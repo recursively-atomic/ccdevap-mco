@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +8,75 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
-        defer />
+        defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title> Document </title>
 </head>
 
 <body>
-    <header> Home Page </header>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand mb-0 h1" href="###"> Brand </a>
 
-    <main></main>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <footer></footer>
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="###"> Home </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="###"> Search A Flight </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="###"> Reserve A Flight </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="###"> My Reservations </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="###"> My Profile </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Admin Access
+                        </a>
+                        <ul class="dropdown-menu mb-3">
+                            <li><a class="dropdown-item" href="###"> Action </a></li>
+                            <li><a class="dropdown-item" href="###"> Action </a></li>
+                            <li><a class="dropdown-item" href="###"> Action </a></li>
+                            <li><a class="dropdown-item" href="###"> Action </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="img-fluid mx-auto d-block rounded" alt="Airline"
+                    src="https://picsum.photos/1280/720/?blur=5">
+
+                <div class="carousel-caption d-none d-md-block">
+                    <h1> [TEXT] </h1>
+                    <p> [Text] </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
