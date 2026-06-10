@@ -9,15 +9,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
             defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./styles/custom.css">
+    <script src="./scripts/index.js" defer></script>
+
+    <link rel="stylesheet" href="./styles/override.css">
+    <link rel="stylesheet" href="./styles/additional.css">
     <title> Document </title>
 </head>
 
-<body>
+<body class="bg-light">
     <!-- NAVIGATION BAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top ps-5 pt-3 pb-3 pe-5 mb-4">
+    <nav class="bg-dark navbar navbar-expand-lg navbar-dark sticky-top ps-5 pt-3 pb-3 pe-5 mb-4">
         <a class="navbar-brand mb-0 h1" href="###"> Brand </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
@@ -46,11 +47,12 @@
                     <a class="nav-link" href="###"> My Profile </a>
                 </li>
 
-                <li class="nav-item dropdown">
+                <li class="nav-item dropstart">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin Access
                     </a>
                     <ul class="dropdown-menu mb-3">
+                        <li><a class="dropdown-item" href="###"> Admin Dashboard </a></li>
                         <li><a class="dropdown-item" href="###"> Flight Management </a></li>
                         <li><a class="dropdown-item" href="###"> Reservation Management </a></li>
                         <li><a class="dropdown-item" href="###"> User Management </a></li>
@@ -76,10 +78,11 @@
     </div>
 
     <!-- FLIGHT SEARCH QUICK WIDGET -->
+    <!-- Add jquery and the stuff -->
     <div class="container mb-4">
-        <div class="card card-hover text-center mt-4 shadow">
-            <div class="card-header"> In Need Of A Quick Flight? </div>
-            
+        <div class="card card-hover text-center mt-4 shadow bg-dark">
+            <h2 class="card-header text-warning"> In Need Of A Quick Flight? </h2>
+
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col-4">
@@ -139,7 +142,7 @@
                     </div>
 
                     <div class="col-4">
-                        <button class="btn-lg btn-primary w-100"> Default </button>
+                        <button class="btn btn-lg btn-warning w-100"> Default </button>
                     </div>
                 </div>
             </div>
@@ -194,8 +197,8 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-info bg-opacity-10 text-center pt-4 pb-2">
-        <p>
+    <footer class="bg-dark text-center pt-4 pb-2">
+        <p class="text-light">
             &copy; [BRAND] 2026 <br>
             CCDEVAP MCO
         </p>
