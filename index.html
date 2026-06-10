@@ -19,40 +19,40 @@
 
 <body class="bg-light">
     <!-- NAVIGATION BAR -->
-    <nav class="bg-dark navbar navbar-expand-lg navbar-dark sticky-top ps-5 pt-3 pb-3 pe-5 mb-4">
-        <a class="navbar-brand mb-0 h1" href="###"> [BRAND] </a>
+    <nav class="navbar navbar-expand-lg sticky-top ps-5 pt-3 pb-3 pe-5 mb-4 bg-dark navbar-dark">
+        <a class="navbar-brand mb-0 h1" href="./index.html"> [BRAND] </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="mainMenu">
+        <div class="navbar-collapse collapse" id="mainMenu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="###"> Home </a>
+                    <a class="nav-link disabled fw-bold text-light text-bg-primary-accent rounded-3"> Home </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="###"> Search A Flight </a>
+                    <a class="nav-link fw-bold" href="###"> Search A Flight </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="###"> Reserve A Flight </a>
+                    <a class="nav-link fw-bold" href="###"> Reserve A Flight </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="###"> My Reservations </a>
+                    <a class="nav-link fw-bold" href="###"> My Reservations </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="###"> My Profile </a>
+                    <a class="nav-link fw-bold" href="./views/user/profile.html"> My Profile </a>
                 </li>
 
                 <li class="nav-item dropstart">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Admin Access
                     </a>
-                    <ul class="dropdown-menu mb-3">
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
                         <li><a class="dropdown-item" href="###"> Admin Dashboard </a></li>
                         <li><a class="dropdown-item" href="###"> Flight Management </a></li>
                         <li><a class="dropdown-item" href="###"> Reservation Management </a></li>
@@ -67,7 +67,7 @@
     <div class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active shadow">
-                <img class="img-fluid mx-auto d-block rounded-3 shadow-lg" src="https://picsum.photos/1280/720/?blur=5">
+                <img class="d-block img-fluid mx-auto rounded-3 shadow-lg" src="https://picsum.photos/1280/720/?blur=5">
 
                 <div class="carousel-caption">
                     <h1 class="fw-5"> [TEXT] </h1>
@@ -79,25 +79,25 @@
 
     <!-- FLIGHT SEARCH QUICK WIDGET -->
     <div class="container mb-4">
-        <div class="card card-hover text-center mt-4 shadow">
+        <div class="card mt-4 card-hover text-center shadow">
             <h2 class="card-header bg-dark text-warning"> In Need Of A Quick Flight? </h2>
 
             <div class="card-body bg-white rounded-bottom">
                 <div class="row align-items-center">
-                    <div class="form-floating mb-lg-0 mb-md-3 col-lg-4 col-md-6 mb-sm-3 mb-3">
+                    <div class="form-floating col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
                         <input type="text" class="form-control ms-1" id="origin" placeholder="Flight Origin"
                                list="result">
                         <label class="ms-3" for="origin"> Flight Origin </label>
                     </div>
 
-                    <div class="form-floating mb-lg-0 mb-md-3 col-lg-4 col-md-6 mb-sm-3 mb-3">
+                    <div class="form-floating col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
                         <input type="text" class="form-control ms-1" id="destination" placeholder="Flight Destination"
                                list="result">
                         <label class="ms-3" for="destination"> Flight Destination </label>
                     </div>
 
                     <div class="col-lg-4 col-md-12">
-                        <button class="btn btn-lg btn-primary w-100 text-white"> Search Flights </button>
+                        <button class="btn btn-lg w-100 btn-primary text-white"> Search Flights </button>
                     </div>
                 </div>
             </div>
@@ -156,48 +156,45 @@
     <div class="container mb-4">
         <div class="row">
             <!-- AVAILABLE FLIGHTS -->
-            <div
-                 class="card card-hover text-center mt-lg-4 shadow col-lg-4 bg-transparent shadow-none border-0 col-md-6 my-md-3 my-sm-3 my-3">
+            <div class="card col-lg-4 col-md-6 mt-lg-4 my-md-3 my-sm-3 my-3 bg-transparent border-0 shadow-none text-center card-hover">
                 <h2 class="card-header bg-dark text-warning text-center"> Available Flights </h2>
 
-                <div class="card-body bg-white rounded-bottom shadow-lg d-flex flex-column">
+                <div class="card-body d-flex flex-column bg-white rounded-bottom shadow-lg">
                     <div class="card bg-danger">
                         <div class="card-body pt-3 pb-2">
-                            <h2 class="text-dark"> 4 Flights Left </h2>
+                            <h2 class="text-white"> 4 Flights Left </h2>
                         </div>
                     </div>
 
-                    <hr class="border border-3 opacity-100 border-secondary-accent">
+                    <hr class="border border-3 border-secondary-accent opacity-100">
 
-                    <button class="btn btn-lg btn-secondary text-white mt-auto mx-auto">
+                    <button class="btn btn-lg mt-auto mx-auto btn-secondary text-white">
                         Book A Flight Now
                     </button>
                 </div>
             </div>
 
             <!-- ACTIVE BOOKINGS -->
-            <div
-                 class="card card-hover text-center mt-lg-4 shadow col-lg-4 bg-transparent shadow-none border-0 col-md-6 my-md-3 mb-sm-3 mb-3">
+            <div class="card col-lg-4 col-md-6 mt-lg-4 my-md-3 mb-sm-3 mb-3 bg-transparent border-0 shadow-none text-center card-hover">
                 <h2 class="card-header bg-dark text-warning text-center"> Active Bookings </h2>
 
-                <div class="card-body bg-white rounded-bottom shadow-lg d-flex flex-column">
+                <div class="card-body d-flex flex-column bg-white rounded-bottom shadow-lg">
                     <div class="card bg-success">
-                        <div class="card-body text-dark pt-3 pb-2">
-                            <h2> 10 Active Bookings </h2>
+                        <div class="card-body pt-3 pb-2">
+                            <h2 class="text-white"> 10 Active Bookings </h2>
                         </div>
                     </div>
 
-                    <hr class="border border-3 opacity-100 border-secondary-accent">
+                    <hr class="border border-3 border-secondary-accent opacity-100">
 
-                    <button class="btn btn-lg btn-secondary text-white mt-auto mx-auto">
+                    <button class="btn btn-lg mt-auto mx-auto btn-secondary text-white">
                         Manage My Flights
                     </button>
                 </div>
             </div>
 
             <!-- POPULAR DESTINATIONS -->
-            <div
-                 class="card card-hover text-center mt-lg-4 shadow col-lg-4 bg-transparent shadow-none border-0 col-md-12">
+            <div class="card col-lg-4 col-md-12 mt-lg-4 bg-transparent border-0 shadow-none text-center card-hover">
                 <h2 class="card-header bg-dark text-warning text-center"> Popular Destinations </h2>
 
                 <div class="card-body bg-white rounded-bottom shadow-lg">
@@ -205,19 +202,19 @@
                         <div class="card-body pt-3 pb-2">
                             <h2 class="text-white"> From Manila </h2>
 
-                            <hr class="border border-3 opacity-100 border-secondary-accent">
+                            <hr class="border border-3 border-secondary-accent opacity-100">
 
-                            <p class="text-dark"> Location, Location, Location, Location, Location, Location </p>
+                            <p class="text-white"> Location, Location, Location, Location, Location, Location </p>
                         </div>
                     </div>
 
                     <div class="card mb-3 bg-tertiary-accent">
                         <div class="card-body pt-3 pb-2">
-                            <h2 class="text-white"> From Manila </h2>
+                            <h2 class="text-white"> From Cebu </h2>
 
-                            <hr class="border border-3 opacity-100 border-secondary-accent">
+                            <hr class="border border-3 border-secondary-accent opacity-100">
 
-                            <p class="text-dark"> Location, Location, Location, Location, Location, Location </p>
+                            <p class="text-white"> Location, Location, Location, Location, Location, Location </p>
                         </div>
                     </div>
 
@@ -230,7 +227,7 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-center pt-4 pb-2">
+    <footer class="pt-4 pb-2 text-center bg-dark">
         <p class="text-light">
             &copy; [BRAND] 2026 <br>
             CCDEVAP MCO
