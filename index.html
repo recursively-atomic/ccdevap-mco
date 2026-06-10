@@ -7,19 +7,20 @@
     <meta charset="UTF-8">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
-            defer></script>
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
     <script src="./scripts/index.js" defer></script>
 
     <link rel="stylesheet" href="./styles/override.css">
     <link rel="stylesheet" href="./styles/additional.css">
-    <title> Document </title>
+    <title> [BRAND] </title>
 </head>
 
 <body class="bg-light">
     <!-- NAVIGATION BAR -->
     <nav class="bg-dark navbar navbar-expand-lg navbar-dark sticky-top ps-5 pt-3 pb-3 pe-5 mb-4">
-        <a class="navbar-brand mb-0 h1" href="###"> Brand </a>
+        <a class="navbar-brand mb-0 h1" href="###"> [BRAND] </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
             <span class="navbar-toggler-icon"></span>
@@ -66,7 +67,7 @@
     <div class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active shadow">
-                <img class="img-fluid mx-auto d-block rounded" alt="Airline"
+                <img class="img-fluid mx-auto d-block rounded shadow-lg" alt="Airline"
                      src="https://picsum.photos/1280/720/?blur=5">
 
                 <div class="carousel-caption d-none d-md-block">
@@ -78,79 +79,36 @@
     </div>
 
     <!-- FLIGHT SEARCH QUICK WIDGET -->
-    <!-- Add jquery and the stuff -->
     <div class="container mb-4">
-        <div class="card card-hover text-center mt-4 shadow bg-dark">
-            <h2 class="card-header text-warning"> In Need Of A Quick Flight? </h2>
+        <div class="card card-hover text-center mt-4 shadow">
+            <h2 class="card-header bg-dark text-warning"> In Need Of A Quick Flight? </h2>
 
-            <div class="card-body">
+            <div class="card-body bg-white rounded-bottom">
                 <div class="row align-items-center">
-                    <div class="col-4">
-                        <div class="form-floating">
-                            <select class="form-select" id="originSelection">
-                                <option selected disabled hidden> Select Origin </option>
+                    <div class="form-floating col-4">
+                        <input type="text" class="form-control ms-1" id="origin" placeholder="Flight Origin"
+                               list="result">
+                        <label class="ms-3" for="origin"> Flight Origin </label>
+                    </div>
 
-                                <option> Bacolod </option>
-                                <option> Cagayan de Oro </option>
-                                <option> Davao </option>
-                                <option> El Nido </option>
-                                <option> General Santos </option>
-                                <option> Iloilo </option>
-                                <option> Kalibo </option>
-                                <option> Laoag </option>
-                                <option> Manila </option>
-                                <option> Naga </option>
-                                <option> Ozamiz </option>
-                                <option> Pagadian </option>
-                                <option> Roxas </option>
-                                <option> San Jose, Mindoro </option>
-                                <option> Tacloban </option>
-                                <option> Virac </option>
-                                <option> Zamboanga </option>
-                            </select>
-
-                            <label for="originSelection"> From </label>
-                        </div>
+                    <div class="form-floating col-4">
+                        <input type="text" class="form-control ms-1" id="destination" placeholder="Flight Destination"
+                               list="result">
+                        <label class="ms-3" for="destination"> Flight Destination </label>
                     </div>
 
                     <div class="col-4">
-                        <div class="form-floating">
-                            <select class="form-select" id="destinationSelection">
-                                <option selected disabled hidden> Select Destination </option>
-
-                                <option> Bacolod </option>
-                                <option> Cagayan de Oro </option>
-                                <option> Davao </option>
-                                <option> El Nido </option>
-                                <option> General Santos </option>
-                                <option> Iloilo </option>
-                                <option> Kalibo </option>
-                                <option> Laoag </option>
-                                <option> Manila </option>
-                                <option> Naga </option>
-                                <option> Ozamiz </option>
-                                <option> Pagadian </option>
-                                <option> Roxas </option>
-                                <option> San Jose, Mindoro </option>
-                                <option> Tacloban </option>
-                                <option> Virac </option>
-                                <option> Zamboanga </option>
-                            </select>
-
-                            <label for="destinationSelection"> To </label>
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <button class="btn btn-lg btn-warning w-100"> Default </button>
+                        <button class="btn btn-lg btn-primary w-100 text-white"> Search Flights </button>
                     </div>
                 </div>
             </div>
+
+            <datalist id="result"></datalist>
         </div>
     </div>
 
     <!-- PROMOTIONAL CAROUSEL -->
-    <div class="card align-items-center p-3 mb-4">
+    <div class="card align-items-center p-3 mb-4 text-white bg-primary-accent">
         <h2> The [BRAND] Experience </h2>
         <p> [Text] </p>
     </div>
@@ -192,8 +150,81 @@
     </div>
 
     <!-- FLIGHT STATISTICS -->
-    <div class="card align-items-center p-3 mb-4">
+    <div class="card align-items-center p-3 text-white bg-primary-accent">
         <h2> Flight Statistics </h2>
+    </div>
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="card card-hover text-center mt-4 shadow col-4 bg-transparent shadow-none border-0">
+                <!-- AVAILABLE FLIGHTS -->
+                <h2 class="card-header bg-dark text-warning text-center"> Available Flights </h2>
+
+                <div class="card-body bg-white rounded-bottom shadow-lg d-flex flex-column">
+                    <div class="card bg-danger">
+                        <div class="card-body pt-3 pb-2">
+                            <h2 class="text-dark"> 4 Flights Left </h2>
+                        </div>
+                    </div>
+
+                    <hr class="border border-3 opacity-100 border-secondary-accent">
+
+                    <button class="btn btn-lg btn-secondary text-white mt-auto mx-auto">
+                        Book A Flight Now
+                    </button>
+                </div>
+            </div>
+
+            <div class="card card-hover text-center mt-4 shadow col-4 bg-transparent shadow-none border-0">
+                <!-- ACTIVE BOOKINGS -->
+                <h2 class="card-header bg-dark text-warning text-center"> Active Bookings </h2>
+
+                <div class="card-body bg-white rounded-bottom shadow-lg d-flex flex-column">
+                    <div class="card bg-success">
+                        <div class="card-body text-dark pt-3 pb-2">
+                            <h2> 10 Active Bookings </h2>
+                        </div>
+                    </div>
+
+                    <hr class="border border-3 opacity-100 border-secondary-accent">
+
+                    <button class="btn btn-lg btn-secondary text-white mt-auto mx-auto">
+                        Manage My Flights
+                    </button>
+                </div>
+            </div>
+
+            <div class="card card-hover text-center mt-4 shadow col-4 bg-transparent shadow-none border-0">
+                <!-- POPULAR DESTINATIONS -->
+                <h2 class="card-header bg-dark text-warning text-center"> Popular Destinations </h2>
+
+                <div class="card-body bg-white rounded-bottom shadow-lg">
+                    <div class="card mb-3 bg-tertiary-accent">
+                        <div class="card-body pt-3 pb-2">
+                            <h2 class="text-white"> From Manila </h2>
+
+                            <hr class="border border-3 opacity-100 border-secondary-accent">
+
+                            <p class="text-dark"> Location, Location, Location, Location, Location, Location </p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 bg-tertiary-accent">
+                        <div class="card-body pt-3 pb-2">
+                            <h2 class="text-white"> From Manila </h2>
+
+                            <hr class="border border-3 opacity-100 border-secondary-accent">
+
+                            <p class="text-dark"> Location, Location, Location, Location, Location, Location </p>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-lg btn-secondary text-white">
+                        Book A Popular Flight Now
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- FOOTER -->
