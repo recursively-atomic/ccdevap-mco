@@ -30,7 +30,6 @@ $(document).ready(function () {
         const $input = $(this);
         const value = $input.val();
 
-        
         const $match = $data.find('option').filter(function () {
             return $(this).val() === value;
         }).first();

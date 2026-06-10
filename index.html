@@ -67,11 +67,10 @@
     <div class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active shadow">
-                <img class="img-fluid mx-auto d-block rounded shadow-lg" alt="Airline"
-                     src="https://picsum.photos/1280/720/?blur=5">
+                <img class="img-fluid mx-auto d-block rounded-3 shadow-lg" src="https://picsum.photos/1280/720/?blur=5">
 
-                <div class="carousel-caption d-none d-md-block">
-                    <h1> [TEXT] </h1>
+                <div class="carousel-caption">
+                    <h1 class="fw-5"> [TEXT] </h1>
                     <p> [Text] </p>
                 </div>
             </div>
@@ -85,19 +84,19 @@
 
             <div class="card-body bg-white rounded-bottom">
                 <div class="row align-items-center">
-                    <div class="form-floating col-4">
+                    <div class="form-floating mb-lg-0 mb-md-3 col-lg-4 col-md-6 mb-sm-3 mb-3">
                         <input type="text" class="form-control ms-1" id="origin" placeholder="Flight Origin"
                                list="result">
                         <label class="ms-3" for="origin"> Flight Origin </label>
                     </div>
 
-                    <div class="form-floating col-4">
+                    <div class="form-floating mb-lg-0 mb-md-3 col-lg-4 col-md-6 mb-sm-3 mb-3">
                         <input type="text" class="form-control ms-1" id="destination" placeholder="Flight Destination"
                                list="result">
                         <label class="ms-3" for="destination"> Flight Destination </label>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-lg-4 col-md-12">
                         <button class="btn btn-lg btn-primary w-100 text-white"> Search Flights </button>
                     </div>
                 </div>
@@ -108,7 +107,7 @@
     </div>
 
     <!-- PROMOTIONAL CAROUSEL -->
-    <div class="card align-items-center p-3 mb-4 text-white bg-primary-accent">
+    <div class="card align-items-center p-3 mb-4 text-white bg-primary-accent rounded-0">
         <h2> The [BRAND] Experience </h2>
         <p> [Text] </p>
     </div>
@@ -150,14 +149,15 @@
     </div>
 
     <!-- FLIGHT STATISTICS -->
-    <div class="card align-items-center p-3 text-white bg-primary-accent">
+    <div class="card align-items-center p-3 text-white bg-primary-accent rounded-0 fw-bolder">
         <h2> Flight Statistics </h2>
     </div>
 
     <div class="container mb-4">
         <div class="row">
-            <div class="card card-hover text-center mt-4 shadow col-4 bg-transparent shadow-none border-0">
-                <!-- AVAILABLE FLIGHTS -->
+            <!-- AVAILABLE FLIGHTS -->
+            <div
+                 class="card card-hover text-center mt-lg-4 shadow col-lg-4 bg-transparent shadow-none border-0 col-md-6 my-md-3 my-sm-3 my-3">
                 <h2 class="card-header bg-dark text-warning text-center"> Available Flights </h2>
 
                 <div class="card-body bg-white rounded-bottom shadow-lg d-flex flex-column">
@@ -175,8 +175,9 @@
                 </div>
             </div>
 
-            <div class="card card-hover text-center mt-4 shadow col-4 bg-transparent shadow-none border-0">
-                <!-- ACTIVE BOOKINGS -->
+            <!-- ACTIVE BOOKINGS -->
+            <div
+                 class="card card-hover text-center mt-lg-4 shadow col-lg-4 bg-transparent shadow-none border-0 col-md-6 my-md-3 mb-sm-3 mb-3">
                 <h2 class="card-header bg-dark text-warning text-center"> Active Bookings </h2>
 
                 <div class="card-body bg-white rounded-bottom shadow-lg d-flex flex-column">
@@ -194,8 +195,9 @@
                 </div>
             </div>
 
-            <div class="card card-hover text-center mt-4 shadow col-4 bg-transparent shadow-none border-0">
-                <!-- POPULAR DESTINATIONS -->
+            <!-- POPULAR DESTINATIONS -->
+            <div
+                 class="card card-hover text-center mt-lg-4 shadow col-lg-4 bg-transparent shadow-none border-0 col-md-12">
                 <h2 class="card-header bg-dark text-warning text-center"> Popular Destinations </h2>
 
                 <div class="card-body bg-white rounded-bottom shadow-lg">
