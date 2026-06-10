@@ -7,68 +7,65 @@
     <meta charset="UTF-8">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
-        defer></script>
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
+            defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/custom.css">
     <title> Document </title>
 </head>
 
 <body>
     <!-- NAVIGATION BAR -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container">
-            <a class="navbar-brand mb-0 h1" href="###"> Brand </a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top ps-5 pt-3 pb-3 pe-5 mb-4">
+        <a class="navbar-brand mb-0 h1" href="###"> Brand </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="mainMenu">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="###"> Home </a>
-                    </li>
+        <div class="collapse navbar-collapse" id="mainMenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="###"> Home </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="###"> Search A Flight </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="###"> Search A Flight </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="###"> Reserve A Flight </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="###"> Reserve A Flight </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="###"> My Reservations </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="###"> My Reservations </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="###"> My Profile </a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="###"> My Profile </a>
+                </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Admin Access
-                        </a>
-                        <ul class="dropdown-menu mb-3">
-                            <li><a class="dropdown-item" href="###"> Action </a></li>
-                            <li><a class="dropdown-item" href="###"> Action </a></li>
-                            <li><a class="dropdown-item" href="###"> Action </a></li>
-                            <li><a class="dropdown-item" href="###"> Action </a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Admin Access
+                    </a>
+                    <ul class="dropdown-menu mb-3">
+                        <li><a class="dropdown-item" href="###"> Flight Management </a></li>
+                        <li><a class="dropdown-item" href="###"> Reservation Management </a></li>
+                        <li><a class="dropdown-item" href="###"> User Management </a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 
     <!-- HERO SECTION -->
     <div class="carousel slide">
         <div class="carousel-inner">
-            <div class="carousel-item active">
+            <div class="carousel-item active shadow">
                 <img class="img-fluid mx-auto d-block rounded" alt="Airline"
-                    src="https://picsum.photos/1280/720/?blur=5">
+                     src="https://picsum.photos/1280/720/?blur=5">
 
                 <div class="carousel-caption d-none d-md-block">
                     <h1> [TEXT] </h1>
@@ -77,6 +74,132 @@
             </div>
         </div>
     </div>
+
+    <!-- FLIGHT SEARCH QUICK WIDGET -->
+    <div class="container mb-4">
+        <div class="card card-hover text-center mt-4 shadow">
+            <div class="card-header"> In Need Of A Quick Flight? </div>
+            
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="originSelection">
+                                <option selected disabled hidden> Select Origin </option>
+
+                                <option> Bacolod </option>
+                                <option> Cagayan de Oro </option>
+                                <option> Davao </option>
+                                <option> El Nido </option>
+                                <option> General Santos </option>
+                                <option> Iloilo </option>
+                                <option> Kalibo </option>
+                                <option> Laoag </option>
+                                <option> Manila </option>
+                                <option> Naga </option>
+                                <option> Ozamiz </option>
+                                <option> Pagadian </option>
+                                <option> Roxas </option>
+                                <option> San Jose, Mindoro </option>
+                                <option> Tacloban </option>
+                                <option> Virac </option>
+                                <option> Zamboanga </option>
+                            </select>
+
+                            <label for="originSelection"> From </label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-floating">
+                            <select class="form-select" id="destinationSelection">
+                                <option selected disabled hidden> Select Destination </option>
+
+                                <option> Bacolod </option>
+                                <option> Cagayan de Oro </option>
+                                <option> Davao </option>
+                                <option> El Nido </option>
+                                <option> General Santos </option>
+                                <option> Iloilo </option>
+                                <option> Kalibo </option>
+                                <option> Laoag </option>
+                                <option> Manila </option>
+                                <option> Naga </option>
+                                <option> Ozamiz </option>
+                                <option> Pagadian </option>
+                                <option> Roxas </option>
+                                <option> San Jose, Mindoro </option>
+                                <option> Tacloban </option>
+                                <option> Virac </option>
+                                <option> Zamboanga </option>
+                            </select>
+
+                            <label for="destinationSelection"> To </label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <button class="btn-lg btn-primary w-100"> Default </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROMOTIONAL CAROUSEL -->
+    <div class="card align-items-center p-3 mb-4">
+        <h2> The [BRAND] Experience </h2>
+        <p> [Text] </p>
+    </div>
+
+    <div class="container mb-4">
+        <div class="carousel slide" id="promotional-carousel" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-pill shadow-lg">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="https://picsum.photos/1280/720?random=1">
+                </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://picsum.photos/1280/720?random=2">
+                </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://picsum.photos/1280/720?random=3">
+                </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://picsum.photos/1280/720?random=4">
+                </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://picsum.photos/1280/720?random=5">
+                </div>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#promotional-carousel"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#promotional-carousel"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- FLIGHT STATISTICS -->
+    <div class="card align-items-center p-3 mb-4">
+        <h2> Flight Statistics </h2>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-info bg-opacity-10 text-center pt-4 pb-2">
+        <p>
+            &copy; [BRAND] 2026 <br>
+            CCDEVAP MCO
+        </p>
+    </footer>
 </body>
 
 </html>
