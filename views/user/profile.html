@@ -7,20 +7,334 @@
     <meta charset="UTF-8">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
-        defer></script>
-        
-    <link rel="stylesheet" href="./styles/override.css">
-    <link rel="stylesheet" href="./styles/additional.css">
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
+            defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+    <script src="/scripts/profile.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/styles/override.css">
+    <link rel="stylesheet" href="/styles/additional.css">
     <title> [BRAND] </title>
 </head>
 
-<body>
-    <header> User Profile Page </header>
+<body class="d-flex flex-column min-vh-100">
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark navbar-dark">
+        <a class="navbar-brand mb-0 h1" href="/index.html"> [BRAND] </a>
 
-    <main></main>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <footer></footer>
+        <div class="navbar-collapse collapse" id="main-menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="/index.html"> Home </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="###"> Search A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="###"> Reserve A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="###"> My Reservations </a>
+                </li>
+
+                <li class="nav-item ps-3 ps-sm-3 ps-md-3 ps-xl-0 mt-xl-0 me-3 text-bg-primary-accent rounded-3">
+                    <a class="nav-link disabled fw-bold text-light"> My Profile </a>
+                </li>
+
+                <li class="nav-item dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Admin Access
+                    </a>
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li><a class="dropdown-item" href="###"> Admin Dashboard </a></li>
+                        <li><a class="dropdown-item" href="###"> Flight Management </a></li>
+                        <li><a class="dropdown-item" href="###"> Reservation Management </a></li>
+                        <li><a class="dropdown-item" href="###"> User Management </a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Required Sections 
+    • Saved passengers 
+    • Payment method UI mockup 
+    • Notification preferences 
+    • Travel history 
+    Interactive Components 
+    • Profile image placeholder upload UI -->
+
+    <!--
+    ### Travel Document & Verification
+    International and domestic flights require identity verification to comply with security rules.
+    * **Passport Number:** (Required for international flights).
+    * **Passport Expiry Date:** (Many countries require the passport to be valid for at least 6 months beyond your trip).
+    * **Issuing Country (Passport):**
+    * **Redress Number / Known Traveler Number (KTN):** (Optional fields for trusted travelers to speed up security checks). -->
+
+    <div class="container mt-5 mb-5">
+        <ul class="nav nav-tabs border-0">
+            <li class="nav-item me-3">
+                <button class="nav-link active" id="passenger-tab" data-bs-toggle="tab" data-bs-target="#passenger-pane"
+                        type="button">
+                    Passenger Information
+                </button>
+            </li>
+
+            <li class="nav-item me-3">
+                <button class="nav-link" id="saved-passengers-tab" data-bs-toggle="tab"
+                        data-bs-target="#saved-passengers-pane" type="button">
+                    Saved Passengers
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" id="three-tab" data-bs-toggle="tab" data-bs-target="#three-pane" type="button">
+                    [3]
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" id="four-tab" data-bs-toggle="tab" data-bs-target="#four-pane" type="button">
+                    [4]
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" id="five-tab" data-bs-toggle="tab" data-bs-target="#five-pane" type="button">
+                    [5]
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content border-start border-end border-bottom border-top rounded-3 rounded-top-0 border-top px-4 pt-3">
+            <!-- PASSENGER INFORMATION TAB -->
+            <div class="tab-pane fade show active" id="passenger-pane">
+                <!-- PASSPORT INFORMATION SECTION -->
+                <h2> Passport Information </h2>
+                <hr>
+
+                <div class="m-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <h4> Country Code </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-map-fill"></i></div>
+                                <input class="form-control" type="text" placeholder="###">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <h4> Passport Code </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-postcard-fill"></i></div>
+                                <input class="form-control" type="text" placeholder="###">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <h4> Expiration Date </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-calendar2-fill"></i></div>
+                                <input class="form-control rounded-end-3" type="date">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PERSONAL INFORMATION SECTION -->
+                <h2> Personal Information </h2>
+                <hr>
+                <!-- PASSENGER NAME -->
+                <div class="m-4">
+                    <h4> Name </h4>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-chat-square-dots-fill"></i></div>
+                                <input class="form-control" type="text" placeholder="Alex Jax">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-chat-square-dots-fill"></i></div>
+                                <input class="form-control" type="text" placeholder="Doe">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-pen-fill"></i></i></div>
+                                <select class="form-select">
+                                    <option selected hidden> Select A Suffix </option>
+                                    <option> None </option>
+                                    <option> Jr. </option>
+                                    <option> Sr. </option>
+                                    <option> II </option>
+                                    <option> III </option>
+                                    <option> IV </option>
+                                    <option> V </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BIRTHDATE -->
+                <div class="mx-4 mb-4">
+                    <h4> Birthdate </h4>
+
+                    <div class="row align-items-center">
+                        <div class="col-12" id="date-container">
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-calendar2-fill"></i></div>
+                                <input class="form-control rounded-end-3" type="date" id="date-input">
+
+                                <div class="invalid-feedback">
+                                    Select A Date Before Or On Today!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-none" id="age-badge-container">
+                            <span class="badge w-100 p-2 rounded-pill text-bg-primary text-white card-hover shadow" id="age-badge" ></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-4 mb-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <!-- GENDER -->
+                            <h4> Gender </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                <select class="form-select" id="gender-select">
+                                    <option selected hidden> Select The One You Most Identify With </option>
+                                    <option> Prefer Not To Answer </option>
+                                    <option> Not Listed </option>
+                                    <option> Male </option>
+                                    <option> Female </option>
+                                    <option> Transgender Male </option>
+                                    <option> Transgender Female </option>
+                                    <option> Non-Binary </option>
+                                </select>
+                            </div>
+
+                            <div class="mt-2 d-none" id="other-gender-container">
+                                <input class="form-control" type="text" placeholder="Please Specify" id="other-gender-input">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <!-- NATIONALITY -->
+                            <h4> Nationality </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-flag-fill"></i></div>
+                                <select class="form-select">
+                                    <option selected hidden> Select A Nationality </option>
+                                    <option> Afghan </option>
+                                    <option> Bahamian </option>
+                                    <option> Cambodian </option>
+                                    <option> Danish </option>
+                                    <option> East Timorese </option>
+                                    <option> Filipino </option>
+                                    <option> Gabonese </option>
+                                    <option> Haitian </option>
+                                    <option> Icelander </option>
+                                    <option> Jamaican </option>
+                                    <option> Kazakhstani </option>
+                                    <option> Laotian </option>
+                                    <option> Macedonian </option>
+                                    <option> Namibian </option>
+                                    <option> Omani </option>
+                                    <option> Pakistani </option>
+                                    <option> Qatari </option>
+                                    <option> Romanian </option>
+                                    <option> Saint Lucian </option>
+                                    <option> Taiwanese </option>
+                                    <option> Ugandan </option>
+                                    <option> Venezuelan </option>
+                                    <option> Welsh </option>
+                                    <option> Yemenite </option>
+                                    <option> Zambian </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTACT INFORMATION TAB -->
+                <h2> Contact Information </h2>
+                <hr>
+                <div class="m-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <!-- E-MAIL -->
+                            <h4> E-Mail </h4>
+
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="E-Mail">
+                                <div class="input-group-text"><i class="bi bi-at"></i></div>
+                                <input class="form-control" type="text" placeholder="Domain Name">
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="col-6">
+                            <!-- PHONE NUMBER -->
+                            <h4> Phone Number </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="bi bi-telephone-fill"></i></div>
+                                <input class="form-control" type="text" placeholder="Country Code">
+                                <input class="form-control w-50" type="text" placeholder="Phone Number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <button class="btn btn-primary text-white" type="submit"> Sign In </button>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="saved-passengers-pane">
+                <h2> Two Header </h2>
+                <p> two text </p>
+            </div>
+
+            <div class="tab-pane fade" id="three-pane">
+                <h2> Three Header </h2>
+                <p> three text </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="pt-4 pb-2 mt-5 text-center bg-dark mt-auto">
+        <p class="text-light">
+            &copy; [BRAND] 2026 <br>
+            CCDEVAP MCO
+        </p>
+    </footer>
 </body>
 
 </html>
