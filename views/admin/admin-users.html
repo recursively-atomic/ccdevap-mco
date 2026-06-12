@@ -9,23 +9,119 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
             defer></script>
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title> Document </title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/styles/override.css">
+    <link rel="stylesheet" href="/styles/additional.css">
+    <title> [BRAND] </title>
 </head>
 
 <body>
-    <header> User Management Page </header>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg sticky-top ps-5 pt-3 pb-3 pe-5 mb-4 bg-dark navbar-dark">
+        <a class="navbar-brand mb-0 h1" href="/index.html"> [BRAND] </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="main-menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="/index.html"> Home </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="###"> Search A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="###"> Reserve A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="###"> My Reservations </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="../user/profile.html"> My Profile </a>
+                </li>
+
+                <li class="nav-item px-3 px-sm-3 ps-md-3 px-xl-0 mt-xl-0 me-3 text-bg-primary-accent rounded-3
+                    dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold text-light" data-bs-toggle="dropdown">
+                        Admin Access
+                    </a>
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li><a class="dropdown-item" href="###"> Admin Dashboard </a></li>
+                        <li><a class="dropdown-item" href="###"> Flight Management </a></li>
+                        <li><a class="dropdown-item" href="###"> Reservation Management </a></li>
+                        <li><a class="dropdown-item disabled text-bg-secondary-accent text-white"> User Management </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card w-100 ps-4">
+            <div class="row">
+                <div class="col-auto bg-danger d-flex justify-content-center align-items-center">
+                    <i class="bi bi-person-circle display-6"></i>
+                </div>
+
+                <div class="col-auto flex-grow-1">
+                    <div class="d-flex align-items-center bg-success">
+                        <h2> User #12345678 </h2>
+                        <i class="bi bi-dot display-5"></i>
+                        <h2 class="fw-lighter"> 4 Saved Passengers </h2>
+                    </div>
+
+                    <div class="d-flex align-items-baseline">
+                        <h5> Passport Number: &nbsp; </h5>
+                        <h5 class="fw-lighter"> PASSPORT-0123456789 </h5>
+                    </div>
+
+                    <div class="d-flex align-items-baseline">
+                        <h5> Username: &nbsp; </h5>
+                        <h5 class="fw-lighter"> Alex Jax Doe </h5>
+                    </div>
+
+                    <div class="d-flex align-items-baseline">
+                        <h5> Number: &nbsp; </h5>
+                        <h5 class="fw-lighter"> 0123456789 </h5>
+                    </div>
+
+                    <div class="d-flex align-items-baseline">
+                        <h5> E-Mail: &nbsp; </h5>
+                        <h5 class="fw-lighter"> email-address@domain.com </h5>
+                    </div>
+                </div>
+
+                <div class="col-auto bg-danger d-flex justify-content-center align-items-center bg-dark">
+                    <i class="bi bi-three-dots-vertical display-6"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <span class="badge w-100 p-2 rounded-pill text-bg-primary text-white card-hover shadow"></span>
+    </div>
 
     <!-- User Management 
     • User table 
     • Search/filter controls 
     • Status indicators  -->
 
-    <main></main>
-
-    <footer></footer>
+    <!-- FOOTER -->
+    <footer class="pt-4 pb-2 mt-5 text-center bg-dark mt-auto">
+        <p class="text-light">
+            &copy; [BRAND] 2026 <br>
+            CCDEVAP MCO
+        </p>
+    </footer>
 </body>
 
 </html>
