@@ -1,9 +1,86 @@
 $(function () {
+    changeProfile();
     showAgeBadge();
     showSpecifyGender();
     formatCardNumber();
     showInputFields();
 });
+
+/**
+ * Enables a user to change their profile picture.
+ */
+function changeProfile() {
+    const $changeProfile = $('#change-profile');
+
+    $changeProfile.on('change', function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const fileReader = new FileReader();
+            fileReader.onload = function (secondEvent) {
+                $('#profile-picture').attr('src', secondEvent.target.result);
+            };
+
+            fileReader.readAsDataURL(file);
+        }
+    });
+}
+
+/**
+ * Shows a toast whenever the user saves their profile
+ * information.
+ */
+function showProfileToast() {
+    const profileToast = $('#profile-toast').get(0);
+
+    const baseToast =
+        bootstrap.Toast.getInstance(profileToast) ||
+        new bootstrap.Toast(profileToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
+}
+
+/**
+ * Shows a toast whenever the user saves a passenger's
+ * information.
+ */
+function showPassengerToast() {
+    const passengerToast = $('#passenger-toast').get(0);
+
+    const baseToast =
+        bootstrap.Toast.getInstance(passengerToast) ||
+        new bootstrap.Toast(passengerToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
+}
+
+/**
+ * Shows a toast whenever the user saves their payment
+ * information.
+ */
+function showPaymentToast() {
+    const paymentToast = $('#payment-toast').get(0);
+
+    const baseToast =
+        bootstrap.Toast.getInstance(paymentToast) ||
+        new bootstrap.Toast(paymentToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
+}
+
+/**
+ * Shows a toast whenever the user updates their notification
+ * preferences.
+ */
+function showPreferencesToast() {
+    const preferenceToast = $('#preference-toast').get(0);
+
+    const baseToast =
+        bootstrap.Toast.getInstance(preferenceToast) ||
+        new bootstrap.Toast(preferenceToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
+}
 
 /**
  * Shows a badge on what age group the passenger is based on
@@ -40,22 +117,30 @@ function showAgeBadge() {
 
             // If the date input is before or on the current date, show the badge
             if (ageBadgeText) {
-                $dateContainer.removeClass('col-12').addClass('col-11');
+                $dateContainer.removeClass('col-xl-12').removeClass('col-md-12').removeClass('col-sm-12').removeClass('col-12');
+                $dateContainer.addClass('col-xl-11').addClass('col-md-11').addClass('col-sm-11').addClass('col-11');
+
                 $dateInput.removeClass('is-invalid').addClass('is-valid');
 
-                $ageBadgeContainer.removeClass('d-none').addClass('col-1');
+                $ageBadgeContainer.removeClass('d-none');
+                $ageBadgeContainer.addClass('col-xl-1').addClass('col-md-1').addClass('col-sm-1').addClass('col-1');
+
                 $ageBadge.text(ageBadgeText);
             } else {
-                $dateContainer.removeClass('col-11').addClass('col-12');
+                $dateContainer.removeClass('col-xl-11').removeClass('col-md-11').removeClass('col-sm-11').removeClass('col-11');
+                $dateContainer.addClass('col-xl-12');
                 $dateInput.removeClass('is-valid').addClass('is-invalid');
 
-                $ageBadgeContainer.removeClass('col-1').addClass('d-none');
+                $ageBadgeContainer.removeClass('col-xl-1').removeClass('col-md-1').removeClass('col-sm-1').removeClass('col-1');
+                $ageBadgeContainer.addClass('d-none');
             }
         } else {
-            $dateContainer.removeClass('col-11').addClass('col-12');
+            $dateContainer.removeClass('col-xl-11').removeClass('col-md-11').removeClass('col-sm-11').removeClass('col-11');
+            $dateContainer.addClass('col-xl-12');
             $dateInput.removeClass('is-valid').removeClass('is-invalid');
 
-            $ageBadgeContainer.removeClass('col-1').addClass('d-none');
+            $ageBadgeContainer.removeClass('col-xl-1').removeClass('col-md-1').removeClass('col-sm-1').removeClass('col-1');
+            $ageBadgeContainer.addClass('d-none');
         }
     });
 }
@@ -81,56 +166,25 @@ function showSpecifyGender() {
 }
 
 /**
- * Shows a toast whenever the user updates their notification
- * preferences.
- */
-function showPreferencesToast() {
-    const preferenceToast = $('#preference-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(preferenceToast) ||
-        new bootstrap.Toast(preferenceToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user saves a passenger's
- * information.
- */
-function showPassengerToast() {
-    const passengerToast = $('#passenger-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(passengerToast) ||
-        new bootstrap.Toast(passengerToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user saves their payment
- * information.
- */
-function showPaymentToast() {
-    const paymentToast = $('#payment-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(paymentToast) ||
-        new bootstrap.Toast(paymentToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Formats the card number into XXXX-XXXX-XXXX-XXXX.
+ * Formats the card number into XXXX XXXX XXXX XXXX.
  */
 function formatCardNumber() {
-    $('#card-number').on('input', function (cardNumberInput) {
-        const value = cardNumberInput.target.value.replace(/\D/g, '');
-        const formattedValue = value.match(/.{1,4}/g);
+    $('#card-number').on('input', function (event) {
+        const input = event.target;
+        const inputValue = input.value;
+        const prevousPosition = input.selectionStart;
+        const digits = inputValue.replace(/\D/g, '').slice(0, 16);
+        const formatted = digits.replace(/(.{4})/g, '$1 ').trim();
+        let difference, nextPosition;
+        
+        input.value = formatted;
+        difference = input.value.length - inputValue.length;
+        nextPosition = prevousPosition + difference;
 
-        cardNumberInput.target.value = formattedValue ? formattedValue.join('-') : value;
+        if (nextPosition < 0) nextPosition = 0;
+        if (nextPosition > input.value.length) nextPosition = input.value.length;
+
+        input.setSelectionRange(nextPosition, nextPosition);
     });
 }
 
@@ -163,18 +217,4 @@ function showInputFields() {
                 break;
         }
     });
-}
-
-/**
- * Shows a toast whenever the user saves their payment
- * information.
- */
-function showProfileToast() {
-    const profileToast = $('#profile-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(profileToast) ||
-        new bootstrap.Toast(profileToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
 }

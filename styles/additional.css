@@ -13,3 +13,45 @@
 .was-checked-primary:checked {
     background-color: var(--bs-primary);
 }
+
+.nav-tabs .nav-link.active {
+    background-color: var(--bs-primary-accent);
+    border-color: var(--bs-primary-accent);
+    color: var(--bs-white);
+}
+
+.nav-tabs .nav-link {
+    background-color: var(--bs-white);
+    border-color: var(--bs-white);
+    color: var(--bs-black);
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: var(--bs-tertiary-accent);
+    border-color: var(--bs-tertiary-accent);
+    color: var(--bs-white);
+}
+
+.page-link {
+    background-color: var(--bs-light);
+    border-color: var(--bs-light);
+    color: var(--bs-black);
+}
+
+.page-link.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: var(--bs-white);
+}
+
+.page-link:hover, .page-link.active:hover {
+    background-color: var(--bs-tertiary);
+    border-color: var(--bs-tertiary);
+    color: var(--bs-white);
+}
+
+.page-link.disabled {
+    background-color: var(--bs-dark);
+    border-color: var(--bs-dark);
+    color: var(--bs-white);
+}

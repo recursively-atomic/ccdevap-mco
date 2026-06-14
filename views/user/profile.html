@@ -19,12 +19,14 @@
           integrity="sha384-EXatlQyrOJgDaM9/a74ArMzy7/2bTMSrZj8ID1IPeVmc3GncfCugefCFWSLj8JL/" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/override.css">
     <link rel="stylesheet" href="/styles/additional.css">
-    <title> [BRAND] </title>
+
+    <link rel="shortcut icon" href="/media/company-logo.png" type="image/x-icon">
+    <title> Cebu Atlantic </title>
 </head>
 
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-light">
     <!-- NAVIGATION BAR -->
-    <nav class="navbar navbar-expand-lg sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
         <div class="mb-0">
             <a class="navbar-brand text-white" href="/index.html">
                 <img class="d-inline-block align-items-center mb-2" width="40px" src="/media/company-logo.png">
@@ -53,15 +55,15 @@
                     <a class="nav-link fw-bold" href="/views/user/reservations.html"> My Reservations </a>
                 </li>
 
-                <li class="nav-item px-3 px-sm-3 ps-md-3 px-xl-0 mt-xl-0 me-3 text-bg-primary-accent rounded-3
-                    dropstart">
+                <li class="nav-item px-3 px-sm-3 ps-md-3 px-xl-0 mt-xl-0 me-3
+                    text-bg-primary-accent rounded-3 dropstart">
                     <a class="nav-link dropdown-toggle fw-bold text-light" data-bs-toggle="dropdown">
                         Profile
                     </a>
 
                     <ul class="dropdown-menu mb-3 bg-dark-subtle">
                         <li>
-                            <a class="dropdown-item disabled text-bg-secondary-accent text-white">
+                            <a class="dropdown-item text-bg-secondary-accent text-white disabled">
                                 My Profile
                             </a>
                         </li>
@@ -75,11 +77,12 @@
                        aria-expanded="false">
                         Admin Access
                     </a>
-                    
+
                     <ul class="dropdown-menu mb-3 bg-dark-subtle">
                         <li><a class="dropdown-item" href="/views/admin/admin-dashboard.html"> Admin Dashboard </a></li>
                         <li><a class="dropdown-item" href="/views/admin/admin-flights.html"> Flight Management </a></li>
-                        <li><a class="dropdown-item" href="/views/admin/admin-reservations.html"> Reservation Management </a></li>
+                        <li><a class="dropdown-item" href="/views/admin/admin-reservations.html"> Reservation Management
+                            </a></li>
                         <li><a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a></li>
                     </ul>
                 </li>
@@ -134,20 +137,27 @@
         </ul>
 
         <!-- TAB CONTENTS -->
-        <div class="tab-content border-start border-end border-bottom border-top rounded-3 rounded-top-0 border-top
-             px-4 pt-3">
+        <div class="tab-content px-4 pt-3 bg-white border-start border-end border-bottom border-top
+             rounded-3 border-white rounded-top-0 border-top">
 
             <!-- PROFILE INFORMATION TAB -->
             <div class="tab-pane fade show active" id="profile-information-pane">
                 <!-- PROFILE PICTURE AND INFORMATION -->
                 <div class="m-4">
                     <div class="row d-flex align-items-center">
-                        <div class="col-3">
-                            <img class="d-block img-fluid rounded-3 shadow-lg card-hover"
-                                 src="https://picsum.photos/1280/1280?random=1">
+                        <div class="col-xl-3 col-md-4 col-sm-12 position-relative card-hover">
+                            <img class="d-block rounded-3 shadow-lg img-fluid"
+                                 src="https://picsum.photos/1280/1280?random=1" id="profile-picture">
+
+                            <button class="btn mb-3 bottom-0 position-absolute start-50 translate-middle-x btn-sm btn-tertiary text-black text-nowrap"
+                                    onclick="$('#change-profile').click();">
+                                Change Profile
+                            </button>
+
+                            <input class="d-none" type="file" accept="image/*" id="change-profile">
                         </div>
 
-                        <div class="col-9">
+                        <div class="col-xl-9 col-md-8 col-sm-12 mt-sm-3 mt-3 text-dark">
                             <p class="m-0 p-0 fs-1 fw-bolder"> @user-name </p>
 
                             <div class="d-flex align-items-center m-0">
@@ -163,35 +173,41 @@
                     </div>
                 </div>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <!-- PROFILE UPDATE OPTIONS -->
                 <div class="m-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <h4> Current Password </h4>
+                    <div class="row text-black">
+                        <div class="col-xl-4 col-md-6 mb-sm-4 mb-4 mb-xl-0">
+                            <h4 class="text-primary-accent"> Current Password </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="fa-solid fa-lock-open"></i></div>
-                                <input class="form-control" type="text" placeholder="********">
+                                <div class="input-group-text bg-dark border-dark"><i
+                                       class="text-secondary fa-solid fa-lock-open"></i></div>
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="********">
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <h4> New Password </h4>
+                        <div class="col-xl-4 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-xl-0">
+                            <h4 class="text-primary-accent"> New Password </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
-                                <input class="form-control" type="text" placeholder="********">
+                                <div class="input-group-text bg-dark border-dark"><i
+                                       class="text-secondary fa-solid fa-lock"></i></div>
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="********">
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <h4> New Username </h4>
+                        <div class="col-xl-4 col-md-12 mb-0">
+                            <h4 class="text-primary-accent"> New Username </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
-                                <input class="form-control" type="text" placeholder="user-name">
+                                <div class="input-group-text bg-dark border-dark"><i
+                                       class="text-secondary fa-solid fa-at"></i></div>
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="user-name">
                             </div>
                         </div>
                     </div>
@@ -208,14 +224,14 @@
                 </div>
 
                 <!-- PASSENGER TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
                      id="profile-toast">
-                    <div class="d-flex">
-                        <div class="toast-body">
+                    <div class="d-flex align-items-center">
+                        <div class="text-nowrap toast-body">
                             Successfully saved profile changes!
                         </div>
 
-                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
@@ -223,68 +239,92 @@
             <!-- PASSENGER INFORMATION TAB -->
             <div class="tab-pane fade" id="passenger-information-pane">
                 <!-- PASSPORT INFORMATION SECTION -->
-                <h2> Passport Information </h2>
+                <h2 class="text-primary"> Passport Information </h2>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <div class="m-4">
                     <div class="row">
-                        <div class="col-4">
-                            <h4> Country Code </h4>
+                        <div class="col-xl-4 col-md-4 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Country Code </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-map-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="AAA">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-map-fill"></i>
+                                </div>
+
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="AAA">
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <h4> Passport Code </h4>
+                        <div class="col-xl-4 col-md-4 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Passport Code </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-postcard-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="A12345678">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-postcard-fill"></i>
+                                </div>
+
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="A12345678">
                             </div>
                         </div>
 
-                        <div class="col-4">
-                            <h4> Expiration Date </h4>
+                        <div class="col-xl-4 col-md-4">
+                            <h4 class="text-primary-accent"> Expiration Date </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-calendar2-fill"></i></div>
-                                <input class="form-control rounded-end-3" type="date">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-calendar2-fill"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="date">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- PERSONAL INFORMATION SECTION -->
-                <h2> Personal Information </h2>
+                <h2 class="text-primary"> Personal Information </h2>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
+
                 <!-- PASSENGER NAME -->
                 <div class="m-4">
-                    <h4> Name </h4>
+                    <h4 class="text-primary-accent"> Name </h4>
 
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-xl-4 col-md-6 mb-sm-4 mb-4">
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-chat-square-dots-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="Alex Jax">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="Alex Jax">
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-xl-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-chat-square-dots-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="Doe">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="Doe">
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-xl-4 col-md-6">
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-pen-fill"></i></i></div>
-                                <select class="form-select">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-pen-fill"></i></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 text-black">
                                     <option selected hidden> Select A Suffix </option>
                                     <option> None </option>
                                     <option> Jr. </option>
@@ -301,13 +341,17 @@
 
                 <!-- BIRTHDATE -->
                 <div class="mx-4 mb-4">
-                    <h4> Birthdate </h4>
+                    <h4 class="text-primary-accent"> Birthdate </h4>
 
                     <div class="row align-items-center">
-                        <div class="col-12" id="date-container">
+                        <div class="col-xl-12 col-mid-12 col-sm-12 col-12" id="date-container">
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-calendar2-fill"></i></div>
-                                <input class="form-control rounded-end-3" type="date" id="date-input">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-calendar2-fill"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="date" id="date-input">
 
                                 <div class="invalid-feedback">
                                     Select A Date Before Or On Today!
@@ -316,7 +360,7 @@
                         </div>
 
                         <div class="d-none" id="age-badge-container">
-                            <span class="badge w-100 p-2 rounded-pill text-bg-primary text-white card-hover shadow"
+                            <span class="badge p-2 rounded-pill text-bg-primary text-white card-hover shadow"
                                   id="age-badge"></span>
                         </div>
                     </div>
@@ -324,14 +368,17 @@
 
                 <div class="mx-4 mb-4">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-xl-6 col-md-6 mb-sm-4 mb-4">
                             <!-- GENDER -->
-                            <h4> Gender </h4>
+                            <h4 class="text-primary-accent"> Gender </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
-                                <select class="form-select" id="gender-select">
-                                    <option selected hidden> Select The One You Most Identify With </option>
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-person-fill"></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 text-black" id="gender-select">
+                                    <option selected hidden> Select Gender </option>
                                     <option> Prefer Not To Answer </option>
                                     <option> Not Listed </option>
                                     <option> Male </option>
@@ -343,18 +390,21 @@
                             </div>
 
                             <div class="mt-4 d-none" id="other-gender-container">
-                                <input class="form-control" type="text" placeholder="Please Specify"
-                                       id="other-gender-input">
+                                <input class="form-control bg-light border-dark text-black" type="text"
+                                       placeholder="Please Specify" id="other-gender-input">
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-xl-6 col-md-6">
                             <!-- NATIONALITY -->
-                            <h4> Nationality </h4>
+                            <h4 class="text-primary-accent"> Nationality </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-flag-fill"></i></div>
-                                <select class="form-select">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-flag-fill"></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 text-black">
                                     <option selected hidden> Select A Nationality </option>
                                     <option> Afghan </option>
                                     <option> Bahamian </option>
@@ -388,51 +438,62 @@
                 </div>
 
                 <!-- CONTACT INFORMATION TAB -->
-                <h2> Contact Information </h2>
+                <h2 class="text-primary"> Contact Information </h2>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <div class="m-4">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-xl-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-xl-0">
                             <!-- E-MAIL -->
-                            <h4> E-Mail </h4>
+                            <h4 class="text-primary-accent"> E-Mail </h4>
 
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="email-address">
-                                <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
-                                <input class="form-control" type="text" placeholder="domain.com">
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="email-address">
+
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-at"></i>
+                                </div>
+
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="domain.com">
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-xl-6 col-md-12 mb-0">
                             <!-- PHONE NUMBER -->
-                            <h4> Phone Number </h4>
+                            <h4 class="text-primary-accent"> Phone Number </h4>
 
                             <div class="input-group">
-                                <div class="input-group-text"><i class="bi bi-telephone-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="00">
-                                <input class="form-control w-50" type="text" placeholder="123456789">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-telephone-fill"></i>
+                                </div>
+
+                                <input class="form-control bg-light border-dark border-end-0 border-2 text-black"
+                                       type="text" placeholder="00">
+                                <input class="w-50 form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="123456789">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center mb-4">
+                <div class="mb-4 text-center">
                     <button class="btn btn-lg btn-primary text-white" onclick="showPassengerToast()">
                         Save Passenger
                     </button>
                 </div>
 
                 <!-- PASSENGER TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
                      id="passenger-toast">
-                    <div class="d-flex">
-                        <div class="toast-body">
+                    <div class="d-flex align-items-center">
+                        <div class="text-nowrap toast-body">
                             Successfully saved passenger [FIRST NAME]!
                         </div>
 
-                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
@@ -440,32 +501,32 @@
             <!-- SAVED PASSENGERS TAB -->
             <div class="tab-pane fade" id="saved-passengers-pane">
                 <!-- CARD TEMPLATE -->
-                <div class="card m-4 card-hover p-4 shadow mb-4">
+                <div class="card m-4 p-4 mb-4 card-hover shadow bg-primary-accent">
                     <div class="row">
-                        <div class="col-9">
-                            <!-- PASSPORT NUMBER AND VIEW PASSENGER ACTIVITY -->
-                            <div class="d-flex align-items-center m-0">
+                        <div class="col-xl-9 col-md-12">
+                            <!-- PASSPORT NUMBER -->
+                            <div class="d-flex align-items-center m-0 text-secondary">
                                 <h2 class="m-0 p-0 pe-1"> AAA </h2>
                                 <h2 class="m-0 p-0 pe-3"> A12345678 </h2>
                             </div>
 
                             <!-- PASSENGER NAME -->
-                            <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center mb-4 text-light">
                                 <h4 class="m-0 p-0 pe-1"> Doe, Alex Jax </h4>
                                 <h4 class="m-0 p-0"> (Me) </h4>
                             </div>
 
-                            <hr>
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                             <div class="row">
                                 <!-- PASSENGER'S PERSONAL INFORMATION -->
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                <div class="col-xl-6 col-md-6 col-sm-12">
+                                    <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-user fa-xl"></i>
-                                        <h6 class="m-2"> Personal Information </h6>
+                                        <h6 class="m-2 fw-bolder"> Personal Information </h6>
                                     </div>
 
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                    <div class="d-flex align-items-center m-0 p-0 text-light">
                                         <p class="m-0 p-0 pe-2 ps-3"> Month 01, Year </p>
 
                                         <span class="badge text-bg-secondary rounded-pill text-white">
@@ -473,26 +534,26 @@
                                         </span>
                                     </div>
 
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                    <div class="d-flex align-items-center m-0 p-0 text-light">
                                         <p class="m-0 p-0 ps-3"> Filipino </p>
                                         <p class="m-0 p-0 ps-1"> Male </p>
                                     </div>
                                 </div>
 
                                 <!-- PASSENGER'S CONTACT INFORMATION -->
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                <div class="col-xl-6 col-md-6 col-sm-12 mt-md-0 mt-sm-4 mt-4 mb-md-4">
+                                    <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-address-book fa-xl"></i>
-                                        <h6 class="m-2"> Contact Information </h6>
+                                        <h6 class="m-2 fw-bolder"> Contact Information </h6>
                                     </div>
 
-                                    <p class="m-0 p-0 ps-3"> email-address@domain.com </p>
-                                    <p class="m-0 p-0 ps-3"> 00 123456789 </p>
+                                    <p class="m-0 p-0 ps-3 text-light"> email-address@domain.com </p>
+                                    <p class="m-0 p-0 ps-3 text-light"> 00 123456789 </p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-3 d-flex align-items-center justify-content-center">
+                        <div class="col-xl-3 mt-md-4 mt-sm-4 mt-4 d-flex align-items-center justify-content-center">
                             <div class="d-flex flex-column gap-2 align-items-center">
                                 <button class="btn btn-secondary btn-lg text-white"> Edit Passenger </button>
 
@@ -504,7 +565,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 m-4">
-                    <button class="btn btn-success text-white m-0">
+                    <button class="btn m-0 btn-success text-white">
                         Add Passenger
                     </button>
 
@@ -535,11 +596,11 @@
                 <div class="modal fade" id="delete-passenger" data-bs-backdrop="static">
                     <div class="modal-dialog modal-sm modal-dialog-centered text-center">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-dark text-white">
                                 <h1 class="modal-title fs-5"> Are you sure? </h1>
                             </div>
 
-                            <div class="modal-footer d-flex">
+                            <div class="modal-footer d-flex bg-light">
                                 <button class="btn btn-success text-white" data-bs-dismiss="modal">
                                     No
                                 </button>
@@ -555,66 +616,85 @@
 
             <!-- PAYMENT INFORMATION TAB -->
             <div class="tab-pane fade" id="payment-information-pane">
-                <h2> Payment Method </h2>
+                <h2 class="text-primary"> Payment Method </h2>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                <div class="m-4">
-                    <div class="col-6">
-                        <h4> Method </h4>
+                <div class="container">
+                    <div class="m-4">
+                        <div class="col-xl-6 col-md-6 col-sm-12">
+                            <h4 class="text-primary-accent"> Method </h4>
 
-                        <div class="input-group">
-                            <div class="input-group-text"><i class="fa-solid fa-wallet"></i></div>
-                            <select class="form-select" id="payment-method-select">
-                                <option selected hidden> Select A Payment Method </option>
-                                <option> Cash </option>
-                                <option> Credit Card </option>
-                                <option> Debit Card </option>
-                                <option> Digital Wallet </option>
-                            </select>
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-wallet"></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 text-black"
+                                        id="payment-method-select">
+                                    <option selected hidden> Select A Payment Method </option>
+                                    <option> Cash </option>
+                                    <option> Credit Card </option>
+                                    <option> Debit Card </option>
+                                    <option> Digital Wallet </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- INPUT FIELDS FOR CREDIT OR DEBIT CARD -->
-                <div class="container d-none" id="card-input-fields">
-                    <h2> Account Information </h2>
+                <div class="container m-0 px-0 d-none" id="card-input-fields">
+                    <h2 class="text-primary"> Account Information </h2>
 
-                    <hr>
+                    <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                    <div class="m-4">
+                    <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-6">
-                                <h4> Cardholder </h4>
+                            <div class="col-xl-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                                <h4 class="text-primary-accent"> Cardholder </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-credit-card-2-front-fill"></i></div>
-                                    <input class="form-control" type="text" placeholder="Brook Remi">
-                                    <input class="form-control" type="text" placeholder="Doe">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 border-end-0 text-black"
+                                           type="text" placeholder="Brook Remi">
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="Doe">
                                 </div>
                             </div>
 
-                            <div class="col-6">
-                                <h4> Send E-Receipts At E-Mail </h4>
+                            <div class="col-xl-6 col-md-12">
+                                <h4 class="text-primary-accent"> Send E-Receipts At E-Mail </h4>
 
                                 <div class="input-group">
-                                    <input class="form-control" type="text" placeholder="email-address">
-                                    <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
-                                    <input class="form-control" type="text" placeholder="domain.com">
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="email-address">
+
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary fa-solid fa-at"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="domain.com">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="m-4">
+                    <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-4">
-                                <h4> Country </h4>
+                            <div class="col-xl-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                                <h4 class="text-primary-accent"> Country </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-globe-central-south-asia"></i></div>
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-globe-central-south-asia"></i>
+                                    </div>
 
-                                    <select class="form-select">
+                                    <select class="form-select bg-light border-dark border-2 text-black">
                                         <option selected hidden> Select A Country </option>
                                         <option> Afghanistan </option>
                                         <option> Bahamas </option>
@@ -645,112 +725,139 @@
                                 </div>
                             </div>
 
-                            <div class="col-4">
-                                <h4> Region </h4>
+                            <div class="col-xl-4 col-md-6 mb-sm-4 mb-4">
+                                <h4 class="text-primary-accent"> Region </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="fa-solid fa-location-dot"></i></div>
-                                    <input class="form-control" type="text" placeholder="Province Town">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary fa-solid fa-location-dot"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="Province Town">
                                 </div>
                             </div>
 
-                            <div class="col-4">
-                                <h4> ZIP Code </h4>
+                            <div class="col-xl-4 col-md-6">
+                                <h4 class="text-primary-accent"> ZIP Code </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-inboxes-fill"></i></div>
-                                    <input class="form-control w-50" type="text" placeholder="1AA1">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-inboxes-fill"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="1AA1">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="m-4">
+                    <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-6">
-                                <h4> Card Information </h4>
+                            <div class="col-xl-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                                <h4 class="text-primary-accent"> Card Information </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="fa-solid fa-table-cells"></i></div>
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary fa-solid fa-table-cells"></i>
+                                    </div>
 
-                                    <input class="form-control w-25" type="text" placeholder="1234-0000-0000-0000"
-                                           inputmode="numeric" maxlength="19" id="card-number">
+                                    <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
+                                           type="text" placeholder="1234 0000 0000 0000" maxlength="19"
+                                           id="card-number">
 
-                                    <input class="form-control w-25" type="month">
+                                    <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
+                                           type="month">
 
-                                    <input class="form-control" type="text" placeholder="CVN" inputmode="numeric"
-                                           maxlength="4">
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="CVN" maxlength="4">
                                 </div>
-
                             </div>
 
-                            <div class="col-6">
-                                <h4> Billing Address </h4>
+                            <div class="col-xl-6 col-md-12 mb-xl-0 mb-sm-4 mb-4 mb-md-0">
+                                <h4 class="text-primary-accent"> Billing Address </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-envelope-paper-fill"></i></div>
-                                    <input class="form-control w-50" type="text" placeholder="Address Line 1">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-envelope-paper-fill"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="Address Line 1">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row mt-4">
-                            <div class="col-6"></div>
+                        <div class="row mt-xl-0 mt-md-4">
+                            <div class="col-xl-6 col-md-0"></div>
 
-                            <div class="col-6">
+                            <div class="col-xl-6 col-md-12">
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-envelope-paper-fill"></i></div>
-                                    <input class="form-control w-50" type="text" placeholder="Address Line 2">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-envelope-paper-fill"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="Address Line 2">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- INPUT FIELDS FOR DIGITAL WALLETS -->
-                <div class="container" id="digital-input-fields">
-                    <h2> Account Information </h2>
+                <!-- INPUT FIELDS FOR DIGITAL WALLETS  -->
+                <div class="container m-0 p-0 d-none" id="digital-input-fields">
+                    <h2 class="text-primary"> Account Information </h2>
 
-                    <hr>
+                    <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                    <div class="m-4">
+                    <div class="m-4 px-3 mb-md-0">
                         <div class="row">
-                            <div class="col-6">
-                                <h4> Account Name </h4>
+                            <div class="col-xl-6 col-md-6 col-sm-12 mb-sm-4 mb-4">
+                                <h4 class="text-primary-accent"> Account Name </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
-                                    <input class="form-control" type="text" placeholder="Brook Remi Doe">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-person-fill"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="Brook Remi Doe">
                                 </div>
                             </div>
 
-                            <div class="col-6">
-                                <h4> Account Number </h4>
+                            <div class="col-xl-6 col-md-6 col-sm-12">
+                                <h4 class="text-primary-accent"> Account Number </h4>
 
                                 <div class="input-group">
-                                    <div class="input-group-text"><i class="bi bi-credit-card-2-front-fill"></i></div>
-                                    <input class="form-control" type="text" placeholder="01234567890">
+                                    <div class="input-group-text bg-dark border-dark">
+                                        <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
+                                    </div>
+
+                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                           placeholder="01234567890">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center mb-4">
+                <div class="mb-4 text-center">
                     <button class="btn btn-lg btn-primary text-white" onclick="showPaymentToast()">
                         Save Payment Information
                     </button>
                 </div>
 
                 <!-- PAYMENT TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
                      id="payment-toast">
-                    <div class="d-flex">
-                        <div class="toast-body">
+                    <div class="d-flex align-items-center">
+                        <div class="text-nowrap toast-body">
                             Successfully saved payment method and information!
                         </div>
 
-                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
@@ -759,61 +866,69 @@
             <div class="tab-pane fade" id="notifcation-preferences-pane">
                 <!-- TRIP AND FLIGHT STATUS SECTION -->
                 <div class="d-flex align-items-center">
-                    <h2><i class="fa-solid fa-plane-circle-check me-2 fa-xs"></i></h2>
-                    <h2> Trip and Flight Status </h2>
+                    <h2 class="text-primary">
+                        <i class="me-2 fa-solid fa-plane-circle-check fa-xs"></i>
+                    </h2>
+
+                    <h2 class="text-secondary">
+                        Trip and Flight Status
+                    </h2>
                 </div>
 
-                <p class="m-0 p-0">
+                <p class="m-0 p-0 text-dark fw-bolder">
                     Crucial updates regarding your active or upcoming flights, highly recommended for all travelers!
                 </p>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <div class="m-4">
                     <div class="row">
-                        <div class="col-8"></div>
+                        <div class="col-xl-8 col-md-6 col-sm-0"></div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <h4><i class="bi bi-envelope-paper-fill me-2"></i></h4>
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
+                             align-items-center justify-content-center text-secondary">
+                            <h4><i class="me-2 bi bi-envelope-paper-fill"></i></h4>
                             <h4> E-Mail </h4>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <h4><i class="bi bi-chat-square-quote-fill me-2"></i></h4>
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
+                             align-items-center justify-content-center text-secondary">
+                            <h4><i class="me-2 bi bi-chat-square-quote-fill"></i></h4>
                             <h4> SMS </h4>
                         </div>
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-8">
-                            <h6 class="m-0 p-0"> Flight Changes and Cancellations </h6>
-                            <p class="m-0 p-0"> Real-time updates about critical schedule changes. </p>
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                            <h6 class="m-0 p-0 text-secondary fw-bolder text"> Flight Changes and Cancellations </h6>
+                            <p class="m-0 p-0 text-dark"> Real-time updates about critical schedule changes. </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-8">
-                            <h6 class="m-0 p-0"> Gate and Baggage Changes </h6>
-                            <p class="m-0 p-0"> Instant alerts for gate updates and luggage carousel numbers. </p>
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Gate and Baggage Changes </h6>
+                            <p class="m-0 p-0 text-dark"> Instant alerts for gate updates and luggage carousel numbers.
+                            </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
@@ -821,47 +936,51 @@
 
                 <!-- CHECK-IN AND BOARDING SECTION -->
                 <div class="d-flex align-items-center mt-5">
-                    <h2><i class="fa-solid fa-ticket me-2 fa-xs"></i></h2>
-                    <h2> Check-In and Boarding </h2>
+                    <h2 class="text-primary">
+                        <i class="me-2 fa-solid fa-ticket fa-xs"></i>
+                    </h2>
+
+                    <h2 class="text-secondary"> Check-In and Boarding </h2>
                 </div>
 
-                <p class="m-0 p-0">
+                <p class="m-0 p-0 text-dark fw-bolder">
                     Time-sensitive reminders to help you prepare for departure day.
                 </p>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <div class="m-4">
                     <div class="row mb-4">
-                        <div class="col-8">
-                            <h6 class="m-0 p-0"> Check-In Reminders </h6>
-                            <p class="m-0 p-0"> Alerts when the 24-hour check-in window officially opens. </p>
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Check-In Reminders </h6>
+                            <p class="m-0 p-0 text-dark"> Alerts when the 24-hour check-in window officially opens. </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-8">
-                            <h6 class="m-0 p-0"> Boarding Announcements </h6>
-                            <p class="m-0 p-0"> Alerts when your specific zone or group is called to board. </p>
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Boarding Announcements </h6>
+                            <p class="m-0 p-0 text-dark"> Alerts when your specific zone or group is called to board.
+                            </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
@@ -869,65 +988,71 @@
 
                 <!-- DEALS AND PROMOTIONS SECTION -->
                 <div class="d-flex align-items-center mt-5">
-                    <h2><i class="fa-solid fa-wand-magic-sparkles me-2 fa-xs"></i></h2>
-                    <h2> Deals and Promotions </h2>
+                    <h2 class="text-primary">
+                        <i class="me-2 fa-solid fa-wand-magic-sparkles fa-xs"></i>
+                    </h2>
+
+                    <h2 class="text-secondary"> Deals and Promotions </h2>
                 </div>
 
-                <p class="m-0 p-0">
+                <p class="m-0 p-0 text-dark fw-bolder">
                     Discounts, flash sales, and tailored travel inspiration based on your history.
                 </p>
 
-                <hr>
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <div class="m-4">
                     <div class="row mb-4">
-                        <div class="col-8">
-                            <h6 class="m-0 p-0"> Fare Sales and Special Offers </h6>
-                            <p class="m-0 p-0"> Price drops and limited discounts on routes you watch. </p>
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Fare Sales and Special Offers </h6>
+                            <p class="m-0 p-0 text-dark"> Price drops and limited discounts on routes you watch. </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-8">
-                            <h6 class="m-0 p-0"> Partner Discounts </h6>
-                            <p class="m-0 p-0"> Exclusive deals on car rentals, hotels, and airport lounges. </p>
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Partner Discounts </h6>
+                            <p class="m-0 p-0 text-dark"> Exclusive deals on car rentals, hotels, and airport lounges.
+                            </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
+                </div>
 
-                    <hr>
+                <hr class="mx-0 px-0 border border-3 border-dark rounded-3 opacity-100">
 
+                <div class="m-4">
                     <div class="row mb-4">
-                        <div class="col-8">
+                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 text-dark fw-bolder">
                             <p> Subscribe to all e-mail or SMS notifcations. </p>
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-2 d-flex align-items-center justify-content-center">
-                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                            <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
@@ -943,14 +1068,14 @@
                 </div>
 
                 <!-- PREFERENCE TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
                      id="preference-toast">
-                    <div class="d-flex">
-                        <div class="toast-body">
+                    <div class="d-flex align-items-center">
+                        <div class="text-nowrap toast-body">
                             Successfully saved notification preferences!
                         </div>
 
-                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
@@ -958,67 +1083,68 @@
             <!-- TRAVEL HISTORY TAB -->
             <div class="tab-pane fade" id="travel-history-pane">
                 <!-- CARD TEMPLATE -->
-                <div class="card m-4 card-hover p-4 shadow mb-4">
+                <div class="card m-4 p-4 mb-4 card-hover shadow bg-primary-accent">
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-xl-9 col-md-12">
                             <!-- FLIGHT ID AND FLIGHT STATUS -->
-                            <div class="d-flex align-items-center m-0">
+                            <div class="d-flex align-items-center m-0 text-secondary">
                                 <h2 class="mb-0 me-2"> FID 1234 </h2>
                                 <span class="badge p-2 fs-6 rounded-pill text-bg-danger text-white"> Cancelled </span>
                             </div>
 
-                            <!-- FLIGHT TYPE AND RESERVATION PASSENGERS -->
-                            <div class="d-flex align-items-center m-0">
+                            <!-- FLIGHT TYPE AND PASSENGER AMOUNT -->
+                            <div class="d-flex align-items-center m-0 text-light">
                                 <h4 class="m-0 p-0"> One-Way Trip </h4>
-                                <i class="bi bi-dot m-0 p-0 display-6"></i>
+                                <i class="m-0 p-0 bi bi-dot display-6"></i>
                                 <h4 class="m-0 p-0"> 1 PAX </h4>
                             </div>
 
-                            <hr>
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                            <!-- FLIGHT DEPARTURE DETAILS -->
                             <div class="row">
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                <!-- FLIGHT DEPARTURE DETAILS -->
+                                <div class="col-xl-6 col-md-12 col-sm-12 mb-md-4 mb-xl-0 mb-sm-4 mb-4">
+                                    <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-plane-departure fa-xl"></i>
-                                        <h6 class="m-2"> Departure </h6>
+                                        <h6 class="m-2 fw-bolder"> Departure </h6>
                                     </div>
 
-                                    <p class="m-0 p-0 ps-3"> MNL Ninoy Aquino International Airport </p>
+                                    <p class="m-0 p-0 ps-3 text-light"> MNL Ninoy Aquino International Airport </p>
 
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                    <div class="d-flex align-items-center m-0 p-0 text-light">
                                         <p class="m-0 p-0 ps-3"> Gate 17A </p>
-                                        <i class="bi bi-dot m-0 p-0"></i>
+                                        <i class="m-0 p-0 bi bi-dot"></i>
                                         <p class="m-0 p-0"> 20:30 </p>
                                     </div>
 
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                    <div class="d-flex align-items-center m-0 p-0 text-light">
                                         <p class="m-0 p-0 ps-3"> June 14 2026 </p>
-                                        <i class="bi bi-dot m-0 p-0"></i>
+                                        <i class="m-0 p-0 bi bi-dot"></i>
                                         <p class="m-0 p-0"> 21:00 </p>
                                     </div>
                                 </div>
 
                                 <!-- FLIGHT ARRIVAL DETAILS -->
-                                <div class="col-6">
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                <div class="col-xl-6 col-md-12 mb-sm-4 mb-4 mb-xl-0">
+                                    <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-plane-arrival fa-xl"></i>
-                                        <h6 class="m-2"> Arrival </h6>
+                                        <h6 class="m-2 fw-bolder"> Arrival </h6>
                                     </div>
 
-                                    <p class="m-0 p-0 ps-3"> DPS I Gusti Ngurah Rai International Airport </p>
-                                    <p class="m-0 p-0 ps-3"> Gate 9B </p>
+                                    <p class="m-0 p-0 ps-3 text-light"> DPS I Gusti Ngurah Rai International Airport
+                                    </p>
+                                    <p class="m-0 p-0 ps-3 text-light"> Gate 9B </p>
 
-                                    <div class="d-flex align-items-center m-0 p-0">
+                                    <div class="d-flex align-items-center m-0 p-0 text-light">
                                         <p class="m-0 p-0 ps-3"> June 15 2026 </p>
-                                        <i class="bi bi-dot m-0 p-0"></i>
+                                        <i class="m-0 p-0 bi bi-dot"></i>
                                         <p class="m-0 p-0"> 03:00 </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-3 d-flex align-items-center justify-content-center">
+                        <div class="col-xl-3 col-md-12 d-flex align-items-center justify-content-center">
                             <div class="d-flex flex-column gap-2 align-items-center w-100">
                                 <button class="btn btn-primary btn-lg text-white" data-bs-toggle="modal"
                                         data-bs-target="#reservation-details"> Reservation Details </button>
@@ -1056,16 +1182,16 @@
                 <div class="modal fade" id="reservation-details" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-dark text-white">
                                 <h1 class="modal-title fs-5"> FID 1234 Reservation Details </h1>
                             </div>
 
-                            <div class="modal-body">
+                            <div class="modal-body bg-white fw-bolder text-dark">
                                 ...
                             </div>
 
-                            <div class="modal-footer">
-                                <button class="btn btn-tertiary text-white" data-bs-dismiss="modal">
+                            <div class="modal-footer bg-light">
+                                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
                                     Close
                                 </button>
                             </div>
@@ -1077,16 +1203,16 @@
                 <div class="modal fade" id="passenger-details" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header bg-dark text-white">
                                 <h1 class="modal-title fs-5"> FID 1234 Passenger Details </h1>
                             </div>
 
-                            <div class="modal-body">
+                            <div class="modal-body bg-white fw-bolder text-dark">
                                 ...
                             </div>
 
-                            <div class="modal-footer">
-                                <button class="btn btn-tertiary text-white" data-bs-dismiss="modal">
+                            <div class="modal-footer bg-light">
+                                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
                                     Close
                                 </button>
                             </div>
@@ -1098,7 +1224,7 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="pt-4 pb-2 mt-5 text-center bg-dark mt-auto">
+    <footer class="pt-4 pb-2 mt-5 mt-auto text-center bg-dark">
         <p class="text-light">
             &copy; [BRAND] 2026 <br>
             CCDEVAP MCO
