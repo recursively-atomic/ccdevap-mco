@@ -6,13 +6,17 @@
     <meta name="author" content="Renier Anthony V. Namol">
     <meta charset="UTF-8">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
             defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"
+            integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
     <script src="/scripts/profile.js" defer></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"
+          integrity="sha384-EXatlQyrOJgDaM9/a74ArMzy7/2bTMSrZj8ID1IPeVmc3GncfCugefCFWSLj8JL/" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/override.css">
     <link rel="stylesheet" href="/styles/additional.css">
     <title> [BRAND] </title>
@@ -69,7 +73,6 @@
     • Saved passengers 
     • Payment method UI mockup 
     • Notification preferences 
-    • Travel history 
     Interactive Components 
     • Profile image placeholder upload UI -->
 
@@ -84,8 +87,15 @@
     <div class="container mt-5 mb-5">
         <ul class="nav nav-tabs border-0">
             <li class="nav-item me-3">
-                <button class="nav-link active" id="passenger-tab" data-bs-toggle="tab" data-bs-target="#passenger-pane"
-                        type="button">
+                <button class="nav-link" id="account-information-tab" data-bs-toggle="tab"
+                        data-bs-target="#account-information-pane" type="button">
+                    Account Information
+                </button>
+            </li>
+
+            <li class="nav-item me-3">
+                <button class="nav-link" id="passenger-information-tab" data-bs-toggle="tab"
+                        data-bs-target="#passenger-information-pane" type="button">
                     Passenger Information
                 </button>
             </li>
@@ -97,31 +107,40 @@
                 </button>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item me-3">
                 <button class="nav-link" id="three-tab" data-bs-toggle="tab" data-bs-target="#three-pane" type="button">
                     [3]
                 </button>
             </li>
 
-            <li class="nav-item">
-                <button class="nav-link" id="four-tab" data-bs-toggle="tab" data-bs-target="#four-pane" type="button">
-                    [4]
+            <li class="nav-item me-3">
+                <button class="nav-link active" id="notifcation-preferences-tab" data-bs-toggle="tab"
+                        data-bs-target="#notifcation-preferences-pane" type="button">
+                    Notification Preferences
                 </button>
             </li>
 
             <li class="nav-item">
-                <button class="nav-link" id="five-tab" data-bs-toggle="tab" data-bs-target="#five-pane" type="button">
-                    [5]
+                <button class="nav-link" id="travel-history-tab" data-bs-toggle="tab"
+                        data-bs-target="#travel-history-pane" type="button">
+                    Travel History
                 </button>
             </li>
         </ul>
 
         <div class="tab-content border-start border-end border-bottom border-top rounded-3 rounded-top-0 border-top
              px-4 pt-3">
+
+            <!-- ACCOUNT INFORMATION TAB show active -->
+            <div class="tab-pane fade" id="account-information-pane">
+                <h2> WOMP </h2>
+            </div>
+
             <!-- PASSENGER INFORMATION TAB -->
-            <div class="tab-pane fade show active" id="passenger-pane">
+            <div class="tab-pane fade" id="passenger-information-pane">
                 <!-- PASSPORT INFORMATION SECTION -->
                 <h2> Passport Information </h2>
+
                 <hr>
 
                 <div class="m-4">
@@ -131,7 +150,7 @@
 
                             <div class="input-group">
                                 <div class="input-group-text"><i class="bi bi-map-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="###">
+                                <input class="form-control" type="text" placeholder="AAA">
                             </div>
                         </div>
 
@@ -140,7 +159,7 @@
 
                             <div class="input-group">
                                 <div class="input-group-text"><i class="bi bi-postcard-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="###">
+                                <input class="form-control" type="text" placeholder="A12345678">
                             </div>
                         </div>
 
@@ -157,6 +176,7 @@
 
                 <!-- PERSONAL INFORMATION SECTION -->
                 <h2> Personal Information </h2>
+
                 <hr>
                 <!-- PASSENGER NAME -->
                 <div class="m-4">
@@ -285,7 +305,9 @@
 
                 <!-- CONTACT INFORMATION TAB -->
                 <h2> Contact Information </h2>
+
                 <hr>
+
                 <div class="m-4">
                     <div class="row">
                         <div class="col-6">
@@ -293,12 +315,10 @@
                             <h4> E-Mail </h4>
 
                             <div class="input-group">
-                                <input class="form-control" type="text" placeholder="E-Mail">
+                                <input class="form-control" type="text" placeholder="email-address">
                                 <div class="input-group-text"><i class="bi bi-at"></i></div>
-                                <input class="form-control" type="text" placeholder="Domain Name">
+                                <input class="form-control" type="text" placeholder="domain.com">
                             </div>
-
-
                         </div>
 
                         <div class="col-6">
@@ -307,15 +327,30 @@
 
                             <div class="input-group">
                                 <div class="input-group-text"><i class="bi bi-telephone-fill"></i></div>
-                                <input class="form-control" type="text" placeholder="Country Code">
-                                <input class="form-control w-50" type="text" placeholder="Phone Number">
+                                <input class="form-control" type="text" placeholder="00">
+                                <input class="form-control w-50" type="text" placeholder="123456789">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="text-center mb-4">
-                    <button class="btn btn-primary text-white" type="submit"> Sign In </button>
+                    <button class="btn btn-lg btn-primary text-white" onclick="showPassengerToast()">
+                        Save Passenger
+                    </button>
+                </div>
+
+                <!-- PASSENGER TOAST -->
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                     data-bs-autohide="true" data-bs-delay="2000" id="passenger-toast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Successfully saved passenger [FIRST NAME]!
+                        </div>
+
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                data-bs-dismiss="toast"></button>
+                    </div>
                 </div>
             </div>
 
@@ -327,6 +362,346 @@
             <div class="tab-pane fade" id="three-pane">
                 <h2> Three Header </h2>
                 <p> three text </p>
+            </div>
+
+            <!-- NOTIFICATION PREFERENCES TAB -->
+            <div class="tab-pane fade show active" id="notifcation-preferences-pane">
+                <!-- TRIP AND FLIGHT STATUS SECTION -->
+                <div class="d-flex align-items-center">
+                    <h2><i class="fa-solid fa-plane-circle-check me-2 fa-xs"></i></h2>
+                    <h2> Trip and Flight Status </h2>
+                </div>
+
+                <p class="m-0 p-0">
+                    Crucial updates regarding your active or upcoming flights, highly recommended for all travelers!
+                </p>
+
+                <hr>
+
+                <div class="m-4">
+                    <div class="row">
+                        <div class="col-8"></div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <h4><i class="bi bi-envelope-paper-fill me-2"></i></h4>
+                            <h4> E-Mail </h4>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <h4><i class="bi bi-chat-square-quote-fill me-2"></i></h4>
+                            <h4> SMS </h4>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-8">
+                            <h6 class="m-0 p-0"> Flight Changes and Cancellations </h6>
+                            <p class="m-0 p-0"> Real-time updates about critical schedule changes. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <h6 class="m-0 p-0"> Gate and Baggage Changes </h6>
+                            <p class="m-0 p-0"> Instant alerts for gate updates and luggage carousel numbers. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHECK-IN AND BOARDING SECTION -->
+                <div class="d-flex align-items-center mt-5">
+                    <h2><i class="fa-solid fa-ticket me-2 fa-xs"></i></h2>
+                    <h2> Check-In and Boarding </h2>
+                </div>
+
+                <p class="m-0 p-0">
+                    Time-sensitive reminders to help you prepare for departure day.
+                </p>
+
+                <hr>
+
+                <div class="m-4">
+                    <div class="row mb-4">
+                        <div class="col-8">
+                            <h6 class="m-0 p-0"> Check-In Reminders </h6>
+                            <p class="m-0 p-0"> Alerts when the 24-hour check-in window officially opens. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <h6 class="m-0 p-0"> Boarding Announcements </h6>
+                            <p class="m-0 p-0"> Alerts when your specific zone or group is called to board. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEALS AND PROMOTIONS SECTION -->
+                <div class="d-flex align-items-center mt-5">
+                    <h2><i class="fa-solid fa-wand-magic-sparkles me-2 fa-xs"></i></h2>
+                    <h2> Deals and Promotions </h2>
+                </div>
+
+                <p class="m-0 p-0">
+                    Discounts, flash sales, and tailored travel inspiration based on your history.
+                </p>
+
+                <hr>
+
+                <div class="m-4">
+                    <div class="row mb-4">
+                        <div class="col-8">
+                            <h6 class="m-0 p-0"> Fare Sales and Special Offers </h6>
+                            <p class="m-0 p-0"> Price drops and limited discounts on routes you watch. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-8">
+                            <h6 class="m-0 p-0"> Partner Discounts </h6>
+                            <p class="m-0 p-0"> Exclusive deals on car rentals, hotels, and airport lounges. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row mb-4">
+                        <div class="col-8">
+                            <p> Subscribe to all e-mail or SMS notifcations. </p>
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+
+                        <div class="col-2 d-flex align-items-center justify-content-center">
+                            <input class=" form-check form-check-inline form-check-input m-0 border-3 border-primary was-checked-primary"
+                                   type="checkbox">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUTTON PANEL SECTION -->
+                <div class="d-flex align-items-center justify-content-center gap-3 m-4">
+                    <button class="btn btn-primary btn-lg text-white" onclick="showPreferencesToast()">
+                        Save Preferences
+                    </button>
+
+                    <button class="btn btn-danger btn-lg text-white"> Discard Changes </button>
+                </div>
+
+                <!-- PREFERENCE TOAST -->
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                     data-bs-autohide="true" data-bs-delay="2000" id="preference-toast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Successfully saved notification preferences!
+                        </div>
+
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TRAVEL HISTORY TAB -->
+            <div class="tab-pane fade" id="travel-history-pane">
+                <!-- CARD TEMPLATE -->
+                <div class="card m-4 card-hover p-4 shadow mb-5">
+                    <div class="row">
+                        <div class="col-9">
+                            <!-- FLIGHT ID AND FLIGHT STATUS -->
+                            <div class="d-flex align-items-center m-0">
+                                <h2 class="mb-0 me-2"> FID 1234 </h2>
+                                <span class="badge p-2 fs-6 rounded-pill text-bg-danger text-white"> Cancelled </span>
+                            </div>
+
+                            <!-- FLIGHT TYPE AND RESERVATION PASSENGERS -->
+                            <div class="d-flex align-items-center m-0">
+                                <h4 class="m-0 p-0"> One-Way Trip </h4>
+                                <i class="bi bi-dot m-0 p-0 display-6"></i>
+                                <h4 class="m-0 p-0"> 1 PAX </h4>
+                            </div>
+
+                            <hr>
+
+                            <!-- FLIGHT DEPARTURE DETAILS -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <i class="fa-solid fa-plane-departure fa-xl"></i>
+                                        <h6 class="m-2"> Departure </h6>
+                                    </div>
+
+                                    <p class="m-0 p-0 ps-3"> MNL Ninoy Aquino International Airport </p>
+
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <p class="m-0 p-0 ps-3"> Gate 17A </p>
+                                        <i class="bi bi-dot m-0 p-0"></i>
+                                        <p class="m-0 p-0"> 20:30 </p>
+                                    </div>
+
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <p class="m-0 p-0 ps-3"> June 14 2026 </p>
+                                        <i class="bi bi-dot m-0 p-0"></i>
+                                        <p class="m-0 p-0"> 21:00 </p>
+                                    </div>
+                                </div>
+
+                                <!-- FLIGHT ARRIVAL DETAILS -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <i class="fa-solid fa-plane-arrival fa-xl"></i>
+                                        <h6 class="m-2"> Arrival </h6>
+                                    </div>
+
+                                    <p class="m-0 p-0 ps-3"> DPS I Gusti Ngurah Rai International Airport </p>
+                                    <p class="m-0 p-0 ps-3"> Gate 9B </p>
+
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <p class="m-0 p-0 ps-3"> June 15 2026 </p>
+                                        <i class="bi bi-dot m-0 p-0"></i>
+                                        <p class="m-0 p-0"> 03:00 </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 d-flex align-items-center justify-content-center">
+                            <div class="d-flex flex-column gap-2 align-items-center w-100">
+                                <button class="btn btn-primary btn-lg text-white" data-bs-toggle="modal"
+                                        data-bs-target="#reservation-details"> Reservation Details </button>
+
+                                <button class="btn btn-secondary btn-lg text-white" data-bs-toggle="modal"
+                                        data-bs-target="#passenger-details"> Passenger Details </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link disabled">
+                                <span aria-hidden="true">
+                                    < </span>
+                            </a>
+                        </li>
+
+                        <li class="page-item"><a class="page-link active"> 1 </a></li>
+                        <li class="page-item"><a class="page-link"> ... </a></li>
+                        <li class="page-item"><a class="page-link"> 10 </a></li>
+
+                        <li class="page-item">
+                            <a class="page-link">
+                                <span aria-hidden="true"> > </span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- RESERVATION DETAILS MODAL -->
+                <div class="modal fade" id="reservation-details" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5"> FID 1234 Reservation Details </h1>
+                            </div>
+
+                            <div class="modal-body">
+                                ...
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-tertiary text-white" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASSENGER DETAILS MODAL -->
+                <div class="modal fade" id="passenger-details" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5"> FID 1234 Passenger Details </h1>
+                            </div>
+
+                            <div class="modal-body">
+                                ...
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-tertiary text-white" data-bs-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -341,3 +716,5 @@
 </body>
 
 </html>
+
+<!--  -->

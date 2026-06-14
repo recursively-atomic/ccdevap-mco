@@ -59,7 +59,8 @@ function showAgeBadge() {
 }
 
 /**
- * Shows an "Please Specify" text field when the user selects "Not Listed".
+ * Shows an "please specify" text field when the user selects "not listed"
+ * in the gender dropdown.
  */
 function showSpecifyGender() {
     const $genderSelect = $('#gender-select');
@@ -75,4 +76,30 @@ function showSpecifyGender() {
             $otherGenderInput.val('');
         }
     });
+}
+
+/**
+ * Shows a toast whenever a user updates their notification
+ * preferences.
+ */
+function showPreferencesToast() {
+    const preferenceToast = $('#preference-toast').get(0);
+    const baseToast =
+        bootstrap.Toast.getInstance(preferenceToast) ||
+        new bootstrap.Toast(preferenceToast, { delay: 2000, autohide: true });
+    
+    baseToast.show();
+}
+
+/**
+ * Shows a toast whenever a user saves a passenger's
+ * information.
+ */
+function showPassengerToast() {
+    const updatedToast = $('#passenger-toast').get(0);
+    const baseToast =
+        bootstrap.Toast.getInstance(updatedToast) ||
+        new bootstrap.Toast(updatedToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
 }

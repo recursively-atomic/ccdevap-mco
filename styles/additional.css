@@ -9,3 +9,7 @@
 .card-hover:hover {
     transform: scale(1.05);
 }
+
+.was-checked-primary:checked {
+    background-color: var(--bs-primary);
+}
