@@ -1,6 +1,8 @@
 $(function () {
     showAgeBadge();
     showSpecifyGender();
+    formatCardNumber();
+    showInputFields();
 });
 
 /**
@@ -79,27 +81,100 @@ function showSpecifyGender() {
 }
 
 /**
- * Shows a toast whenever a user updates their notification
+ * Shows a toast whenever the user updates their notification
  * preferences.
  */
 function showPreferencesToast() {
     const preferenceToast = $('#preference-toast').get(0);
+
     const baseToast =
         bootstrap.Toast.getInstance(preferenceToast) ||
         new bootstrap.Toast(preferenceToast, { delay: 2000, autohide: true });
-    
+
     baseToast.show();
 }
 
 /**
- * Shows a toast whenever a user saves a passenger's
+ * Shows a toast whenever the user saves a passenger's
  * information.
  */
 function showPassengerToast() {
-    const updatedToast = $('#passenger-toast').get(0);
+    const passengerToast = $('#passenger-toast').get(0);
+
     const baseToast =
-        bootstrap.Toast.getInstance(updatedToast) ||
-        new bootstrap.Toast(updatedToast, { delay: 2000, autohide: true });
+        bootstrap.Toast.getInstance(passengerToast) ||
+        new bootstrap.Toast(passengerToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
+}
+
+/**
+ * Shows a toast whenever the user saves their payment
+ * information.
+ */
+function showPaymentToast() {
+    const paymentToast = $('#payment-toast').get(0);
+
+    const baseToast =
+        bootstrap.Toast.getInstance(paymentToast) ||
+        new bootstrap.Toast(paymentToast, { delay: 2000, autohide: true });
+
+    baseToast.show();
+}
+
+/**
+ * Formats the card number into XXXX-XXXX-XXXX-XXXX.
+ */
+function formatCardNumber() {
+    $('#card-number').on('input', function (cardNumberInput) {
+        const value = cardNumberInput.target.value.replace(/\D/g, '');
+        const formattedValue = value.match(/.{1,4}/g);
+
+        cardNumberInput.target.value = formattedValue ? formattedValue.join('-') : value;
+    });
+}
+
+/**
+ * Shows input fields corresponding to the payment method that
+ * the user chose in the payment method dropdown.
+ */
+function showInputFields() {
+    const $paymentMethodSelect = $('#payment-method-select');
+    const $cardInputFields = $('#card-input-fields');
+    const $digitalInputFields = $('#digital-input-fields');
+
+    $cardInputFields.addClass('d-none');
+    $digitalInputFields.addClass('d-none');
+
+    $paymentMethodSelect.on('change', function () {
+        switch ($paymentMethodSelect.val()) {
+            case 'Credit Card':
+            case 'Debit Card':
+                $cardInputFields.removeClass('d-none');
+                $digitalInputFields.addClass('d-none');
+                break;
+            case 'Digital Wallet':
+                $cardInputFields.addClass('d-none');
+                $digitalInputFields.removeClass('d-none');
+                break;
+            default:
+                $cardInputFields.addClass('d-none');
+                $digitalInputFields.addClass('d-none');
+                break;
+        }
+    });
+}
+
+/**
+ * Shows a toast whenever the user saves their payment
+ * information.
+ */
+function showProfileToast() {
+    const profileToast = $('#profile-toast').get(0);
+
+    const baseToast =
+        bootstrap.Toast.getInstance(profileToast) ||
+        new bootstrap.Toast(profileToast, { delay: 2000, autohide: true });
 
     baseToast.show();
 }

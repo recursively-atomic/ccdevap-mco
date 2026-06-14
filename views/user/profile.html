@@ -25,9 +25,13 @@
 <body class="d-flex flex-column min-vh-100">
     <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark navbar-dark">
-        <a class="navbar-brand mb-0 h1" href="/index.html"> [BRAND] </a>
+        <div class="mb-0">
+            <a class="navbar-brand text-white" href="/index.html">
+                <img class="d-inline-block align-items-center mb-2" width="40px" src="/media/company-logo.png">
+            </a>
+        </div>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu">
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -38,19 +42,32 @@
                 </li>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="###"> Search A Flight </a>
+                    <a class="nav-link fw-bold" href="/views/user/search.html"> Search A Flight </a>
                 </li>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="###"> Reserve A Flight </a>
+                    <a class="nav-link fw-bold" href="/views/user/booking.html"> Reserve A Flight </a>
                 </li>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="###"> My Reservations </a>
+                    <a class="nav-link fw-bold" href="/views/user/reservations.html"> My Reservations </a>
                 </li>
 
-                <li class="nav-item ps-3 ps-sm-3 ps-md-3 ps-xl-0 mt-xl-0 me-3 text-bg-primary-accent rounded-3">
-                    <a class="nav-link disabled fw-bold text-light"> My Profile </a>
+                <li class="nav-item px-3 px-sm-3 ps-md-3 px-xl-0 mt-xl-0 me-3 text-bg-primary-accent rounded-3
+                    dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold text-light" data-bs-toggle="dropdown">
+                        Profile
+                    </a>
+
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li>
+                            <a class="dropdown-item disabled text-bg-secondary-accent text-white">
+                                My Profile
+                            </a>
+                        </li>
+
+                        <li><a class="dropdown-item" href="###"> Log Out </a></li>
+                    </ul>
                 </li>
 
                 <li class="nav-item dropstart">
@@ -58,10 +75,11 @@
                        aria-expanded="false">
                         Admin Access
                     </a>
+                    
                     <ul class="dropdown-menu mb-3 bg-dark-subtle">
-                        <li><a class="dropdown-item" href="###"> Admin Dashboard </a></li>
-                        <li><a class="dropdown-item" href="###"> Flight Management </a></li>
-                        <li><a class="dropdown-item" href="###"> Reservation Management </a></li>
+                        <li><a class="dropdown-item" href="/views/admin/admin-dashboard.html"> Admin Dashboard </a></li>
+                        <li><a class="dropdown-item" href="/views/admin/admin-flights.html"> Flight Management </a></li>
+                        <li><a class="dropdown-item" href="/views/admin/admin-reservations.html"> Reservation Management </a></li>
                         <li><a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a></li>
                     </ul>
                 </li>
@@ -69,71 +87,137 @@
         </div>
     </nav>
 
-    <!-- Required Sections 
-    • Saved passengers 
-    • Payment method UI mockup 
-    • Notification preferences 
-    Interactive Components 
-    • Profile image placeholder upload UI -->
-
-    <!--
-    ### Travel Document & Verification
-    International and domestic flights require identity verification to comply with security rules.
-    * **Passport Number:** (Required for international flights).
-    * **Passport Expiry Date:** (Many countries require the passport to be valid for at least 6 months beyond your trip).
-    * **Issuing Country (Passport):**
-    * **Redress Number / Known Traveler Number (KTN):** (Optional fields for trusted travelers to speed up security checks). -->
-
     <div class="container mt-5 mb-5">
+        <!-- TABS -->
         <ul class="nav nav-tabs border-0">
             <li class="nav-item me-3">
-                <button class="nav-link" id="account-information-tab" data-bs-toggle="tab"
-                        data-bs-target="#account-information-pane" type="button">
-                    Account Information
+                <button class="nav-link active" id="profile-information-tab" data-bs-toggle="tab"
+                        data-bs-target="#profile-information-pane">
+                    Profile Information
                 </button>
             </li>
 
             <li class="nav-item me-3">
                 <button class="nav-link" id="passenger-information-tab" data-bs-toggle="tab"
-                        data-bs-target="#passenger-information-pane" type="button">
+                        data-bs-target="#passenger-information-pane">
                     Passenger Information
                 </button>
             </li>
 
             <li class="nav-item me-3">
                 <button class="nav-link" id="saved-passengers-tab" data-bs-toggle="tab"
-                        data-bs-target="#saved-passengers-pane" type="button">
+                        data-bs-target="#saved-passengers-pane">
                     Saved Passengers
                 </button>
             </li>
 
             <li class="nav-item me-3">
-                <button class="nav-link" id="three-tab" data-bs-toggle="tab" data-bs-target="#three-pane" type="button">
-                    [3]
+                <button class="nav-link" id="payment-information-tab" data-bs-toggle="tab"
+                        data-bs-target="#payment-information-pane">
+                    Payment Information
                 </button>
             </li>
 
             <li class="nav-item me-3">
-                <button class="nav-link active" id="notifcation-preferences-tab" data-bs-toggle="tab"
-                        data-bs-target="#notifcation-preferences-pane" type="button">
+                <button class="nav-link" id="notifcation-preferences-tab" data-bs-toggle="tab"
+                        data-bs-target="#notifcation-preferences-pane">
                     Notification Preferences
                 </button>
             </li>
 
             <li class="nav-item">
                 <button class="nav-link" id="travel-history-tab" data-bs-toggle="tab"
-                        data-bs-target="#travel-history-pane" type="button">
+                        data-bs-target="#travel-history-pane">
                     Travel History
                 </button>
             </li>
         </ul>
 
+        <!-- TAB CONTENTS -->
         <div class="tab-content border-start border-end border-bottom border-top rounded-3 rounded-top-0 border-top
              px-4 pt-3">
 
-            <!-- ACCOUNT INFORMATION TAB show active -->
-            <div class="tab-pane fade" id="account-information-pane">
-                <h2> WOMP </h2>
+            <!-- PROFILE INFORMATION TAB -->
+            <div class="tab-pane fade show active" id="profile-information-pane">
+                <!-- PROFILE PICTURE AND INFORMATION -->
+                <div class="m-4">
+                    <div class="row d-flex align-items-center">
+                        <div class="col-3">
+                            <img class="d-block img-fluid rounded-3 shadow-lg card-hover"
+                                 src="https://picsum.photos/1280/1280?random=1">
+                        </div>
+
+                        <div class="col-9">
+                            <p class="m-0 p-0 fs-1 fw-bolder"> @user-name </p>
+
+                            <div class="d-flex align-items-center m-0">
+                                <h4 class="m-0 p-0 pe-1"> E-Mail: </h2>
+                                    <p class="m-0 p-0 fs-4"> email-address@domain.com </p>
+                            </div>
+
+                            <div class="d-flex align-items-center m-0">
+                                <h4 class="m-0 p-0 pe-1"> Contact Number: </h2>
+                                    <p class="m-0 p-0 fs-4"> +00 01234567890 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- PROFILE UPDATE OPTIONS -->
+                <div class="m-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <h4> Current Password </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="fa-solid fa-lock-open"></i></div>
+                                <input class="form-control" type="text" placeholder="********">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <h4> New Password </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="fa-solid fa-lock"></i></div>
+                                <input class="form-control" type="text" placeholder="********">
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <h4> New Username </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
+                                <input class="form-control" type="text" placeholder="user-name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 gap-2 d-flex justify-content-center">
+                    <button class="btn btn-lg btn-primary text-white" onclick="showProfileToast()">
+                        Save Changes
+                    </button>
+
+                    <button class="btn btn-lg btn-secondary text-white">
+                        Make Passenger Profile
+                    </button>
+                </div>
+
+                <!-- PASSENGER TOAST -->
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                     id="profile-toast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Successfully saved profile changes!
+                        </div>
+
+                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
             </div>
 
             <!-- PASSENGER INFORMATION TAB -->
@@ -258,7 +342,7 @@
                                 </select>
                             </div>
 
-                            <div class="mt-2 d-none" id="other-gender-container">
+                            <div class="mt-4 d-none" id="other-gender-container">
                                 <input class="form-control" type="text" placeholder="Please Specify"
                                        id="other-gender-input">
                             </div>
@@ -316,7 +400,7 @@
 
                             <div class="input-group">
                                 <input class="form-control" type="text" placeholder="email-address">
-                                <div class="input-group-text"><i class="bi bi-at"></i></div>
+                                <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
                                 <input class="form-control" type="text" placeholder="domain.com">
                             </div>
                         </div>
@@ -342,30 +426,337 @@
 
                 <!-- PASSENGER TOAST -->
                 <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
-                     data-bs-autohide="true" data-bs-delay="2000" id="passenger-toast">
+                     id="passenger-toast">
                     <div class="d-flex">
                         <div class="toast-body">
                             Successfully saved passenger [FIRST NAME]!
                         </div>
 
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                data-bs-dismiss="toast"></button>
+                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
 
+            <!-- SAVED PASSENGERS TAB -->
             <div class="tab-pane fade" id="saved-passengers-pane">
-                <h2> Two Header </h2>
-                <p> two text </p>
+                <!-- CARD TEMPLATE -->
+                <div class="card m-4 card-hover p-4 shadow mb-4">
+                    <div class="row">
+                        <div class="col-9">
+                            <!-- PASSPORT NUMBER AND VIEW PASSENGER ACTIVITY -->
+                            <div class="d-flex align-items-center m-0">
+                                <h2 class="m-0 p-0 pe-1"> AAA </h2>
+                                <h2 class="m-0 p-0 pe-3"> A12345678 </h2>
+                            </div>
+
+                            <!-- PASSENGER NAME -->
+                            <div class="d-flex align-items-center mb-4">
+                                <h4 class="m-0 p-0 pe-1"> Doe, Alex Jax </h4>
+                                <h4 class="m-0 p-0"> (Me) </h4>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+                                <!-- PASSENGER'S PERSONAL INFORMATION -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <i class="fa-solid fa-user fa-xl"></i>
+                                        <h6 class="m-2"> Personal Information </h6>
+                                    </div>
+
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <p class="m-0 p-0 pe-2 ps-3"> Month 01, Year </p>
+
+                                        <span class="badge text-bg-secondary rounded-pill text-white">
+                                            Adult
+                                        </span>
+                                    </div>
+
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <p class="m-0 p-0 ps-3"> Filipino </p>
+                                        <p class="m-0 p-0 ps-1"> Male </p>
+                                    </div>
+                                </div>
+
+                                <!-- PASSENGER'S CONTACT INFORMATION -->
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center m-0 p-0">
+                                        <i class="fa-solid fa-address-book fa-xl"></i>
+                                        <h6 class="m-2"> Contact Information </h6>
+                                    </div>
+
+                                    <p class="m-0 p-0 ps-3"> email-address@domain.com </p>
+                                    <p class="m-0 p-0 ps-3"> 00 123456789 </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 d-flex align-items-center justify-content-center">
+                            <div class="d-flex flex-column gap-2 align-items-center">
+                                <button class="btn btn-secondary btn-lg text-white"> Edit Passenger </button>
+
+                                <button class="btn btn-danger btn-lg text-white" data-bs-toggle="modal"
+                                        data-bs-target="#delete-passenger"> Delete Passenger </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 m-4">
+                    <button class="btn btn-success text-white m-0">
+                        Add Passenger
+                    </button>
+
+                    <!-- PAGINATION -->
+                    <nav>
+                        <ul class="pagination m-0">
+                            <li class="page-item">
+                                <a class="page-link disabled">
+                                    <span aria-hidden="true">
+                                        < </span>
+                                </a>
+                            </li>
+
+                            <li class="page-item"><a class="page-link active"> 1 </a></li>
+                            <li class="page-item"><a class="page-link"> ... </a></li>
+                            <li class="page-item"><a class="page-link"> 10 </a></li>
+
+                            <li class="page-item">
+                                <a class="page-link">
+                                    <span aria-hidden="true"> > </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- PASSENGER DELETE CONFIRMATION MODAL -->
+                <div class="modal fade" id="delete-passenger" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5"> Are you sure? </h1>
+                            </div>
+
+                            <div class="modal-footer d-flex">
+                                <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                                    No
+                                </button>
+
+                                <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                                    Yes, Delete It
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="tab-pane fade" id="three-pane">
-                <h2> Three Header </h2>
-                <p> three text </p>
+            <!-- PAYMENT INFORMATION TAB -->
+            <div class="tab-pane fade" id="payment-information-pane">
+                <h2> Payment Method </h2>
+
+                <hr>
+
+                <div class="m-4">
+                    <div class="col-6">
+                        <h4> Method </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text"><i class="fa-solid fa-wallet"></i></div>
+                            <select class="form-select" id="payment-method-select">
+                                <option selected hidden> Select A Payment Method </option>
+                                <option> Cash </option>
+                                <option> Credit Card </option>
+                                <option> Debit Card </option>
+                                <option> Digital Wallet </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INPUT FIELDS FOR CREDIT OR DEBIT CARD -->
+                <div class="container d-none" id="card-input-fields">
+                    <h2> Account Information </h2>
+
+                    <hr>
+
+                    <div class="m-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4> Cardholder </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-credit-card-2-front-fill"></i></div>
+                                    <input class="form-control" type="text" placeholder="Brook Remi">
+                                    <input class="form-control" type="text" placeholder="Doe">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <h4> Send E-Receipts At E-Mail </h4>
+
+                                <div class="input-group">
+                                    <input class="form-control" type="text" placeholder="email-address">
+                                    <div class="input-group-text"><i class="fa-solid fa-at"></i></div>
+                                    <input class="form-control" type="text" placeholder="domain.com">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <h4> Country </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-globe-central-south-asia"></i></div>
+
+                                    <select class="form-select">
+                                        <option selected hidden> Select A Country </option>
+                                        <option> Afghanistan </option>
+                                        <option> Bahamas </option>
+                                        <option> Cambodia </option>
+                                        <option> Denmark </option>
+                                        <option> Gabon </option>
+                                        <option> Haiti </option>
+                                        <option> Iceland </option>
+                                        <option> Jamaica </option>
+                                        <option> Kazakhstan </option>
+                                        <option> Laos </option>
+                                        <option> Namibia </option>
+                                        <option> North Macedonia </option>
+                                        <option> Oman </option>
+                                        <option> Pakistan </option>
+                                        <option> Philippines </option>
+                                        <option> Qatar </option>
+                                        <option> Romania </option>
+                                        <option> Saint Lucia </option>
+                                        <option> Taiwan </option>
+                                        <option> Timor-Leste </option>
+                                        <option> Uganda </option>
+                                        <option> United Kingdown </option>
+                                        <option> Venezuela </option>
+                                        <option> Yemen </option>
+                                        <option> Zambia </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <h4> Region </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="fa-solid fa-location-dot"></i></div>
+                                    <input class="form-control" type="text" placeholder="Province Town">
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <h4> ZIP Code </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-inboxes-fill"></i></div>
+                                    <input class="form-control w-50" type="text" placeholder="1AA1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4> Card Information </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="fa-solid fa-table-cells"></i></div>
+
+                                    <input class="form-control w-25" type="text" placeholder="1234-0000-0000-0000"
+                                           inputmode="numeric" maxlength="19" id="card-number">
+
+                                    <input class="form-control w-25" type="month">
+
+                                    <input class="form-control" type="text" placeholder="CVN" inputmode="numeric"
+                                           maxlength="4">
+                                </div>
+
+                            </div>
+
+                            <div class="col-6">
+                                <h4> Billing Address </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-envelope-paper-fill"></i></div>
+                                    <input class="form-control w-50" type="text" placeholder="Address Line 1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-6"></div>
+
+                            <div class="col-6">
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-envelope-paper-fill"></i></div>
+                                    <input class="form-control w-50" type="text" placeholder="Address Line 2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INPUT FIELDS FOR DIGITAL WALLETS -->
+                <div class="container" id="digital-input-fields">
+                    <h2> Account Information </h2>
+
+                    <hr>
+
+                    <div class="m-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <h4> Account Name </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                    <input class="form-control" type="text" placeholder="Brook Remi Doe">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <h4> Account Number </h4>
+
+                                <div class="input-group">
+                                    <div class="input-group-text"><i class="bi bi-credit-card-2-front-fill"></i></div>
+                                    <input class="form-control" type="text" placeholder="01234567890">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <button class="btn btn-lg btn-primary text-white" onclick="showPaymentToast()">
+                        Save Payment Information
+                    </button>
+                </div>
+
+                <!-- PAYMENT TOAST -->
+                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
+                     id="payment-toast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Successfully saved payment method and information!
+                        </div>
+
+                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
             </div>
 
             <!-- NOTIFICATION PREFERENCES TAB -->
-            <div class="tab-pane fade show active" id="notifcation-preferences-pane">
+            <div class="tab-pane fade" id="notifcation-preferences-pane">
                 <!-- TRIP AND FLIGHT STATUS SECTION -->
                 <div class="d-flex align-items-center">
                     <h2><i class="fa-solid fa-plane-circle-check me-2 fa-xs"></i></h2>
@@ -553,14 +944,13 @@
 
                 <!-- PREFERENCE TOAST -->
                 <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-25 text-bg-success text-white"
-                     data-bs-autohide="true" data-bs-delay="2000" id="preference-toast">
+                     id="preference-toast">
                     <div class="d-flex">
                         <div class="toast-body">
                             Successfully saved notification preferences!
                         </div>
 
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                                data-bs-dismiss="toast"></button>
+                        <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
@@ -568,7 +958,7 @@
             <!-- TRAVEL HISTORY TAB -->
             <div class="tab-pane fade" id="travel-history-pane">
                 <!-- CARD TEMPLATE -->
-                <div class="card m-4 card-hover p-4 shadow mb-5">
+                <div class="card m-4 card-hover p-4 shadow mb-4">
                     <div class="row">
                         <div class="col-9">
                             <!-- FLIGHT ID AND FLIGHT STATUS -->
@@ -640,6 +1030,7 @@
                     </div>
                 </div>
 
+                <!-- PAGINATIONS -->
                 <nav class="d-flex justify-content-center">
                     <ul class="pagination">
                         <li class="page-item">
@@ -674,7 +1065,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-tertiary text-white" data-bs-dismiss="modal">
+                                <button class="btn btn-tertiary text-white" data-bs-dismiss="modal">
                                     Close
                                 </button>
                             </div>
@@ -695,7 +1086,7 @@
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-tertiary text-white" data-bs-dismiss="modal">
+                                <button class="btn btn-tertiary text-white" data-bs-dismiss="modal">
                                     Close
                                 </button>
                             </div>
@@ -716,5 +1107,3 @@
 </body>
 
 </html>
-
-<!--  -->
