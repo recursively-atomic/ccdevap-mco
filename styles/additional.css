@@ -1,5 +1,63 @@
+/* Global */
 * {
     user-select: none;
+}
+
+/* TABLE STYLES */
+tbody > tr > th,
+tbody > tr > td {
+    color: var(--bs-dark) !important;
+}
+
+tbody > tr:hover > td,
+tbody > tr:hover > th {
+    color: var(--bs-primary) !important;
+    background: var(--bs-light);
+}
+
+tbody > tr:hover > td > button.btn-success {
+    color: var(--bs-success) !important;
+    background: var(--bs-white);
+    border-color: var(--bs-white);
+}
+
+tbody > tr:hover > td > button.btn-success:hover {
+    color: var(--bs-white) !important;
+    background: var(--bs-success);
+    border-color: var(--bs-success);
+}
+
+tbody > tr:hover > td > button.btn-warning {
+    color: var(--bs-warning) !important;
+    background: var(--bs-white);
+    border-color: var(--bs-white);
+}
+
+tbody > tr:hover > td > button.btn-warning:hover {
+    color: var(--bs-white) !important;
+    background: var(--bs-warning);
+    border-color: var(--bs-warning);
+}
+
+tbody > tr:hover > td > button.btn-danger {
+    color: var(--bs-danger) !important;
+    background: var(--bs-white);
+    border-color: var(--bs-white);
+}
+
+tbody > tr:hover > td > button.btn-danger:hover {
+    color: var(--bs-white) !important;
+    background: var(--bs-danger);
+    border-color: var(--bs-danger);
+}
+
+/* FORM STYLES */
+.was-checked-primary:checked {
+    background-color: var(--bs-primary);
+}
+
+.form-floating {
+    zoom: 75%;
 }
 
 /* NAVIGATION TAB STYLES */
@@ -34,7 +92,8 @@
     color: var(--bs-white);
 }
 
-.page-link:hover, .page-link.active:hover {
+.page-link:hover,
+.page-link.active:hover {
     background-color: var(--bs-tertiary);
     border-color: var(--bs-tertiary);
     color: var(--bs-white);
@@ -46,11 +105,6 @@
     color: var(--bs-white);
 }
 
-/* FORM STYLES */
-.was-checked-primary:checked {
-    background-color: var(--bs-primary);
-}
-
 /* CUSTOM STYLES */
 .card-hover {
     transition: transform 0.3s ease-in-out;
@@ -58,4 +112,12 @@
 
 .card-hover:hover {
     transform: scale(1.05);
+}
+
+#filter-dropdown .active {
+    background-color: black;
+}
+
+#sort-dropdown .active {
+    background-color: black;
 }
