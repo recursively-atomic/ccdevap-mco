@@ -13,6 +13,8 @@
             integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
     <script src="./scripts/index.js" defer></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"
           integrity="sha384-EXatlQyrOJgDaM9/a74ArMzy7/2bTMSrZj8ID1IPeVmc3GncfCugefCFWSLj8JL/" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/override.css">
@@ -38,7 +40,7 @@
 
         <div class="navbar-collapse collapse" id="main-menu">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-xl-0 mt-3 mt-sm-3 mt-md-3 mt-xl-0
+                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0
                     text-bg-primary-accent rounded-3">
                     <a class="nav-link disabled fw-bold text-light"> Home </a>
                 </li>
@@ -115,16 +117,33 @@
 
             <div class="card-body rounded-bottom bg-secondary-accent">
                 <div class="row d-flex align-items-center">
-                    <div class="form-floating col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
-                        <input type="text" class="form-control ms-1 bg-white border-white text-black" id="origin"
-                               placeholder="Flight Origin" list="result">
-                        <label class="ms-3" for="origin"> Flight Origin </label>
+
+                    <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-plane-departure"></i>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="text" class="form-control bg-light border-dark border-5 text-black"
+                                       id="origin" placeholder="" list="result">
+                                <label class="ms-1" for="origin"> Flight Origin </label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-floating col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
-                        <input type="text" class="form-control ms-1 bg-white border-white text-black" id="destination"
-                               placeholder="Flight Destination" list="result">
-                        <label class="ms-3" for="destination"> Flight Destination </label>
+                    <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-plane-arrival"></i>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="text" class="form-control bg-light border-dark border-5 text-black"
+                                       id="destination" placeholder="" list="result">
+                                <label class="ms-1" for="destination"> Flight Destination </label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-lg-4 col-md-12">

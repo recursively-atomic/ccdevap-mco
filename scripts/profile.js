@@ -100,9 +100,7 @@ function showAgeBadge() {
             const currentDate = new Date();
             const birthDate = new Date(inputValue);
             const differenceInDays = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
-            let ageCategories;
-            let ageCategory;
-            let ageBadgeText;
+            let ageCategories, ageCategory, ageBadgeText;
 
             ageCategories = [
                 { label: 'Infant', min: 0, max: 730 },
@@ -117,30 +115,25 @@ function showAgeBadge() {
 
             // If the date input is before or on the current date, show the badge
             if (ageBadgeText) {
-                $dateContainer.removeClass('col-xl-12').removeClass('col-md-12').removeClass('col-sm-12').removeClass('col-12');
-                $dateContainer.addClass('col-xl-11').addClass('col-md-11').addClass('col-sm-11').addClass('col-11');
-
+                $dateContainer.removeClass('col-lg-12 col-md-12 col-sm-12 col-12');
+                $dateContainer.addClass('col-lg-11 col-md-10 col-sm-10 col-10');
                 $dateInput.removeClass('is-invalid').addClass('is-valid');
 
-                $ageBadgeContainer.removeClass('d-none');
-                $ageBadgeContainer.addClass('col-xl-1').addClass('col-md-1').addClass('col-sm-1').addClass('col-1');
-
+                $ageBadgeContainer.removeClass('d-none').addClass('col-lg-1 col-md-2 col-sm-2 col-2');
                 $ageBadge.text(ageBadgeText);
             } else {
-                $dateContainer.removeClass('col-xl-11').removeClass('col-md-11').removeClass('col-sm-11').removeClass('col-11');
-                $dateContainer.addClass('col-xl-12');
+                $dateContainer.removeClass('col-lg-11 col-md-10 col-sm-10 col-10');
+                $dateContainer.addClass('col-lg-12 col-md-12 col-sm-12 col-12');
                 $dateInput.removeClass('is-valid').addClass('is-invalid');
 
-                $ageBadgeContainer.removeClass('col-xl-1').removeClass('col-md-1').removeClass('col-sm-1').removeClass('col-1');
-                $ageBadgeContainer.addClass('d-none');
+                $ageBadgeContainer.removeClass('col-lg-1 col-md-2 col-sm-2 col-2').addClass('d-none');
             }
         } else {
-            $dateContainer.removeClass('col-xl-11').removeClass('col-md-11').removeClass('col-sm-11').removeClass('col-11');
-            $dateContainer.addClass('col-xl-12');
-            $dateInput.removeClass('is-valid').removeClass('is-invalid');
+            $dateContainer.removeClass('col-lg-11 col-md-10 col-sm-10 col-10');
+            $dateContainer.addClass('col-lg-12 col-md-12 col-sm-12 col-12');
+            $dateInput.removeClass('is-valid').addClass('is-invalid');
 
-            $ageBadgeContainer.removeClass('col-xl-1').removeClass('col-md-1').removeClass('col-sm-1').removeClass('col-1');
-            $ageBadgeContainer.addClass('d-none');
+            $ageBadgeContainer.removeClass('col-lg-1 col-md-2 col-sm-2 col-2').addClass('d-none');
         }
     });
 }
@@ -170,21 +163,33 @@ function showSpecifyGender() {
  */
 function formatCardNumber() {
     $('#card-number').on('input', function (event) {
-        const input = event.target;
+        const input = this;
         const inputValue = input.value;
-        const prevousPosition = input.selectionStart;
+
+        // Gets the cursor's old position before text formatting
+        const oldPosition = input.selectionStart;
+
+        // Remove non-digits and cap it to 16 digits
         const digits = inputValue.replace(/\D/g, '').slice(0, 16);
+
+        // Adds a space every 4 digits
         const formatted = digits.replace(/(.{4})/g, '$1 ').trim();
-        let difference, nextPosition;
-        
+        let difference, newPosition;
+
+        // Sets the card number's input to the formatted input
         input.value = formatted;
+
+        // Calculate the difference of the length of the old to the formatted input
         difference = input.value.length - inputValue.length;
-        nextPosition = prevousPosition + difference;
 
-        if (nextPosition < 0) nextPosition = 0;
-        if (nextPosition > input.value.length) nextPosition = input.value.length;
+        // Calculate the expected cursor position after the formatting has been done
+        newPosition = oldPosition + difference;
 
-        input.setSelectionRange(nextPosition, nextPosition);
+        // The new position is within the bounds of the user's input
+        newPosition = Math.max(0, Math.min(newPosition, input.value.length));
+
+        // Sets the cursor's new position
+        input.setSelectionRange(newPosition, newPosition);
     });
 }
 

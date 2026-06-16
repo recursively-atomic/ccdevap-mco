@@ -55,7 +55,7 @@
                     <a class="nav-link fw-bold" href="/views/user/reservations.html"> My Reservations </a>
                 </li>
 
-                <li class="nav-item px-3 px-sm-3 ps-md-3 px-xl-0 mt-xl-0 me-3
+                <li class="nav-item px-3 px-sm-3 ps-md-3 px-lg-0 mt-lg-0 me-3
                     text-bg-primary-accent rounded-3 dropstart">
                     <a class="nav-link dropdown-toggle fw-bold text-light" data-bs-toggle="dropdown">
                         Profile
@@ -104,36 +104,36 @@
 
     <div class="container mt-5 mb-5">
         <!-- TABS -->
-        <ul class="nav nav-tabs border-0">
-            <li class="nav-item me-3">
+        <ul class="nav nav-tabs nav-fill column-gap-3 row-gap-3 border-0">
+            <li class="nav-item">
                 <button class="nav-link active" id="profile-information-tab" data-bs-toggle="tab"
                         data-bs-target="#profile-information-pane">
                     Profile Information
                 </button>
             </li>
 
-            <li class="nav-item me-3">
+            <li class="nav-item">
                 <button class="nav-link" id="passenger-information-tab" data-bs-toggle="tab"
                         data-bs-target="#passenger-information-pane">
                     Passenger Information
                 </button>
             </li>
 
-            <li class="nav-item me-3">
+            <li class="nav-item">
                 <button class="nav-link" id="saved-passengers-tab" data-bs-toggle="tab"
                         data-bs-target="#saved-passengers-pane">
                     Saved Passengers
                 </button>
             </li>
 
-            <li class="nav-item me-3">
+            <li class="nav-item">
                 <button class="nav-link" id="payment-information-tab" data-bs-toggle="tab"
                         data-bs-target="#payment-information-pane">
                     Payment Information
                 </button>
             </li>
 
-            <li class="nav-item me-3">
+            <li class="nav-item">
                 <button class="nav-link" id="notifcation-preferences-tab" data-bs-toggle="tab"
                         data-bs-target="#notifcation-preferences-pane">
                     Notification Preferences
@@ -157,7 +157,7 @@
                 <!-- PROFILE PICTURE AND INFORMATION -->
                 <div class="m-4">
                     <div class="row d-flex align-items-center">
-                        <div class="col-xl-3 col-md-4 col-sm-12 position-relative card-hover">
+                        <div class="col-lg-3 col-md-4 col-sm-12 position-relative card-hover">
                             <img class="d-block rounded-3 shadow-lg img-fluid"
                                  src="https://picsum.photos/1280/1280?random=1" id="profile-picture">
 
@@ -169,8 +169,8 @@
                             <input class="d-none" type="file" accept="image/*" id="change-profile">
                         </div>
 
-                        <div class="col-xl-9 col-md-8 col-sm-12 mt-sm-3 mt-3 text-dark">
-                            <p class="m-0 p-0 fs-1 fw-bolder"> @user-name </p>
+                        <div class="col-lg-9 col-md-8 col-sm-12 mt-sm-3 mt-3 text-dark">
+                            <p class="m-0 p-0 fs-1 fw-bolder"> Doe, Alex Jax </p>
 
                             <div class="d-flex align-items-center m-0">
                                 <h4 class="m-0 p-0 pe-1"> E-Mail: </h2>
@@ -188,9 +188,9 @@
                 <hr class="border border-3 border-dark rounded-3 opacity-100">
 
                 <!-- PROFILE UPDATE OPTIONS -->
-                <div class="m-4">
+                <div class="m-4 mb-0">
                     <div class="row text-black">
-                        <div class="col-xl-4 col-md-6 mb-sm-4 mb-4 mb-xl-0">
+                        <div class="col-lg-6 col-md-6 mb-sm-4 mb-4 mb-lg-4">
                             <h4 class="text-primary-accent"> Current Password </h4>
 
                             <div class="input-group">
@@ -201,7 +201,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-xl-0">
+                        <div class="col-lg-6 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4">
                             <h4 class="text-primary-accent"> New Password </h4>
 
                             <div class="input-group">
@@ -209,17 +209,6 @@
                                        class="text-secondary fa-solid fa-lock"></i></div>
                                 <input class="form-control bg-light border-dark border-2 text-black" type="text"
                                        placeholder="********">
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-12 mb-0">
-                            <h4 class="text-primary-accent"> New Username </h4>
-
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark"><i
-                                       class="text-secondary fa-solid fa-at"></i></div>
-                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="user-name">
                             </div>
                         </div>
                     </div>
@@ -257,7 +246,7 @@
 
                 <div class="m-4">
                     <div class="row">
-                        <div class="col-xl-4 col-md-4 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-4 mb-sm-4 mb-4">
                             <h4 class="text-primary-accent"> Country Code </h4>
 
                             <div class="input-group">
@@ -270,7 +259,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-md-4 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-4 mb-sm-4 mb-4">
                             <h4 class="text-primary-accent"> Passport Code </h4>
 
                             <div class="input-group">
@@ -283,7 +272,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-lg-4 col-md-4">
                             <h4 class="text-primary-accent"> Expiration Date </h4>
 
                             <div class="input-group">
@@ -308,7 +297,7 @@
                     <h4 class="text-primary-accent"> Name </h4>
 
                     <div class="row">
-                        <div class="col-xl-4 col-md-6 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary bi bi-chat-square-dots-fill"></i>
@@ -319,7 +308,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary bi bi-chat-square-dots-fill"></i>
@@ -330,7 +319,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-4 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary bi bi-pen-fill"></i></i>
@@ -356,7 +345,7 @@
                     <h4 class="text-primary-accent"> Birthdate </h4>
 
                     <div class="row align-items-center">
-                        <div class="col-xl-12 col-mid-12 col-sm-12 col-12" id="date-container">
+                        <div class="col-lg-12 col-mid-12 col-sm-12 col-12" id="date-container">
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary bi bi-calendar2-fill"></i>
@@ -380,7 +369,7 @@
 
                 <div class="mx-4 mb-4">
                     <div class="row">
-                        <div class="col-xl-6 col-md-6 mb-sm-4 mb-4">
+                        <div class="col-lg-6 col-md-6 mb-sm-4 mb-4">
                             <!-- GENDER -->
                             <h4 class="text-primary-accent"> Gender </h4>
 
@@ -407,7 +396,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-6 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <!-- NATIONALITY -->
                             <h4 class="text-primary-accent"> Nationality </h4>
 
@@ -456,7 +445,7 @@
 
                 <div class="m-4">
                     <div class="row">
-                        <div class="col-xl-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-xl-0">
+                        <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
                             <!-- E-MAIL -->
                             <h4 class="text-primary-accent"> E-Mail </h4>
 
@@ -473,7 +462,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-6 col-md-12 mb-0">
+                        <div class="col-lg-6 col-md-12 mb-0">
                             <!-- PHONE NUMBER -->
                             <h4 class="text-primary-accent"> Phone Number </h4>
 
@@ -515,7 +504,7 @@
                 <!-- CARD TEMPLATE -->
                 <div class="card m-4 p-4 mb-4 card-hover shadow bg-primary-accent">
                     <div class="row">
-                        <div class="col-xl-9 col-md-12">
+                        <div class="col-lg-9 col-md-12">
                             <!-- PASSPORT NUMBER -->
                             <div class="d-flex align-items-center m-0 text-secondary">
                                 <h2 class="m-0 p-0 pe-1"> AAA </h2>
@@ -532,7 +521,7 @@
 
                             <div class="row">
                                 <!-- PASSENGER'S PERSONAL INFORMATION -->
-                                <div class="col-xl-6 col-md-6 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-user fa-xl"></i>
                                         <h6 class="m-2 fw-bolder"> Personal Information </h6>
@@ -553,7 +542,7 @@
                                 </div>
 
                                 <!-- PASSENGER'S CONTACT INFORMATION -->
-                                <div class="col-xl-6 col-md-6 col-sm-12 mt-md-0 mt-sm-4 mt-4 mb-md-4">
+                                <div class="col-lg-6 col-md-6 col-sm-12 mt-md-0 mt-sm-4 mt-4 mb-md-4">
                                     <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-address-book fa-xl"></i>
                                         <h6 class="m-2 fw-bolder"> Contact Information </h6>
@@ -565,7 +554,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-3 mt-md-4 mt-sm-4 mt-4 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-3 mt-md-4 mt-sm-4 mt-4 d-flex align-items-center justify-content-center">
                             <div class="d-flex flex-column gap-2 align-items-center">
                                 <button class="btn btn-secondary btn-lg text-white"> Edit Passenger </button>
 
@@ -604,8 +593,8 @@
                     </nav>
                 </div>
 
-                <!-- PASSENGER DELETE CONFIRMATION MODAL -->
-                <div class="modal fade" id="delete-passenger" data-bs-backdrop="static">
+                <!-- DELETE PASSENGER MODAL -->
+                <div class="modal fade" data-bs-backdrop="static" id="delete-passenger">
                     <div class="modal-dialog modal-sm modal-dialog-centered text-center">
                         <div class="modal-content">
                             <div class="modal-header bg-dark text-white">
@@ -634,7 +623,7 @@
 
                 <div class="container">
                     <div class="m-4">
-                        <div class="col-xl-6 col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
                             <h4 class="text-primary-accent"> Method </h4>
 
                             <div class="input-group">
@@ -663,7 +652,7 @@
 
                     <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-xl-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                            <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
                                 <h4 class="text-primary-accent"> Cardholder </h4>
 
                                 <div class="input-group">
@@ -678,7 +667,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-6 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <h4 class="text-primary-accent"> Send E-Receipts At E-Mail </h4>
 
                                 <div class="input-group">
@@ -698,7 +687,7 @@
 
                     <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-xl-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
                                 <h4 class="text-primary-accent"> Country </h4>
 
                                 <div class="input-group">
@@ -737,7 +726,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-4 col-md-6 mb-sm-4 mb-4">
+                            <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
                                 <h4 class="text-primary-accent"> Region </h4>
 
                                 <div class="input-group">
@@ -750,7 +739,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-4 col-md-6">
+                            <div class="col-lg-4 col-md-6">
                                 <h4 class="text-primary-accent"> ZIP Code </h4>
 
                                 <div class="input-group">
@@ -767,7 +756,7 @@
 
                     <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-xl-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                            <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
                                 <h4 class="text-primary-accent"> Card Information </h4>
 
                                 <div class="input-group">
@@ -787,7 +776,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-6 col-md-12 mb-xl-0 mb-sm-4 mb-4 mb-md-0">
+                            <div class="col-lg-6 col-md-12 mb-lg-0 mb-sm-4 mb-4 mb-md-0">
                                 <h4 class="text-primary-accent"> Billing Address </h4>
 
                                 <div class="input-group">
@@ -801,10 +790,10 @@
                             </div>
                         </div>
 
-                        <div class="row mt-xl-0 mt-md-4">
-                            <div class="col-xl-6 col-md-0"></div>
+                        <div class="row mt-lg-0 mt-md-4">
+                            <div class="col-lg-6 col-md-0"></div>
 
-                            <div class="col-xl-6 col-md-12">
+                            <div class="col-lg-6 col-md-12">
                                 <div class="input-group">
                                     <div class="input-group-text bg-dark border-dark">
                                         <i class="text-secondary bi bi-envelope-paper-fill"></i>
@@ -826,7 +815,7 @@
 
                     <div class="m-4 px-3 mb-md-0">
                         <div class="row">
-                            <div class="col-xl-6 col-md-6 col-sm-12 mb-sm-4 mb-4">
+                            <div class="col-lg-6 col-md-6 col-sm-12 mb-sm-4 mb-4">
                                 <h4 class="text-primary-accent"> Account Name </h4>
 
                                 <div class="input-group">
@@ -839,7 +828,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-xl-6 col-md-6 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <h4 class="text-primary-accent"> Account Number </h4>
 
                                 <div class="input-group">
@@ -895,15 +884,15 @@
 
                 <div class="m-4">
                     <div class="row">
-                        <div class="col-xl-8 col-md-6 col-sm-0"></div>
+                        <div class="col-lg-8 col-md-6 col-sm-0"></div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
                              align-items-center justify-content-center text-secondary">
                             <h4><i class="me-2 bi bi-envelope-paper-fill"></i></h4>
                             <h4> E-Mail </h4>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
                              align-items-center justify-content-center text-secondary">
                             <h4><i class="me-2 bi bi-chat-square-quote-fill"></i></h4>
                             <h4> SMS </h4>
@@ -911,35 +900,35 @@
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
                             <h6 class="m-0 p-0 text-secondary fw-bolder text"> Flight Changes and Cancellations </h6>
                             <p class="m-0 p-0 text-dark"> Real-time updates about critical schedule changes. </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
                             <h6 class="m-0 p-0 text-secondary fw-bolder"> Gate and Baggage Changes </h6>
                             <p class="m-0 p-0 text-dark"> Instant alerts for gate updates and luggage carousel numbers.
                             </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
@@ -963,35 +952,35 @@
 
                 <div class="m-4">
                     <div class="row mb-4">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
                             <h6 class="m-0 p-0 text-secondary fw-bolder"> Check-In Reminders </h6>
                             <p class="m-0 p-0 text-dark"> Alerts when the 24-hour check-in window officially opens. </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
                             <h6 class="m-0 p-0 text-secondary fw-bolder"> Boarding Announcements </h6>
                             <p class="m-0 p-0 text-dark"> Alerts when your specific zone or group is called to board.
                             </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
@@ -1015,35 +1004,35 @@
 
                 <div class="m-4">
                     <div class="row mb-4">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
                             <h6 class="m-0 p-0 text-secondary fw-bolder"> Fare Sales and Special Offers </h6>
                             <p class="m-0 p-0 text-dark"> Price drops and limited discounts on routes you watch. </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
                             <h6 class="m-0 p-0 text-secondary fw-bolder"> Partner Discounts </h6>
                             <p class="m-0 p-0 text-dark"> Exclusive deals on car rentals, hotels, and airport lounges.
                             </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
@@ -1054,16 +1043,16 @@
 
                 <div class="m-4">
                     <div class="row mb-4">
-                        <div class="col-xl-8 col-md-6 col-sm-12 col-12 text-dark fw-bolder">
+                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 text-dark fw-bolder">
                             <p> Subscribe to all e-mail or SMS notifcations. </p>
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
 
-                        <div class="col-xl-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
                             <input class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
                                    type="checkbox">
                         </div>
@@ -1097,7 +1086,7 @@
                 <!-- CARD TEMPLATE -->
                 <div class="card m-4 p-4 mb-4 card-hover shadow bg-primary-accent">
                     <div class="row">
-                        <div class="col-xl-9 col-md-12">
+                        <div class="col-lg-9 col-md-12">
                             <!-- FLIGHT ID AND FLIGHT STATUS -->
                             <div class="d-flex align-items-center m-0 text-secondary">
                                 <h2 class="mb-0 me-2"> FID 1234 </h2>
@@ -1115,7 +1104,7 @@
 
                             <div class="row">
                                 <!-- FLIGHT DEPARTURE DETAILS -->
-                                <div class="col-xl-6 col-md-12 col-sm-12 mb-md-4 mb-xl-0 mb-sm-4 mb-4">
+                                <div class="col-lg-6 col-md-12 col-sm-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
                                     <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-plane-departure fa-xl"></i>
                                         <h6 class="m-2 fw-bolder"> Departure </h6>
@@ -1137,7 +1126,7 @@
                                 </div>
 
                                 <!-- FLIGHT ARRIVAL DETAILS -->
-                                <div class="col-xl-6 col-md-12 mb-sm-4 mb-4 mb-xl-0">
+                                <div class="col-lg-6 col-md-12 mb-sm-4 mb-4 mb-lg-0">
                                     <div class="d-flex align-items-center m-0 p-0 text-tertiary">
                                         <i class="fa-solid fa-plane-arrival fa-xl"></i>
                                         <h6 class="m-2 fw-bolder"> Arrival </h6>
@@ -1156,7 +1145,7 @@
                             </div>
                         </div>
 
-                        <div class="col-xl-3 col-md-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
                             <div class="d-flex flex-column gap-2 align-items-center w-100">
                                 <button class="btn btn-primary btn-lg text-white" data-bs-toggle="modal"
                                         data-bs-target="#reservation-details"> Reservation Details </button>
