@@ -15,12 +15,257 @@
     <title> Cebu Atlantic </title>
 </head>
 
-<body>
-    <header> Flight Management Page </header>
+<body class="bg-light">
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
+        <div class="mb-0">
+            <a class="navbar-brand text-white" href="./index.html">
+                <img class="d-inline-block align-items-center mb-2" width="40px" src="./media/company-logo.png">
+                Cebu Atlantic
+            </a>
+        </div>
 
-    <main></main>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <footer class="pt-4 pb-2 text-center bg-dark">
+        <div class="navbar-collapse collapse" id="main-menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0
+                    text-bg-primary-accent rounded-3">
+                    <a class="nav-link disabled fw-bold text-light"> Home </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="./views/user/search.html"> Search A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="./views/user/booking.html"> Reserve A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="./views/user/reservations.html"> My Reservations </a>
+                </li>
+
+                <li class="nav-item dropstart me-3">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Profile
+                    </a>
+
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li><a class="dropdown-item" href="./views/user/profile.html"> My Profile </a></li>
+                        <li><a class="dropdown-item" href="###"> Log Out </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Admin Access
+                    </a>
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li>
+                            <a class="dropdown-item" href="./views/admin/admin-dashboard.html"> Admin Dashboard </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="./views/admin/admin-flights.html"> Flight Management </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="./views/admin/admin-reservations.html">
+                                Reservation Management
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="card align-items-center p-3 mb-4 text-white bg-primary-accent rounded-0">
+        <h1>Flight Management</h1>
+    </header>
+
+
+    <!-- FLIGHT TABLE -->
+<div class="container">
+    <table class="table">
+        
+    <tr>
+            <th>Flight Number</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Departure Time</th>
+            <th>Arrival Time</th>
+            <th>Status</th>
+    </tr>
+    <tr>
+        <td>CA123</td>
+        <td>Manila</td>
+        <td>Cebu</td>
+        <td>2024-07-01 08:00</td>
+        <td>2024-07-01 09:30</td>  
+        <td>On Time</td>
+    </tr>
+    <tr>
+        <td>CA456</td>
+        <td>Cebu</td>
+        <td>Manila</td>
+        <td>2024-07-01 14:00</td>
+        <td>2024-07-01 15:30</td>  
+        <td>Delayed</td>
+    </tr>
+    </table>
+</div>  
+<!-- PAGINATION -->
+<div class="card-footer d-flex justify-content-center">
+    <nav>
+        <ul class="pagination m-0">
+            <li class="page-item">
+                <a class="page-link disabled">
+                    <span aria-hidden="true">
+                    < </span>
+                </a>
+            </li>
+
+                <li class="page-item"><a class="page-link active"> 1 </a></li>
+                <li class="page-item"><a class="page-link"> ... </a></li>
+                <li class="page-item"><a class="page-link"> 10 </a></li>
+
+                <li class="page-item">
+                    <a class="page-link">
+                        <span aria-hidden="true"> > </span>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+</div>
+<br>
+
+<!-- BUTTONS FOR ACTIONS -->
+<div class="d-flex justify-content-center gap-5">
+    <button class="btn btn-sm btn-secondary text-white align-middle" data-bs-toggle="modal" data-bs-target="#add-flight">Add</button>
+    <button class="btn btn-sm btn-secondary text-white" data-bs-toggle="modal" data-bs-target="#edit-flight">Edit</button>
+    <button class="btn btn-sm btn-danger btn-secondary text-white" data-bs-toggle="modal" data-bs-target="#delete-flight">Delete</button>
+</div>
+
+<!-- ADD FLIGHT MODAL -->
+<div class="modal fade" data-bs-backdrop="static" id="add-flight">
+    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                    <h1 class="modal-title fs-5"> Add a flight </h1>
+                </div>
+                    <div class="modal-dialog">
+                        <p class="text-start"> Flight Number: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter flight number">
+                        <p class="text-start"> Origin: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter origin">
+                        <p class="text-start"> Destination: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter destination">
+                        <p class="text-start"> Departure Time: </p>
+                        <input class="form-control mb-2" type="datetime-local">
+                        <p class="text-start"> Arrival Time: </p>
+                        <input class="form-control mb-2" type="datetime-local">
+                        <p class="text-start"> Status: </p>
+                        <select class="form-control mb-2">
+                            <option>On Time</option>
+                            <option>Delayed</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+                    
+                    <div class="modal-footer d-flex bg-light">
+                        <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                               Add Flight
+                        </button>
+                        <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                                Exit
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+<!-- EDIT FLIGHT MODAL -->
+<div class="modal fade" data-bs-backdrop="static" id="edit-flight">
+    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                    <h1 class="modal-title fs-5"> Edit Flight Details </h1>
+                </div>
+                    <div class="modal-dialog">
+                        <p class="text-start"> Flight Number: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter flight number">
+                        <p class="text-start"> Origin: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter origin">
+                        <p class="text-start"> Destination: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter destination">
+                        <p class="text-start"> Departure Time: </p>
+                        <input class="form-control mb-2" type="datetime-local">
+                        <p class="text-start"> Arrival Time: </p>
+                        <input class="form-control mb-2" type="datetime-local">
+                        <p class="text-start"> Status: </p>
+                        <select class="form-control mb-2">
+                            <option>On Time</option>
+                            <option>Delayed</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+                    
+                    <div class="modal-footer d-flex bg-light">
+                        <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                               Save Changes
+                        </button>
+                        <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                            Exit
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+
+
+<!-- DELETE FLIGHT MODAL -->
+<div class="modal fade" data-bs-backdrop="static" id="delete-flight">
+    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                    <h1 class="modal-title fs-5"> Delete Flight </h1>
+                </div>
+                <div class="modal-dialog">
+                    <p class="text-start"> Flight Number: </p>
+                        <input class="form-control mb-2" type="text" placeholder="Enter flight number">
+                    </div>
+                    <div class="modal-footer d-flex bg-light">
+                        <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                               Delete Flight
+                        </button>
+                        <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                            Exit
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+         </div>
+    </div>
+</div>
+<br>
+<!-- FOOTER -->
+    <footer class="pt-4 pb-2 mt-5 mt-auto text-center bg-dark">
         <p class="text-light">
             &copy; [BRAND] 2026 <br>
             CCDEVAP MCO
