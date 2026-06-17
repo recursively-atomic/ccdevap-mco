@@ -1,22 +1,590 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="###">
-    <meta charset="UTF-8">
+    <title>Booking</title>
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--CSS-->
+    <link href="bootstrap.css" rel="stylesheet">
 
-    <script src="###" defer/>
-    <link rel="stylesheet" href="###">
-    <title> Document </title>
+    <link rel="stylesheet" href="css/override.css">
+
+    <link rel="stylesheet" href="css/addition.css">
 </head>
-
 <body>
-    <header> Reservation Page </header>
+    <!--jQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <main></main>
+    <!--NavBar-->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
+        <div class="mb-0">
+            <a class="navbar-brand text-white" href="./index.html">
+                <img class="d-inline-block align-items-center mb-2" width="40px" src="./media/company-logo.png">
+                Cebu Atlantic
+            </a>
+        </div>
 
-    <footer></footer>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="main-menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0
+                    text-bg-primary-accent rounded-3">
+                    <a class="nav-link disabled fw-bold text-light"> Home </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="./views/user/search.html"> Search A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="./views/user/booking.html"> Reserve A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="./views/user/reservations.html"> My Reservations </a>
+                </li>
+
+                <li class="nav-item dropstart me-3">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Profile
+                    </a>
+
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li><a class="dropdown-item" href="./views/user/profile.html"> My Profile </a></li>
+                        <li><a class="dropdown-item" href="###"> Log Out </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Admin Access
+                    </a>
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li>
+                            <a class="dropdown-item" href="./views/admin/admin-dashboard.html"> Admin Dashboard </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="./views/admin/admin-flights.html"> Flight Management </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="./views/admin/admin-reservations.html">
+                                Reservation Management
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!--MainLayout-->
+    <div class = "container mt-4">
+        <div class = "row">
+           <!--LeftColumns-->
+
+            <div class = "col-lg-8">
+
+                <!--ProgressIndicator(REQUIRED)-->
+                <div class="progress mb-4">
+                    <div id="bookingProgress"
+                        class="progress-bar"
+                        style="width:25%">
+                        Step 1 of 4
+                    </div>
+                </div>
+
+                <!--PassengerInfoCard-->
+                <div class="card mb-4">
+
+                    
+                    <div class="card-header">
+                         <h4 class="mb-0">Passenger Information</h4>
+                    </div>
+
+                    <!--ReqFieldsInput-->
+                    <div class="card-body">
+
+                        <!--FullName-->
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+
+                            <input id="fullName"
+                                type="text"
+                                class="form-control"
+                                placeholder="Please enter full name">
+
+                            <small id="nameError" class="text-danger"></small>
+                        </div>
+
+                        <!--Email-->
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+
+                            <input id="email"
+                                type="email"
+                                class="form-control"
+                                placeholder="example@email.com">
+
+                            <small id="emailError" class="text-danger"></small>
+                        </div>
+
+                        <!--ContactNumber-->
+                        <div class="mb-3">
+                            <label class="form-label">Contact Number</label>
+
+                            <input id="phone"
+                                type="tel"
+                                class="form-control"
+                                placeholder="+63">
+
+                            <small id="phoneError" class="text-danger"></small>
+                        </div>
+
+                        <!--PassportNumber-->
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Passport Number</label>
+                                    <input type="text" class="form-control" placeholder="Passport Number">
+                                </div>
+                            </div>
+
+                            <!--DropDownNationalities-->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Nationality</label>
+                                    <select class="form-select">
+                                        <option>Filipino</option>
+                                        <option>American</option>
+                                        <option>Japanese</option>
+                                        <option>Korean</option>
+                                        <option>Israeli</option>
+                                        <option>Nigerian</option>
+                                        <option>Malaysian</option>
+                                        <option>Nigerean</option>
+                                        <option>Carribean</option>
+                                        <option>Mongolian</option>
+                                        <option>Prussian</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+
+                           <!--DoB&Gender-->
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control">
+                                    </div>
+                                </div>
+
+                                <!--DropDownGenders-->
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select">
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                            <option>Prefer not to say</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!--EmergencyContact-->
+
+                            <div class="mb-3">
+                                <label class="form-label">Emergency Contact</label>
+                                <input type="text" class="form-control" placeholder="Emergency Contact Number">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--MealCard-->
+                <div class="col-lg-8">
+
+                    <div class="card mb-4">
+
+                        <div class="card-header">
+                            <h4 class="mb-0">Meal Selection</h4>
+                        </div>
+
+                        <div class="card-body">
+
+                            <label class="form-label">
+                                Please Choose a Meal
+                            </label>
+
+                            <select id="mealSelect" class="form-select">
+                                <option>Standard</option>
+                                <option>Vegetarian</option>
+                                <option>Vegan</option>
+                                <option>Halal</option>
+                                <option>Kosher</option>
+                                <option>Gluten-Free</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--MealDescription(jQuery)-->
+                <p id="mealDescription"></p>
+
+                <!--SeatSelectionCard-->
+                <div class="card mb-4">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">Seat Selection</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Legend -->
+                        <div class="mb-3">
+
+                            <span class="badge bg-secondary">Available</span>
+
+                            <span class="badge bg-success">Selected</span>
+
+                            <span class="badge bg-danger">Occupied</span>
+
+                            <span class="badge bg-warning text-dark">Premium</span>
+
+                        </div>
+
+                        <!-- Row A -->
+                        <div class="row text-center mb-2">
+
+                            <div class="col seat">A1</div>
+                            <div class="col seat">A2</div>
+                            <div class="col seat occupied">A3</div>
+                            <div class="col seat">A4</div>
+
+                        </div>
+
+                        <!-- Row B -->
+                        <div class="row text-center mb-2">
+
+                            <div class="col seat">B1</div>
+                            <div class="col seat premium">B2</div>
+                            <div class="col seat premium">B3</div>
+                            <div class="col seat">B4</div>
+
+                        </div>
+
+                        <!-- Row C -->
+                        <div class="row text-center mb-2">
+
+                            <div class="col seat">C1</div>
+                            <div class="col seat occupied">C2</div>
+                            <div class="col seat">C3</div>
+                            <div class="col seat">C4</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!--ExtraServices-->
+                <div class="card mb-4">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">Extra Services</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- Additional Baggage -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Additional Baggage (kg)
+                            </label>
+
+                            <input
+                                type="number"
+                                class="form-control"
+                                min="0"
+                                max="50"
+                                value="0"
+                            >
+                        </div>
+
+                        <!-- Priority Boarding -->
+                        <div class="form-check mb-3">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="priorityBoarding"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="priorityBoarding"
+                            >
+                                Priority Boarding
+                            </label>
+
+                        </div>
+
+                        <!-- Travel Insurance -->
+                        <div class="form-check mb-3">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="travelInsurance"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="travelInsurance"
+                            >
+                                Travel Insurance
+                            </label>
+
+                        </div>
+
+                        <!-- Lounge Access -->
+                        <div class="form-check mb-3">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                id="loungeAccess"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="loungeAccess"
+                            >
+                                Lounge Access
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            
+            <!--RightColumns-->
+            <div class="col-lg-4">
+
+                <div class="card sticky-top">
+
+                    <div class="card-header">
+                        <h4 class="mb-0">Booking Summary</h4>
+                    </div>
+
+                    <div class="card-body">
+
+                        <h5 class="mb-3">Flight Details</h5>
+
+                        <p>
+                            <strong>Origin:</strong>
+                            <span id="summaryOrigin">
+                                Manila
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Destination:</strong>
+                            <!--Shouldn't actually work so dummy value for now-->
+                            <span id="summaryDestination">
+                                Singapore
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Flight Number:</strong>
+                            <span id="summaryFlightNumber">
+                                PR102
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Cabin Class:</strong>
+                            <span id="summaryCabin">
+                                Economy
+                            </span>
+                        </p>
+
+                        <hr>
+
+                        <h5 class="mb-3">Reservation Details</h5>
+
+                        <p>
+                            <strong>Passengers:</strong>
+                            <span id="summaryPassengers">
+                                1
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Selected Seat:</strong>
+                            <span id="summarySeat">
+                                None
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Meal Package:</strong>
+                            <span id="summaryMeal">
+                                Standard
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Extra Services:</strong>
+                            <span id="summaryExtras">
+                                None
+                            </span>
+                        </p>
+
+                        <hr>
+
+                        <h5 class="mb-3">Price Breakdown</h5>
+
+                        <p>
+                            Base Fare:
+                            ₱<span id="baseFare">
+                                3500
+                            </span>
+                        </p>
+
+                        <p>
+                            Taxes & Fees:
+                            ₱<span id="summaryTax">
+                                400
+                            </span>
+                        </p>
+
+                        <p>
+                            Extras:
+                            ₱<span id="extrasCost">
+                                0
+                            </span>
+                        </p>
+
+                        <hr>
+
+                        <h4>
+                            Grand Total:
+                            ₱<span id="grandTotal">
+                                5000
+                            </span>
+                        </h4>
+
+                        <div class="d-grid mt-3">
+
+                            <button id="confirmBooking" class="btn btn-airline">
+                                Confirm Booking
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <!--Modal (Required by specs)-->
+    <div class="modal fade" id="seatModal">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title">
+                        Seat Information
+                    </h5>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <p id="seatInfo">
+                        Seat details will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--Messages (Required by specs)-->
+    <div
+        class="toast position-fixed bottom-0 end-0 m-3"
+        id="bookingToast">
+
+        <div class="toast-header">
+
+            <strong class="me-auto">
+                Airline Booking
+            </strong>
+
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="toast">
+            </button>
+
+        </div>
+
+        <div class="toast-body" id="toastMessage">
+
+            Booking updated successfully.
+
+        </div>
+
+    </div>
+
+    <!--Toast Stuff-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--jQUERY-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/booking.js"></script>
+
 </body>
-
 </html>
