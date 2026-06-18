@@ -9,19 +9,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"
             defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"
+            integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
+    <script src="/scripts/admin-reservations.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/override.css">
     <link rel="stylesheet" href="/styles/additional.css">
+
     <link rel="shortcut icon" href="/media/company-logo.png" type="image/x-icon">
     <title> Cebu Atlantic </title>
 </head>
 
-<body class="bg-light">
+<body class="d-flex flex-column min-vh-100 bg-light">
     <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
         <div class="mb-0">
-            <a class="navbar-brand text-white" href="./index.html">
-                <img class="d-inline-block align-items-center mb-2" width="40px" src="./media/company-logo.png">
-                Cebu Atlantic
+            <a class="navbar-brand text-white" href="/index.html">
+                <img class="d-inline-block align-items-center mb-2" width="40px" src="/media/company-logo.png">
             </a>
         </div>
 
@@ -31,21 +37,20 @@
 
         <div class="navbar-collapse collapse" id="main-menu">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0
-                    text-bg-primary-accent rounded-3">
-                    <a class="nav-link disabled fw-bold text-light"> Home </a>
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="/index.html"> Home </a>
                 </li>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="./views/user/search.html"> Search A Flight </a>
+                    <a class="nav-link fw-bold" href="/views/user/search.html"> Search A Flight </a>
                 </li>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="./views/user/booking.html"> Reserve A Flight </a>
+                    <a class="nav-link fw-bold" href="/views/user/booking.html"> Reserve A Flight </a>
                 </li>
 
                 <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="./views/user/reservations.html"> My Reservations </a>
+                    <a class="nav-link fw-bold" href="/views/user/reservations.html"> My Reservations </a>
                 </li>
 
                 <li class="nav-item dropstart me-3">
@@ -54,28 +59,28 @@
                     </a>
 
                     <ul class="dropdown-menu mb-3 bg-dark-subtle">
-                        <li><a class="dropdown-item" href="./views/user/profile.html"> My Profile </a></li>
+                        <li><a class="dropdown-item" href="/views/user/profile.html"> My Profile </a></li>
                         <li><a class="dropdown-item" href="###"> Log Out </a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item dropstart">
-                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                <li class="nav-item px-3 px-sm-3 ps-md-3 px-lg-0 mt-lg-0 me-3 text-bg-primary-accent rounded-3
+                    dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold text-light" data-bs-toggle="dropdown">
                         Admin Access
                     </a>
                     <ul class="dropdown-menu mb-3 bg-dark-subtle">
                         <li>
-                            <a class="dropdown-item" href="./views/admin/admin-dashboard.html"> Admin Dashboard </a>
+                            <a class="dropdown-item" href="/views/admin/admin-dashboard.html"> Admin Dashboard </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="./views/admin/admin-flights.html"> Flight Management </a>
+                            <a class="dropdown-item" href="/views/admin/admin-flights.html"> Flight Management </a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" href="./views/admin/admin-reservations.html">
-                                Reservation Management
-                            </a>
+                            <a class="dropdown-item disabled text-bg-secondary-accent text-white"> Reservation
+                                Management </a>
                         </li>
 
                         <li>
@@ -87,144 +92,163 @@
         </div>
     </nav>
 
-    <!-- HEADER -->
-    <header class="card align-items-center p-3 mb-4 text-white bg-primary-accent rounded-0">
-        <h1>Reservation Management</h1>
-    </header>
+    <div class="container mt-5 mb-5">
+        <div class="card d-flex">
+            <div class="card-header text-center text-white bg-primary-accent">
+                <h1 class="mt-2"> Reservation Management </h1>
+            </div>
 
-    <!--RESERVATION TABLE-->
-    <div class="container">
-        <table class="table table-striped table-bordered text-center">
-            <tr>
-                <td>Booking Reference</td>
-                <td>Passenger Name</td>
-                <td>Flight Route</td>
-                <td>Seat Number</td>
-                <td>Booking Status</td>
-            </tr>
-            <tr>
-                <td>BR12345</td>
-                <td>John Doe</td>
-                <td>Manila to Cebu</td>
-                <td>12A</td>
-                <td>
-                    <div class="dropdown d-inline">
-                        <button class="btn btn-sm btn-white btn-outline-primary dropdown-toggle align=right" data-bs-toggle="dropdown">
-                            Update Status
+            <!-- TABLE -->
+            <div class="card-body">
+                <div class="table-responsive text-nowrap">
+                    <table class="table text-center table-hover">
+                        <thead class="border-dark border-2">
+                            <tr>
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Booking Reference
+                                </th>
+
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Passenger Name
+                                </th>
+
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Flight Route
+                                </th>
+
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Seat Number
+                                </th>
+
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Booking Status
+                                </th>
+
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Details
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table-group-divider">
+                            <tr>
+                                <th scope="row"> BR12345 </th>
+                                <td> John Doe </td>
+                                <td> Manila to Cebu </td>
+                                <td> 12A </td>
+                                <td> Pending </td>
+
+                                <td>
+                                    <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                                            data-bs-target="#view-reservation"> View </button>
+
+                                    <button class="btn btn-warning btn-sm text-white fw-bolder"> Edit </button>
+                                    <!-- This would go to reservations.html -->
+
+                                    <button class="btn btn-danger btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                                            data-bs-target="#delete-reservation"> Delete </button>
+                                </td>
+                            </tr>
+
+                            <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-primary-accent">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
+                    <h6 class="text-white">
+                        Showing 10 Results Out Of 100,000
+                    </h6>
+
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                        <button class="btn m-0 btn-success text-white">
+                            Add Reservation
+                            <!-- This would go to reservations.html -->
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Confirmed</a></li>
-                            <li><a class="dropdown-item" href="#">Cancelled</a></li>
-                            <li><a class="dropdown-item" href="#">Pending</a></li>
-                        </ul>
-                </td>
-            </tr>
-        </table>
-    </div>
 
-    <!--PAGINATION-->
-    <div class="card-footer d-flex justify-content-center">
-        <nav>
-            <ul class="pagination m-0">
-                <li class="page-item">
-                    <a class="page-link disabled">
-                        <span aria-hidden="true">
-                        < </span>
-                    </a>
-                </li>
+                        <!-- PAGINATION -->
+                        <nav>
+                            <ul class="pagination m-0">
+                                <li class="page-item">
+                                    <a class="page-link disabled">
+                                        <span aria-hidden="true">
+                                            < </span>
+                                    </a>
+                                </li>
 
-                    <li class="page-item"><a class="page-link active"> 1 </a></li>
-                    <li class="page-item"><a class="page-link"> ... </a></li>
-                    <li class="page-item"><a class="page-link"> 10 </a></li>
+                                <li class="page-item"><a class="page-link active"> 1 </a></li>
+                                <li class="page-item"><a class="page-link"> ... </a></li>
+                                <li class="page-item"><a class="page-link"> 10 </a></li>
 
-                    <li class="page-item">
-                        <a class="page-link">
-                            <span aria-hidden="true"> > </span>
-                        </a>
-                    </li>
-            </ul>
-        </nav>
-    </div>
-
-    <br>
-
-    <!--ACTION BUTTONS-->
-    <div class="d-flex justify-content-center gap-4">
-        <button class="btn btn-sm btn-secondary text-white" style="width: 12%;" data-bs-toggle="modal" data-bs-target="#add-reserve">Add</button>
-        <button class="btn btn-sm btn-secondary text-white" style="width: 12%;" data-bs-toggle="modal" data-bs-target="#edit-reserve">Edit</button>
-        <button class="btn btn-sm btn-danger btn-secondary text-white" style="width: 12%;" data-bs-toggle="modal" data-bs-target="#delete-reserve">Delete</button>
-    </div>
-
-    <!-- ADD RESERVATION MODAL -->
-    <div class="modal fade" data-bs-backdrop="static" id="add-reserve">
-        <div class="modal-dialog modal-sm modal-dialog-centered text-center">
-            <div class="modal-content">
-                <div class="modal-header bg-dark text-white">
-                        <h1 class="modal-title fs-5"> Add a reservation </h1>
-                    </div>
-                    <p>...</p>
-                        <div class="modal-footer d-flex bg-light">
-                            <button class="btn btn-success text-white" data-bs-dismiss="modal">
-                                Add
-                            </button>
-                            <button class="btn btn-danger text-white" data-bs-dismiss="modal">
-                                    Exit
-                            </button>
-                        </div>
-
+                                <li class="page-item">
+                                    <a class="page-link">
+                                        <span aria-hidden="true"> > </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- EDIT FLIGHT MODAL -->
-    <div class="modal fade" data-bs-backdrop="static" id="edit-reserve">
-        <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+    <!-- VIEW RESERVATION MODAL -->
+    <div class="modal fade" id="view-reservation" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                        <h1 class="modal-title fs-5"> Edit Reservation Details </h1>
-                    </div>
-                        <p>...</p>
-                        <div class="modal-footer d-flex bg-light">
-                            <button class="btn btn-success text-white" data-bs-dismiss="modal">
-                                Save Changes
-                            </button>
-                            <button class="btn btn-danger text-white" data-bs-dismiss="modal">
-                                Exit
-                            </button>
-                        </div>
+                    <h1 class="modal-title fs-5"> [BOOKING REFERENCE] Details </h1>
+                </div>
 
-                    </div>
+                <div class="modal-body bg-white fw-bolder text-dark">
+                    ...
+                </div>
+
+                <div class="modal-footer bg-light">
+                    <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- DELETE FLIGHT MODAL -->
-    <div class="modal fade" data-bs-backdrop="static" id="delete-reserve">
+    <!-- DELETE RESERVATION MODAL -->
+    <div class="modal fade" id="delete-reservation" data-bs-backdrop="static">
         <div class="modal-dialog modal-sm modal-dialog-centered text-center">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                        <h1 class="modal-title fs-5"> Delete Reservation </h1>
-                    </div>
-                    <p>...</p>
-                        <div class="modal-footer d-flex bg-light">
-                            <button class="btn btn-success text-white" data-bs-dismiss="modal">
-                                Delete
-                            </button>
-                            <button class="btn btn-danger text-white" data-bs-dismiss="modal">
-                                Exit
-                            </button>
-                        </div>
+                    <h1 class="modal-title fs-5"> Are you sure? </h1>
+                </div>
 
-                    </div>
+                <div class="modal-footer d-flex bg-light">
+                    <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                        No
+                    </button>
+
+                    <button class="btn btn-danger text-white" data-bs-dismiss="modal" onclick="showDeleteToast()">
+                        Yes, Delete It
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <br>
+    <!-- DELETE RESERVATION TOAST -->
+    <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white"
+         id="delete-toast">
+        <div class="d-flex align-items-center">
+            <div class="text-nowrap toast-body">
+                Deleted [BOOKING REFERENCE]!
+            </div>
+
+            <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="pt-4 pb-2 mt-5 mt-auto text-center sticky-bottom bg-dark">

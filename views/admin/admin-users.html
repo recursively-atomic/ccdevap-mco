@@ -94,7 +94,7 @@
     </nav>
 
     <div class="container mt-5 mb-5">
-        <div class="card d-flex">
+        <div class="card">
             <div class="card-header bg-primary-accent">
                 <div class="row my-md-3 mx-0 p-0 align-items-center">
                     <!-- SEARCH BAR -->
@@ -360,12 +360,12 @@
         </div>
     </div>
 
-    <!-- EDIT USER ACTIVITY MODAL -->
+    <!-- VIEW USER ACTIVITY MODAL -->
     <div class="modal fade" id="view-activity" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                    <h1 class="modal-title fs-5"> User 0000 Activity </h1>
+                    <h1 class="modal-title fs-5"> User [USER ID] Activity </h1>
                 </div>
 
                 <div class="modal-body bg-white fw-bolder text-dark">
@@ -386,7 +386,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                    <h1 class="modal-title fs-5"> User 0000 Activity </h1>
+                    <h1 class="modal-title fs-5"> Edit User [USER ID] Activity </h1>
                 </div>
 
                 <div class="modal-body bg-white fw-bolder text-dark">
@@ -394,7 +394,7 @@
                 </div>
 
                 <div class="modal-footer bg-light">
-                    <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                    <button class="btn btn-success text-white" data-bs-dismiss="modal" onclick="showEditToast()">
                         Save Changes
                     </button>
 
@@ -403,6 +403,18 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- EDIT FLIGHT TOAST -->
+    <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+         id="edit-toast">
+        <div class="d-flex align-items-center">
+            <div class="text-nowrap toast-body">
+                Successfully saved changes on user [USER ID]!
+            </div>
+
+            <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
         </div>
     </div>
 
@@ -419,11 +431,23 @@
                         No
                     </button>
 
-                    <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                    <button class="btn btn-danger text-white" data-bs-dismiss="modal" onclick="showDeleteToast()">
                         Yes, Delete It
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- DELETE FLIGHT TOAST -->
+    <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white"
+         id="delete-toast">
+        <div class="d-flex align-items-center">
+            <div class="text-nowrap toast-body">
+                Deleted User [USER ID]!
+            </div>
+
+            <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
         </div>
     </div>
 
