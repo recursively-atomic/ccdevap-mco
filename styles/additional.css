@@ -105,6 +105,11 @@ tbody > tr:hover > td > button.btn-danger:hover {
     color: var(--bs-white);
 }
 
+/* LAYOUT STYLES */
+.z-max {
+    z-index: 9999;
+}
+
 /* CUSTOM STYLES */
 .card-hover {
     transition: transform 0.3s ease-in-out;
@@ -120,9 +125,4 @@ tbody > tr:hover > td > button.btn-danger:hover {
 
 #sort-dropdown .active {
     background-color: black;
-}
-
-/* NEW */
-.z-max {
-    z-index: 9999;
 }
