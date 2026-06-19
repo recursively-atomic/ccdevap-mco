@@ -34,27 +34,25 @@ function bindListItemValue(dropdown, display) {
 }
 
 /**
- * Shows a toast whenever the user edits a user's activity.
+ * Hides a modal and shows a toast.
  */
-function showEditToast() {
-    const editToast = $('#edit-toast').get(0);
+function showToast(modalID, toastID) {
+    const modal = document.getElementById(modalID);
+    const toast = document.getElementById(toastID);
 
-    const baseToast =
-        bootstrap.Toast.getInstance(editToast) ||
-        new bootstrap.Toast(editToast, { delay: 2000, autohide: true });
+    document.activeElement.blur();
 
-    baseToast.show();
-}
+    const modalInstance =
+        bootstrap.Modal.getInstance(modal) ||
+        new bootstrap.Modal(modal);
 
-/**
- * Shows a toast whenever the user deletes a user.
- */
-function showDeleteToast() {
-    const deleteToast = $('#delete-toast').get(0);
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
 
-    const baseToast =
-        bootstrap.Toast.getInstance(deleteToast) ||
-        new bootstrap.Toast(deleteToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
+    modalInstance.hide();
+    toastInstance.show();
 }

@@ -121,3 +121,8 @@ tbody > tr:hover > td > button.btn-danger:hover {
 #sort-dropdown .active {
     background-color: black;
 }
+
+/* NEW */
+.z-max {
+    z-index: 9999;
+}

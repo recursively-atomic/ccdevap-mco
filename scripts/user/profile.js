@@ -27,59 +27,21 @@ function changeProfile() {
 }
 
 /**
- * Shows a toast whenever the user saves their profile
- * information.
+ * Hides a modal and shows a toast.
  */
-function showProfileToast() {
-    const profileToast = $('#profile-toast').get(0);
+function showToast(toastID) {
+    const toast = document.getElementById(toastID);
 
-    const baseToast =
-        bootstrap.Toast.getInstance(profileToast) ||
-        new bootstrap.Toast(profileToast, { delay: 2000, autohide: true });
+    document.activeElement.blur();
+    
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
 
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user saves a passenger's
- * information.
- */
-function showPassengerToast() {
-    const passengerToast = $('#passenger-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(passengerToast) ||
-        new bootstrap.Toast(passengerToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user saves their payment
- * information.
- */
-function showPaymentToast() {
-    const paymentToast = $('#payment-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(paymentToast) ||
-        new bootstrap.Toast(paymentToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user updates their notification
- * preferences.
- */
-function showPreferencesToast() {
-    const preferenceToast = $('#preference-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(preferenceToast) ||
-        new bootstrap.Toast(preferenceToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
+    toastInstance.show();
 }
 
 /**

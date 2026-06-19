@@ -329,7 +329,7 @@
                 </div>
 
                 <div class="modal-footer d-flex bg-light">
-                    <button class="btn btn-success text-white" data-bs-dismiss="modal" onclick="showEditToast()">
+                    <button class="btn btn-success text-white" onclick="showToast('edit-reservation', 'edit-toast')">
                         Save Changes
                     </button>
 
@@ -338,18 +338,6 @@
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- EDIT RESERVATION TOAST -->
-    <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-         id="edit-toast">
-        <div class="d-flex align-items-center">
-            <div class="text-nowrap toast-body">
-                Successfully saved changes on reservation [BOOKING REFERENCE]!
-            </div>
-
-            <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
         </div>
     </div>
 
@@ -366,11 +354,23 @@
                         No
                     </button>
 
-                    <button class="btn btn-danger text-white" data-bs-dismiss="modal" onclick="showCancelToast()">
+                    <button class="btn btn-danger text-white" onclick="showToast('cancel-reservation', 'cancel-toast')">
                         Yes, Cancel It
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <!-- EDIT RESERVATION TOAST -->
+    <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+         id="edit-toast">
+        <div class="d-flex align-items-center">
+            <div class="text-nowrap toast-body">
+                Successfully saved changes on reservation [BOOKING REFERENCE]!
+            </div>
+
+            <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
         </div>
     </div>
 
