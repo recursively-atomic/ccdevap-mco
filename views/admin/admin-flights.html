@@ -24,7 +24,7 @@
     <title> Cebu Atlantic </title>
 </head>
 
-<body class="user-select-none d-flex flex-column min-vh-100 bg-light">
+<body class="d-flex flex-column min-vh-100 bg-light user-select-none">
     <!-- NAVIGATION BAR -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
         <div class="mb-0">
@@ -131,7 +131,11 @@
                                 </th>
 
                                 <th class="text-secondary bg-dark" scope="col">
-                                    Status
+                                    Flight Status
+                                </th>
+
+                                <th class="text-secondary bg-dark" scope="col">
+                                    Capcity Status
                                 </th>
 
                                 <th class="text-secondary bg-dark" scope="col">
@@ -143,11 +147,12 @@
                         <tbody class="table-group-divider">
                             <tr>
                                 <th scope="row"> CA123 </th>
-                                <td> Manila </td>
-                                <td> Cebu </td>
+                                <td> MNL </td>
+                                <td> CEB </td>
                                 <td> 2026-07-01 08:00 </td>
                                 <td> 2026-07-01 09:30 </td>
                                 <td> On Time </td>
+                                <td> Available </td>
 
                                 <td>
                                     <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"
@@ -163,11 +168,12 @@
 
                             <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
                                 <th scope="row"> CA456 </th>
-                                <td> Cebu </td>
-                                <td> Manila </td>
+                                <td> CEB </td>
+                                <td> MNL </td>
                                 <td> 2026-07-01 14:00 </td>
                                 <td> 2026-07-01 15:30 </td>
                                 <td> Delayed </td>
+                                <td> Full </td>
 
                                 <td>
                                     <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"

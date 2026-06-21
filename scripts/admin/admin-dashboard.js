@@ -1,30 +1,37 @@
-$(document).ready(function () {
-    // View Button Logic
-    $(".viewBooking").click(function () {
-        let row = $(this).closest("tr");
-        let bookingID =
-            row.find("td:eq(0)").text();
-        let passenger =
-            row.find("td:eq(1)").text();
-        let route =
-            row.find("td:eq(2)").text();
-        let status =
-            row.find("td:eq(3)").text();
-        $("#reservationInfo").html(
-            "<strong> Booking ID: </strong> " + bookingID +
-            "<br><strong> Passenger: </strong> " + passenger +
-            "<br><strong> Route: </strong> " + route +
-            "<br><strong> Status: </strong> " + status
-        );
-        const modal =
-            new bootstrap.Modal(
-                document.getElementById("reservationModal")
-            );
-        modal.show();
-        showToast(
-            "Reservation " +
-            bookingID +
-            " loaded"
-        );
-    });
+$(function () {
+    showReservationDetails();
+    showDashboardToast();
 });
+
+/**
+ * Shows the details of a booking reference.
+ */
+function showReservationDetails() {
+    $(".view-reservation").click(function () {
+        const $viewReservationModal = $("#view-reservation");
+        const baseModal = new bootstrap.Modal($viewReservationModal);
+
+        const tableRow = $(this).closest("tr");
+        const bookingReference = tableRow.find("th:eq(0)").text();
+        // Add more details that align with booking.html
+
+        $("#view-reservation .modal-title").html(
+            bookingReference + "Details"
+        );
+
+        baseModal.show();
+    });
+}
+
+/**
+ * Shows a welcome toast when a user enters the page.
+ */
+function showDashboardToast() {
+    const $dashboardToast = $("#dashboard-toast");
+    const baseToast = new bootstrap.Toast($dashboardToast, {
+        autohide: true,
+        delay: 4000
+    });
+
+    baseToast.show();
+}

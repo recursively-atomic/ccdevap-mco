@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"
             integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
     <script src="/scripts/admin/admin-dashboard.js" defer></script>
-    
+
     <link rel="stylesheet" href="/styles/override.css">
     <link rel="stylesheet" href="/styles/additional.css">
 
@@ -20,12 +20,12 @@
     <title> Cebu Atlantic </title>
 </head>
 
-<body class="user-select-none d-flex flex-column min-vh-100 bg-light">
+<body class="d-flex flex-column min-vh-100 bg-light user-select-none">
     <!-- NAVIGATION BAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark ps-5 pe-5 pt-3 pb-3 mb-4">
         <div class="mb-0">
-            <a class="navbar-brand text-white" href="/index.html">
-                <img class="d-inline-block align-items-center mb-2" width="40px" src="/media/company-logo.png">
+            <a class="navbar-brand d-inline-block align-items-center text-white" href="/index.html">
+                <img class="mb-2" width="40px" src="/media/company-logo.png">
             </a>
         </div>
 
@@ -33,7 +33,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="navbar-collapse collapse" id="main-menu">
+        <div class="collapse navbar-collapse" id="main-menu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-3">
                     <a class="nav-link fw-bold" href="/index.html"> Home </a>
@@ -56,20 +56,20 @@
                         Profile
                     </a>
 
-                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                    <ul class="dropdown-menu bg-dark-subtle mb-3">
                         <li><a class="dropdown-item" href="/views/user/profile.html"> My Profile </a></li>
                         <li><a class="dropdown-item" href="###"> Log Out </a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item px-3 px-sm-3 ps-md-3 px-lg-0 mt-lg-0 me-3 text-bg-primary-accent rounded-3
-                    dropstart">
-                    
+                <li class="nav-item dropstart text-bg-primary-accent rounded-3
+                    px-3 px-sm-3 ps-md-3 px-lg-0 mt-lg-0 me-3">
+
                     <a class="nav-link dropdown-toggle fw-bold text-light" data-bs-toggle="dropdown">
                         Admin Access
                     </a>
 
-                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                    <ul class="dropdown-menu bg-dark-subtle mb-3">
                         <li>
                             <a class="dropdown-item disabled text-bg-secondary-accent text-white">
                                 Admin Dashboard
@@ -91,192 +91,234 @@
             </ul>
         </div>
     </nav>
+
     <div class="container mt-5 mb-5">
         <div class="card d-flex">
             <div class="card-header text-center text-white bg-primary-accent">
                 <h2 class="mt-2"> Admin Dashboard </h2>
             </div>
+
             <div class="card-body">
-                <!-- Analytics Cards -->
                 <div class="row g-3 mb-4">
-                    <div class="col-md-3">
-                        <div class="card border-dark">
-                            <div class="card-header bg-dark text-secondary fw-bold">
-                                Total Bookings
-                            </div>
-                            <div class="card-body text-center">
-                                <h2 class="text-primary-accent fw-bolder">1248</h2>
+                    <div class="col-lg-3 col-md-3">
+                        <!-- TOTAL RESERVATIONS CARD -->
+                        <div class="card shadow text-center card-hover">
+                            <h4 class="card-header bg-dark text-secondary fw-bold">
+                                Total Reservations
+                            </h4>
+
+                            <div class="card-body">
+                                <h2 class="text-primary-accent fw-bolder"> 1248 </h2>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-3">
-                        <div class="card border-dark">
-                            <div class="card-header bg-dark text-secondary fw-bold">
+                        <!-- TOTAL REVENUE CARD -->
+                        <div class="card shadow text-center card-hover">
+                            <h4 class="card-header bg-dark text-secondary fw-bold">
                                 Total Revenue
-                            </div>
-                            <div class="card-body text-center">
-                                <h2 class="text-primary-accent fw-bolder">₱6.7M</h2>
+                            </h4>
+
+                            <div class="card-body">
+                                <h2 class="text-primary-accent fw-bolder"> ₱6.7M </h2>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-3">
-                        <div class="card border-dark">
-                            <div class="card-header bg-dark text-secondary fw-bold">
+                        <!-- FLIGHTS TODAY CARD -->
+                        <div class="card shadow text-center card-hover">
+                            <h4 class="card-header bg-dark text-secondary fw-bold">
                                 Flights Today
-                            </div>
-                            <div class="card-body text-center">
-                                <h2 class="text-primary-accent fw-bolder">85</h2>
+                            </h4>
+
+                            <div class="card-body">
+                                <h2 class="text-primary-accent fw-bolder"> 85 </h2>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-3">
-                        <div class="card border-dark">
-                            <div class="card-header bg-dark text-secondary fw-bold">
+                        <!-- ACTIVE USERS CARD -->
+                        <div class="card shadow text-center card-hover">
+                            <h4 class="card-header bg-dark text-secondary fw-bold">
                                 Active Users
-                            </div>
-                            <div class="card-body text-center">
-                                <h2 class="text-primary-accent fw-bolder">542</h2>
+                            </h4>
+
+                            <div class="card-body">
+                                <h2 class="text-primary-accent fw-bolder"> 542 </h2>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Revenue Chart + Popular Destinations -->
-                <!-- Recent Reservations -->
-                <div class="card border-dark mb-4">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0">
-                            Recent Reservations
-                        </h5>
-                    </div>
+
+                <!-- RECENT RESERVATIONS CARD -->
+                <div class="card shadow mb-4 card-hover-xl">
+                    <h4 class="card-header bg-dark text-secondary fw-bold">
+                        Recent Reservations
+                    </h4>
+
                     <div class="card-body">
+                        <!-- TABLE -->
                         <div class="table-responsive text-nowrap">
                             <table class="table text-center table-hover">
                                 <thead class="border-dark border-2">
                                     <tr>
-                                        <th class="text-secondary bg-dark" scope="col">Booking ID</th>
-                                        <th class="text-secondary bg-dark" scope="col">Passenger</th>
-                                        <th class="text-secondary bg-dark" scope="col">Route</th>
-                                        <th class="text-secondary bg-dark" scope="col">Status</th>
-                                        <th class="text-secondary bg-dark" scope="col">Action</th>
+                                        <th class="bg-dark text-secondary" scope="col">
+                                            Booking Reference
+                                        </th>
+
+                                        <th class="bg-dark text-secondary" scope="col">
+                                            Booking Passenger
+                                        </th>
+
+                                        <th class="bg-dark text-secondary" scope="col">
+                                            Total Pax
+                                        </th>
+
+                                        <th class="bg-dark text-secondary" scope="col">
+                                            Route
+                                        </th>
+
+                                        <th class="bg-dark text-secondary" scope="col">
+                                            Status
+                                        </th>
+
+                                        <th class="bg-dark text-secondary" scope="col">
+                                            Details
+                                        </th>
                                     </tr>
                                 </thead>
+
                                 <tbody class="table-group-divider">
                                     <tr>
-                                        <td>BK000</td>
-                                        <td>Darryl Ac-ac</td>
-                                        <td>Manila → Tokyo</td>
+                                        <th scope="row"> BK000 </th>
+                                        <td> Darryl Ac-ac </td>
+                                        <td> 2 </td>
+                                        <td> MNL to HND </td>
+                                        <td> Confirmed </td>
+
                                         <td>
-                                            <span class="badge bg-success">
-                                                Confirmed
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-success btn-sm text-white fw-bolder view-booking">
+                                            <button class="btn btn-success btn-sm text-white fw-bolder
+                                                    view-reservation">
                                                 View
                                             </button>
                                         </td>
                                     </tr>
+
                                     <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0
                                         border-dark">
-                                        <td>BK001</td>
-                                        <td>Kyeeona Caesar</td>
-                                        <td>Manila → N. Korea</td>
+                                        <th scope="row"> BK001 </th>
+                                        <td> Kyeeona Caesar </td>
+                                        <td> 1 </td>
+                                        <td> MNL to FNJ </td>
+                                        <td> Confirmed </td>
+
                                         <td>
-                                            <span class="badge bg-success">
-                                                Confirmed
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-success btn-sm text-white fw-bolder view-booking">
+                                            <button class="btn btn-success btn-sm text-white fw-bolder
+                                                    view-reservation">
                                                 View
                                             </button>
                                         </td>
                                     </tr>
+
                                     <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0
                                         border-dark">
-                                        <td>BK002</td>
-                                        <td>Nico Cotoco</td>
-                                        <td>Manila → Singapore</td>
+                                        <th scope="row"> BK002 </th>
+                                        <td> Nico Cotoco </td>
+                                        <td> 5 </td>
+                                        <td> MNL to SIN </td>
+                                        <td> Pending </td>
+
                                         <td>
-                                            <span class="badge bg-warning text-dark">
-                                                Pending
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-success btn-sm text-white fw-bolder view-booking">
+                                            <button class="btn btn-success btn-sm text-white fw-bolder
+                                                    view-reservation">
                                                 View
                                             </button>
                                         </td>
                                     </tr>
-                                    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0
+
+                                    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 
                                         border-dark">
-                                        <td>BK003</td>
-                                        <td>Anthony Namol</td>
-                                        <td>Manila → Seoul</td>
+                                        <th scope="row"> BK003 </th>
+                                        <td> Anthony Namol </td>
+                                        <td> 2 </td>
+                                        <td> MNL to ICN </td>
+                                        <td> Cancelled </td>
+
                                         <td>
-                                            <span class="badge bg-danger">
-                                                Cancelled
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-success btn-sm text-white fw-bolder view-booking">
+                                            <button class="btn btn-success btn-sm text-white fw-bolder
+                                                    view-reservation">
                                                 View
                                             </button>
                                         </td>
+                                    </tr>
+
+                                    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0
+                                        border-dark">
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+
                 <div class="row mb-2">
-                    <!-- Revenue Chart -->
                     <div class="col-lg-8">
-                        <div class="card border-dark h-100">
-                            <div class="card-header bg-dark text-white">
-                                <h5 class="mb-0">
-                                    Monthly Revenue
-                                </h5>
-                            </div>
+                        <!-- MONTHLY REVENUE CARD -->
+                        <div class="card shadow card-hover-lg">
+                            <h4 class="card-header bg-dark text-secondary fw-bold">
+                                Monthly Revenue
+                            </h4>
+
                             <div class="card-body">
-                                <div class="revenue-chart">
-                                    <div class="chart-bar">
-                                        Jan
-                                    </div>
-                                    <div class="chart-bar">
-                                        Feb
-                                    </div>
-                                    <div class="chart-bar">
-                                        Mar
-                                    </div>
-                                    <div class="chart-bar">
-                                        Apr
-                                    </div>
-                                    <div class="chart-bar">
-                                        May
-                                    </div>
-                                    <div class="chart-bar">
-                                        Jun
-                                    </div>
+                                <div>
+                                    <div> Jan </div>
+                                    <div> Feb </div>
+                                    <div> Mar </div>
+                                    <div> Apr </div>
+                                    <div> May </div>
+                                    <div> Jun </div>
+                                    <div> Jul </div>
+                                    <div> Aug </div>
+                                    <div> Sept </div>
+                                    <div> Oct </div>
+                                    <div> Nov </div>
+                                    <div> Dec </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Popular Destinations -->
+
                     <div class="col-lg-4">
-                        <div class="card border-dark h-100">
-                            <div class="card-header bg-dark text-white">
-                                <h5 class="mb-0">
-                                    Popular Destinations
-                                </h5>
-                            </div>
+                        <!-- POPULAR DESTONATIONS CARD -->
+                        <div class="card shadow card-hover">
+                            <h4 class="card-header bg-dark text-secondary fw-bold">
+                                Popular Destinations
+                            </h4>
+
                             <div class="card-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item border-dark"> Tokyo </li>
-                                    <li class="list-group-item border-dark"> Singapore </li>
-                                    <li class="list-group-item border-dark"> Seoul </li>
-                                    <li class="list-group-item border-dark"> Bangkok </li>
-                                    <li class="list-group-item border-dark"> Dubai </li>
+                                <ul class="list-group text-center">
+                                    <li class="list-group-item text-dark">
+                                        NRT (Tokyo, Narita International Airport)
+                                    </li>
+
+                                    <li class="list-group-item text-dark">
+                                        SIN (Singapore, Singapore Changi Airport)
+                                    </li>
+
+                                    <li class="list-group-item text-dark">
+                                        ICN (Seoul, Incheon International Airport)
+                                    </li>
+
+                                    <li class="list-group-item text-dark">
+                                        BKK (Bangkok, Suvarnabhumi Airport)
+                                    </li>
+
+                                    <li class="list-group-item text-dark">
+                                        DXB (Dubai, Dubai International Airport)
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -285,17 +327,23 @@
             </div>
         </div>
     </div>
+
     <!-- VIEW RESERVATION MODAL -->
-    <div class="modal fade" id="reservationModal" data-bs-backdrop="static">
+    <div class="modal fade" id="view-reservation" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
-                    <h2 class="modal-title fs-5"> Reservation Details </h2>
+                    <h2 class="modal-title fs-5">
+                        Reservation Details
+                    </h2>
+
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body bg-white fw-bolder text-dark">
-                    <p id="reservationInfo"></p>
+
+                <div class="modal-body bg-white text-dark fw-bolder">
+                    ...
                 </div>
+
                 <div class="modal-footer bg-light">
                     <button class="btn btn-primary text-white" data-bs-dismiss="modal">
                         Close
@@ -304,20 +352,23 @@
             </div>
         </div>
     </div>
+
     <!-- DASHBOARD TOAST -->
-    <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-primary-accent
-        text-white" id="dashboardToast">
+    <div class="toast position-fixed bottom-0 start-50 translate-middle-x text-bg-primary-accent text-white z-max p-2 m-3 w-auto"
+         id="dashboard-toast">
         <div class="d-flex align-items-center">
-            <div class="text-nowrap toast-body" id="toastMessage">
+            <div class="toast-body text-nowrap">
                 Welcome Administrator
             </div>
-            <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+
+            <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     </div>
+
     <!-- FOOTER -->
-    <footer class="pt-4 pb-2 mt-5 mt-auto text-center bg-dark">
+    <footer class="bg-dark text-center pt-4 pb-2 mt-5 mt-auto">
         <p class="text-light">
-            &copy; [BRAND] 2026 <br>
+            &copy; BRAND 2026 <br>
             CCDEVAP MCO
         </p>
     </footer>

@@ -1,49 +1,49 @@
 /* TABLE STYLES */
 tbody > tr > th,
 tbody > tr > td {
-    color: var(--bs-dark) !important;
+    color: var(--bs-dark)!important;
 }
 
 tbody > tr:hover > td,
 tbody > tr:hover > th {
-    color: var(--bs-primary) !important;
     background: var(--bs-light);
+    color: var(--bs-primary)!important;
 }
 
 tbody > tr:hover > td > button.btn-success {
-    color: var(--bs-success) !important;
-    background: var(--bs-white);
     border-color: var(--bs-white);
+    background: var(--bs-white);
+    color: var(--bs-success)!important;
 }
 
 tbody > tr:hover > td > button.btn-success:hover {
-    color: var(--bs-white) !important;
-    background: var(--bs-success);
     border-color: var(--bs-success);
+    background: var(--bs-success);
+    color: var(--bs-white)!important;
 }
 
 tbody > tr:hover > td > button.btn-warning {
-    color: var(--bs-warning) !important;
-    background: var(--bs-white);
     border-color: var(--bs-white);
+    background: var(--bs-white);
+    color: var(--bs-warning)!important;
 }
 
 tbody > tr:hover > td > button.btn-warning:hover {
-    color: var(--bs-white) !important;
-    background: var(--bs-warning);
     border-color: var(--bs-warning);
+    background: var(--bs-warning);
+    color: var(--bs-white)!important;
 }
 
 tbody > tr:hover > td > button.btn-danger {
-    color: var(--bs-danger) !important;
-    background: var(--bs-white);
     border-color: var(--bs-white);
+    background: var(--bs-white);
+    color: var(--bs-danger)!important;
 }
 
 tbody > tr:hover > td > button.btn-danger:hover {
-    color: var(--bs-white) !important;
-    background: var(--bs-danger);
     border-color: var(--bs-danger);
+    background: var(--bs-danger);
+    color: var(--bs-white)!important;
 }
 
 /* FORM STYLES */
@@ -57,46 +57,46 @@ tbody > tr:hover > td > button.btn-danger:hover {
 
 /* NAVIGATION TAB STYLES */
 .nav-tabs .nav-link.active {
-    background-color: var(--bs-primary-accent);
     border-color: var(--bs-primary-accent);
+    background-color: var(--bs-primary-accent);
     color: var(--bs-white);
 }
 
 .nav-tabs .nav-link {
-    background-color: var(--bs-white);
     border-color: var(--bs-white);
+    background-color: var(--bs-white);
     color: var(--bs-black);
 }
 
 .nav-tabs .nav-link:hover {
-    background-color: var(--bs-tertiary-accent);
     border-color: var(--bs-tertiary-accent);
+    background-color: var(--bs-tertiary-accent);
     color: var(--bs-white);
 }
 
 /* PAGINATION STYLES */
 .page-link {
-    background-color: var(--bs-light);
     border-color: var(--bs-light);
+    background-color: var(--bs-light);
     color: var(--bs-black);
 }
 
 .page-link.active {
-    background-color: var(--bs-primary);
     border-color: var(--bs-primary);
+    background-color: var(--bs-primary);
     color: var(--bs-white);
 }
 
 .page-link:hover,
 .page-link.active:hover {
-    background-color: var(--bs-tertiary);
     border-color: var(--bs-tertiary);
+    background-color: var(--bs-tertiary);
     color: var(--bs-white);
 }
 
 .page-link.disabled {
-    background-color: var(--bs-dark);
     border-color: var(--bs-dark);
+    background-color: var(--bs-dark);
     color: var(--bs-white);
 }
 
@@ -114,10 +114,33 @@ tbody > tr:hover > td > button.btn-danger:hover {
     transform: scale(1.05);
 }
 
+.card-hover-lg {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-hover-lg:hover {
+    transform: scale(1.02);
+}
+
+.card-hover-xl {
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-hover-xl:hover {
+    transform: scale(1.015);
+}
+
 #filter-dropdown .active {
-    background-color: black;
+    background-color: var(--bs-tertiary-accent);
+    color: var(--bs-light)!important;
 }
 
 #sort-dropdown .active {
-    background-color: black;
+    background-color: var(--bs-tertiary-accent);
+    color: var(--bs-light)!important;
+}
+
+.list-group-item:hover {
+    background: var(--bs-light);
+    color: var(--bs-primary)!important;
 }
