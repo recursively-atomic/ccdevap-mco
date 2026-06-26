@@ -35,8 +35,11 @@ function bindListItemValue(dropdown, display) {
 
 /**
  * Hides a modal and shows a toast.
+ * 
+ * @param {string} modalID the modal's ID.
+ * @param {string} toastID the toast's ID.
  */
-function showToast(modalID, toastID) {
+function hideModalShowToast(modalID, toastID) {
     const modal = document.getElementById(modalID);
     const toast = document.getElementById(toastID);
 
