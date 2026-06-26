@@ -30,7 +30,7 @@ function showDashboardToast() {
     const $dashboardToast = $("#dashboard-toast");
     const baseToast = new bootstrap.Toast($dashboardToast, {
         autohide: true,
-        delay: 4000
+        delay: 2000
     });
 
     baseToast.show();

@@ -144,3 +144,51 @@ tbody > tr:hover > td > button.btn-danger:hover {
     background: var(--bs-light);
     color: var(--bs-primary)!important;
 }
+
+/* NEW */
+.h-30px {
+    height: 30px;
+}
+
+.btn-check:checked + .btn {
+    color: var(--bs-white) !important;
+}
+
+.bg-green {
+    background-color: var(--bs-green);
+}
+
+.seat {
+    color: var(--bs-white);
+    height: 30px;
+    width: 30px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.seat:hover {
+    transform: scale(1.25);
+}
+
+.available {
+    border: 3px solid var(--bs-success);
+}
+
+.occupied {
+    border: 3px solid var(--bs-danger);
+}
+
+.first-class {
+    background-color: var(--bs-primary-accent);
+}
+
+.premium {
+    background-color: var(--bs-secondary-accent);
+}
+
+.selected {
+    border: 3px solid var(--bs-warning);
+}
+
+.economy {
+    background-color: var(--bs-tertiary-accent);
+}

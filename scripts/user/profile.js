@@ -27,7 +27,9 @@ function changeProfile() {
 }
 
 /**
- * Hides a modal and shows a toast.
+ * Displays a toast.
+ * 
+ * @param {string} toastID the toast's ID.
  */
 function showToast(toastID) {
     const toast = document.getElementById(toastID);
@@ -75,7 +77,7 @@ function showAgeBadge() {
                 differenceInDays >= category.min && differenceInDays <= category.max);
             ageBadgeText = ageCategory ? ageCategory.label : '';
 
-            // If the date input is before or on the current date, show the badge
+            // If the date input is before the current date, show the badge
             if (ageBadgeText) {
                 $dateContainer.removeClass('col-lg-12 col-md-12 col-sm-12 col-12');
                 $dateContainer.addClass('col-lg-11 col-md-10 col-sm-10 col-10');
@@ -93,7 +95,7 @@ function showAgeBadge() {
         } else {
             $dateContainer.removeClass('col-lg-11 col-md-10 col-sm-10 col-10');
             $dateContainer.addClass('col-lg-12 col-md-12 col-sm-12 col-12');
-            $dateInput.removeClass('is-valid').addClass('is-invalid');
+            $dateInput.removeClass('is-valid').removeClass('is-invalid');
 
             $ageBadgeContainer.removeClass('col-lg-1 col-md-2 col-sm-2 col-2').addClass('d-none');
         }
