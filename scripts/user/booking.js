@@ -40,8 +40,9 @@ $(function () {
 });
 
 /**
+ * Increases the progress bar by one.
  * 
- * @param {*} stepName 
+ * @param {string} stepName the name of the step in the stepsDone array.
  */
 function increaseProgress(stepName) {
     let finishedPercent;
@@ -56,8 +57,9 @@ function increaseProgress(stepName) {
 }
 
 /**
+ * Decreases the progress bar by one.
  * 
- * @param {*} stepName 
+ * @param {string} stepName the name of the step in the stepsDone array.
  */
 function decreaseProgress(stepName) {
     let finishedPercent;
@@ -72,17 +74,21 @@ function decreaseProgress(stepName) {
 }
 
 /**
- * 
+ * Keeps track if the required fields in the passenger information
+ * card are filled with proper information.
  */
 function checkPassengerInformation() {
     let isFilled = true;
 
+    // Calls it self if any input within the fields is detected
     requiredFields.forEach(function (field) {
         $(field.selector).on('input', function () {
             checkPassengerInformation();
         });
     });
 
+    // Checks if a field has the proper data, and flags
+    // accordingly through the requireFields array.
     requiredFields.forEach(function (field) {
         const value = $(field.selector).val().trim();
 
@@ -147,6 +153,7 @@ function checkPassengerInformation() {
         }
     });
 
+    // Increases or decreases the user's progress accordingly.
     if (requiredFields.map(field => field.isFilled).every(Boolean)) {
         increaseProgress('passengerInformation');
     } else {
@@ -235,6 +242,11 @@ function showSpecifyGender() {
     });
 }
 
+/**
+ * Displays a toast whenever the user picks a
+ * different meal package and displays the chosen
+ * meal package in the booking summary.
+ */
 function updateMealSelection() {
     const $mealToast = $('#meal-toast');
     const $toastBody = $mealToast.find('.toast-body');
@@ -255,6 +267,11 @@ function updateMealSelection() {
     });
 }
 
+/**
+ * Displays a toast whenever the user picks a
+ * seat and displays the chosen seat and its class
+ * in the booking summary.
+ */
 function updateSeatSelection() {
     const $seatToast = $("#seat-toast");
     const $toastBody = $seatToast.find(".toast-body");
@@ -299,6 +316,10 @@ function updateSeatSelection() {
     });
 }
 
+/**
+ * Displays the extra services that the user will avail
+ * in this booking.
+ */
 function updateServiceSelection() {
     const $hasExtraServices = $('#has-extra-services');
     const $noExtraServices = $('#no-extra-services');
@@ -340,6 +361,10 @@ function updateServiceSelection() {
     });
 }
 
+/**
+ * Dynamically displays the user's choices in the different
+ * selections and its cost with the breakdown.
+ */
 function updateBookingSummary() {
     const $baseFare = $('#base-fare');
     const $taxAndFee = $('#tax-and-fee');
@@ -368,6 +393,10 @@ function updateBookingSummary() {
     $bookingTotal.text(`PHP ${(seatFare + classFare + taxAndFee + extraFee).toLocaleString('en-US')}`);
 }
 
+/**
+ * Dynamically displays if an input field has not yet been filled in
+ * or has the wrong input.
+ */
 function showMissingFields() {
     requiredFields.forEach(function (field) {
         $(field.selector).on('input', function () {
@@ -435,8 +464,9 @@ function showMissingFields() {
 }
 
 /**
+ * Displays a toast.
  * 
- * @param {*} toastID 
+ * @param {string} toastID the toast's ID.
  */
 function showToast(toastID) {
     const toast = document.getElementById(toastID);
@@ -454,7 +484,9 @@ function showToast(toastID) {
 }
 
 /**
- * 
+ * Checks if all of the required details for a booking
+ * are filled in and displays a toast if the confirmation
+ * is successful or not.
  */
 function confirmBooking() {
     let isFinished = false;
