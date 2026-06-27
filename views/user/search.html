@@ -13,6 +13,10 @@
             integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
     <script src="/scripts/user/search.js" defer></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"
+          integrity="sha384-EXatlQyrOJgDaM9/a74ArMzy7/2bTMSrZj8ID1IPeVmc3GncfCugefCFWSLj8JL/" crossorigin="anonymous">
     <link rel="stylesheet" href="/styles/override.css">
     <link rel="stylesheet" href="/styles/additional.css">
 
@@ -28,25 +32,29 @@
                 <img class="d-inline-block align-items-center mb-2" width="40px" src="/media/company-logo.png">
             </a>
         </div>
+
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="navbar-collapse collapse" id="main-menu">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item me-3">
                     <a class="nav-link fw-bold" href="/index.html"> Home </a>
                 </li>
-                <li class="nav-item px-3 px-sm-3 ps-md-3 px-xl-0 mt-xl-0 me-3 text-bg-primary-accent rounded-3">
-                    <a class="nav-link fw-bold text-light">
-                        Search A Flight
-                    </a>
+
+                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-lg-0 text-bg-primary-accent rounded-3">
+                    <a class="nav-link fw-bold text-light"> Search A Flight </a>
                 </li>
+
                 <li class="nav-item me-3">
                     <a class="nav-link fw-bold" href="/views/user/booking.html"> Reserve A Flight </a>
                 </li>
+
                 <li class="nav-item me-3">
                     <a class="nav-link fw-bold" href="/views/user/reservations.html"> My Reservations </a>
                 </li>
+
                 <li class="nav-item dropstart me-3">
                     <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
                         Profile
@@ -57,23 +65,28 @@
                         <li><a class="dropdown-item" href="###"> Log Out </a></li>
                     </ul>
                 </li>
+
                 <li class="nav-item dropstart">
                     <a class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         Admin Access
                     </a>
+
                     <ul class="dropdown-menu mb-3 bg-dark-subtle">
                         <li>
                             <a class="dropdown-item" href="/views/admin/admin-dashboard.html"> Admin Dashboard </a>
                         </li>
+
                         <li>
                             <a class="dropdown-item" href="/views/admin/admin-flights.html"> Flight Management </a>
                         </li>
+
                         <li>
                             <a class="dropdown-item" href="/views/admin/admin-reservations.html">
                                 Reservation Management
                             </a>
                         </li>
+
                         <li>
                             <a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a>
                         </li>
@@ -83,308 +96,491 @@
         </div>
     </nav>
 
+    <div class="container mt-5 mb-5">
+        <div class="card d-flex">
+            <div class="card-header text-center text-white bg-primary-accent">
+                <h2 class="mt-2"> Flight Search </h2>
+            </div>
 
-    <hr class="border border-3 border-dark rounded-3 opacity-100">
+            <div class="card-body">
+                <div class="mx-4 mt-2">
+                    <h4 class="text-primary-accent"> Flight Route </h4>
 
-    <!-- Page Title -->
-    <div class="container mb-2">
-        <div class="bg-dark text-white p-3 rounded text-center">
-            <h2 class="mb-3">Flight Search</h2>
-        </div>
-    </div>
-    <main>
-        <div class="container mb-4">
-            <!--Initial Search Form-->
-            <div class="card shadow-sm border-dark p-3">
-                <form class="row g-3 needs-validation" novalidate>
-                    <!--Origin Airport-->
-                    <div class="col-md-4">
-                        <h3>Departure Airport</h3>
-                        <label for="originAirport" class="form-label"></label>
-                        <select class="form-select filter-select" id="originAirport" required>
-                            <option selected disabled value="">Options</option>
-                            <option value="1">Airport A</option>
-                            <option value="2">Airport B</option>
-                            <option value="3">Airport C</option>
-                            <option value="4">Airport D</option>
-                            <option value="5">Airport E</option>
-                            <option value="6">Airport F</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a departure airport.
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-pen-fill"></i></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                        id="suffix-select">
+                                    <option selected hidden value=""> Select A Departure Airport </option>
+                                    <option> Airport A </option>
+                                    <option> Airport B </option>
+                                    <option> Airport C </option>
+                                    <option> Airport D </option>
+                                    <option> Airport E </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-pen-fill"></i></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                        id="suffix-select">
+                                    <option selected hidden value=""> Select An Arrival Airport </option>
+                                    <option> Airport A </option>
+                                    <option> Airport B </option>
+                                    <option> Airport C </option>
+                                    <option> Airport D </option>
+                                    <option> Airport E </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="btn-group w-100">
+                                <input type="radio" class="btn-check" name="trip-type" id="one-way">
+                                <label class="btn btn-primary text-white" for="one-way"> One-Way Flight </label>
+
+                                <input type="radio" class="btn-check" name="trip-type" id="round-trip">
+                                <label class="btn btn-primary text-white" for="round-trip"> Round-Trip Flight </label>
+                            </div>
                         </div>
                     </div>
-                    <!--Destination Airport-->
-                    <div class="col-md-4">
-                        <h3>Destination Airport</h3>
-                        <label for="destinationAirport" class="form-label"></label>
-                        <select class="form-select" id="destinationAirport" required>
-                            <option selected disabled value="">Options</option>
-                            <option value="1">Airport A</option>
-                            <option value="2">Airport B</option>
-                            <option value="3">Airport C</option>
-                            <option value="4">Airport D</option>
-                            <option value="5">Airport E</option>
-                            <option value="6">Airport F</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select a destination airport.
+                </div>
+
+                <div class="mx-4 mt-2">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="text-primary-accent"> Departure Date </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <!-- ICON -->
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="date" id="date-input">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <h4 class="text-primary-accent"> Return Date </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <!-- ICON -->
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="date" id="date-input">
+                            </div>
                         </div>
                     </div>
-                    <!--Trip Type-->
-                    <div class="col-md-4">
-                        <h3>Trip Type</h3>
-                        <div class="form-check mb-4">
-                            <input type="radio" class="form-check-input" id="oneWay" name="tripType" required>
-                            <label class="form-check-label" for="oneWay">One-Way</label>
-                            <div class="invalid-feedback">Please select a trip type.</div>
+                </div>
+
+                <div class="mx-4 mt-2">
+                    <div class="row">
+                        <div class="col">
+                            <h4 class="text-primary-accent"> Passengers </h4>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-pen-fill"></i></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                                id="suffix-select">
+                                            <option selected hidden value=""> Select Number of Adults </option>
+                                            <option> 1 Adult </option>
+                                            <option> 2 Adults </option>
+                                            <option> 3 Adults </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-pen-fill"></i></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                                id="suffix-select">
+                                            <option selected hidden value=""> Select Number of Children </option>
+                                            <option> No Children </option>
+                                            <option> 1 Child </option>
+                                            <option> 2 Children </option>
+                                            <option> 3 Children </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-pen-fill"></i></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                                id="suffix-select">
+                                            <option selected hidden value=""> Select Number of Infants </option>
+                                            <option> No Infants </option>
+                                            <option> 1 Infant </option>
+                                            <option> 2 Infants </option>
+                                            <option> 3 Infants </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-check mb-3">
-                            <input type="radio" class="form-check-input" id="roundTrip" name="tripType" required>
-                            <label class="form-check-label" for="roundTrip">Round-Trip</label>
-                            <div class="invalid-feedback">Please select a trip type.</div>
-                        </div>
-                    </div>
-                    <!-- Departure Date -->
-                    <div class="col-sm-2">
-                        <h3>Departure</h3>
-                        <label for="departure-date" class="form-label fw-bold">June 2026 to June 2027</label>
-                        <input type="date" id="departure-date" name="departure_date" value="" min="2026-06-01"
-                               max="2027-06-15" required>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback">Please select a departure date between June 1, 2026, and June 15,
-                            2027.</div>
-                    </div>
-                    <!-- Return Date -->
-                    <div class="col-sm-2">
-                        <h3>Return</h3>
-                        <label for="return-date" class="form-label fw-bold">June 2026 to June 2027</label>
-                        <input type="date" id="return-date" name="return_date" value="" min="2026-06-01"
-                               max="2027-06-15" required>
-                        <div class="valid-feedback"></div>
-                        <div class="invalid-feedback">Please select a return date between June 1, 2026, and June 15,
-                            2027.</div>
-                    </div>
-                    <!--Passengers-->
-                    <div class="col-sm-4">
-                        <h3>Passengers</h3>
-                        <label for="adults" class="form-label">Number of Adults</label>
-                        <select class="form-select" id="adults" required>
-                            <option selected disabled value="">Options</option>
-                            <option value="1">1 Adult</option>
-                            <option value="2">2 Adults</option>
-                            <option value="3">3 Adults</option>
-                            <option value="4">4 Adults</option>
-                            <option value="5">5 Adults</option>
-                            <option value="6">6 Adults</option>
-                            <option value="7">7 Adults</option>
-                            <option value="8">8 Adults</option>
-                            <option value="9">9 Adults</option>
-                            <option value="10">10 Adults</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select the number of adults.
-                        </div>
-                        <label for="children" class="form-label">Number of Children</label>
-                        <select class="form-select" id="children" required>
-                            <option selected disabled value="">Options</option>
-                            <option value="0">0 Children</option>
-                            <option value="1">1 Child</option>
-                            <option value="2">2 Children</option>
-                            <option value="3">3 Children</option>
-                            <option value="4">4 Children</option>
-                            <option value="5">5 Children</option>
-                            <option value="6">6 Children</option>
-                            <option value="7">7 Children</option>
-                            <option value="8">8 Children</option>
-                            <option value="9">9 Children</option>
-                            <option value="10">10 Children</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select the number of children.
-                        </div>
-                        <label for="infants" class="form-label">Number of Infants</label>
-                        <select class="form-select" id="infants" required>
-                            <option selected disabled value="">Options</option>
-                            <option value="0">0 Infants</option>
-                            <option value="1">1 Infant</option>
-                            <option value="2">2 Infants</option>
-                            <option value="3">3 Infants</option>
-                            <option value="4">4 Infants</option>
-                            <option value="5">5 Infants</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select the number of infants.
+
+                        <div class="col-lg-3">
+                            <h4 class="text-primary-accent"> Cabin Class </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-pen-fill"></i></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                        id="suffix-select">
+                                    <option selected hidden value=""> Select A Cabin Class </option>
+                                    <option> Economy </option>
+                                    <option> Premium Economy </option>
+                                    <option> Business </option>
+                                    <option> First Class </option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <h3>Cabin Class</h3>
-                        <label for="cabinClass" class="form-label"></label>
-                        <select class="form-select" id="cabinClass" required>
-                            <option selected disabled value="">Options</option>
-                            <option value="economy">Economy</option>
-                            <option value="premium_economy">Premium Economy</option>
-                            <option value="business">Business</option>
-                            <option value="first_class">First Class</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Please select the cabin class.
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="d-flex">
-                            <button type="submit" class="btn btn-outline-primary btn-lg">Search Flights</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
-            <div class="container rounded bg-danger text-white mt-4 p-3 text-center">
-                <h2 class="mb-3">Additional Advanced Search Options</h2>
-            </div>
-            <!-- Additional Advanced Search Options -->
-            <div id="accordion">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                    aria-expanded="false" aria-controls="collapseOne">
-                                Preferred Airlines
+
+            <div class="mt-2">
+                <div class="accordion" id="advanced-search-options">
+                    <div class="accordion-item shadow">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#search-options">
+                                Advanced Search Options
                             </button>
-                        </h3>
-                    </div>
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-                            <label for="cabinClass" class="form-label">Options</label>
-                            <select class="form-select" id="cabinClass">
-                                <option selected disabled value="">...</option>
-                                <option value="cebu_atlantic">Cebu Atlantic</option>
-                                <option value="premium_economy">Gas Asia</option>
-                                <option value="opp">OPP</option>
-                                <option value="spirit_air">Spirit Air</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingTwo">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
-                                    aria-expanded="false" aria-controls="collapseTwo">
-                                Direct Flights Toggle
-                            </button>
-                        </h3>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                        <div class="card-body">
-                            <input class="form-check-input" type="checkbox" value="" id="directFlights">
-                            <label class="form-check-label" for="directFlights">
-                                Direct Flights Only
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingThree">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
-                                    aria-expanded="false" aria-controls="collapseThree">
-                                Flexible Dates Toggle
-                            </button>
-                        </h3>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                        <div class="card-body">
-                            <input class="form-check-input" type="checkbox" value="" id="flexibleDates">
-                            <label class="form-check-label" for="flexibleDates">
-                                Flexible Dates
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" id="headingFour">
-                        <h3 class="mb-0">
-                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"
-                                    aria-expanded="false" aria-controls="collapseFour">
-                                Price Range Maximum
-                            </button>
-                        </h3>
-                    </div>
-                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-                        <div class="card-body">
-                            <label for="customRange2" class="form-label fw-bold">P10000 - P100000</label>
-                            <input type="range" class="form-range" min="1" max="10" id="priceMax">
+                        </h2>
+
+                        <div id="search-options" class="accordion-collapse collapse"
+                             data-bs-parent="#advanced-search-options">
+
+                            <div class="mx-4 mt-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="text-primary-accent"> Preferred Airline </h4>
+
+                                        <div class="input-group">
+                                            <div class="input-group-text bg-dark border-dark">
+                                                <i class="text-secondary bi bi-pen-fill"></i></i>
+                                            </div>
+
+                                            <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black"
+                                                    id="suffix-select">
+                                                <option selected hidden value="">
+                                                    Select A Preferred Airline
+                                                </option>
+
+                                                <option> Cebu Atlantic </option>
+                                                <option> Filipino Airlines </option>
+                                                <option> AirFAST </option>
+                                                <option> Sunray Air </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <h4 class="text-primary-accent"> Preferred Price Range </h4>
+
+                                        <div class="d-flex align-items-center gap-3">
+                                            <!-- Min price box -->
+                                            <div class="input-group input-group-sm" style="width: 100px;">
+                                                <span class="input-group-text"> PHP </span>
+                                                <input type="number" class="form-control" id="minPriceInput" value="200"
+                                                       readonly>
+                                            </div>
+
+                                            <!-- The Slider Wrapper -->
+                                            <div class="position-relative flex-grow-1" style="height: 24px;">
+                                                <input type="range"
+                                                       class="form-range position-absolute top-0 start-0 w-100"
+                                                       id="minPrice" min="0" max="1000" step="10" value="200">
+                                                <input type="range"
+                                                       class="form-range position-absolute top-0 start-0 w-100"
+                                                       id="maxPrice" min="0" max="1000" step="10" value="800">
+                                            </div>
+
+                                            <!-- Max price box -->
+                                            <div class="input-group input-group-sm" style="width: 100px;">
+                                                <span class="input-group-text"> PHP </span>
+                                                <input type="number" class="form-control" id="maxPriceInput" value="800"
+                                                       readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mx-4 mt-2">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4 class="text-primary-accent"> Additional Options </h4>
+
+                                        <div class="btn-group w-100">
+                                            <input type="checkbox" class="btn-check" name="additional-option"
+                                                   id="direct-flights">
+                                            <label class="btn btn-lg btn-outline-primary" for="direct-flights">
+                                                Direct Flights Only
+                                            </label>
+
+                                            <input type="checkbox" class="btn-check" name="additional-option"
+                                                   id="flexible-dates">
+                                            <label class="btn btn-lg btn-outline-primary" for="flexible-dates">
+                                                Flexible Dates
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--Flight Results-->
-        <div class="container mb-2">
-            <div class="rounded bg-warning text-white mt-4 p-3 text-center">
-                <h2 class="mb-3">Flight Results</h2>
-            </div>
-        </div>
-        <div class="container mb-2">
-            <div class="row g-3 mb-2">
-                <div class="card-body mb-1">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="sortOptions"
-                                data-toggle="dropdown" aria-expanded="false">
-                            Sort Options
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="sortOptions">
-                            <li><a class="dropdown-item" href="#">Price</a></li>
-                            <li><a class="dropdown-item" href="#">Departure Time</a></li>
-                            <li><a class="dropdown-item" href="#">Duration</a></li>
-                        </ul>
-                    </div>
-                    <input class="form-check-input" type="checkbox" value="" id="sortOrder">
-                    <label class="form-check-label" for="sortOrder">
-                        Descending Order
-                    </label>
+
+            <div class="card-footer bg-primary-accent">
+                <div class="d-flex justify-content-center m-3">
+                    <button class="btn btn-lg btn-primary text-white">
+                        Search Flights
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="container mb-2">
-            <div class="row">
-                <div class="col-md-5 col-lg-4 order-md-last">
-                    <div class="card bg-warning text-white text-center mb-2">
-                        <h3>Filter</h3>
-                        <label for="cabinClass" class="form-label">Airlines</label>
-                        <select class="form-select" id="cabinClass">
-                            <option selected disabled value="">Options</option>
-                            <option value="cebu_atlantic">Cebu Atlantic</option>
-                            <option value="gas_asia">Gas Asia</option>
-                            <option value="opp">Operation Philippines</option>
-                            <option value="spirit_air">Spirit Airlines</option>
-                        </select>
-                        <label for="cabinClass" class="form-label">Price Ranges</label>
-                        <select class="form-select" id="cabinClass">
-                            <option selected disabled value="">Options</option>
-                            <option value="cheap">P2000 - P20 000</option>
-                            <option value="average">P25 000 - P40 000</option>
-                            <option value="expensive">P50 000 - P100 000</option>
-                            <option value="extravagant">P200 000 - P400 000</option>
-                        </select>
-                        <label for="cabinClass" class="form-label">Stops</label>
-                        <select class="form-select" id="cabinClass">
-                            <option selected disabled value="">Options</option>
-                            <option value="1">1 stop</option>
-                            <option value="2">2 stop</option>
-                            <option value="3">3 stop</option>
-                            <option value="4">4 stop</option>
-                        </select>
-                        <label for="return-date" class="form-label fw-bold">Departure Date</label>
-                        <input type="date" id="return-date" name="return_date" value="" min="2026-06-01"
-                               max="2027-06-15">
+
+        <div class="card d-flex mt-4">
+            <div class="card-header text-center text-white bg-primary-accent">
+                <div class="row">
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                    data-bs-toggle="dropdown">
+                                Sort By
+                                <span id="sort-type"> User ID (1-9) </span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-center bg-dark-subtle" id="sort-dropdown">
+                                <li>
+                                    <h4 class="dropdown-header"> Sort By </h4>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li value="User ID (1-9)">
+                                    <a class="dropdown-item text-dark active">
+                                        <i class="fa-solid fa-arrow-down-1-9"></i> Price
+                                    </a>
+                                </li>
+
+                                <li value="User ID (9-1)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-9-1"></i> Price
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li value="Last Name (A-Z)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-a-z"></i> Departure Time
+                                    </a>
+                                </li>
+
+                                <li value="Last Name (Z-A)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-z-a"></i> Departure Time
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li value="Saved Pax (1-9)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-1-9"></i> Duration
+                                    </a>
+                                </li>
+
+                                <li value="Saved Pax (9-1)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-9-1"></i> Duration
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="dropdown">
+                            <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                    data-bs-toggle="dropdown">
+                                Filter By
+                                <span id="filter-type"> Admins </span>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-center bg-dark-subtle" id="filter-dropdown">
+                                <li>
+                                    <h4 class="dropdown-header"> Filter By </h4>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li>
+                                    <h6 class="dropdown-header"> Airlines </h6>
+                                </li>
+
+                                <li value="Admins">
+                                    <a class="dropdown-item text-dark active">
+                                        <i class="fa-solid fa-user-gear"></i> Cebu Atlantic
+                                    </a>
+                                </li>
+
+                                <li value="Staff">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-users"></i> Filipino Airlines
+                                    </a>
+                                </li>
+
+                                <li value="Agents">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-user-pen"></i> AirFAST
+                                    </a>
+                                </li>
+
+                                <li value="Customers">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-user"></i> Sunray Air
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li>
+                                    <h6 class="dropdown-header"> Price Ranges </h6>
+                                </li>
+
+                                <li value="Unverified Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-question-circle-fill"></i> PHP 1,000 - 25,000
+                                    </a>
+                                </li>
+
+                                <li value="Active Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-check-circle-fill"></i> PHP 25,001 - 50,000
+                                    </a>
+                                </li>
+
+                                <li value="Inactive Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-x-circle-fill"></i> PHP 50,001 - 75,000
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> PHP 75,001 - 100,000
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li>
+                                    <h6 class="dropdown-header"> Stops </h6>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 1 Stop
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 2 Stops
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 3 Stops
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 4 Stops
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 5 Stops
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li>
+                                    <h6 class="dropdown-header"> Departure Time </h6>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 00:00 to 06:00
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 06:01 to 12:00
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 12:01 to 18:00
+                                    </a>
+                                </li>
+
+                                <li value="Suspended Users">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="bi bi-exclamation-circle-fill"></i> 18:01 to 23:59
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-7 col-lg-8">
-                    <div class="row g-3">
-                        <div class="card mb-3 border-warning">
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">
+                        <div class="card card-hover mb-3 border-warning">
                             <h5 class="fw-bold">Cebu Atlantic</h5>
-                            <img src="/media/company-logo.png" class="img-thumbnail" alt="Cebu Atlantic Logo">
+                            <img src="/media/company-logo.png" class="img-thumbnail square-100px bg-dark"
+                                 alt="Cebu Atlantic Logo">
                             <h5>Flight Number:</h5>
                             <h5 class="fw-bold">CAL110</h5>
                             <h5>Departure & Arrival:</h5>
@@ -399,9 +595,13 @@
                             <h5 class="fw-bold">20</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Cebu Atlantic</h5>
-                            <img src="/media/company-logo.png" class="img-thumbnail" alt="Cebu Atlantic Logo">
+                            <img src="/media/company-logo.png" class="img-thumbnail square-100px bg-dark"
+                                 alt="Cebu Atlantic Logo">
                             <h5>Flight Number:</h5>
                             <h5 class="fw-bold">CAL115</h5>
                             <h5>Departure & Arrival:</h5>
@@ -416,9 +616,13 @@
                             <h5 class="fw-bold">10</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Gas Asia</h5>
-                            <img src="/media/company-logo.png" class="img-thumbnail" alt="Gas Asia Logo">
+                            <img src="/media/company-logo.png" class="img-thumbnail square-100px bg-dark"
+                                 alt="Gas Asia Logo">
                             <h5>Flight Number:</h5>
                             <h5 class="fw-bold">GAS120</h5>
                             <h5>Departure & Arrival:</h5>
@@ -433,9 +637,13 @@
                             <h5 class="fw-bold">24</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Gas Asia</h5>
-                            <img src="/media/company-logo.png" class="img-thumbnail" alt="Gas Asia Logo">
+                            <img src="/media/company-logo.png" class="img-thumbnail square-100px bg-dark"
+                                 alt="Gas Asia Logo">
                             <h5>Flight Number:</h5>
                             <h5 class="fw-bold">GAS142</h5>
                             <h5>Departure & Arrival:</h5>
@@ -450,6 +658,11 @@
                             <h5 class="fw-bold">05</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Operation Philippines</h5>
                             <img src="/media/company-logo.png" class="img-thumbnail" alt="Operation Philippines Logo">
@@ -467,6 +680,9 @@
                             <h5 class="fw-bold">13</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Operation Philippines</h5>
                             <img src="/media/company-logo.png" class="img-thumbnail" alt="Operation Philippines Logo">
@@ -484,6 +700,9 @@
                             <h5 class="fw-bold">09</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Spirit Airlines</h5>
                             <img src="/media/company-logo.png" class="img-thumbnail" alt="Spirit Airlines Logo">
@@ -501,6 +720,9 @@
                             <h5 class="fw-bold">40</h5>
                             <button type="submit" class="btn btn-outline-warning btn-lg mb-2">Book</button>
                         </div>
+                    </div>
+
+                    <div class="col-3">
                         <div class="card mb-3 border-warning">
                             <h5 class="fw-bold">Spirit Airlines</h5>
                             <img src="/media/company-logo.png" class="img-thumbnail" alt="Spirit Airlines Logo">
@@ -521,7 +743,41 @@
                     </div>
                 </div>
             </div>
-    </main>
+
+            <div class="card-footer bg-primary-accent">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
+                    <h6 class="text-white">
+                        Showing 10 Results Out Of 100,000
+                    </h6>
+
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                        <!-- PAGINATION -->
+                        <nav>
+                            <ul class="pagination m-0">
+                                <li class="page-item">
+                                    <a class="page-link disabled">
+                                        <span aria-hidden="true">
+                                            < </span>
+                                    </a>
+                                </li>
+
+                                <li class="page-item"><a class="page-link active"> 1 </a></li>
+                                <li class="page-item"><a class="page-link"> ... </a></li>
+                                <li class="page-item"><a class="page-link"> 10 </a></li>
+
+                                <li class="page-item">
+                                    <a class="page-link">
+                                        <span aria-hidden="true"> > </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="pt-4 pb-2 mt-5 mt-auto text-center bg-dark">
         <p class="text-light">

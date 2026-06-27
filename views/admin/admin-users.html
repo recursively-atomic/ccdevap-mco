@@ -105,7 +105,8 @@
                             </div>
 
                             <div class="form-floating">
-                                <input class="form-control bg-light border-dark border-5 text-black" placeholder="">
+                                <input class="form-control bg-light border-dark border-5 text-black rounded-end-3"
+                                       placeholder="">
                                 <label for="search"> Search </label>
                             </div>
                         </div>
@@ -329,32 +330,34 @@
             </div>
 
             <div class="card-footer bg-primary-accent">
-                <div class="d-flex justify-content-between align-items-baseline flex-wrap gap-3 m-2">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
                     <h6 class="text-white">
                         Showing 10 Results Out Of 100,000
                     </h6>
 
-                    <!-- PAGINATION -->
-                    <nav>
-                        <ul class="pagination m-0">
-                            <li class="page-item">
-                                <a class="page-link disabled">
-                                    <span aria-hidden="true">
-                                        < </span>
-                                </a>
-                            </li>
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                        <!-- PAGINATION -->
+                        <nav>
+                            <ul class="pagination m-0">
+                                <li class="page-item">
+                                    <a class="page-link disabled">
+                                        <span aria-hidden="true">
+                                            < </span>
+                                    </a>
+                                </li>
 
-                            <li class="page-item"><a class="page-link active"> 1 </a></li>
-                            <li class="page-item"><a class="page-link"> ... </a></li>
-                            <li class="page-item"><a class="page-link"> 10 </a></li>
+                                <li class="page-item"><a class="page-link active"> 1 </a></li>
+                                <li class="page-item"><a class="page-link"> ... </a></li>
+                                <li class="page-item"><a class="page-link"> 10 </a></li>
 
-                            <li class="page-item">
-                                <a class="page-link">
-                                    <span aria-hidden="true"> > </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                                <li class="page-item">
+                                    <a class="page-link">
+                                        <span aria-hidden="true"> > </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
@@ -394,7 +397,8 @@
                 </div>
 
                 <div class="modal-footer bg-light">
-                    <button class="btn btn-success text-white" onclick="hideModalShowToast('edit-activity', 'edit-toast')">
+                    <button class="btn btn-success text-white"
+                            onclick="hideModalShowToast('edit-activity', 'edit-toast')">
                         Save Changes
                     </button>
 
@@ -431,7 +435,8 @@
                         No
                     </button>
 
-                    <button class="btn btn-danger text-white" onclick="hideModalShowToast('delete-activity', 'delete-toast')">
+                    <button class="btn btn-danger text-white"
+                            onclick="hideModalShowToast('delete-activity', 'delete-toast')">
                         Yes, Delete It
                     </button>
                 </div>

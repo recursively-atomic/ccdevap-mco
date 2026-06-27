@@ -1,49 +1,49 @@
 /* TABLE STYLES */
 tbody > tr > th,
 tbody > tr > td {
-    color: var(--bs-dark)!important;
+    color: var(--bs-dark) !important;
 }
 
 tbody > tr:hover > td,
 tbody > tr:hover > th {
     background: var(--bs-light);
-    color: var(--bs-primary)!important;
+    color: var(--bs-primary) !important;
 }
 
 tbody > tr:hover > td > button.btn-success {
     border-color: var(--bs-white);
     background: var(--bs-white);
-    color: var(--bs-success)!important;
+    color: var(--bs-success) !important;
 }
 
 tbody > tr:hover > td > button.btn-success:hover {
     border-color: var(--bs-success);
     background: var(--bs-success);
-    color: var(--bs-white)!important;
+    color: var(--bs-white) !important;
 }
 
 tbody > tr:hover > td > button.btn-warning {
     border-color: var(--bs-white);
     background: var(--bs-white);
-    color: var(--bs-warning)!important;
+    color: var(--bs-warning) !important;
 }
 
 tbody > tr:hover > td > button.btn-warning:hover {
     border-color: var(--bs-warning);
     background: var(--bs-warning);
-    color: var(--bs-white)!important;
+    color: var(--bs-white) !important;
 }
 
 tbody > tr:hover > td > button.btn-danger {
     border-color: var(--bs-white);
     background: var(--bs-white);
-    color: var(--bs-danger)!important;
+    color: var(--bs-danger) !important;
 }
 
 tbody > tr:hover > td > button.btn-danger:hover {
     border-color: var(--bs-danger);
     background: var(--bs-danger);
-    color: var(--bs-white)!important;
+    color: var(--bs-white) !important;
 }
 
 /* FORM STYLES */
@@ -132,22 +132,27 @@ tbody > tr:hover > td > button.btn-danger:hover {
 
 #filter-dropdown .active {
     background-color: var(--bs-tertiary-accent);
-    color: var(--bs-light)!important;
+    color: var(--bs-light) !important;
 }
 
 #sort-dropdown .active {
     background-color: var(--bs-tertiary-accent);
-    color: var(--bs-light)!important;
+    color: var(--bs-light) !important;
 }
 
 .list-group-item:hover {
     background: var(--bs-light);
-    color: var(--bs-primary)!important;
+    color: var(--bs-primary) !important;
 }
 
 /* NEW */
 .h-30px {
     height: 30px;
+}
+
+.square-100px {
+    height: 100px;
+    width: 100px;
 }
 
 .btn-check:checked + .btn {
@@ -191,4 +196,22 @@ tbody > tr:hover > td > button.btn-danger:hover {
 
 .economy {
     background-color: var(--bs-tertiary-accent);
+}
+
+input[type="range"].form-range {
+    pointer-events: none;
+    background: transparent;
+}
+
+input[type="range"].form-range::-webkit-slider-thumb {
+    pointer-events: auto;
+}
+
+input[type="range"].form-range::-moz-range-thumb {
+    pointer-events: auto;
+}
+
+#maxPrice::-webkit-slider-runnable-track {
+    background: transparent;
+    background-color: transparent;
 }
