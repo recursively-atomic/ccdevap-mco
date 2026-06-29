@@ -1,4 +1,4 @@
-$(function () {
+$(function () {    
     autocompleteLocations();
 });
 
@@ -38,7 +38,7 @@ function autocompleteLocations() {
     });
 
     // Updating the datalist when a user inputs something
-    $('#origin, #destination').on('change', function () {
+    $('#origin, #destination').off('change').on('change', function () {
         const $input = $(this);
         const value = $input.val();
         let $match, code, location;

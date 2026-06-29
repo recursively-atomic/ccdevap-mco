@@ -157,12 +157,12 @@
                 <!-- PROFILE PICTURE AND INFORMATION -->
                 <div class="m-4">
                     <div class="row d-flex align-items-center">
-                        <div class="col-lg-3 col-md-4 col-sm-12 position-relative card-hover">
-                            <img class="d-block rounded-3 shadow-lg img-fluid"
+                        <div class="col-lg-3 col-md-4 col-sm-12 position-relative card-hover-sm">
+                            <img class="d-block rounded-3 shadow-lg img-fluid profile-picture"
                                  src="https://picsum.photos/1280/1280?random=1" id="profile-picture">
 
                             <button class="btn mb-3 bottom-0 position-absolute start-50 translate-middle-x btn-sm btn-tertiary text-black text-nowrap"
-                                    onclick="$('#change-profile').click();">
+                                    onclick="$('#change-profile').trigger('click');">
                                 Change Profile
                             </button>
 
@@ -362,7 +362,7 @@
                         </div>
 
                         <div class="d-none" id="age-badge-container">
-                            <span class="badge p-2 rounded-pill text-bg-primary text-white card-hover shadow"
+                            <span class="badge p-2 rounded-pill text-bg-primary text-white card-hover-sm shadow"
                                   id="age-badge"></span>
                         </div>
                     </div>
@@ -503,7 +503,7 @@
             <!-- SAVED PASSENGERS TAB -->
             <div class="tab-pane fade" id="saved-passengers-pane">
                 <!-- CARD TEMPLATE -->
-                <div class="card m-4 p-4 mb-4 card-hover shadow bg-primary-accent">
+                <div class="card m-4 p-4 mb-4 card-hover-sm shadow bg-primary-accent">
                     <div class="row">
                         <div class="col-lg-9 col-md-12">
                             <!-- PASSPORT NUMBER -->
@@ -655,7 +655,7 @@
 
                     <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                            <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
                                 <h4 class="text-primary-accent"> Cardholder </h4>
 
                                 <div class="input-group">
@@ -690,7 +690,7 @@
 
                     <div class="m-4 px-3">
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                            <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
                                 <h4 class="text-primary-accent"> Country </h4>
 
                                 <div class="input-group">
@@ -729,7 +729,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
+                            <div class="col-lg-4 col-md-6 mb-sm-4 mb-4 mb-lg-0">
                                 <h4 class="text-primary-accent"> Region </h4>
 
                                 <div class="input-group">
@@ -1088,7 +1088,7 @@
             <!-- TRAVEL HISTORY TAB -->
             <div class="tab-pane fade" id="travel-history-pane">
                 <!-- CARD TEMPLATE -->
-                <div class="card m-4 p-4 mb-4 card-hover shadow bg-primary-accent">
+                <div class="card m-4 p-4 mb-4 card-hover-sm shadow bg-primary-accent">
                     <div class="row">
                         <div class="col-lg-9 col-md-12">
                             <!-- FLIGHT ID AND FLIGHT STATUS -->
@@ -1098,11 +1098,11 @@
                             </div>
 
                             <!-- FLIGHT TYPE AND PASSENGER AMOUNT -->
-                            <div class="d-flex align-items-center m-0 text-light">
-                                <h4 class="m-0 p-0"> One-Way Trip </h4>
+                            <h4 class="d-flex align-items-center m-0 text-light">
+                                <p class="m-0 p-0"> One-Way Trip </p>
                                 <i class="m-0 p-0 bi bi-dot display-6"></i>
-                                <h4 class="m-0 p-0"> 1 PAX </h4>
-                            </div>
+                                <p class="m-0 p-0"> 1 PAX </p>
+                            </h4>
 
                             <hr class="border border-3 border-dark rounded-3 opacity-100">
 
@@ -1136,8 +1136,10 @@
                                         <h6 class="m-2 fw-bolder"> Arrival </h6>
                                     </div>
 
-                                    <p class="m-0 p-0 ps-3 text-light"> DPS I Gusti Ngurah Rai International Airport
+                                    <p class="m-0 p-0 ps-3 text-light">
+                                        DPS I Gusti Ngurah Rai International Airport
                                     </p>
+                                    
                                     <p class="m-0 p-0 ps-3 text-light"> Gate 9B </p>
 
                                     <div class="d-flex align-items-center m-0 p-0 text-light">

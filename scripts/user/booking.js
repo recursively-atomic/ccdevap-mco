@@ -30,6 +30,7 @@ let step = 0;
 $(function () {
     increaseProgress('mealSelection');
     increaseProgress('extraService');
+    bindPassengerInformationEvents();
     checkPassengerInformation();
     showAgeBadge();
     showSpecifyGender();
@@ -73,25 +74,24 @@ function decreaseProgress(stepName) {
     }
 }
 
+function bindPassengerInformationEvents() {
+    requiredFields.forEach(function (field) {
+        $(field.selector).off('input.check').on('input.check', function () {
+            checkPassengerInformation();
+        });
+    });
+}
+
 /**
  * Keeps track if the required fields in the passenger information
  * card are filled with proper information.
  */
 function checkPassengerInformation() {
-    let isFilled = true;
-
-    // Calls it self if any input within the fields is detected
-    requiredFields.forEach(function (field) {
-        $(field.selector).on('input', function () {
-            checkPassengerInformation();
-        });
-    });
-
-    // Checks if a field has the proper data, and flags
-    // accordingly through the requireFields array.
     requiredFields.forEach(function (field) {
         const value = $(field.selector).val().trim();
 
+        // Checks if a field has the proper data, and flags
+        // accordingly through the requireFields array.
         switch (field.selector) {
             case '#date-input':
                 if (value !== '') {
@@ -166,14 +166,13 @@ function checkPassengerInformation() {
  * the birthdate inputted.
  */
 function showAgeBadge() {
-    const $dateContainer = $('#date-container');
     const $dateInput = $('#date-input');
     const $ageBadgeContainer = $('#age-badge-container');
     const $ageBadge = $('#age-badge');
     const $invalidInput = $('#invalid-input');
     const $noInput = $('#no-input');
 
-    $dateInput.on('change', function () {
+    $dateInput.off('change.ageBadge').on('change.ageBadge', function () {
         const inputValue = $dateInput.val();
 
         // If there is a date input, show the badge
@@ -196,25 +195,19 @@ function showAgeBadge() {
 
             // If the date input is before the current date, show the badge
             if (ageBadgeText) {
-                $dateContainer.removeClass('col-lg-6');
-                $dateContainer.addClass('col-lg-6');
                 $dateInput.removeClass('is-invalid').addClass('is-valid');
 
                 $ageBadgeContainer.removeClass('d-none');
                 $ageBadge.text(ageBadgeText);
             } else {
-                $dateContainer.removeClass('col-lg-6');
-                $dateContainer.addClass('col-lg-6');
                 $dateInput.removeClass('is-valid').addClass('is-invalid');
+
+                $ageBadgeContainer.addClass('d-none');
 
                 $invalidInput.removeClass('d-none');
                 $noInput.addClass('d-none');
-
-                $ageBadgeContainer.addClass('d-none');
             }
         } else {
-            $dateContainer.removeClass('col-lg-6');
-            $dateContainer.addClass('col-lg-6');
             $dateInput.removeClass('is-valid').removeClass('is-invalid');
 
             $ageBadgeContainer.addClass('d-none');
@@ -231,7 +224,7 @@ function showSpecifyGender() {
     const $otherGenderContainer = $('#other-gender-container');
     const $otherGenderInput = $('#other-gender-input');
 
-    $genderSelect.on('change', function () {
+    $genderSelect.off('change.gender').on('change.gender', function () {
         if ($genderSelect.val() === 'Not Listed') {
             $otherGenderContainer.removeClass('d-none');
             $otherGenderInput.focus();
@@ -259,7 +252,7 @@ function updateMealSelection() {
     $selectedMeal.text('Standard');
     $('#standard').prop('checked', true);
 
-    $('input[name="meal-selection"]').change(function () {
+    $('input[name="meal-selection"]').off('change').on('change', function () {
         $toastBody.text(`Changed meal type to ${$(this).next('label').text().trim().toLowerCase()} meal!`);
         baseToast.show();
 
@@ -287,7 +280,7 @@ function updateSeatSelection() {
     $selectedSeat.text('None');
     $selectedClass.text('None');
 
-    $(".seat").click(function () {
+    $(".seat").off('click').on('click', function () {
         increaseProgress('seatSelection');
 
         if (!$(this).hasClass("occupied")) {
@@ -336,7 +329,7 @@ function updateServiceSelection() {
     $noExtraServices.text('None');
     $('#none').prop('checked', true);
 
-    $('input[name="extra-services"], #additional-baggage').change(function () {
+    $('input[name="extra-services"], #additional-baggage').off('change').on('change', function () {
         switch ($(this).attr('id')) {
             case 'none':
                 $('input[name="extra-services"]').not('#none').prop('checked', false);
@@ -394,16 +387,38 @@ function updateBookingSummary() {
 }
 
 /**
- * Dynamically displays if an input field has not yet been filled in
- * or has the wrong input.
+ * Displays a toast.
+ * 
+ * @param {string} toastID the toast's ID.
  */
-function showMissingFields() {
+function showToast(toastID) {
+    const toast = document.getElementById(toastID);
+
+    document.activeElement.blur();
+
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
+
+    toastInstance.show();
+}
+
+function bindMissingFieldsEvents() {
     requiredFields.forEach(function (field) {
-        $(field.selector).on('input', function () {
+        $(field.selector).off('input.show change.show').on('input.show change.show', function () {
             showMissingFields();
         });
     });
+}
 
+/**
+ * Displays to the user the emtpy fields that are required
+ * to confirm a booking.
+ */
+function showMissingFields() {
     requiredFields.forEach(function (field) {
         const value = $(field.selector).val().trim();
 
@@ -427,10 +442,10 @@ function showMissingFields() {
                         differenceInDays >= category.min && differenceInDays <= category.max);
 
                     if (ageCategory) {
-                        $(field.selector).addClass('is-valid').removeClass('is-invalid');
+                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
                     }
                 } else {
-                    $(field.selector).addClass('is-invalid').removeClass('is-valid');
+                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
                     $('#invalid-input').addClass('d-none');
                     $('#no-input').removeClass('d-none');
                 }
@@ -439,48 +454,28 @@ function showMissingFields() {
                 if (value !== '') {
                     if (value === 'Not Listed') {
                         if ($('#other-gender-input').val().trim() !== '') {
-                            $(field.selector).addClass('is-valid').removeClass('is-invalid');
+                            $(field.selector).removeClass('is-invalid').addClass('is-valid');
                         } else {
-                            $(field.selector).addClass('is-invalid').removeClass('is-valid');
+                            $(field.selector).removeClass('is-valid').addClass('is-invalid');
                             $('#specify').removeClass('d-none');
                             $('#select').addClass('d-none');
                         }
                     } else {
-                        $(field.selector).addClass('is-valid').removeClass('is-invalid');
+                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
                     }
                 } else {
-                    $(field.selector).addClass('is-invalid').removeClass('is-valid');
+                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
                 }
                 break;
             default:
                 if (value !== '') {
-                    $(field.selector).addClass('is-valid').removeClass('is-invalid');
+                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
                 } else {
-                    $(field.selector).addClass('is-invalid').removeClass('is-valid');
+                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
                 }
                 break;
         }
     });
-}
-
-/**
- * Displays a toast.
- * 
- * @param {string} toastID the toast's ID.
- */
-function showToast(toastID) {
-    const toast = document.getElementById(toastID);
-
-    document.activeElement.blur();
-    
-    const toastInstance =
-        bootstrap.Toast.getInstance(toast) ||
-        new bootstrap.Toast(toast, {
-            delay: 2000,
-            autohide: true
-        });
-
-    toastInstance.show();
 }
 
 /**
@@ -489,8 +484,7 @@ function showToast(toastID) {
  * is successful or not.
  */
 function confirmBooking() {
-    let isFinished = false;
-
+    bindMissingFieldsEvents();
     showMissingFields();
 
     if (Object.values(stepsDone).every(Boolean)) {

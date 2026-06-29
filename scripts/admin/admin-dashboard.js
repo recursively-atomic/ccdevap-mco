@@ -7,7 +7,7 @@ $(function () {
  * Shows the details of a booking reference.
  */
 function showReservationDetails() {
-    $(".view-reservation").click(function () {
+    $(".view-reservation").off('click').on('click', function () {
         const $viewReservationModal = $("#view-reservation");
         const baseModal = new bootstrap.Modal($viewReservationModal);
 

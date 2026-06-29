@@ -1,4 +1,4 @@
-$(function () {
+$(function () {    
     changeDropdownDisplay();
 });
 
@@ -22,7 +22,7 @@ function bindListItemValue(dropdown, display) {
     const $dropdown = $(dropdown);
     const $display = $(display);
 
-    $dropdown.on('click', '.dropdown-item', function (event) {
+    $dropdown.off('click', '.dropdown-item').on('click', '.dropdown-item', function (event) {
         const $dropdownItem = $(this);
         const $listItem = $(this).closest('li');
         const listItemValue = $listItem.attr('value');

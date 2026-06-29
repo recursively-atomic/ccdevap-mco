@@ -12,7 +12,7 @@ $(function () {
 function changeProfile() {
     const $changeProfile = $('#change-profile');
 
-    $changeProfile.on('change', function (event) {
+    $changeProfile.off('change').on('change', function (event) {
         const file = event.target.files[0];
 
         if (file) {
@@ -56,7 +56,7 @@ function showAgeBadge() {
     const $ageBadgeContainer = $('#age-badge-container');
     const $ageBadge = $('#age-badge');
 
-    $dateInput.on('change', function () {
+    $dateInput.off('change').on('change', function () {
         const inputValue = $dateInput.val();
 
         // If there is a date input, show the badge
@@ -111,7 +111,7 @@ function showSpecifyGender() {
     const $otherGenderContainer = $('#other-gender-container');
     const $otherGenderInput = $('#other-gender-input');
 
-    $genderSelect.on('change', function () {
+    $genderSelect.off('change').on('change', function () {
         if ($genderSelect.val() === 'Not Listed') {
             $otherGenderContainer.removeClass('d-none');
             $otherGenderInput.focus();
@@ -126,7 +126,7 @@ function showSpecifyGender() {
  * Formats the card number into XXXX XXXX XXXX XXXX.
  */
 function formatCardNumber() {
-    $('#card-number').on('input', function (event) {
+    $('#card-number').off('input').on('input', function () {
         const input = this;
         const inputValue = input.value;
 
@@ -169,7 +169,7 @@ function showInputFields() {
     $cardInputFields.addClass('d-none');
     $digitalInputFields.addClass('d-none');
 
-    $paymentMethodSelect.on('change', function () {
+    $paymentMethodSelect.off('change').on('change', function () {
         switch ($paymentMethodSelect.val()) {
             case 'Credit Card':
             case 'Debit Card':
@@ -177,8 +177,8 @@ function showInputFields() {
                 $digitalInputFields.addClass('d-none');
                 break;
             case 'Digital Wallet':
-                $cardInputFields.addClass('d-none');
                 $digitalInputFields.removeClass('d-none');
+                $cardInputFields.addClass('d-none');
                 break;
             default:
                 $cardInputFields.addClass('d-none');
