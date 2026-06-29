@@ -74,6 +74,10 @@ function decreaseProgress(stepName) {
     }
 }
 
+/**
+ * Binds `checkPassengerInformation()` to all of the required fields for
+ * a booking, whenever a field's input has changed.
+ */
 function bindPassengerInformationEvents() {
     requiredFields.forEach(function (field) {
         $(field.selector).off('input.check').on('input.check', function () {
@@ -406,6 +410,10 @@ function showToast(toastID) {
     toastInstance.show();
 }
 
+/**
+ * Binds `showMissingFields()` to all of the required fields for
+ * searching a flight, whenver a field's input has changed.
+ */
 function bindMissingFieldsEvents() {
     requiredFields.forEach(function (field) {
         $(field.selector).off('input.show change.show').on('input.show change.show', function () {

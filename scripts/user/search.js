@@ -19,7 +19,8 @@ $(function () {
 });
 
 /**
- * 
+ * Binds `checkSearchInformation()` to all of the required fields for
+ * searching a flight, whenever a field's input has changed.
  */
 function bindSearchInformationEvents() {
     requiredFields.forEach(function (field) {
@@ -88,7 +89,7 @@ function checkSearchInformation() {
 }
 
 /**
- * 
+ * Dynamically displays the user's specified price range,
  */
 function showPriceRangeInput() {
     const $minPriceInput = $('#min-price-input');
@@ -114,7 +115,8 @@ function showPriceRangeInput() {
 }
 
 /**
- * 
+ * Binds `showMissingFields()` to all of the required fields for
+ * searching a flight, whenver a field's input has changed.
  */
 function bindMissingFieldsEvents() {
     requiredFields.forEach(function (field) {
@@ -125,7 +127,8 @@ function bindMissingFieldsEvents() {
 }
 
 /**
- * 
+ * Displays to the user the emtpy fields that are required
+ * to confirm a booking.
  */
 function showMissingFields() {
     requiredFields.forEach(function (field) {
@@ -172,7 +175,9 @@ function showMissingFields() {
 }
 
 /**
- * 
+ * Checks if all of the required details for searching
+ * a flight, and if successful, it will display the flight
+ * resutls card.
  */
 function searchFlights() {
     bindMissingFieldsEvents();
