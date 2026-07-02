@@ -5,29 +5,15 @@ const stepsDone = {
     extraService: false
 };
 
-const requiredFields = [
-    { selector: '#first-name', isFilled: false },
-    { selector: '#last-name', isFilled: false },
-    { selector: '#suffix-select', isFilled: false },
-    { selector: '#email-address', isFilled: false },
-    { selector: '#domain-address', isFilled: false },
-    { selector: '#country-number', isFilled: false },
-    { selector: '#contact-number', isFilled: false },
-    { selector: '#passport-code', isFilled: false },
-    { selector: '#nationality', isFilled: false },
-    { selector: '#date-input', isFilled: false },
-    { selector: '#gender-select', isFilled: false },
-    { selector: '#other-gender-input', isFilled: false }
-];
-
+let requiredFields;
 let seatFare = 3500;
 let classFare = 0;
 let taxAndFee = 400;
 let extraFee = 0;
-let bookingTotal = 0;
 let step = 0;
 
 $(function () {
+    getRequiredFields();
     increaseProgress('mealSelection');
     increaseProgress('extraService');
     bindPassengerInformationEvents();
@@ -39,6 +25,21 @@ $(function () {
     updateServiceSelection();
     updateBookingSummary();
 });
+
+/**
+ * Gets all the required fields by first getting the elements with the
+ * `.required-field` class and getting their ids.
+ */
+function getRequiredFields() {
+    requiredFields = $('.required-field').map(function () {
+        return {
+            selector: '#' + $(this).attr('id'),
+            isFilled: false
+        };
+    }).get();
+
+    console.log(requiredFields);
+}
 
 /**
  * Increases the progress bar by one.

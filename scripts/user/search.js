@@ -1,22 +1,26 @@
-const requiredFields = [
-    { selector: '#departure-select', isFilled: false },
-    { selector: '#arrival-select', isFilled: false },
-    { selector: '#flight-type', isFilled: true },
-    { selector: '#departure-date', isFilled: false },
-    { selector: '#arrival-date', isFilled: false },
-    { selector: '#adult-select', isFilled: false },
-    { selector: '#children-select', isFilled: false },
-    { selector: '#infant-select', isFilled: false },
-    { selector: '#class-select', isFilled: false }
-];
+let requiredFields;
 
 $(function () {
+    getRequiredFields();
     showPriceRangeInput();
     bindSearchInformationEvents();
     checkSearchInformation();
     bindListItemValue('#sort-dropdown', '#sort-type', false);
     bindListItemValue('#filter-dropdown', '#filter-type', true);
 });
+
+/**
+ * Gets all the required fields by first getting the elements with the
+ * `.required-field` class and getting their ids.
+ */
+function getRequiredFields() {
+    requiredFields = $('.required-field').map(function () {
+        return {
+            selector: '#' + $(this).attr('id'),
+            isFilled: $(this).attr('id') === 'flight-type'
+        };
+    }).get();
+}
 
 /**
  * Binds `checkSearchInformation()` to all of the required fields for
