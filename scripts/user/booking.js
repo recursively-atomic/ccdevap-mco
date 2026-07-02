@@ -37,8 +37,6 @@ function getRequiredFields() {
             isFilled: false
         };
     }).get();
-
-    console.log(requiredFields);
 }
 
 /**
