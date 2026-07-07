@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Christian Dominic A. Cotoco">
+    <meta charset="UTF-8">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"
+            defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"
+            integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
+    <script src="/scripts/user/search.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+          integrity="sha384-CK2SzKma4jA5H/MXDUU7i1TqZlCFaD4T01vtyDFvPlD97JQyS+IsSh1nI2EFbpyk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.2.0/css/all.min.css"
+          integrity="sha384-EXatlQyrOJgDaM9/a74ArMzy7/2bTMSrZj8ID1IPeVmc3GncfCugefCFWSLj8JL/" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/override.css">
+    <link rel="stylesheet" href="/styles/additional.css">
+
+    <link rel="shortcut icon" href="/media/images/company-logo.png" type="image/x-icon">
+    <title> Cebu Atlantic </title>
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light user-select-none">
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
+        <div class="mb-0">
+            <a class="navbar-brand text-white" href="/">
+                <img class="d-inline-block align-items-center mb-2 square-40px" src="/media/images/company-logo.png">
+            </a>
+        </div>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse" id="main-menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="/"> Home </a>
+                </li>
+
+                <li class="nav-item me-3 ps-3 ps-sm-3 ps-md-3 ps-lg-0 text-bg-primary-accent rounded-3">
+                    <a class="nav-link fw-bold text-light"> Search A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="/flight-book"> Reserve A Flight </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="/reservations"> My Reservations </a>
+                </li>
+
+                <li class="nav-item dropstart me-3">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Profile
+                    </a>
+
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li><a class="dropdown-item" href="/views/user/profile.html"> My Profile </a></li>
+                        <li><a class="dropdown-item" href="###"> Log Out </a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Admin Access
+                    </a>
+
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li>
+                            <a class="dropdown-item" href="/views/admin/admin-dashboard.html"> Admin Dashboard </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/views/admin/admin-flights.html"> Flight Management </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/views/admin/admin-reservations.html">
+                                Reservation Management
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- FLIGHT SEARCH -->
+    <div class="container mt-5 mb-5">
+        <div class="card d-flex shadow-lg">
+            <!-- DEFAULT SEARCH OPTIONS -->
+            <div class="card-header text-center text-white bg-primary-accent">
+                <h2 class="mt-2"> Flight Search </h2>
+            </div>
+
+            <div class="card-body">
+                <div class="mx-4 mt-2">
+                    <h4 class="text-primary-accent"> Flight Route </h4>
+
+                    <div class="row mb-lg-4 mb-md-4 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-4 mb-sm-4 mb-4">
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-plane-departure"></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                        id="departure-select">
+                                    <option selected hidden value=""> Select A Departure Airport </option>
+                                    <option> Airport A </option>
+                                    <option> Airport B </option>
+                                    <option> Airport C </option>
+                                    <option> Airport D </option>
+                                    <option> Airport E </option>
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Select a departure airport!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-4">
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-plane-arrival"></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                        id="arrival-select">
+                                    <option selected hidden value=""> Select An Arrival Airport </option>
+                                    <option> Airport A </option>
+                                    <option> Airport B </option>
+                                    <option> Airport C </option>
+                                    <option> Airport D </option>
+                                    <option> Airport E </option>
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Select an arrival airport!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="btn-group w-100 required-field" id="flight-type">
+                                <input type="radio" class="btn-check" name="trip-type" value="one-way" id="one-way">
+                                <label class="btn btn-outline-primary" for="one-way"> One-Way Flight </label>
+
+                                <input type="radio" class="btn-check" name="trip-type" value="round-trip"
+                                       id="round-trip" checked>
+                                <label class="btn btn-outline-primary" for="round-trip"> Round-Trip Flight </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-4 mt-2">
+                    <div class="row mb-lg-4 mb-md-4 mb-sm-4 mb-4">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4 mb-sm-0 mb-md-0 mb-lg-0">
+                            <h4 class="text-primary-accent"> Departure Date </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-plane-departure"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                       type="date" id="departure-date">
+
+                                <div class="invalid-feedback">
+                                    Select a departure date!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <h4 class="text-primary-accent"> Arrival Date </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-plane-arrival"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                       type="date" id="arrival-date">
+
+                                <div class="invalid-feedback">
+                                    Select an arrival date!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mx-4 mt-2">
+                    <div class="row mb-md-2 mb-lg-2">
+                        <div class="col-lg-9 col-md-12">
+                            <h4 class="text-primary-accent"> Passengers </h4>
+
+                            <div class="row mb-lg-0 mb-md-4 mb-sm-4 mb-4">
+                                <div class="col-lg-4 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-sm-0 mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-person-fill"></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                                id="adult-select">
+                                            <option selected hidden value=""> Select Number of Adults </option>
+                                            <option> 1 Adult </option>
+                                            <option> 2 Adults </option>
+                                            <option> 3 Adults </option>
+                                        </select>
+
+                                        <div class="invalid-feedback">
+                                            Select the amount of adults!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-4 mb-sm-4 mb-lg-0 mb-md-0 mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary fa-solid fa-children"></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                                id="children-select">
+                                            <option selected hidden value=""> Select Number of Children </option>
+                                            <option> No Children </option>
+                                            <option> 1 Child </option>
+                                            <option> 2 Children </option>
+                                            <option> 3 Children </option>
+                                        </select>
+
+                                        <div class="invalid-feedback">
+                                            Select the amount of children!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary fa-solid fa-baby-carriage"></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                                id="infant-select">
+                                            <option selected hidden value=""> Select Number of Infants </option>
+                                            <option> No Infants </option>
+                                            <option> 1 Infant </option>
+                                            <option> 2 Infants </option>
+                                            <option> 3 Infants </option>
+                                        </select>
+
+                                        <div class="invalid-feedback">
+                                            Select the amount of infants!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-12 mb-sm-3 mb-md-2 mb-lg-0 mb-3">
+                            <h4 class="text-primary-accent"> Cabin Class </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-bell-concierge"></i>
+                                </div>
+
+                                <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                        id="class-select">
+                                    <option selected hidden value=""> Select A Cabin Class </option>
+                                    <option> Economy </option>
+                                    <option> Premium Economy </option>
+                                    <option> Business </option>
+                                    <option> First Class </option>
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Select a seat class!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADVANCED SEARCH OPTIONS -->
+            <div class="mt-2">
+                <div class="accordion" id="advanced-search-options">
+                    <div class="accordion-item shadow border-secondary-accent rounded-0 border-4">
+                        <h2 class="accordion-header bg-secondary-accent">
+                            <button class="accordion-button bg-secondary-accent text-white collapsed fw-bolder accordion-button-white"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#search-options">
+                                Advanced Search Options
+                            </button>
+                        </h2>
+
+                        <div id="search-options" class="accordion-collapse collapse" data-bs-parent="#advanced-search-options">
+                            <div class="m-4">
+                                <div class="row p-0 m-0">
+                                    <div class="col-lg-6 col-md-12 mb-lg-0 mb-md-4 mb-sm-4 mb-4">
+                                        <h4 class="text-secondary-accent"> Preferred Airline </h4>
+
+                                        <div class="input-group">
+                                            <div class="input-group-text bg-tertiary border-tertiary">
+                                                <i class="text-primary-accent bi bi-pen-fill"></i></i>
+                                            </div>
+
+                                            <select class="form-select bg-light border-tertiary border-2 rounded-end-3 text-black"
+                                                    id="suffix-select">
+                                                <option selected hidden value="">
+                                                    Select A Preferred Airline
+                                                </option>
+
+                                                <option> Cebu Atlantic </option>
+                                                <option> Filipino Airlines </option>
+                                                <option> AirFAST </option>
+                                                <option> Sunray Air </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-12">
+                                        <h4 class="text-secondary-accent"> Preferred Price Range </h4>
+
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div class="input-group w-135px">
+                                                <div class="input-group-text bg-tertiary border-tertiary">
+                                                    <i class="text-primary-accent fw-bolder fst-normal"> PHP </i>
+                                                </div>
+
+                                                <input class="form-control rounded-end-3 bg-light border-tertiary border-2 text-black"
+                                                       type="text" id="min-price" value="5,000" readonly>
+                                            </div>
+
+                                            <div class="position-relative flex-grow-1 mb-4">
+                                                <input type="range"
+                                                       class="form-range position-absolute top-0 start-0 w-100"
+                                                       id="min-price-input" min="1000" max="40000" step="1000"
+                                                       value="5000">
+
+                                                <input type="range"
+                                                       class="form-range position-absolute top-0 start-0 w-100"
+                                                       id="max-price-input" min="1000" max="40000" step="1000"
+                                                       value="36000">
+                                            </div>
+
+                                            <div class="input-group w-135px">
+                                                <div class="input-group-text bg-tertiary border-tertiary">
+                                                    <i class="text-primary-accent fw-bolder fst-normal"> PHP </i>
+                                                </div>
+
+                                                <input class="form-control rounded-end-3 bg-light border-tertiary border-2 text-black"
+                                                       type="text" id="max-price" value="36,000" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mx-4 mb-4">
+                                <div class="row p-0 m-0">
+                                    <h4 class="text-secondary-accent"> Additional Options </h4>
+                                    
+                                    <div class="col-lg-12 col-md-12 me-0 col-sm-12 col-12">
+                                        <div class="btn-group w-100">
+                                            <input type="checkbox" class="btn-check" name="additional-option"
+                                                   id="direct-flights">
+
+                                            <label class="btn btn-lg btn-outline-secondary rounded-end-lg-0 rounded-end-md-0
+                                                   rounded-end-sm-0 rounded-end-0" for="direct-flights">
+                                                Direct Flights Only
+                                            </label>
+
+                                            <input type="checkbox" class="btn-check" name="additional-option"
+                                                   id="flexible-dates">
+
+                                            <label class="btn btn-lg btn-outline-secondary rounded-start-lg-0 border-start-lg-0
+                                                   rounded-start-md-0 border-start-md-0 rounded-start-sm-0 border-start-sm-0
+                                                   rounded-start-0 border-start-0"
+                                                   for="flexible-dates">
+                                                Flexible Dates
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-primary-accent">
+                <div class="d-flex justify-content-center m-3">
+                    <button class="btn btn-lg btn-primary text-white" onclick="searchFlights()">
+                        Search Flights
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLIGHT SEARCH RESULTS -->
+        <div class="card d-flex mt-4 shadow-lg d-none" id="flight-results">
+            <div class="card-header text-center text-white bg-primary-accent">
+                <div class="row mx-2 my-4">
+                    <!-- SORT BY DROPDOWN -->
+                    <div class="col-lg-6 col-md-6 mb-sm-4 mb-md-0 mb-lg-0 mb-4">
+                        <div class="dropdown dropdown-center">
+                            <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                    data-bs-toggle="dropdown">
+                                Sort By
+                                <span id="sort-type"> User ID (1-9) </span>
+                            </button>
+
+                            <ul class="dropdown-menu bg-dark-subtle" id="sort-dropdown">
+                                <li>
+                                    <h4 class="dropdown-header"> Sort By </h4>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li value="Price (1-9)">
+                                    <a class="dropdown-item text-dark active">
+                                        <i class="fa-solid fa-arrow-down-1-9"></i> Price
+                                    </a>
+                                </li>
+
+                                <li value="Price (9-1)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-9-1"></i> Price
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li value="Departure (1-9)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-1-9"></i> Departure
+                                    </a>
+                                </li>
+
+                                <li value="Departure (9-1)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-9-1"></i> Departure
+                                    </a>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <li value="Duration (1-9)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-1-9"></i> Duration
+                                    </a>
+                                </li>
+
+                                <li value="Duration (9-1)">
+                                    <a class="dropdown-item text-dark">
+                                        <i class="fa-solid fa-arrow-down-9-1"></i> Duration
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- FILTER BY DROPDOWN -->
+                    <div class="col-lg-6 col-md-6">
+                        <div class="dropdown dropdown-center">
+                            <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                    data-bs-toggle="dropdown">
+                                Filter By
+                                <span id="filter-type"> Cebu Atlantic </span>
+                            </button>
+
+                            <ul class="dropdown-menu bg-dark-subtle" id="filter-dropdown">
+                                <li>
+                                    <h4 class="dropdown-header"> Filter By </h4>
+                                </li>
+
+                                <li class="dropdown-divider"></li>
+
+                                <!-- FILTER BY AIRLINE -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-header dropdown-header-item text-dark fs-6 py-1
+                                       text-decoration-none active">
+                                        <i class="fa-solid fa-plane"></i> Airline
+                                    </a>
+
+                                    <ul class="dropdown-menu bg-dark-subtle">
+                                        <li value="Cebu Atlantic">
+                                            <a class="dropdown-item text-dark active">
+                                                <i class="fa-solid fa-plane-up"></i> Cebu Atlantic
+                                            </a>
+                                        </li>
+
+                                        <li value="Filipino Airlines">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-plane-up"></i> Filipino Airlines
+                                            </a>
+                                        </li>
+
+                                        <li value="AirFAST">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-plane-up"></i> AirFAST
+                                            </a>
+                                        </li>
+
+                                        <li value="Sunray Air">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-plane-up"></i> Sunray Air
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <!-- FILTER BY PRICE RANGE -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-header dropdown-header-item text-dark fs-6 py-1
+                                       text-decoration-none">
+                                        <i class="bi bi-tags-fill"></i> Price Range
+                                    </a>
+
+                                    <ul class="dropdown-menu bg-dark-subtle">
+                                        <li value="Budget Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-coins"></i> PHP 1,000 - 25,000
+                                            </a>
+                                        </li>
+
+                                        <li value="Economy Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-money-bill"></i> PHP 25,001 - 50,000
+                                            </a>
+                                        </li>
+
+                                        <li value="Premium Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-money-bills"></i> PHP 50,001 - 75,000
+                                            </a>
+                                        </li>
+
+                                        <li value="Luxury Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-sack-dollar"></i> PHP 75,001 - 100,000
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <!-- FILTER BY LAYOVERS -->
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-header dropdown-header-item text-dark fs-6 py-1
+                                       text-decoration-none">
+                                        <i class="bi bi-stoplights-fill"></i> Layovers
+                                    </a>
+
+                                    <ul class="dropdown-menu bg-dark-subtle">
+                                        <li value="No Layovers">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-stop fa-canvas-square"></i> 0 Layovers
+                                            </a>
+                                        </li>
+
+                                        <li value="1 Layover">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-dice-one"></i> 1 Layover
+                                            </a>
+                                        </li>
+
+                                        <li value="2 Layovers">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-dice-two"></i> 2 Layovers
+                                            </a>
+                                        </li>
+
+                                        <li value="3 Layovers">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-dice-three"></i> 3 Layovers
+                                            </a>
+                                        </li>
+
+                                        <li value="4 Layovers">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-dice-four"></i> 4 Layovers
+                                            </a>
+                                        </li>
+
+                                        <li value="5 Layovers">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-dice-five"></i> 5 Layovers
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <!-- FILTER BY DEPARTURES -->
+                                <li class="dropdown-submenu">
+                                    <a
+                                       class="dropdown-header dropdown-header-item text-dark fs-6 py-1 text-decoration-none">
+                                        <i class="fa-solid fa-user-gear"></i> Departure Times
+                                    </a>
+
+                                    <ul class="dropdown-menu bg-dark-subtle">
+                                        <li value="Late Evening Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-cloud-moon"></i> 00:00 to 06:00
+                                            </a>
+                                        </li>
+
+                                        <li value="Morning Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-sun"></i> 06:01 to 12:00
+                                            </a>
+                                        </li>
+
+                                        <li value="Afternoon Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-cloud-sun"></i> 12:01 to 18:00
+                                            </a>
+                                        </li>
+
+                                        <li value="Evening Flights">
+                                            <a class="dropdown-item text-dark">
+                                                <i class="fa-solid fa-moon"></i> 18:01 to 23:59
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="row row-gap-lg-4 my-3 m-0 row-gap-md-4 row-gap-sm-4 row-gap-4">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 25,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> CA100 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 10:00 - 12:30 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 2h 30m </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> No Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-success border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 20 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 25,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2i text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> CA101 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 10:00 - 12:30 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 2h 30m </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> No Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-danger border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 10 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 50,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> FA100 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 10:00 - 22:00 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 12h </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> 2 Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-success border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 24 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 50,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> FA101 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 08:00 - 20:00 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 12h </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> 2 Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-danger border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 05 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 20,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> AF100 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 09:00 - 14:00 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 5h </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> 0 Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-success border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 13 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 10,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> AF101 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 11:00 - 13:00 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 2h </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> 0 Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-danger border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 09 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 40,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> SA100 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 07:00 - 22:00 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 15h </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> 3 Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-success border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 40 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+                            <div class="d-flex justify-content-between">
+                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
+                                     src="/media/company-logo.png">
+                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 40,000 </h4>
+                            </div>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                                <i class="fa-solid fa-plane me-2 p-0"></i>
+                                <p class="m-0 p-0"> SA101 </p>
+                            </h4>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                                <p class="m-0 p-0 me-1"> 07:00 - 22:00 </p>
+                                <p class="m-0 p-0"> ( </p>
+                                <p class="m-0 p-0"> 15h </p>
+                                <p class="m-0 p-0"> ) </p>
+                            </h6>
+
+                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                                <p class="m-0 p-0"> 3 Layovers </p>
+                            </h6>
+
+                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+                            <button class="btn btn-lg btn-success border-4 text-white m-0">
+                                <p class="m-0 p-0 fw-bolder"> Book </p>
+                                <h6 class="m-0 p-0 fst-italic"> 50 Seats Left </h6>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer bg-primary-accent">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
+                    <h6 class="text-white">
+                        Showing 10 Results Out Of 100,000
+                    </h6>
+
+                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                        <!-- PAGINATION -->
+                        <nav>
+                            <ul class="pagination m-0">
+                                <li class="page-item">
+                                    <a class="page-link disabled">
+                                        <span aria-hidden="true">
+                                            < </span>
+                                    </a>
+                                </li>
+
+                                <li class="page-item"><a class="page-link active"> 1 </a></li>
+                                <li class="page-item"><a class="page-link"> ... </a></li>
+                                <li class="page-item"><a class="page-link"> 10 </a></li>
+
+                                <li class="page-item">
+                                    <a class="page-link">
+                                        <span aria-hidden="true"> > </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="pt-4 pb-2 mt-5 mt-auto text-center bg-dark">
+        <p class="text-light">
+            &copy; Cebu Atlantic 2026 <br>
+            CCDEVAP MCO
+        </p>
+    </footer>
+</body>
+
+</html>

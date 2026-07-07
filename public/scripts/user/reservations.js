@@ -22,7 +22,7 @@ function bindListItemValue(dropdown, display) {
     const $dropdown = $(dropdown);
     const $display = $(display);
 
-    $dropdown.on('click', '.dropdown-item', function (event) {
+    $dropdown.off('click', '.dropdown-item').on('click', '.dropdown-item', function (event) {
         const $dropdownItem = $(this);
         const $listItem = $(this).closest('li');
         const listItemValue = $listItem.attr('value');
@@ -31,4 +31,31 @@ function bindListItemValue(dropdown, display) {
         $dropdown.find('.dropdown-item').removeClass('active');
         $dropdownItem.addClass('active');
     });
+}
+
+/**
+ * Hides a modal and shows a toast.
+ * 
+ * @param {string} modalID the modal's ID.
+ * @param {string} toastID the toast's ID.
+ */
+function hideModalShowToast(modalID, toastID) {
+    const modal = document.getElementById(modalID);
+    const toast = document.getElementById(toastID);
+
+    document.activeElement.blur();
+
+    const modalInstance =
+        bootstrap.Modal.getInstance(modal) ||
+        new bootstrap.Modal(modal);
+
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
+
+    modalInstance.hide();
+    toastInstance.show();
 }

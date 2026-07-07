@@ -12,7 +12,7 @@ $(function () {
 function changeProfile() {
     const $changeProfile = $('#change-profile');
 
-    $changeProfile.on('change', function (event) {
+    $changeProfile.off('change').on('change', function (event) {
         const file = event.target.files[0];
 
         if (file) {
@@ -27,59 +27,23 @@ function changeProfile() {
 }
 
 /**
- * Shows a toast whenever the user saves their profile
- * information.
+ * Displays a toast.
+ * 
+ * @param {string} toastID the toast's ID.
  */
-function showProfileToast() {
-    const profileToast = $('#profile-toast').get(0);
+function showToast(toastID) {
+    const toast = document.getElementById(toastID);
 
-    const baseToast =
-        bootstrap.Toast.getInstance(profileToast) ||
-        new bootstrap.Toast(profileToast, { delay: 2000, autohide: true });
+    document.activeElement.blur();
+    
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
 
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user saves a passenger's
- * information.
- */
-function showPassengerToast() {
-    const passengerToast = $('#passenger-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(passengerToast) ||
-        new bootstrap.Toast(passengerToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user saves their payment
- * information.
- */
-function showPaymentToast() {
-    const paymentToast = $('#payment-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(paymentToast) ||
-        new bootstrap.Toast(paymentToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
-}
-
-/**
- * Shows a toast whenever the user updates their notification
- * preferences.
- */
-function showPreferencesToast() {
-    const preferenceToast = $('#preference-toast').get(0);
-
-    const baseToast =
-        bootstrap.Toast.getInstance(preferenceToast) ||
-        new bootstrap.Toast(preferenceToast, { delay: 2000, autohide: true });
-
-    baseToast.show();
+    toastInstance.show();
 }
 
 /**
@@ -92,7 +56,7 @@ function showAgeBadge() {
     const $ageBadgeContainer = $('#age-badge-container');
     const $ageBadge = $('#age-badge');
 
-    $dateInput.on('change', function () {
+    $dateInput.off('change').on('change', function () {
         const inputValue = $dateInput.val();
 
         // If there is a date input, show the badge
@@ -113,7 +77,7 @@ function showAgeBadge() {
                 differenceInDays >= category.min && differenceInDays <= category.max);
             ageBadgeText = ageCategory ? ageCategory.label : '';
 
-            // If the date input is before or on the current date, show the badge
+            // If the date input is before the current date, show the badge
             if (ageBadgeText) {
                 $dateContainer.removeClass('col-lg-12 col-md-12 col-sm-12 col-12');
                 $dateContainer.addClass('col-lg-11 col-md-10 col-sm-10 col-10');
@@ -131,7 +95,7 @@ function showAgeBadge() {
         } else {
             $dateContainer.removeClass('col-lg-11 col-md-10 col-sm-10 col-10');
             $dateContainer.addClass('col-lg-12 col-md-12 col-sm-12 col-12');
-            $dateInput.removeClass('is-valid').addClass('is-invalid');
+            $dateInput.removeClass('is-valid').removeClass('is-invalid');
 
             $ageBadgeContainer.removeClass('col-lg-1 col-md-2 col-sm-2 col-2').addClass('d-none');
         }
@@ -147,7 +111,7 @@ function showSpecifyGender() {
     const $otherGenderContainer = $('#other-gender-container');
     const $otherGenderInput = $('#other-gender-input');
 
-    $genderSelect.on('change', function () {
+    $genderSelect.off('change').on('change', function () {
         if ($genderSelect.val() === 'Not Listed') {
             $otherGenderContainer.removeClass('d-none');
             $otherGenderInput.focus();
@@ -162,7 +126,7 @@ function showSpecifyGender() {
  * Formats the card number into XXXX XXXX XXXX XXXX.
  */
 function formatCardNumber() {
-    $('#card-number').on('input', function (event) {
+    $('#card-number').off('input').on('input', function () {
         const input = this;
         const inputValue = input.value;
 
@@ -205,7 +169,7 @@ function showInputFields() {
     $cardInputFields.addClass('d-none');
     $digitalInputFields.addClass('d-none');
 
-    $paymentMethodSelect.on('change', function () {
+    $paymentMethodSelect.off('change').on('change', function () {
         switch ($paymentMethodSelect.val()) {
             case 'Credit Card':
             case 'Debit Card':
@@ -213,8 +177,8 @@ function showInputFields() {
                 $digitalInputFields.addClass('d-none');
                 break;
             case 'Digital Wallet':
-                $cardInputFields.addClass('d-none');
                 $digitalInputFields.removeClass('d-none');
+                $cardInputFields.addClass('d-none');
                 break;
             default:
                 $cardInputFields.addClass('d-none');
