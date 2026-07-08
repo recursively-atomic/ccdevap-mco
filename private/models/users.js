@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-    // email-ddress
+    // emailAddress
     // password
-    // first-name
-    // last-name
-    // passport-code
+    // firstName
+    // lastName
+    // passportCode
     // role (admin or client)
 });
 
