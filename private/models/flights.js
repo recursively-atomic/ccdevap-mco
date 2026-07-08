@@ -11,5 +11,4 @@ const schema = new mongoose.Schema({
     // ticket-price
 });
 
-const Flights = mongoose.model('flights', schema);
-module.exports = Flights;
+module.exports = mongoose.model('flights', schema);
