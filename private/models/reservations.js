@@ -8,5 +8,4 @@ const schema = new mongoose.Schema({
     // status (Paid, Pending, Cancelled, emerut)
 });
 
-const Reservations = mongoose.model('reservations', schema);
-module.exports = Reservations;
+module.exports = mongoose.model('reservations', schema);
