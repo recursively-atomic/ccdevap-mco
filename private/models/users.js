@@ -9,4 +9,4 @@ const schema = new mongoose.Schema({
     // role (admin or client)
 });
 
-module.exports = mongoose.model('users', schema);;
+module.exports = mongoose.model('users', schema);
