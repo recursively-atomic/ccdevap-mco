@@ -6,7 +6,7 @@ const schema = new mongoose.Schema({
     // origin
     // destination
     // departure - date and time
-    // origin - date and time
+    // arrival - date and time
     // availableSeats (16 per flight para 4 each cabin class)
     // ticketPrice
 });

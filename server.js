@@ -1,14 +1,34 @@
 const express = require('express');
-const handlebars = req9ore
+const expressHandlebars = require('express-handlebars');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
+const { createReservation } = require('./private/controllers/reservations');
 const server = express();
 
+const handlebars = expressHandlebars.create({
+    extname: 'hbs',
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, 'views', 'layouts'),
+    partialsDir: path.join(__dirname, 'views', 'partials'),
+    helpers: {
+        eq: (a, b) => a == b
+    }
+});
+
+server.engine('hbs', handlebars.engine);
+
+server.set('view engine', 'hbs');
+server.set('views', path.join(__dirname, 'views'));
+
 // Exposes every file in the public folder
+server.use(express.json());
 server.use(express.static(path.join(__dirname, 'public')));
 
 server.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/index.html'));
+    res.render('index', {
+        page: '/',
+        script: '/scripts/index.js'
+    });
 });
 
 server.get('/flight-search', (req, res) => {
@@ -16,7 +36,20 @@ server.get('/flight-search', (req, res) => {
 });
 
 server.get('/flight-book', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/user/booking.html'));
+    res.render('booking', {
+        page: '/flight-book',
+        script: '/scripts/user/booking.js'
+    });
+});
+
+server.post('/flight-book', (req, res) => {
+    try {
+        const reservation = createReservation();
+        res.status(200).json({ success: true, reservation });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to create sample reservation.' });
+    }
 });
 
 server.get('/reservations', (req, res) => {

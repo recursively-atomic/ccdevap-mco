@@ -491,12 +491,30 @@ function showMissingFields() {
  * is successful or not.
  */
 function confirmBooking() {
-    bindMissingFieldsEvents();
-    showMissingFields();
+    console.log('Confirm button clicked');
+    
+    //bindMissingFieldsEvents();
+    //showMissingFields();
 
-    if (Object.values(stepsDone).every(Boolean)) {
-        showToast('complete');
-    } else {
-        showToast('incomplete');
-    }
+    // if (!Object.values(stepsDone).every(Boolean)) {
+    //     showToast('incomplete');
+    //     return;
+    // }
+
+    fetch('/flight-book', {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then((result) => {
+            console.log('Reservation response:', result);
+            if (result.success) {
+                showToast('complete');
+            } else {
+                showToast('incomplete');
+            }
+        })
+        .catch((error) => {
+            console.error('Booking request failed:', error);
+            showToast('incomplete');
+        });
 }
