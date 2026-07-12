@@ -1,19 +1,18 @@
 const model = require('../models/reservations');
 
-function createReservation(flight = '507f1f77bcf86cd799439011', user = '507f1f77bcf86cd799439012') {
+async function createReservation(data) {
     const reservation = new model({
-        reservationNumber: 'RSV-1001',
-        flightNumber: flight,
-        userId: user,
-        email: 'womp@womp.com',
-        firstName: 'Ana',
-        lastName: 'Santos',
-        passportCode: 'WOMP',
-        seatNumber: '14B'
+        reservationNumber: data.reservationNumber,
+        flightNumber: data.flightNumber,
+        userId: data.userId,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        passportCode: data.passportCode,
+        seatNumber: data.seatNumber,
     });
 
-    reservation.save();
-    return reservation;
+    return reservation.save();
 }
 
 module.exports = { createReservation };

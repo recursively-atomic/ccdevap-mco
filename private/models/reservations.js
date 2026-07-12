@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
     reservationNumber: {
         type: String,
+        unique: true,
         required: true
     },
 

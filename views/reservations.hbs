@@ -1,0 +1,295 @@
+{{> navigation}}
+
+<div class="container mt-5 mb-5">
+    <div class="card d-flex shadow-lg">
+        <div class="card-header text-center text-white bg-primary-accent">
+            <div class="row my-md-3 mx-0 p-0 align-items-center">
+                <!-- SEARCH BAR -->
+                <div class="col-lg-6 col-md-12 mb-md-4 mb-lg-0 col-sn-12 my-sm-4 my-4 mt-md-3 mt-lg-0">
+                    <div class="input-group">
+                        <div class="input-group-text bg-dark border-dark">
+                            <i class="text-secondary fa-solid fa-magnifying-glass"></i>
+                        </div>
+
+                        <div class="form-floating">
+                            <input class="form-control bg-light border-dark border-5 text-black rounded-end-3"
+                                   placeholder="">
+                            <label for="search"> Search </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SORT BY DROPDOWN -->
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-sm-4 mb-4">
+                    <div class="dropdown dropdown-center">
+                        <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                data-bs-toggle="dropdown">
+                            Sort By
+                            <span id="sort-type"> Price (1-9) </span>
+                        </button>
+
+                        <ul class="dropdown-menu bg-dark-subtle text-dark" id="sort-dropdown">
+                            <li>
+                                <h4 class="dropdown-header"> Sort By </h4>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="Price (1-9)">
+                                <a class="dropdown-item text-dark active">
+                                    <i class="fa-solid fa-arrow-down-1-9"></i> Price
+                                </a>
+                            </li>
+
+                            <li value="Price (9-1)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-9-1"></i> Price
+                                </a>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="Departure (1-9)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-9-1"></i> Departure
+                                </a>
+                            </li>
+
+                            <li value="Departure (9-1)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-9-1"></i> Departure
+                                </a>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="Duration (1-9)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-1-9"></i> Duration
+                                </a>
+                            </li>
+
+                            <li value="Duration (9-1)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-9-1"></i> Duration
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FILTER BY DROPDOWN -->
+                <div class="col-lg-3 col-md-6 mb-sm-4 mb-md-0 mb-4">
+                    <div class="dropdown dropdown-center">
+                        <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                data-bs-toggle="dropdown">
+                            Filter By
+                            <span id="filter-type"> Confirmed </span>
+                        </button>
+
+                        <ul class="dropdown-menu bg-dark-subtle text-dark" id="filter-dropdown">
+                            <li>
+                                <h4 class="dropdown-header"> Filter By </h4>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="Confirmed">
+                                <a class="dropdown-item text-dark active">
+                                    <i class="bi bi-check-circle-fill"></i> Confirmed
+                                </a>
+                            </li>
+
+                            <li value="Wailisted">
+                                <a class="dropdown-item text-dark">
+                                    <i class="bi bi-clock-fill"></i> Waitlisted
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="card m-4 p-4 mb-4 card-hover-sm bg-primary-accent shadow">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12">
+                        <!-- FLIGHT ID AND FLIGHT STATUS -->
+                        <div class="d-flex align-items-center m-0 text-secondary justify-content-between">
+                            <div class="container d-flex flex-row p-0">
+                                <h2 class="mb-0 me-2"> BR01020 </h2>
+
+                                <span
+                                      class="badge fs-6 rounded-pill text-bg-success text-white p-2 m-0 d-flex align-items-center">
+                                    Confirmed
+                                </span>
+                            </div>
+
+                            <h2 class="m-0 p-0 ps-3 text-light text-end text-nowrap"> PHP 15,000 </h2>
+                        </div>
+
+                        <!-- FLIGHT TYPE AND PASSENGER AMOUNT -->
+                        <div class="d-flex align-items-center m-0 text-light">
+                            <h4 class="m-0 p-0"> One-Way Trip </h4>
+                            <i class="m-0 p-0 bi bi-dot display-6"></i>
+                            <h4 class="m-0 p-0"> Morgan, Dexter (3 PAX) </h4>
+                        </div>
+
+                        <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                        <div class="row">
+                            <!-- FLIGHT DEPARTURE DETAILS -->
+                            <div class="col-lg-6 col-md-12 col-sm-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
+                                <div class="d-flex align-items-center m-0 p-0 text-tertiary">
+                                    <i class="fa-solid fa-plane-departure fa-xl"></i>
+                                    <h6 class="m-2 fw-bolder"> Departure </h6>
+                                </div>
+
+                                <p class="m-0 p-0 ps-3 text-light"> MNL Ninoy Aquino International Airport </p>
+
+                                <div class="d-flex align-items-center m-0 p-0 text-light">
+                                    <p class="m-0 p-0 ps-3"> Gate 17A </p>
+                                    <i class="m-0 p-0 bi bi-dot"></i>
+                                    <p class="m-0 p-0"> 20:30 </p>
+                                </div>
+
+                                <div class="d-flex align-items-center m-0 p-0 text-light">
+                                    <p class="m-0 p-0 ps-3"> June 14 2026 </p>
+                                    <i class="m-0 p-0 bi bi-dot"></i>
+                                    <p class="m-0 p-0"> 21:00 </p>
+                                </div>
+                            </div>
+
+                            <!-- FLIGHT ARRIVAL DETAILS -->
+                            <div class="col-lg-6 col-md-12 mb-sm-4 mb-4 mb-lg-0">
+                                <div class="d-flex align-items-center m-0 p-0 text-tertiary">
+                                    <i class="fa-solid fa-plane-arrival fa-xl"></i>
+                                    <h6 class="m-2 fw-bolder"> Arrival </h6>
+                                </div>
+
+                                <p class="m-0 p-0 ps-3 text-light"> DPS I Gusti Ngurah Rai International Airport
+                                </p>
+                                <p class="m-0 p-0 ps-3 text-light"> Gate 9B </p>
+
+                                <div class="d-flex align-items-center m-0 p-0 text-light">
+                                    <p class="m-0 p-0 ps-3"> June 15 2026 </p>
+                                    <i class="m-0 p-0 bi bi-dot"></i>
+                                    <p class="m-0 p-0"> 03:00 </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
+                        <div class="d-flex flex-column gap-2 align-items-center w-100">
+                            <button class="btn btn-success btn-lg text-white" data-bs-toggle="modal"
+                                    data-bs-target="#view-reservation"> View Details </button>
+
+                            <button class="btn btn-warning btn-lg text-white" data-bs-toggle="modal"
+                                    data-bs-target="#edit-reservation"> Edit Details </button>
+
+                            <button class="btn btn-danger btn-lg text-white" data-bs-toggle="modal"
+                                    data-bs-target="#cancel-reservation"> Cancel Reservation </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VIEW RESERVATION MODAL -->
+<div class="modal fade" id="view-reservation" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> [BOOKING REFERENCE] Details </h2>
+            </div>
+
+            <div class="modal-body bg-white fw-bolder text-dark">
+                ...
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT RESERVATION MODAL -->
+<div class="modal fade" id="edit-reservation" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> Edit [BOOKING REFERENCE] </h2>
+            </div>
+
+            <div class="modal-body bg-white fw-bolder text-dark">
+                ...
+            </div>
+
+            <div class="modal-footer d-flex bg-light">
+                <button class="btn btn-success text-white"
+                        onclick="hideModalShowToast('edit-reservation', 'edit-toast')">
+                    Save Changes
+                </button>
+
+                <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT RESERVATION TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
+     id="edit-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body">
+            Successfully saved changes on reservation [BOOKING REFERENCE]!
+        </div>
+
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+<!-- CANCEL RESERVATION MODAL -->
+<div class="modal fade" id="cancel-reservation" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> Are you sure? </h2>
+            </div>
+
+            <div class="modal-footer d-flex bg-light">
+                <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                    No
+                </button>
+
+                <button class="btn btn-danger text-white"
+                        onclick="hideModalShowToast('cancel-reservation', 'cancel-toast')">
+                    Yes, Cancel It
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CANCEL RESERVATION TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
+     id="cancel-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body">
+            Cancelled Reservation [BOOKING REFERENCE]!
+        </div>
+
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+{{> footer}}

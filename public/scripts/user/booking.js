@@ -244,21 +244,13 @@ function showSpecifyGender() {
  * meal package in the booking summary.
  */
 function updateMealSelection() {
-    const $mealToast = $('#meal-toast');
-    const $toastBody = $mealToast.find('.toast-body');
     const $selectedMeal = $('#selected-meal');
-    const baseToast = new bootstrap.Toast($mealToast, {
-        autohide: true,
-        delay: 2000
-    });
 
     $selectedMeal.text('Standard');
     $('#standard').prop('checked', true);
 
     $('input[name="meal-selection"]').off('change').on('change', function () {
-        $toastBody.text(`Changed meal type to ${$(this).next('label').text().trim().toLowerCase()} meal!`);
-        baseToast.show();
-
+        showToast('#meal-toast', `Changed meal type to ${$(this).next('label').text().trim().toLowerCase()} meal!`);
         $selectedMeal.text($(this).next('label').text().trim());
     });
 }
@@ -269,14 +261,8 @@ function updateMealSelection() {
  * in the booking summary.
  */
 function updateSeatSelection() {
-    const $seatToast = $("#seat-toast");
-    const $toastBody = $seatToast.find(".toast-body");
     const $selectedSeat = $('#selected-seat');
     const $selectedClass = $('#selected-class');
-    const baseToast = new bootstrap.Toast($seatToast, {
-        autohide: true,
-        delay: 2000
-    });
 
     let seatClass;
 
@@ -290,9 +276,7 @@ function updateSeatSelection() {
             $(".seat").removeClass("selected");
             $(this).addClass("selected");
 
-            $toastBody.text(`Changed seat number to ${$(this).text().trim()}!`);
-            baseToast.show();
-
+            showToast('#seat-toast', `Changed seat number to ${$(this).text().trim()}!`);
             classFare = 0;
 
             if ($(this).hasClass('economy')) {
@@ -390,14 +374,20 @@ function updateBookingSummary() {
 }
 
 /**
- * Displays a toast.
+ * Displays a toast with an optional display text.
  * 
  * @param {string} toastID the toast's ID.
+ * @param {string} text the toast's display text.
  */
-function showToast(toastID) {
-    const toast = document.getElementById(toastID);
+function showToast(toastID, text = '') {
+    const toast = document.querySelector(toastID);
+    const toastBody = toast.querySelector('.toast-body');
 
     document.activeElement.blur();
+
+    if (text) {
+        toastBody.textContent = text;
+    }
 
     const toastInstance =
         bootstrap.Toast.getInstance(toast) ||
@@ -491,30 +481,42 @@ function showMissingFields() {
  * is successful or not.
  */
 function confirmBooking() {
-    console.log('Confirm button clicked');
-    
-    //bindMissingFieldsEvents();
-    //showMissingFields();
+    let userInputs;
 
-    // if (!Object.values(stepsDone).every(Boolean)) {
-    //     showToast('incomplete');
-    //     return;
-    // }
+    bindMissingFieldsEvents();
+    showMissingFields();
 
-    fetch('/flight-book', {
-        method: 'POST'
-    })
-        .then(response => response.json())
-        .then((result) => {
-            console.log('Reservation response:', result);
-            if (result.success) {
-                showToast('complete');
-            } else {
-                showToast('incomplete');
-            }
+    if (Object.values(stepsDone).every(Boolean)) {
+        userInputs = {
+            reservationNumber: `${performance.now().toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
+            flightNumber: '123456789012123456789012',
+            userId: '123456789012123456789012',
+            email: `${$('#email-address').val().trim()}@${$('#domain-address').val().trim()}`,
+            firstName: $('#first-name').val().trim(),
+            lastName: $('#last-name').val().trim(),
+            passportCode: $('#passport-code').val().trim(),
+            seatNumber: $('#selected-seat').text().trim(),
+        };
+
+        fetch('/flight-book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(userInputs)
         })
-        .catch((error) => {
-            console.error('Booking request failed:', error);
-            showToast('incomplete');
-        });
+            .then(response => response.json())
+            .then((result) => {
+                if (result.success) {
+                    showToast('#complete', `Booking confirmed under ${userInputs.reservationNumber}!`);
+
+                    setTimeout(() => {
+                        window.location.href = '/reservations';
+                    }, 800);
+                }
+            });
+    } else {
+        showToast('#incomplete');
+    }
 }

@@ -20,7 +20,6 @@ server.engine('hbs', handlebars.engine);
 server.set('view engine', 'hbs');
 server.set('views', path.join(__dirname, 'views'));
 
-// Exposes every file in the public folder
 server.use(express.json());
 server.use(express.static(path.join(__dirname, 'public')));
 
@@ -43,17 +42,23 @@ server.get('/flight-book', (req, res) => {
 });
 
 server.post('/flight-book', (req, res) => {
+    // if user has not picked flight and goes to this link,
+    // redirect to flight-search
+
     try {
-        const reservation = createReservation();
+        const reservation = createReservation(req.body);
         res.status(200).json({ success: true, reservation });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Failed to create sample reservation.' });
+        res.status(500).json({ success: false, message: 'Failed To Create Reservation!' });
     }
 });
 
 server.get('/reservations', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/user/reservations.html'));
+    res.render('reservations', {
+        page: '/reservations',
+        script: '/scripts/user/reservations.js'
+    });
 });
 
 connectToMongo((err) => {

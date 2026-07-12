@@ -27,9 +27,9 @@
             <li class="nav-item me-3 {{#if (eq page "/flight-book")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
                 <a class="nav-link fw-bold {{#if (eq page "/flight-book")}}disabled text-light{{/if}}" {{#unless (eq page "/flight-book")}}href="/flight-book"{{/unless}}> Reserve A Flight </a>
             </li>
-            
-            <li class="nav-item me-3">
-                <a class="nav-link fw-bold" href="/reservations"> My Reservations </a>
+
+            <li class="nav-item me-3 {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}}href="/reservations"{{/unless}}> My Reservations </a>
             </li>
 
             <li class="nav-item dropstart me-3">
