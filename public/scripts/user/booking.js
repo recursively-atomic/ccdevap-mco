@@ -34,7 +34,8 @@ function getRequiredFields() {
     requiredFields = $('.required-field').map(function () {
         return {
             selector: '#' + $(this).attr('id'),
-            isFilled: false
+            isFilled: false,
+            value: null
         };
     }).get();
 }
@@ -79,7 +80,7 @@ function decreaseProgress(stepName) {
  */
 function bindPassengerInformationEvents() {
     requiredFields.forEach(function (field) {
-        $(field.selector).off('input.check').on('input.check', function () {
+        $(field.selector).off('input.check change.check').on('input.check change.check', function () {
             checkPassengerInformation();
         });
     });
@@ -91,7 +92,13 @@ function bindPassengerInformationEvents() {
  */
 function checkPassengerInformation() {
     requiredFields.forEach(function (field) {
-        const value = $(field.selector).val().trim();
+        let value;
+
+        try {
+            value = $(field.selector).val().trim();
+        } catch {
+            value = $(field.selector).text().trim();
+        }
 
         // Checks if a field has the proper data, and flags
         // accordingly through the requireFields array.
@@ -116,41 +123,54 @@ function checkPassengerInformation() {
 
                     if (ageCategory) {
                         field.isFilled = true;
+                        field.value = value;
                     } else {
                         field.isFilled = false;
+                        field.value = null;
                     }
                 } else {
                     field.isFilled = false;
+                    field.value = null;
                 }
                 break;
             case '#gender-select':
                 if (value !== '') {
                     if (value === 'Not Listed') {
-                        if ($('#other-gender-input').val().trim() !== '') {
+                        const otherGenderValue = $('#other-gender-input').val().trim();
+
+                        if (otherGenderValue !== '') {
                             field.isFilled = true;
+                            field.value = otherGenderValue;
                         } else {
                             field.isFilled = false;
+                            field.value = null;
                         }
                     } else {
                         field.isFilled = true;
+                        field.value = value;
                         requiredFields.find(field => field.selector == '#other-gender-input').isFilled = true;
                     }
                 } else {
                     field.isFilled = false;
+                    field.value = null;
                 }
                 break;
             case '#other-gender-input':
                 if (requiredFields.find(field => field.selector == '#gender-select').isFilled == true) {
                     field.isFilled = true;
+                    field.value = value;
                 } else {
                     field.isFilled = false;
+                    field.value = null;
                 }
                 break;
             default:
                 if (value !== '') {
                     field.isFilled = true;
+                    field.value = value;
                 } else {
                     field.isFilled = false;
+                    field.value = null;
                 }
                 break;
         }
@@ -283,6 +303,9 @@ function updateSeatSelection() {
                 seatClass = 'Economy';
             } else if ($(this).hasClass('premium')) {
                 seatClass = 'Premium';
+                classFare += 500;
+            } else if ($(this).hasClass('business')) {
+                seatClass = 'Business';
                 classFare += 1000;
             } else {
                 seatClass = 'First';
@@ -476,27 +499,40 @@ function showMissingFields() {
 }
 
 /**
+ * Gets all of the important information about a reservation.
+ * 
+ * @returns {Object} an object of the user's inputs.
+ */
+function getReservationData() {
+    let reservationData = {
+        reservationNumber: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
+        flightNumber: 'TESTFLIGHT',
+        email: `${requiredFields.find(field => field.selector == '#email-address').value}@${requiredFields.find(field => field.selector == '#domain-address').value}`,
+        firstName: requiredFields.find(field => field.selector == '#first-name').value,
+        lastName: requiredFields.find(field => field.selector == '#last-name').value,
+        passportCode: requiredFields.find(field => field.selector == '#passport-code').value,
+        seatNumber: $('#selected-seat').text().trim(),
+        totalAmount: seatFare + classFare + taxAndFee + extraFee
+    };
+
+    if ($('#suffix-select').val() != 'None') {
+        reservationData.suffix = requiredFields.find(field => field.selector == '#suffix-select').value;
+    }
+
+    return reservationData;
+}
+
+/**
  * Checks if all of the required details for a booking
  * are filled in and displays a toast if the confirmation
  * is successful or not.
  */
 function confirmBooking() {
-    let userInputs;
-
     bindMissingFieldsEvents();
     showMissingFields();
 
     if (Object.values(stepsDone).every(Boolean)) {
-        userInputs = {
-            reservationNumber: `${performance.now().toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
-            flightNumber: '123456789012123456789012',
-            userId: '123456789012123456789012',
-            email: `${$('#email-address').val().trim()}@${$('#domain-address').val().trim()}`,
-            firstName: $('#first-name').val().trim(),
-            lastName: $('#last-name').val().trim(),
-            passportCode: $('#passport-code').val().trim(),
-            seatNumber: $('#selected-seat').text().trim(),
-        };
+        const reservationData = getReservationData();
 
         fetch('/flight-book', {
             method: 'POST',
@@ -504,16 +540,16 @@ function confirmBooking() {
                 'Content-Type': 'application/json'
             },
 
-            body: JSON.stringify(userInputs)
+            body: JSON.stringify(reservationData)
         })
             .then(response => response.json())
             .then((result) => {
                 if (result.success) {
-                    showToast('#complete', `Booking confirmed under ${userInputs.reservationNumber}!`);
+                    showToast('#complete', `Booking confirmed under ${reservationData.reservationNumber}!`);
 
                     setTimeout(() => {
                         window.location.href = '/reservations';
-                    }, 800);
+                    }, 1000);
                 }
             });
     } else {

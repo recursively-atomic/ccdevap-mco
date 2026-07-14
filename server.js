@@ -2,7 +2,7 @@ const express = require('express');
 const expressHandlebars = require('express-handlebars');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
-const { createReservation } = require('./private/controllers/reservations');
+const { getSeatMap, createReservation } = require('./private/controllers/reservations');
 const server = express();
 
 const handlebars = expressHandlebars.create({
@@ -34,23 +34,28 @@ server.get('/flight-search', (req, res) => {
     res.sendFile(path.join(__dirname, './views/user/search.html'));
 });
 
-server.get('/flight-book', (req, res) => {
-    res.render('booking', {
-        page: '/flight-book',
-        script: '/scripts/user/booking.js'
-    });
-});
-
-server.post('/flight-book', (req, res) => {
-    // if user has not picked flight and goes to this link,
-    // redirect to flight-search
-
+server.get('/flight-book', async (req, res) => {
     try {
-        const reservation = createReservation(req.body);
-        res.status(200).json({ success: true, reservation });
+        const seatRows = await getSeatMap("TESTFLIGHT");
+        
+        res.status(200).render('booking', {
+            page: '/flight-book',
+            script: '/scripts/user/booking.js',
+            seats: seatRows
+        });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Failed To Create Reservation!' });
+        res.status(500);
+    }
+});
+
+server.post('/flight-book', async (req, res) => {
+    try {
+        const reservation = await createReservation(req.body);
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
     }
 });
 

@@ -226,6 +226,10 @@ input[type="range"].form-range::-webkit-slider-thumb {
     background-color: var(--bs-primary-accent);
 }
 
+.business {
+    background-color: var(--bs-green);
+}
+
 .premium {
     background-color: var(--bs-secondary-accent);
 }

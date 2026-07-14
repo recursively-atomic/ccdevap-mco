@@ -8,14 +8,7 @@ const schema = new mongoose.Schema({
     },
 
     flightNumber: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'flights',
-        required: true
-    },
-
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
+        type: String,
         required: true
     },
 
@@ -34,6 +27,11 @@ const schema = new mongoose.Schema({
         required: true
     },
 
+    suffix: {
+        type: String,
+        required: false
+    },
+
     passportCode: {
         type: String,
         required: true
@@ -41,6 +39,11 @@ const schema = new mongoose.Schema({
 
     seatNumber: {
         type: String,
+        required: true
+    },
+
+    totalAmount: {
+        type: Number,
         required: true
     },
 
