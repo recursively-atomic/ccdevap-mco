@@ -15,14 +15,4 @@ function connectToMongo(callback) {
         });
 }
 
-function signalHandler() {
-    mongoose.connection.close(() => {
-        process.exit();
-    });
-}
-
-process.on('SIGINT', signalHandler);
-process.on('SIGTERM', signalHandler);
-process.on('SIGQUIT', signalHandler);
-
 module.exports = { connectToMongo };
