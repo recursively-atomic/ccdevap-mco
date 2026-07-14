@@ -1,0 +1,72 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
+    <div class="mb-0">
+        <a class="navbar-brand text-white" href="/">
+            <img class="d-inline-block align-items-center mb-2 square-40px" src="/media/images/company-logo.png">
+
+            {{#if (eq page "/")}}
+            Cebu Atlantic
+            {{/if}}
+
+        </a>
+    </div>
+
+    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse collapse" id="main-menu">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item me-3 {{#if (eq page "/")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                <a class="nav-link fw-bold {{#if (eq page "/")}}disabled text-light{{/if}}" {{#unless (eq page "/")}}href="/"{{/unless}}> Home </a>
+            </li>
+
+            <li class="nav-item me-3">
+                <a class="nav-link fw-bold" href="/flight-search"> Search A Flight </a>
+            </li>
+
+            <li class="nav-item me-3 {{#if (eq page "/flight-book")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                <a class="nav-link fw-bold {{#if (eq page "/flight-book")}}disabled text-light{{/if}}" {{#unless (eq page "/flight-book")}}href="/flight-book"{{/unless}}> Reserve A Flight </a>
+            </li>
+
+            <li class="nav-item me-3 {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}}href="/reservations"{{/unless}}> My Reservations </a>
+            </li>
+
+            <li class="nav-item dropstart me-3">
+                <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                    Profile
+                </a>
+
+                <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                    <li><a class="dropdown-item" href="./views/user/profile.html"> My Profile </a></li>
+                    <li><a class="dropdown-item" href="###"> Log Out </a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item dropstart">
+                <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                    Admin Access
+                </a>
+                <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                    <li>
+                        <a class="dropdown-item" href="./views/admin/admin-dashboard.html"> Admin Dashboard </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="./views/admin/admin-flights.html"> Flight Management </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="./views/admin/admin-reservations.html">
+                            Reservation Management
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

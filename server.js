@@ -1,26 +1,83 @@
 const express = require('express');
-const handlebars = req9ore
+const expressHandlebars = require('express-handlebars');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
+const { createUser } = require('./private/controllers/users');
 const server = express();
 
-// Exposes every file in the public folder
-server.use(express.static(path.join(__dirname, 'public')));
+const handlebars = expressHandlebars.create({
+    extname: 'hbs',
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, 'views', 'layouts'),
+    partialsDir: path.join(__dirname, 'views', 'partials'),
+    helpers: {
+        eq: (a, b) => a == b
+    }
+});
+
+
+server.engine('hbs', handlebars.engine);
+
+server.set('view engine', 'hbs');
+server.set('views', path.join(__dirname, 'views'));
+
+server.use(express.json());
+server.use(express.static(path.join(__dirname, 'public'))); // Exposes every file in the public folder
 
 server.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/index.html'));
+    res.render('index', {
+        page: '/',
+        script: '/scripts/index.js'
+    });
 });
 
-server.get('/flight-search', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/user/search.html'));
+server.get("/register", (req, res) => {
+    res.render('register', { message: "user registration page" });
 });
 
-server.get('/flight-book', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/user/booking.html'));
+server.post("/register", async (req, res) => {
+     try {
+        const user = createUser(req.body);
+        res.status(200).json({ success: true, user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Registration Failed!' });
+    }
 });
 
-server.get('/reservations', (req, res) => {
-    res.sendFile(path.join(__dirname, './views/user/reservations.html'));
+server.get('/login', (req, res) => {
+    res.render('login', { message: "user login page"});
+});
+
+server.post("/login", async(req,res)=>{
+    try{
+        // create email and this is in html name="email"
+        const email = req.body.email;
+        const password = req.body.password;
+          //     database email name : current email
+        const userEmail = await Users.findOne({emailAddress: email});
+        if(userEmail.password === password){
+            res.status(201).render("index");    
+        }else{
+            res.send("Invalid login Details");
+        }
+    }catch(error){
+        res.status(400).send("invalid Email");
+    }
+});
+
+server.get('/user-profile', (req, res) => {
+    res.render('user', {
+        page: '/user-profile',
+        script: '/scripts/user/profile.js'
+    });
+});
+
+server.get('/admin-profile', (req, res) => {
+    res.render('admin', {
+        page: '/admin-profile',
+        script: '/scripts/admin/admin-users.js'
+    });
 });
 
 connectToMongo((err) => {
