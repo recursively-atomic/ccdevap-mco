@@ -12,46 +12,8 @@ const {
     getUserByEmail,
     getAllUsers,
     updateUser,
-    deleteUser,
     changePassword
 } = require('./private/controllers/users');
-
-const {
-    getSeatMap, 
-    createReservation, 
-    getReservationsByEmail, 
-    getReservationById,
-    getAllReservations, 
-    getReservationById, 
-    deleteReservation, 
-    updateStatus
-} = require("./private/controllers/reservations");
-
-const {
-    createPassenger,
-    getPassengersByUser,
-    getPassenger,
-    updatePassenger,
-    deletePassenger
-} = require("./private/controllers/passengers");
-
-const {
-    createPayment,
-    getPaymentByUser,
-    updatePayment
-} = require("./private/controllers/payments");
-
-const {
-    getPreferences,
-    savePreferences
-} = require("./private/controllers/notificationPreferences");
-
-const {
-    getSeatMap,
-    createReservation,
-    getReservationsByEmail,
-    getReservationById
-} = require("./private/controllers/reservations");
 
 const server = express();
 
@@ -166,309 +128,56 @@ server.get("/logout", (req, res) => {
     });
 });
 
-server.get("/api/passengers", async (req, res) => {
-    try {
-        if (!req.session.user) {
-            return res.status(401).json({
-                success: false
-            });
-        }
-
-        const passengers = await getPassengersByUser(req.session.user._id);
-
-        res.json({
-            success: true,
-            passengers
-        });
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false
-        });
-    }
-});
-
-server.post("/api/passengers", async (req, res) => {
+server.put("/api/profile", async (req, res) => {
     try {
         if (!req.session.user) {
             return res.status(401).json({
                 success: false,
-                message: "Please log in first."
+                message: "Not logged in."
             });
         }
 
-        const passenger = await createPassenger({
-
-            userId: req.session.user._id,
-
-            countryCode: req.body.countryCode,
-            passportCode: req.body.passportCode,
-            passportExpiration: req.body.passportExpiration,
-
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            suffix: req.body.suffix,
-
-            birthDate: req.body.birthDate,
-            gender: req.body.gender,
-            nationality: req.body.nationality,
-
-            emailAddress: req.body.emailAddress,
-            phoneNumber: req.body.phoneNumber
-
-        });
-
-        res.json({
-            success: true,
-            passenger
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            message: "Unable to save passenger."
-        });
-    }
-});
-
-server.delete("/api/passengers/:id", async (req, res) => {
-    try {
-        if (!req.session.user) {
-            return res.status(401).json({
-                success: false,
-                message: "Please log in first."
-            });
-        }
-
-        const passenger = await getPassenger(req.params.id);
-        if (!passenger) {
-            return res.status(404).json({
-                success: false,
-                message: "Passenger not found."
-            });
-        }
-
-        // Prevent users from deleting someone else's passenger
-        if (passenger.userId.toString() !== req.session.user._id.toString()) {
-            return res.status(403).json({
-                success: false,
-                message: "Unauthorized."
-            });
-        }
-
-        await deletePassenger(req.params.id);
-
-        res.json({
-            success: true
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            message: "Unable to delete passenger."
-        });
-    }
-});
-
-server.get("/api/passengers/:id", async (req, res) => {
-    try {
-        const passenger = await getPassenger(req.params.id);
-
-        if (!passenger) {
-            return res.status(404).json({
-                success: false
-            });
-        }
-
-        if (passenger.userId.toString() !== req.session.user._id.toString()) {
-            return res.status(403).json({
-                success: false
-            });
-        }
-
-        res.json({
-            success: true,
-            passenger
-        });
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false
-        });
-    }
-});
-
-server.put("/api/passengers/:id", async (req, res) => {
-    try {
-        const passenger = await getPassenger(req.params.id);
-
-        if (!passenger) {
-            return res.status(404).json({ success: false });
-        }
-
-        if (passenger.userId.toString() !== req.session.user._id.toString()) {
-            return res.status(403).json({ success: false });
-        }
-
-        const updated = await updatePassenger(req.params.id, req.body);
-        res.json({
-            success: true,
-            passenger: updated
-        });
-
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false
-        });
-    }
-});
-
-server.get("/api/payment", async (req, res) => {
-    try {
-        if (!req.session.user) {
-            return res.status(401).json({
-                success: false
-            });
-        }
-
-        const payment = await getPaymentByUser(req.session.user._id);
-
-        res.json({
-            success: true,
-            payment
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false
-        });
-    }
-});
-
-server.post("/api/payment", async (req, res) => {
-    try {
-        if (!req.session.user) {
-            return res.status(401).json({
-                success: false
-            });
-        }
-
-        const payment = await createPayment({
-            userId: req.session.user._id,
-            ...req.body
-        });
-
-        res.json({
-            success: true,
-            payment
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false
-        });
-    }
-});
-
-server.put("/api/payment", async (req, res) => {
-    try {
-        if (!req.session.user) {
-            return res.status(401).json({
-                success: false
-            });
-        }
-
-        const payment = await getPaymentByUser(req.session.user._id);
-        
-        if (!payment) {
-            return res.status(404).json({
-                success: false
-            });
-        }
-
-        const updated = await updatePayment(
-            payment._id,
-            req.body
-        );
-
-        res.json({
-            success: true,
-            payment: updated
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false
-        });
-    }
-});
-
-server.get("/notification-preferences", async (req, res) => {
-    const preferences =
-        await getPreferences(req.session.user._id);
-    res.json(preferences || {});
-});
-
-server.put("/notification-preferences", async (req, res) => {
-    const preferences =
-        await savePreferences(
+        const user = await updateUser(
             req.session.user._id,
             req.body
         );
-    res.json(preferences);
-});
 
-server.get("/travel-history", async (req, res) => {
-    try {
-        const reservations =
-            await getReservationsByEmail(
-                req.session.user.emailAddress
-            );
-        res.json(reservations);
-    }
+        req.session.user.emailAddress = user.emailAddress;
+        
+        res.json({
+            success: true,
+            user
+        });
 
-    catch (err) {
+    } catch (err) {
         console.log(err);
-        res.sendStatus(500);
+        res.status(500).json({
+            success: false,
+            message: "Unable to update profile."
+        });
     }
 });
 
-server.get("/travel-history/:id", async (req, res) => {
-    try {
-        const reservation =
-            await getReservationById(req.params.id);
-        if (!reservation) {
-            return res.sendStatus(404);
-        }
-        res.json(reservation);
-    }
-
-    catch (err) {
-        console.log(err);
-        res.sendStatus(500);
-    }
-});
-
-server.get("/user-profile", (req, res) => {
+server.get("/user-profile", async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     }
-    res.render("user");
+    const user = await getUserById(req.session.user._id);
+    res.render("user", {
+        user
+    });
 });
 
-server.get("/admin-profile", (req, res) => {
+server.get("/admin-profile", async (req, res) => {
     if (!req.session.user || req.session.user.role !== "admin") {
         return res.redirect("/login");
     }
-    res.render("admin");
+
+    const user = await getUserById(req.session.user._id);
+
+    res.render("admin", {
+        user
+    });
 });
 
 server.get("/user/:id", async (req, res) => {
@@ -476,25 +185,6 @@ server.get("/user/:id", async (req, res) => {
     res.render("user", {
         user
     });
-});
-
-server.put("/api/users/profile", async (req, res) => {
-    try {
-        const updatedUser = await updateUser(
-            req.session.user._id,
-            req.body
-        );
-        res.json({
-            success: true,
-            user: updatedUser
-        });
-
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
 });
 
 server.get("/admin-users", async (req, res) => {
@@ -544,97 +234,6 @@ server.put("/api/users/:id", async (req, res) => {
         });
 
     } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
-});
-
-server.delete("/api/users/:id", async (req, res) => {
-    try {
-        await deleteUser(req.params.id);
-        res.json({
-            success: true
-        });
-
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            error: err.message
-        });
-    }
-});
-
-server.put("/api/users/:id", async (req, res) => {
-    try {
-        const user = await updateUser(req.params.id, req.body);
-        res.json(user);
-    } catch (err) {
-        res.status(500).json({
-            error: err.message
-        });
-    }
-});
-
-server.get("/api/reservations", async (req, res) => {
-    try {
-        const reservations = await getAllReservations();
-        res.json(reservations);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
-});
-
-server.get("/api/reservations/:id", async (req, res) => {
-    try {
-        const reservation =
-            await getReservationById(req.params.id);
-        res.json(reservation);
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
-});
-
-server.put("/api/reservations/:id", async (req, res) => {
-    try {
-        const reservation = await updateStatus(
-                req.params.id,
-                req.body.status
-            );
-        res.json({
-            success: true,
-            reservation
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
-    }
-});
-
-server.delete("/api/reservations/:id", async (req, res) => {
-    try {
-        await deleteReservation(req.params.id);
-        res.json({
-            success: true
-        });
-
-    } catch (err) {
-        console.error(err);
         res.status(500).json({
             success: false,
             message: err.message

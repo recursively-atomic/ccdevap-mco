@@ -1,8 +1,9 @@
+//testing of login html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Mikhael Darryl Y. Ac-ac">
+    <meta name="author" content="Kyeeona Caesar">
     <meta charset="UTF-8">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
@@ -12,8 +13,8 @@
             integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao=" crossorigin="anonymous" defer></script>
     <script src="/scripts/admin/admin-dashboard.js" defer></script>
     
-    <link rel="stylesheet" href="/styles/override.css">
-    <link rel="stylesheet" href="/styles/additional.css">
+    <link rel="stylesheet" href="/public/styles/override.css">
+    <link rel="stylesheet" href="/public/styles/additional.css">
 
     <link rel="shortcut icon" href="/media/company-logo.png" type="image/x-icon">
     <title> Cebu Atlantic </title>
@@ -24,7 +25,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card shadow-sm rounded-3 p-4 mt-5 mb-5">
-                    <img class="d-inline-block align-items-center mb-2" width="40px" src="/media/company-logo.png">
+                    <img class="d-inline-block align-items-center mb-2" width="40px" src="/public/media/images/company-logo.png">
                     <h2 class="text-center mb-4"> Login </h2>
                     <form id="admin-login-form" method="POST" action="/api/admin/login">
                         <div class="mb-3">
@@ -46,7 +47,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </body>
 </html>

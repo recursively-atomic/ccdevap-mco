@@ -1,26 +1,54 @@
-<li class="nav-item dropstart">
-                <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
-                    Admin Access
-                </a>
-                <ul class="dropdown-menu mb-3 bg-dark-subtle">
-                    <li>
-                        <a class="dropdown-item" href="./views/old/admin/admin-dashboard.html"> Admin Dashboard </a>
-                    </li>
+<!--For admin navigation-->
+<body class="bg-light">
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top ps-5 pe-5 pt-3 pb-3 mb-4 bg-dark">
+        <div class="mb-0">
+            <a class="navbar-brand text-white" href="./index.html">
+                <img class="d-inline-block align-items-center mb-2" width="40px" src="./media/company-logo.png">
+                Cebu Atlantic
+            </a>
+        </div>
 
-                    <li>
-                        <a class="dropdown-item" href="./views/old/admin/admin-flights.html"> Flight Management </a>
-                    </li>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#main-menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <li>
-                        <a class="dropdown-item" href="./views/old/admin/admin-reservations.html">
-                            Reservation Management
-                        </a>
-                    </li>
+        <div class="navbar-collapse collapse" id="main-menu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropstart me-3">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Profile
+                    </a>
 
-                    <li>
-                        <a class="dropdown-item" href="./views/old/admin/admin-users.html"> User Management </a>
-                    </li>
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li><a class="dropdown-item" href="/views/user/login.html"> Log Out </a></li>
+                    </ul>
+                </li>
 
-                    <li><a class="dropdown-item" href="./views/login.html"> Log Out </a></li>
-                </ul>
-            </li>
+                <li class="nav-item dropstart">
+                    <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                        Admin Access
+                    </a>
+                    <ul class="dropdown-menu mb-3 bg-dark-subtle">
+                        <li>
+                            <a class="dropdown-item" href="./views/old/admin/admin-dashboard.html"> Admin Dashboard </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="./views/old/admin/admin-flights.html"> Flight Management </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="./views/old/admin/admin-reservations.html">
+                                Reservation Management
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" href="/views/old/admin/admin-users.html"> User Management </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>

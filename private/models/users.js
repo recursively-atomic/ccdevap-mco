@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
+    contactNumber: {
+    type: String,
+    default: ""
+    },
+
     passportCode: {
         type: String
     },

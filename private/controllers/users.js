@@ -34,43 +34,31 @@ async function getAllUsers() {
 
 // UPDATE
 async function updateUser(id, data) {
-
     return await Users.findByIdAndUpdate(
         id,
         {
             firstName: data.firstName,
             lastName: data.lastName,
             emailAddress: data.emailAddress,
-            passportCode: data.passportCode
+            contactNumber: data.contactNumber
         },
         {
             new: true
         }
     );
-
-}
-
-// DELETE
-async function deleteUser(id) {
-    return await Users.findByIdAndDelete(id);
 }
 
 async function changePassword(userId, currentPassword, newPassword) {
-
     const user = await Users.findById(userId);
-
     if (!user) {
         throw new Error("User not found.");
     }
-
     if (user.password !== currentPassword) {
         throw new Error("Current password is incorrect.");
     }
 
     user.password = newPassword;
-
     await user.save();
-
     return user;
 }
 
@@ -80,6 +68,5 @@ module.exports = {
     getUserByEmail,
     getAllUsers,
     updateUser,
-    deleteUser,
     changePassword
 };
