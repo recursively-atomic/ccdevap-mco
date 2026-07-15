@@ -4,12 +4,11 @@ const model = require('../models/reservations');
  * Creates a seat map of a specific flight that keeps track of
  * seat availability.
  * 
- * @param {*} flightNumber the specific flight to create a seat map of.
- * 
- * @returns the seat map.
+ * @param {String} flightNumber the specific flight to create a seat map of.
+ * @returns {Object} the seat map.
  */
 async function getSeatMap(flightNumber) {
-    const reservations = await model.find({ flightNumber }).select('seatNumber').lean();
+    const reservations = await model.find({ flightNumber, status: { $ne: 'Cancelled' } }).select('seatNumber').lean();
     const reservedSeats = reservations.map(reservation => reservation.seatNumber);
 
     const rows = ['A', 'B', 'C', 'D'];
@@ -32,17 +31,34 @@ async function getSeatMap(flightNumber) {
 }
 
 /**
+ * Gets all of the reservations that are associated to a certain user and
+ * limits the resuls to three per page.
+ * 
+ * @param {String} userId the specific user.
+ * @param {Number} page the page of the reservation results.
+ * @param {Number} limit the maximum amount of reservations that can be displayed per page.
+ * @returns {[Object, Number]} the reservations and the total amount of reservations.
+ */
+async function getReservationCards(userId, page, limit) {
+    const skip = (page - 1) * limit;
+    const totalReservations = await model.countDocuments({ userId });
+    const reservations = await model.find({ userId }).sort({ 'reservationNumber': 1 }).skip(skip).limit(limit).lean();
+
+    return { reservations, totalReservations };
+}
+
+/**
  * Creates a single reservation from user inputs in
  * `booking.hbs` and `booking.js`.
  * 
  * @param {Object} reservationData is an object containing all of the user input.
- * 
  * @returns {Promise} the status of the creation of the document.
  */
 async function createReservation(reservationData) {
     const reservation = new model({
         reservationNumber: reservationData.reservationNumber,
         flightNumber: reservationData.flightNumber,
+        userId: reservationData.userId,
         email: reservationData.email,
         firstName: reservationData.firstName,
         lastName: reservationData.lastName,
@@ -55,8 +71,32 @@ async function createReservation(reservationData) {
     return reservation.save();
 }
 
-// readReservation
-// updateSeatSelection
-// updateStatus
+/**
+ * Updates the seat associated to a certain reservation.
+ * 
+ * @param {String} reservationNumber the reservation to be updated.
+ * @param {String} newSeat the new selected seat to be associated to the reservation.
+ * @returns {Promise} the status after updating the document.
+ */
+async function updateSeat(reservationNumber, newSeat) {
+    return await model.findOneAndUpdate(
+        { reservationNumber },
+        { seatNumber: newSeat }
+    );
+}
 
-module.exports = { getSeatMap, createReservation };
+/**
+ * Updates the status of a reservation.
+ * 
+ * @param {String} reservationNumber the reservation to be updated.
+ * @param {String} newStatus the new status of the reservation.
+ * @returns {Promise} the status after updating the document.
+ */
+async function updateStatus(reservationNumber, newStatus) {
+    return await model.findOneAndUpdate(
+        { reservationNumber },
+        { status: newStatus }
+    );
+}
+
+module.exports = { getSeatMap, getReservationCards, createReservation, updateSeat, updateStatus };

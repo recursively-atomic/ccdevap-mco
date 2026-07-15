@@ -12,6 +12,11 @@ const schema = new mongoose.Schema({
         required: true
     },
 
+    userId: {
+        type: String,
+        required: true
+    },
+
     email: {
         type: String,
         required: true
@@ -49,7 +54,7 @@ const schema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['Paid', 'Pending', 'Cancelled', 'Waitlisted', 'Rescheduled'],
+        enum: ['Confirmed', 'Pending', 'Cancelled', 'Waitlisted', 'Rescheduled'],
         default: 'Pending'
     }
 });

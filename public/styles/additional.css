@@ -1,54 +1,54 @@
 /* TABLE STYLES */
 tbody > tr > th,
 tbody > tr > td {
-    color: var(--bs-dark) !important;
+    color: var(--bs-dark)!important;
 }
 
 tbody > tr:hover > td,
 tbody > tr:hover > th {
     background: var(--bs-light);
-    color: var(--bs-primary) !important;
+    color: var(--bs-primary)!important;
 }
 
 tbody > tr:hover > td > button.btn-success {
     border-color: var(--bs-white);
     background: var(--bs-white);
-    color: var(--bs-success) !important;
+    color: var(--bs-success)!important;
 }
 
 tbody > tr:hover > td > button.btn-success:hover {
     border-color: var(--bs-success);
     background: var(--bs-success);
-    color: var(--bs-white) !important;
+    color: var(--bs-white)!important;
 }
 
 tbody > tr:hover > td > button.btn-warning {
     border-color: var(--bs-white);
     background: var(--bs-white);
-    color: var(--bs-warning) !important;
+    color: var(--bs-warning)!important;
 }
 
 tbody > tr:hover > td > button.btn-warning:hover {
     border-color: var(--bs-warning);
     background: var(--bs-warning);
-    color: var(--bs-white) !important;
+    color: var(--bs-white)!important;
 }
 
 tbody > tr:hover > td > button.btn-danger {
     border-color: var(--bs-white);
     background: var(--bs-white);
-    color: var(--bs-danger) !important;
+    color: var(--bs-danger)!important;
 }
 
 tbody > tr:hover > td > button.btn-danger:hover {
     border-color: var(--bs-danger);
     background: var(--bs-danger);
-    color: var(--bs-white) !important;
+    color: var(--bs-white)!important;
 }
 
 /* FORM STYLES */
 ::placeholder {
-    color: var(--bs-black) !important;
+    color: var(--bs-black)!important;
 }
 
 .was-checked-primary:checked {
@@ -56,8 +56,8 @@ tbody > tr:hover > td > button.btn-danger:hover {
 }
 
 #max-price-input {
-    pointer-events: none;
     background: transparent;
+    pointer-events: none;
 }
 
 input[type="range"].form-range::-webkit-slider-thumb {
@@ -82,7 +82,7 @@ input[type="range"].form-range::-webkit-slider-thumb {
 }
 
 .btn-check:checked + .btn {
-    color: var(--bs-white) !important;
+    color: var(--bs-white)!important;
 }
 
 /* DROPDOWN STYLES */
@@ -92,9 +92,9 @@ input[type="range"].form-range::-webkit-slider-thumb {
 
 .dropdown-submenu .dropdown-menu {
     display: none;
+    left: calc(100% - 1px);
     position: absolute;
     top: calc(0% - 9px);
-    left: calc(100% - 1px);
 }
 
 .dropdown-submenu:hover > .dropdown-menu {
@@ -103,12 +103,12 @@ input[type="range"].form-range::-webkit-slider-thumb {
 
 #filter-dropdown .active {
     background-color: var(--bs-tertiary-accent);
-    color: var(--bs-light) !important;
+    color: var(--bs-light)!important;
 }
 
 #sort-dropdown .active {
     background-color: var(--bs-tertiary-accent);
-    color: var(--bs-light) !important;
+    color: var(--bs-light)!important;
 }
 
 .dropdown-header-item:focus,
@@ -163,7 +163,7 @@ input[type="range"].form-range::-webkit-slider-thumb {
 /* ACCORDION STYLES */
 .accordion-button-white.accordion-button:not(.collapsed)::after,
 .accordion-button-white.accordion-button.collapsed::after {
-    filter: brightness(0) invert(100%) sepia(34%) saturate(457%) hue-rotate(118deg) brightness(108%) contrast(97%);
+    filter: brightness(0)invert(100%)sepia(34%)saturate(457%)hue-rotate(118deg)brightness(108%)contrast(97%);
 }
 
 /* PAGINATION STYLES */
@@ -195,14 +195,17 @@ input[type="range"].form-range::-webkit-slider-thumb {
 /* LIST GROUP STYLES */
 .list-group-item:hover {
     background: var(--bs-light);
-    color: var(--bs-primary) !important;
+    color: var(--bs-primary)!important;
 }
 
 /* SEAT CLASS STYLES */
 .seat {
-    color: var(--bs-white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 30px;
     width: 30px;
+    color: var(--bs-white);
     transition: transform 0.3s ease-in-out;
 }
 
@@ -262,30 +265,29 @@ input[type="range"].form-range::-webkit-slider-thumb {
     width: 40px;
 }
 
-/* RESPONSIVE UTILITIES */
 @media (min-width: 576px) {
     .border-start-sm-0 {
         border-left: 0 !important;
     }
 
     .rounded-end-sm-2 {
-        border-top-right-radius: var(--bs-border-radius) !important;
-        border-bottom-right-radius: var(--bs-border-radius) !important;
+        border-bottom-right-radius: var(--bs-border-radius)!important;
+    border-top-right-radius: var(--bs-border-radius)!important;
     }
 
     .rounded-end-sm-0 {
-        border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
     }
 
     .rounded-start-sm-2 {
-        border-top-left-radius: var(--bs-border-radius) !important;
-        border-bottom-left-radius: var(--bs-border-radius) !important;
+        border-bottom-left-radius: var(--bs-border-radius)!important;
+    border-top-left-radius: var(--bs-border-radius)!important;
     }
 
     .rounded-start-sm-0 {
-        border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
     }
 }
 
@@ -295,23 +297,23 @@ input[type="range"].form-range::-webkit-slider-thumb {
     }
 
     .rounded-end-md-2 {
-        border-top-right-radius: var(--bs-border-radius) !important;
-        border-bottom-right-radius: var(--bs-border-radius) !important;
+        border-bottom-right-radius: var(--bs-border-radius)!important;
+    border-top-right-radius: var(--bs-border-radius)!important;
     }
 
     .rounded-end-md-0 {
-        border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
     }
 
     .rounded-start-md-2 {
-        border-top-left-radius: var(--bs-border-radius) !important;
-        border-bottom-left-radius: var(--bs-border-radius) !important;
+        border-bottom-left-radius: var(--bs-border-radius)!important;
+    border-top-left-radius: var(--bs-border-radius)!important;
     }
 
     .rounded-start-md-0 {
-        border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
     }
 }
 
@@ -321,13 +323,13 @@ input[type="range"].form-range::-webkit-slider-thumb {
     }
 
     .rounded-end-lg-0 {
-        border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
     }
 
     .rounded-start-lg-0 {
-        border-top-left-radius: 0 !important;
         border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
     }
 }
 

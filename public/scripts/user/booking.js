@@ -507,6 +507,7 @@ function getReservationData() {
     let reservationData = {
         reservationNumber: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
         flightNumber: 'TESTFLIGHT',
+        userId: 'TESTUSER',
         email: `${requiredFields.find(field => field.selector == '#email-address').value}@${requiredFields.find(field => field.selector == '#domain-address').value}`,
         firstName: requiredFields.find(field => field.selector == '#first-name').value,
         lastName: requiredFields.find(field => field.selector == '#last-name').value,
