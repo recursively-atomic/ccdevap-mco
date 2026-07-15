@@ -4,7 +4,7 @@
             <li class="page-item">
                 <a class="page-link {{#if (eq pagination.currentPage 1)}}disabled{{/if}}"
                    href="{{#if (gt pagination.currentPage 1)}}{{pagination.baseUrl}}{{subtract pagination.currentPage 1}}{{else}}#{{/if}}">
-                    <span aria-hidden="true"> &laquo; </span>
+                    <span> &laquo; </span>
                 </a>
             </li>
 
@@ -21,11 +21,13 @@
                     {{/if}}
                 {{else}}
                     {{#if (or (eq this (add ../pagination.currentPage 2)) (eq this (subtract ../pagination.currentPage 2)))}}
-                        <li class="page-item disabled"><a> … </a></li>
+                        <li class="page-item">
+                            <a class="page-link disabled"> … </a>
+                        </li>
                     {{/if}}
                 {{/if}}
             {{/each}}
-
+            
             <li class="page-item">
                 <a class="page-link {{#if (eq pagination.currentPage pagination.totalPages)}}disabled{{/if}}"
                    href="{{#if (lt pagination.currentPage pagination.totalPages)}}{{pagination.baseUrl}}{{add pagination.currentPage 1}}{{else}}#{{/if}}">

@@ -31,18 +31,20 @@ async function getSeatMap(flightNumber) {
 }
 
 /**
- * Gets all of the reservations that are associated to a certain user and
- * limits the resuls to three per page.
+ * Gets all of the reservations that are associated to a certain user or not and
+ * limits the results according to the `limit` parameter.
  * 
- * @param {String} userId the specific user.
  * @param {Number} page the page of the reservation results.
  * @param {Number} limit the maximum amount of reservations that can be displayed per page.
+ * @param {String} userId an optional specific user.
  * @returns {[Object, Number]} the reservations and the total amount of reservations.
  */
-async function getReservationCards(userId, page, limit) {
+async function getReservations(page, limit, userId = null) {
     const skip = (page - 1) * limit;
-    const totalReservations = await model.countDocuments({ userId });
-    const reservations = await model.find({ userId }).sort({ 'reservationNumber': 1 }).skip(skip).limit(limit).lean();
+    const filter = userId ? { userId } : {};
+
+    const totalReservations = await model.countDocuments(filter);
+    const reservations = await model.find(filter).sort({ 'reservationNumber': 1 }).skip(skip).limit(limit).lean();
 
     return { reservations, totalReservations };
 }
@@ -99,4 +101,4 @@ async function updateStatus(reservationNumber, newStatus) {
     );
 }
 
-module.exports = { getSeatMap, getReservationCards, createReservation, updateSeat, updateStatus };
+module.exports = { getSeatMap, getReservations, createReservation, updateSeat, updateStatus };

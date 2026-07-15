@@ -1,0 +1,20 @@
+{{#each reservationRows}}
+    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+        <th scope="row"> {{this.reservationNumber}} </th>
+        <td> {{this.firstName}} {{this.lastName}}{{#if this.suffix}} {{this.suffix}}{{/if}} </td>
+        <td> TESTROUTE </td>
+        <td> 1 </td>
+        <td> {{this.status}} </td>
+
+        <td>
+            <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                    data-bs-target="#view-reservation"> View </button>
+
+            <button class="btn btn-warning btn-sm text-white fw-bolder"> Edit </button>
+            <!-- This would go to reservations.html -->
+
+            <button class="btn btn-danger btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                    data-bs-target="#delete-reservation"> Delete </button>
+        </td>
+    </tr>
+{{/each}}

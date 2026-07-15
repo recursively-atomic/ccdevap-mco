@@ -16,57 +16,48 @@
 
     <div class="navbar-collapse collapse" id="main-menu">
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item me-3 {{#if (eq page "/")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                <a class="nav-link fw-bold {{#if (eq page "/")}}disabled text-light{{/if}}" {{#unless (eq page "/")}}href="/"{{/unless}}> Home </a>
-            </li>
+            {{#if (eq role 'user')}}
+                <li class="nav-item me-3 {{#if (eq page "/")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/")}}disabled text-light{{/if}}" {{#unless (eq page "/")}}href="/"{{/unless}}> Home </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="?"> Search A Flight </a>
+                </li>
+
+                <li class="nav-item me-3 {{#if (eq page "/flight-book")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/flight-book")}}disabled text-light{{/if}}" {{#unless (eq page "/flight-book")}}href="/flight-book"{{/unless}}> Reserve A Flight </a>
+                </li>
+
+                <li class="nav-item me-3 {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}}href="/reservations"{{/unless}}> My Reservations </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="?"> Profile </a>
+                </li>
+            {{else if (eq role 'admin')}}
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="?"> Dashboard </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="?"> Flight Management </a>
+                </li>
+
+                <li class="nav-item me-3 {{#if (eq page "/admin/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/admin/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/admin/reservations")}} href="/admin/reservations"{{/unless}}> Reservation Management </a>
+                </li>
+
+                <li class="nav-item me-3">
+                    <a class="nav-link fw-bold" href="?"> User Management </a>
+                </li>
+            {{/if}}
 
             <li class="nav-item me-3">
-                <a class="nav-link fw-bold" href="/flight-search"> Search A Flight </a>
+                <a class="nav-link fw-bold" href="?"> Sign In or Register </a>
             </li>
-
-            <li class="nav-item me-3 {{#if (eq page "/flight-book")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                <a class="nav-link fw-bold {{#if (eq page "/flight-book")}}disabled text-light{{/if}}" {{#unless (eq page "/flight-book")}}href="/flight-book"{{/unless}}> Reserve A Flight </a>
-            </li>
-
-            <li class="nav-item me-3 {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}}href="/reservations"{{/unless}}> My Reservations </a>
-            </li>
-
-            <li class="nav-item dropstart me-3">
-                <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
-                    Profile
-                </a>
-
-                <ul class="dropdown-menu mb-3 bg-dark-subtle">
-                    <li><a class="dropdown-item" href="./views/user/profile.html"> My Profile </a></li>
-                    <li><a class="dropdown-item" href="###"> Log Out </a></li>
-                </ul>
-            </li>
-
-            <li class="nav-item dropstart">
-                <a class="nav-link dropdown-toggle fw-bold" data-bs-toggle="dropdown">
-                    Admin Access
-                </a>
-                <ul class="dropdown-menu mb-3 bg-dark-subtle">
-                    <li>
-                        <a class="dropdown-item" href="./views/admin/admin-dashboard.html"> Admin Dashboard </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="./views/admin/admin-flights.html"> Flight Management </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="./views/admin/admin-reservations.html">
-                            Reservation Management
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item" href="/views/admin/admin-users.html"> User Management </a>
-                    </li>
-                </ul>
-            </li>
+            {{!-- Tapos pag logged in na, Sign Out na dapat nakalagay --}}
         </ul>
     </div>
 </nav>

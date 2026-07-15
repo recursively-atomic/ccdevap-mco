@@ -2,7 +2,7 @@ const express = require('express');
 const expressHandlebars = require('express-handlebars');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
-const { getSeatMap, getReservationCards, createReservation, updateSeat, updateStatus } = require('./private/controllers/reservations');
+const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('./private/controllers/reservations');
 const server = express();
 
 const handlebars = expressHandlebars.create({
@@ -23,11 +23,20 @@ const handlebars = expressHandlebars.create({
             for (let i = start; i <= end; i++) arr.push(i);
             return arr;
         },
-        or: (a, b) => a || b,
-        and: (a, b) => a && b,
-        format: (n) => n.toLocaleString('en-US')
+        or: (...args) => {
+            args.pop();
+            return args.some(Boolean);
+        },
+        and: (...args) => {
+            args.pop();
+            return args.every(Boolean);
+        },
+        format: (input) => input.toLocaleString('en-US')
     }
 });
+
+const userRole = 'admin';
+// For testing lang
 
 server.engine('hbs', handlebars.engine);
 
@@ -40,8 +49,12 @@ server.use(express.static(path.join(__dirname, 'public')));
 server.get('/', (req, res) => {
     res.render('index', {
         page: '/',
-        script: '/scripts/index.js'
+        script: '/scripts/index.js',
+        role: userRole
     });
+
+    // If admin yung role, redirect to admin dashboard,
+    // as yun yung home page ng mga admins idk hshs
 });
 
 server.get('/flight-search', (req, res) => {
@@ -55,6 +68,7 @@ server.get('/flight-book', async (req, res) => {
         res.status(200).render('booking', {
             page: '/flight-book',
             script: '/scripts/user/booking.js',
+            role: userRole,
             seats: seatMap
         });
     } catch (error) {
@@ -127,7 +141,7 @@ server.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
 server.get('/reservations', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 3;
-        const { reservations, totalReservations } = await getReservationCards("TESTUSER", page, limit);
+        const { reservations, totalReservations } = await getReservations(page, limit, "TESTUSER");
         const totalPages = Math.ceil(totalReservations / limit);
 
         let pagination;
@@ -147,7 +161,41 @@ server.get('/reservations', async (req, res) => {
         res.status(200).render('reservations', {
             page: '/reservations',
             script: '/scripts/user/reservations.js',
+            role: userRole,
             reservationCards: reservations,
+            pagination: pagination
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+server.get('/admin/reservations', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1, limit = 10;
+        const { reservations, totalReservations } = await getReservations(page, limit);
+        const totalPages = Math.ceil(totalReservations / limit);
+
+        let pagination;
+
+        if (!req.query.page && totalPages > 1) {
+            return res.redirect('/admin/reservations?page=1');
+        }
+
+        pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalReservations,
+            resultsPerPage: limit,
+            baseUrl: '/admin/reservations?page='
+        };
+
+        res.status(200).render('admin-reservations', {
+            page: '/admin/reservations',
+            script: '/scripts/admin/admin-flights.js',
+            role: userRole,
+            reservationRows: reservations,
             pagination: pagination
         });
     } catch (error) {

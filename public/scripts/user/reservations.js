@@ -70,7 +70,8 @@ function hideModalShowToast(modalID, toastID, text = '') {
 }
 
 /**
- * 
+ * Views the details of a reservations by editing a modal's
+ * title and content.
  */
 function viewReservation() {
     const $viewModal = $('#view-reservation');
@@ -111,7 +112,7 @@ function viewReservation() {
 }
 
 /**
- * 
+ * Edits a reservation's associated seat.
  */
 function editReservation() {
     const $editModal = $('#edit-reservation');
@@ -173,9 +174,11 @@ function editReservation() {
 }
 
 /**
+ * Attaches a modified seat map on the modal of editing a reservation,
+ * enabling a user to change a reservation's associated seat.
  * 
- * @param {*} $seatMap 
- * @param {*} editData 
+ * @param {HTMLElement} $seatMap the modal body. 
+ * @param {Object} editData the edit data.
  */
 function attachSeatSelection($seatMap, editData) {
     const $seats = $seatMap.find('.seat');
@@ -191,7 +194,8 @@ function attachSeatSelection($seatMap, editData) {
 }
 
 /**
- * 
+ * Cancels a reservation by changing the reservation's status
+ *  to 'Cancelled'.
  */
 function cancelReservation() {
     const $cancelModal = $('#cancel-reservation');
