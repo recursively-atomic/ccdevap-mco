@@ -17,6 +17,17 @@ const {
 } = require('./private/controllers/users');
 
 const {
+    getSeatMap, 
+    createReservation, 
+    getReservationsByEmail, 
+    getReservationById,
+    getAllReservations, 
+    getReservationById, 
+    deleteReservation, 
+    updateStatus
+} = require("./private/controllers/reservations");
+
+const {
     createPassenger,
     getPassengersByUser,
     getPassenger,
@@ -486,16 +497,149 @@ server.put("/api/users/profile", async (req, res) => {
     }
 });
 
-server.get("/admin/users", async (req, res) => {
-    const users = await getAllUsers();
-    res.render("admin", {
-        users
-    });
+server.get("/admin-users", async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        res.render("admin-users", {
+            users,
+            layout: "main"
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Unable to load users.");
+    }
 });
 
-server.post("/admin/users/:id/delete", async (req, res) => {
-    await deleteUser(req.params.id);
-    res.redirect("/admin/users");
+server.get("/api/users", async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
+server.get("/api/users/:id", async (req, res) => {
+    try {
+        const user = await getUserById(req.params.id);
+        res.json(user);
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+server.put("/api/users/:id", async (req, res) => {
+    try {
+        const updatedUser = await updateUser(req.params.id, req.body);
+        res.json({
+            success: true,
+            user: updatedUser
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+server.delete("/api/users/:id", async (req, res) => {
+    try {
+        await deleteUser(req.params.id);
+        res.json({
+            success: true
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            error: err.message
+        });
+    }
+});
+
+server.put("/api/users/:id", async (req, res) => {
+    try {
+        const user = await updateUser(req.params.id, req.body);
+        res.json(user);
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        });
+    }
+});
+
+server.get("/api/reservations", async (req, res) => {
+    try {
+        const reservations = await getAllReservations();
+        res.json(reservations);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+server.get("/api/reservations/:id", async (req, res) => {
+    try {
+        const reservation =
+            await getReservationById(req.params.id);
+        res.json(reservation);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+server.put("/api/reservations/:id", async (req, res) => {
+    try {
+        const reservation = await updateStatus(
+                req.params.id,
+                req.body.status
+            );
+        res.json({
+            success: true,
+            reservation
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
+});
+
+server.delete("/api/reservations/:id", async (req, res) => {
+    try {
+        await deleteReservation(req.params.id);
+        res.json({
+            success: true
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+    }
 });
 
 server.use((req, res) => {

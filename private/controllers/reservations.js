@@ -73,8 +73,40 @@ async function getReservationById(id) {
     return await model.findById(id);
 }
 
-// readReservation
-// updateSeatSelection
-// updateStatus
+/**
+ * Returns all reservations.
+ */
+async function getAllReservations() {
 
-module.exports = { getSeatMap, createReservation, getReservationsByEmail, getReservationById };
+    return await model.find().sort({
+        reservationNumber: 1
+    });
+
+}
+
+/**
+ * Returns one reservation by its MongoDB ID.
+ */
+async function getReservationById(id) {
+
+    return await model.findById(id);
+
+}
+
+/**
+ * Deletes a reservation.
+ */
+async function deleteReservation(id) {
+
+    return await model.findByIdAndDelete(id);
+
+}
+
+async function updateStatus(id, status) {
+    return await model.findByIdAndUpdate(
+        id,{status}, { new: true}
+    );
+}
+
+module.exports = { getSeatMap, createReservation, getReservationsByEmail, getReservationById,
+    getAllReservations, getReservationById, deleteReservation, updateStatus };
