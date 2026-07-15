@@ -1,5 +1,14 @@
 const Users = require('../models/users');
 
+
+/**
+ * Creates a single user once user registers.
+ * 
+ * 
+ * @param {Object} data is an object containing all of the user input.
+ * 
+ * @returns {Promise} the status of the creation of the document.
+ */
 async function createUser(data) {
     const user = new Users({
         emailAddress: data.emailAddress,
@@ -13,6 +22,7 @@ async function createUser(data) {
     return await user.save();
 }
 
+//GETS USER BY ID
 async function getUserById(id) {
     return await Users.findById(id);
 }
@@ -32,7 +42,7 @@ async function getAllUsers() {
     });
 }
 
-// UPDATE
+// UPDATE USER INFORMATION
 async function updateUser(id, data) {
     return await Users.findByIdAndUpdate(
         id,
@@ -48,6 +58,7 @@ async function updateUser(id, data) {
     );
 }
 
+//CHANGE PASSWORD
 async function changePassword(userId, currentPassword, newPassword) {
     const user = await Users.findById(userId);
     if (!user) {

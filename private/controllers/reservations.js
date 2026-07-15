@@ -55,58 +55,8 @@ async function createReservation(reservationData) {
     return reservation.save();
 }
 
-/**
- * Gets all reservations of a user using their email.
- */
-async function getReservationsByEmail(email) {
-    return await model.find({
-        email: email
-    }).sort({
-        reservationNumber: -1
-    });
-}
+// readReservation
+// updateSeatSelection
+// updateStatus
 
-/**
- * Gets one reservation.
- */
-async function getReservationById(id) {
-    return await model.findById(id);
-}
-
-/**
- * Returns all reservations.
- */
-async function getAllReservations() {
-
-    return await model.find().sort({
-        reservationNumber: 1
-    });
-
-}
-
-/**
- * Returns one reservation by its MongoDB ID.
- */
-async function getReservationById(id) {
-
-    return await model.findById(id);
-
-}
-
-/**
- * Deletes a reservation.
- */
-async function deleteReservation(id) {
-
-    return await model.findByIdAndDelete(id);
-
-}
-
-async function updateStatus(id, status) {
-    return await model.findByIdAndUpdate(
-        id,{status}, { new: true}
-    );
-}
-
-module.exports = { getSeatMap, createReservation, getReservationsByEmail, getReservationById,
-    getAllReservations, getReservationById, deleteReservation, updateStatus };
+module.exports = { getSeatMap, createReservation };
