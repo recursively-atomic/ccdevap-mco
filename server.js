@@ -64,14 +64,14 @@ server.use("/", reservationRoutes);
 server.use("/api/flights", flightRoutes);
 
 server.get('/', (req, res) => {
-    if (!req.session.user) {
+    if (req.session.user) {
         res.render('index', {
             page: '/',
             script: '/scripts/index.js',
             role: req.session.user
         });
     } else {
-        res.redirect('/register');
+        res.redirect('/login');
     }
 });
 
@@ -188,6 +188,7 @@ server.get("/user-profile", async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     }
+
     const user = await getUserById(req.session.user._id);
     res.render('user', {
         user: user

@@ -2,14 +2,14 @@ const model = require('../models/userModel');
 
 //GETS USER BY ID
 async function getUserById(id) {
-    return await model.findById(id);
+    return await model.findById(id).lean();
 }
 
 // READ USING EMAIL (used for login)
 async function getUserByEmail(email) {
     return await model.findOne({
         emailAddress: email
-    });
+    }).lean();;
 }
 
 // READ ALL (Admin)
@@ -17,7 +17,7 @@ async function getAllUsers() {
     return await model.find().sort({
         lastName: 1,
         firstName: 1
-    });
+    }).lean();;
 }
 
 /**
