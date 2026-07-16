@@ -1,12 +1,41 @@
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({
-    // emailAddress
-    // password
-    // firstName
-    // lastName
-    // passportCode
-    // role (admin or client)
-});
+const userSchema = new mongoose.Schema({
+    emailAddress: {
+        type: String,
+        unique: true,
+        required: true
+    },
 
-module.exports = mongoose.model('users', schema);
+    password: {
+        type: String,
+        required: true
+    },
+
+    firstName: {
+        type: String,
+        required: true
+    },
+
+    lastName: {
+        type: String,
+        required: true
+    },
+
+    contactNumber: {
+        type: String,
+        default: ""
+    },
+
+    passportCode: {
+        type: String
+    },
+
+    role: {
+        type: String,
+        default: "user",
+        required: true
+    }
+}, { timestamps: true });
+
+module.exports = mongoose.model('users', userSchema);

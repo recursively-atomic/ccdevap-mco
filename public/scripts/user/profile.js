@@ -4,6 +4,10 @@ $(function () {
     showSpecifyGender();
     formatCardNumber();
     showInputFields();
+
+    $("#save-password-btn").on("click", savePassword);
+    $("#update-profile-btn").on("click", openProfileModal);
+    $("#save-profile-btn").on("click", saveProfileInformation);
 });
 
 /**
@@ -20,10 +24,113 @@ function changeProfile() {
             fileReader.onload = function (secondEvent) {
                 $('#profile-picture').attr('src', secondEvent.target.result);
             };
-
             fileReader.readAsDataURL(file);
         }
     });
+}
+
+/**
+ * Enables a user to change their password.
+ */
+async function savePassword() {
+
+    const currentPassword = $("#current-password").val().trim();
+    const newPassword = $("#new-password").val().trim();
+
+    if (!currentPassword || !newPassword) {
+        alert("Please fill in both password fields.");
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/users/change-password", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                currentPassword,
+                newPassword
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            $("#current-password").val("");
+            $("#new-password").val("");
+            showToast("password-toast");
+
+        } else {
+            alert(result.message);
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong.");
+    }
+}
+
+/**
+ * Opens a modal for users to edit their profile information.
+ */
+function openProfileModal() {
+
+    $("#edit-first-name").val($("#profile-name").data("firstname"));
+    $("#edit-last-name").val($("#profile-name").data("lastname"));
+    $("#edit-email").val($("#profile-email").text().trim());
+    $("#edit-contact").val($("#profile-contact").text().trim());
+
+    const modal = new bootstrap.Modal(
+        document.getElementById("update-profile-modal")
+    );
+
+    modal.show();
+}
+
+/**
+ * Saves the profile information that was edited from the modal.
+ */
+async function saveProfileInformation() {
+
+    const data = {
+        firstName: $("#edit-first-name").val().trim(),
+        lastName: $("#edit-last-name").val().trim(),
+        emailAddress: $("#edit-email").val().trim(),
+        contactNumber: $("#edit-contact").val().trim()
+    };
+
+    const response = await fetch("/api/profile", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+        alert(result.message || "Failed to update profile.");
+        return;
+    }
+
+    // Update the displayed information immediately
+    $("#profile-name").text(
+        result.user.lastName + ", " + result.user.firstName
+    );
+
+    $("#profile-email").text(result.user.emailAddress);
+
+    $("#profile-contact").text(result.user.contactNumber);
+
+    bootstrap.Modal.getInstance(
+        document.getElementById("update-profile-modal")
+    ).hide();
+
+    bootstrap.Toast.getOrCreateInstance(
+        document.getElementById("profile-toast")
+    ).show();
 }
 
 /**
@@ -33,7 +140,6 @@ function changeProfile() {
  */
 function showToast(toastID) {
     const toast = document.getElementById(toastID);
-
     document.activeElement.blur();
     
     const toastInstance =
@@ -42,7 +148,6 @@ function showToast(toastID) {
             delay: 2000,
             autohide: true
         });
-
     toastInstance.show();
 }
 
@@ -161,28 +266,73 @@ function formatCardNumber() {
  * Shows input fields corresponding to the payment method that
  * the user chose in the payment method dropdown.
  */
-function showInputFields() {
-    const $paymentMethodSelect = $('#payment-method-select');
-    const $cardInputFields = $('#card-input-fields');
-    const $digitalInputFields = $('#digital-input-fields');
+function showInputFields(clearFields = true) {
 
-    $cardInputFields.addClass('d-none');
-    $digitalInputFields.addClass('d-none');
+    const $paymentMethodSelect = $("#payment-method-select");
+    const $cardInputFields = $("#card-input-fields");
+    const $digitalInputFields = $("#digital-input-fields");
 
-    $paymentMethodSelect.off('change').on('change', function () {
-        switch ($paymentMethodSelect.val()) {
-            case 'Credit Card':
-            case 'Debit Card':
-                $cardInputFields.removeClass('d-none');
-                $digitalInputFields.addClass('d-none');
+    function clearCardFields() {
+        $("#cardHolderFirstName").val("");
+        $("#cardHolderLastName").val("");
+
+        $("#receiptEmail").val("");
+
+        $("#billingCountry").val("");
+        $("#billingRegion").val("");
+        $("#zipCode").val("");
+
+        $("#cardNumber").val("");
+        $("#expirationDate").val("");
+        $("#cvn").val("");
+
+        $("#billingAddress1").val("");
+        $("#billingAddress2").val("");
+    }
+
+    function clearDigitalWalletFields() {
+        $("#accountName").val("");
+        $("#accountNumber").val("");
+    }
+
+    $cardInputFields.addClass("d-none");
+    $digitalInputFields.addClass("d-none");
+
+    $paymentMethodSelect.off("change").on("change", function () {
+
+        switch ($(this).val()) {
+
+            case "Credit Card":
+            case "Debit Card":
+                $cardInputFields.removeClass("d-none");
+                $digitalInputFields.addClass("d-none");
+
+                // Clear wallet fields
+                if (clearFields) {
+                clearDigitalWalletFields();
+                }
                 break;
-            case 'Digital Wallet':
-                $digitalInputFields.removeClass('d-none');
-                $cardInputFields.addClass('d-none');
+
+            case "Digital Wallet":
+                $digitalInputFields.removeClass("d-none");
+                $cardInputFields.addClass("d-none");
+
+                // Clear card fields
+                if (clearFields) {
+                clearCardFields();
+                }
                 break;
+
+            case "Cash":
             default:
-                $cardInputFields.addClass('d-none');
-                $digitalInputFields.addClass('d-none');
+                $cardInputFields.addClass("d-none");
+                $digitalInputFields.addClass("d-none");
+
+                // Clear everything
+                if (clearFields) {
+                clearCardFields();
+                clearDigitalWalletFields();
+                }
                 break;
         }
     });
