@@ -1,4 +1,4 @@
-const model = require('../models/reservations');
+const model = require('../models/reservationModel');
 
 /**
  * Creates a seat map of a specific flight that keeps track of

@@ -1,6 +1,5 @@
 const Users = require('../models/users');
 
-
 /**
  * Creates a single user once user registers.
  * 
