@@ -58,77 +58,9 @@
             </div>
 
             <div class="card-body">
-                {{!-- <form action="/searchFlights" method="GET">
-                    <div class="mx-4 mt-2">
-                        
-                            <h4 class="text-primary-accent"> Flight Route </h4>
-                            <div class="row mb-lg-4 mb-md-4 mb-sm-4 mb-4">
-                                <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-4 mb-sm-4 mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-text bg-dark border-dark">
-                                            <i class="text-secondary fa-solid fa-plane-departure"></i>
-                                        </div>
-                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
-                                                name="departure-select" id="departure-select">
-                                            <option selected hidden value=""> Select A Departure Airport </option>
-                                            <option> Airport A </option>
-                                            <option> Airport B </option>
-                                            <option> Airport C </option>
-                                            <option> Airport D </option>
-                                            <option> Airport E </option>
-                                        </select>
-
-                                        <div class="invalid-feedback">
-                                            Select a departure airport!
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-4">
-                                    <div class="input-group">
-                                        <div class="input-group-text bg-dark border-dark">
-                                            <i class="text-secondary fa-solid fa-plane-arrival"></i>
-                                        </div>
-
-                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
-                                                name="arrival-select" id="arrival-select">
-                                            <option selected hidden value=""> Select An Arrival Airport </option>
-                                            <option> Airport A </option>
-                                            <option> Airport B </option>
-                                            <option> Airport C </option>
-                                            <option> Airport D </option>
-                                            <option> Airport E </option>
-                                        </select>
-
-                                        <div class="invalid-feedback">
-                                            Select an arrival airport!
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                
-                            </div>
-                
-                    </div> --}}
 
                     <div class="mx-4 mt-2">
-                        {{!-- <div class="row mb-lg-4 mb-md-4 mb-sm-4 mb-4">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4 mb-sm-0 mb-md-0 mb-lg-0">
-                                <h4 class="text-primary-accent"> Departure Date </h4>
 
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary fa-solid fa-plane-departure"></i>
-                                    </div>
-
-                                    <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
-                                        type="date" id="departure-date">
-
-                                    <div class="invalid-feedback">
-                                        Select a departure date!
-                                    </div>
-                                </div>
-                            </div> --}}
 
                             <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                 <h4 class="text-primary-accent"> Arrival Date </h4>
@@ -610,6 +542,8 @@
                 <div class="row row-gap-lg-4 my-3 m-0 row-gap-md-4 row-gap-sm-4 row-gap-4">
 
                     <div id="resultsContainer" class="row g-4"></div>
+
+                
                 </div>
             </div>
         </div>
@@ -635,5 +569,59 @@
             </div>
         </div>
     </div>
+
+    <script id="results-template" type="text/x-handlebars-template">
+        {{#each flights}}
+            <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px" src="/media/company-logo.png" alt="Logo">
+                <h4 class="fw-bold m-0 p-0 text-light">{{this.ticketPrice}}</h4>
+            </div>
+
+            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+
+            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                <i class="fa-solid fa-plane me-2 p-0"></i>
+                <span class="m-0 p-0">{{this.flightNumber}} - {{this.airline}}</span>
+            </h4>
+
+            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+                <i class="fa-solid fa-plane me-2 p-0"></i>
+                <span class="m-0 p-0"> Origin:{{this.origin}} Destination:{{this.destination}}</span>
+            </h4>
+
+            <h6 class="d-flex align-items-center m-0 mb-1 text-tertiary fw-bolder">
+                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+                <span class="m-0 p-0 me-1">Departure: {{this.departureDate}} {{this.departureTime}} - {{this.arrivalDate}} {{this.arrivalTime}}</span>
+            </h6>
+
+            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
+                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+                <span class="m-0 p-0">Layovers: {{this.layovers}}</span>
+            </h6>
+
+                <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
+                    <div class="d-flex flex-column gap-2 align-items-center w-100">
+                        <button class="btn btn-success btn-lg text-white" data-bs-toggle="modal"
+                                    data-bs-target="#view-flight"> View Details </button>
+
+                        <button onclick="window.location.href='/views/booking'" class="btn btn-primary">Book Now</button>
+                    </div>
+                </div>  
+
+            </div>
+        </div>
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.name}}</h5>
+                    <p class="card-text">{{this.category}} - {{this.brand}}</p>
+                </div>
+            </div>
+        {{else}}
+            <p>No results found matching your criteria.</p>
+        {{/each}}
+    </script>
+    
 
 {{> footer}}
