@@ -10,13 +10,19 @@ const flightschema = new mongoose.Schema({
     // destination
     destination: {type: String, required: true},
     // departure - date and time
-    departure: {type: Date, required: true},
+    departureDate: {type: Date, required: true},
     // arrival - date and time
-    arrival: {type: Date, required: true},
+    arrivalDate: {type: Date, required: true},
+    // available-seats (16 per flight para 4 each cabin class)
+    departureTime: {type: String, required: true},
+    // arrival - date and time
+    arrivalTime: {type: String, required: true},
     // available-seats (16 per flight para 4 each cabin class)
     availableSeats: 16,
+    // layovers
+    layovers: {type: Number, default: 0},
     // ticket-price
-    ticketPrice: {type: mongoose.Schema.Types.Decimal128, required : true},
+    ticketPrice: {type: Number, required : true},
 });
 
 flightschema.set('toJSON', {
@@ -27,4 +33,5 @@ flightschema.set('toJSON', {
   }
 });
 
-module.exports = mongoose.model('flights', schema);
+const Flights = mongoose.model('flights', flightschema);
+module.exports = Flights;
