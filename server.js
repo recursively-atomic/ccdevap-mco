@@ -166,6 +166,12 @@ server.post('/flight-book', async (req, res) => {
 server.get('/', (req, res) => {
     if (!req.session.user) {
         res.redirect('/login');
+    } else {
+        res.render('index', {
+            page: '/',
+            script: '/scripts/index.js',
+            role: req.session.user.role,
+        });
     }
 });
 
