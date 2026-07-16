@@ -6,16 +6,16 @@ const flightschema = new mongoose.Schema({
     // airline (Cebu Atlantic, Filipino Airlines, AirFAST, Sunray Air)
     airline: {type: String, required: true},
     // origin
-    origin: {type: String, required: true},
+    originAirport: {type: String, required: true},
     // destination
-    destination: {type: String, required: true},
-    // departure - date and time
+    destinationAirport: {type: String, required: true},
+    // departure - date
     departureDate: {type: Date, required: true},
-    // arrival - date and time
+    // arrival - date 
     arrivalDate: {type: Date, required: true},
     // available-seats (16 per flight para 4 each cabin class)
     departureTime: {type: String, required: true},
-    // arrival - date and time
+    // arrival - time
     arrivalTime: {type: String, required: true},
     // available-seats (16 per flight para 4 each cabin class)
     availableSeats: 16,
