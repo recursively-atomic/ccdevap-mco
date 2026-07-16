@@ -414,8 +414,55 @@ server.put("/api/users/:id", async (req, res) => {
     }
 });
 
-server.use((req, res) => {
-    res.status(404).send("Page not found.");
+server.get('/flight-book', (req, res) => {
+    res.render('booking', {
+        page: '/flight-book',
+        script: '/scripts/user/booking.js'
+    });
+});
+
+server.get('/api/search', async (req, res) => {
+  const { originAirport, destinationAirport, date } = req.query;
+  
+  // Construct dynamic query
+  let query = {};
+  if (originAirport) query.originAirport = originAirport;
+  if (destinationAirport) query.destinationAirport = destinationAirport;
+  if (date) {
+    // Match the exact day in MongoDB regardless of time
+    const start = new Date(date);
+    start.setUTCHours(0,0,0,0);
+    const end = new Date(date);
+    end.setUTCHours(23,59,59,999);
+    query.date = { $gte: start, $lte: end };
+  }
+
+  try {
+    const results = await Record.find(query);
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+server.post('/flight-book', (req, res) => {
+    // if user has not picked flight and goes to this link,
+    // redirect to flight-search
+
+    try {
+        const reservation = createReservation(req.body);
+        res.status(200).json({ success: true, reservation });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed To Create Reservation!' });
+    }
+});
+
+server.get('/reservations', (req, res) => {
+    res.render('reservations', {
+        page: '/reservations',
+        script: '/scripts/user/reservations.js'
+    });
 });
 
 connectToMongo((err) => {
