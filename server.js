@@ -1,11 +1,11 @@
-const Users = require('./private/models/users');
+const Users = require('./private/models/userModel');
 const express = require('express');
 const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
 const cors = require('cors');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
-const { createUser, getUserById, getUserByEmail, getAllUsers, updateUser, changePassword } = require('./private/controllers/users');
+const { createUser, getUserById, getUserByEmail, getAllUsers, updateUser, changePassword } = require('./private/controllers/userController');
 const server = express();
 
 const handlebars = expressHandlebars.create({
