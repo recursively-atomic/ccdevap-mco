@@ -9,20 +9,28 @@ const schema = new mongoose.Schema({
         type: String,
         default: 'Unknown'  // Not in HBS, but we provide a default
     },
-    origin: {
+    originAirport: {
         type: String,
         required: true
     },
-    destination: {
+    destinationAirport: {
         type: String,
         required: true
     },
-    departureDateTime: {
+    departureDate: {
         type: Date,
         required: true
     },
-    arrivalDateTime: {
+    arrivalDate: {
         type: Date,
+        required: true
+    },
+    departureTime: {
+        type: String,
+        required: true
+    },
+    arrivalTime: {
+        type: String,
         required: true
     },
     availableSeats: {
