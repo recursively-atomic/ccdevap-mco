@@ -64,9 +64,13 @@ server.use("/api/flights", flightRoutes);
 const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('./private/controllers/reservationController');
 
 server.get('/reservations', async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
     try {
         const page = parseInt(req.query.page) || 1, limit = 3;
-        const { reservations, totalReservations } = await getReservations(page, limit, "TESTUSER");
+        const { reservations, totalReservations } = await getReservations(page, limit, req.session.user._id);
         const totalPages = Math.ceil(totalReservations / limit);
 
         let pagination;
@@ -160,13 +164,7 @@ server.post('/flight-book', async (req, res) => {
 });
 
 server.get('/', (req, res) => {
-    if (req.session.user) {
-        res.render('index', {
-            page: '/',
-            script: '/scripts/index.js',
-            role: req.session.user.role,
-        });
-    } else {
+    if (!req.session.user) {
         res.redirect('/login');
     }
 });
@@ -179,7 +177,6 @@ server.post("/register", async (req, res) => {
     try {
         const user = await createUser(req.body);
         res.redirect("/login");
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false });
@@ -370,6 +367,18 @@ server.put("/api/users/:id", async (req, res) => {
     }
 });
 
+server.get('/flight-search', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    res.render('search', {
+        page: '/flight-search',
+        script: '/scripts/user/search.js',
+        role: req.session.user.role,
+    });
+});
+
 server.get('/api/search', async (req, res) => {
     const { originAirport, destinationAirport, date } = req.query;
 
@@ -392,6 +401,30 @@ server.get('/api/search', async (req, res) => {
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
+});
+
+server.get('/flight-search', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    res.render('search', {
+        page: '/flight-search',
+        script: '/scripts/user/search.js',
+        role: req.session.user.role,
+    });
+});
+
+server.get('/admin-flights', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    res.render('admin-flights', {
+        page: '/admin-flights',
+        script: '/scripts/admin/admin-flights.js',
+        role: req.session.user.role,
+    });
 });
 
 connectToMongo((err) => {

@@ -1,69 +1,89 @@
-let flights = [];
+const model = require('../models/flightModel');
 
-exports.getFlights = (req, res) => {
-    res.json(flights);
+// Get all flights
+exports.getFlights = async (req, res) => {
+    try {
+        const flights = await model.find().lean();
+        res.json(flights);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
 };
 
-exports.getFlight = (req, res) => {
-    const id = Number(req.params.id);
-    const flight = flights.find(f => f.id === id);
-    if (!flight) {
-        return res.status(404).json({
-            message: "Flight not found"
-        });
+// Get a single flight by ID
+exports.getFlight = async (req, res) => {
+    try {
+        const flight = await model.findById(req.params.id).lean();
+        if (!flight) return res.status(404).json({ message: 'Flight not found' });
+        res.json(flight);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
-    res.json(flight);
-}
-
-exports.createFlight = (req, res) => {
-    const newFlight = {
-        id: flights.length + 1,
-        flightNumber: req.body.flightNumber,
-        origin: req.body.origin,
-        destination: req.body.destination,
-        departureDateTime: req.body.departureDateTime,
-        arrivalDateTime: req.body.arrivalDateTime,
-        flightStatus: req.body.flightStatus,
-        capacityStatus: req.body.capacityStatus
-    };
-    flights.push(newFlight);
-    res.status(201).json({
-        message: "Flight added successfully!",
-        flight: newFlight
-    });
 };
 
-exports.updateFlight = (req, res) => {
-    const id = Number(req.params.id);
-    const flight = flights.find(f => f.id === id);
-    if (!flight) {
-        return res.status(404).json({
-            message: "Flight not found"
-        });
-    }
-    flight.flightNumber = req.body.flightNumber;
-    flight.origin = req.body.origin;
-    flight.destination = req.body.destination;
-    flight.departureDateTime = req.body.departureDateTime;
-    flight.arrivalDateTime = req.body.arrivalDateTime;
-    flight.flightStatus = req.body.flightStatus;
-    flight.capacityStatus = req.body.capacityStatus;
-    res.json({
-        message: "Flight updated successfully",
-        flight
-    });
-}
+// Create a new flight
+exports.createFlight = async (req, res) => {
+    try {
+        const {
+            flightNumber,
+            airline,
+            origin,
+            destination,
+            departureDateTime,
+            arrivalDateTime,
+            availableSeats,
+            layovers,
+            ticketPrice,
+            flightStatus
+        } = req.body;
 
-exports.deleteFlight = (req, res) => {
-    const id = Number(req.params.id);
-    const index = flights.findIndex(f => f.id === id);
-    if (index === -1) {
-        return res.status(404).json({
-            message: "Flight not found"
+        const newFlight = new model({
+            flightNumber,
+            airline,
+            origin,
+            destination,
+            departureDateTime,
+            arrivalDateTime,
+            availableSeats: availableSeats || 16,
+            layovers: layovers || 0,
+            ticketPrice,
+            flightStatus: flightStatus || 'On Time'
         });
+
+        const saved = await newFlight.save();
+        res.status(201).json(saved);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
-    flights.splice(index, 1);
-    res.json({
-        message: "Flight deleted"
-    });
+};
+
+// Update a flight
+exports.updateFlight = async (req, res) => {
+    try {
+        const updated = await model.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true, runValidators: true }
+        ).lean();
+        if (!updated) return res.status(404).json({ message: 'Flight not found' });
+        res.json(updated);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+// Delete a flight
+exports.deleteFlight = async (req, res) => {
+    try {
+        const deleted = await model.findByIdAndDelete(req.params.id);
+        if (!deleted) return res.status(404).json({ message: 'Flight not found' });
+        res.json({ message: 'Flight deleted' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
 };

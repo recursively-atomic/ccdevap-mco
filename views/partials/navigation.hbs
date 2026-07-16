@@ -21,8 +21,8 @@
                     <a class="nav-link fw-bold {{#if (eq page "/")}}disabled text-light{{/if}}" {{#unless (eq page "/")}}href="/"{{/unless}}> Home </a>
                 </li>
 
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="?"> Search A Flight </a>
+                <li class="nav-item me-3 {{#if (eq page "/flight-search")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/flight-search")}}disabled text-light{{/if}}" {{#unless (eq page "/flight-search")}}href="/flight-search"{{/unless}}> Search A Flight </a>
                 </li>
 
                 <li class="nav-item me-3 {{#if (eq page "/flight-book")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
@@ -41,8 +41,8 @@
                     <a class="nav-link fw-bold {{#if (eq page "/admin-profile")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-profile")}} href="/admin-profile"{{/unless}}> Dashboard </a>
                 </li>
 
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="?"> Flight Management </a>
+                <li class="nav-item me-3 {{#if (eq page "/admin-flights")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/admin-flights")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-flights")}} href="/admin-flights"{{/unless}}> Flight Management </a>
                 </li>
 
                 <li class="nav-item me-3 {{#if (eq page "/admin-reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
@@ -57,7 +57,6 @@
             <li class="nav-item me-3">
                 <a class="nav-link fw-bold" href="/logout"> Log Out </a>
             </li>
-            {{!-- Tapos pag logged in na, Sign Out na dapat nakalagay --}}
         </ul>
     </div>
 </nav>
