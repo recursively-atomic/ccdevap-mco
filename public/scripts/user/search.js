@@ -1,82 +1,24 @@
 let requiredFields;
 
-document.getElementById('searchForm').addEventListener('submit', async (e) => {
+const templateSource = document.getElementById('resultsTemplate').innerHTML;
+const template = Handlebars.compile(templateSource);
+
+document.getElementById('searchForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const originAirport = document.getElementById('originAirport').value;
-  const destinationAirport = document.getElementById('destinationAirport').value;
-  const departureDate = document.getElementById('departureDate').value;
-  const container = document.getElementById('resultsContainer');
+  // Serialize form data
+  const formData = new FormData(this);
+  const queryParams = new URLSearchParams(formData).toString();
 
-  
-//   container.innerHTML = '<div class="text-center w-100"><div class="spinner-border text-primary" role="status"></div></div>'; 
-
-  try {
-    const response = await fetch(`/api/search?originAirport=${originAirport}&destinationAirport=${destinationAirport}&date=${departureDate}`);
-    
-    
-    if (!response.ok) {
-      throw new Error(`Server returned status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    container.innerHTML = ''; 
-
-    if (!data || data.length === 0) {
-      container.innerHTML = '<p class="text-muted text-center w-100">No flights found for this route.</p>';
-      return;
-    }
-
-    const cardTemplates = data.map(item => `
-      <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
-        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-          
-          <div class="d-flex justify-content-between align-items-center">
-            <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px" src="/media/company-logo.png" alt="Logo">
-            <h4 class="fw-bold m-0 p-0 text-light">${item.price}</h4>
-          </div>
-
-          <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-          <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-            <i class="fa-solid fa-plane me-2 p-0"></i>
-            <span class="m-0 p-0">${item.flightNumber} - ${item.airline}</span>
-          </h4>
-
-          <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-            <i class="fa-solid fa-plane me-2 p-0"></i>
-            <span class="m-0 p-0"> Origin:${item.origin} Destination:${item.destination}</span>
-          </h4>
-
-          <h6 class="d-flex align-items-center m-0 mb-1 text-tertiary fw-bolder">
-            <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-            <span class="m-0 p-0 me-1">Departure: ${item.departureDate} ${item.departureTime} - ${item.arrivalDate} ${item.arrivalTime}</span>
-          </h6>
-
-          <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-            <i class="bi bi-stoplights-fill me-2 p-0"></i>
-            <span class="m-0 p-0">Layovers: ${item.layovers}</span>
-          </h6>
-
-            <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
-                <div class="d-flex flex-column gap-2 align-items-center w-100">
-                    <button class="btn btn-success btn-lg text-white" data-bs-toggle="modal"
-                                  data-bs-target="#view-flight"> View Details </button>
-
-                    <button onclick="window.location.href='/views/booking'" class="btn btn-primary">Book Now</button>
-                </div>
-            </div>  
-
-        </div>
-      </div>
-    `).join('');
-
-    container.innerHTML = cardTemplates;
-
-  } catch (error) {
-    console.error('Search failed:', error);
-    container.innerHTML = '<p class="text-danger text-center w-100">Unable to load flights. Please try again later.</p>';
-  }
+  // Send AJAX request
+  fetch(`/api/search?${queryParams}`)
+    .then(response => response.json())
+    .then(data => {
+      // Render data into Handlebars template
+      const html = template({ results: data });
+      document.getElementById('resultsContainer').innerHTML = html;
+    })
+    .catch(error => console.error('Error fetching data:', error));
 });
 
 $(function () {
