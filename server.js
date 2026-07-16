@@ -1,4 +1,5 @@
 const Users = require('./private/models/userModel');
+const flights = require('./private/models/flights');
 const express = require('express');
 const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
@@ -396,27 +397,36 @@ server.get('/flight-search', (req, res) => {
 });
 
 server.get('/api/search', async (req, res) => {
-    const { originAirport, destinationAirport, date } = req.query;
+  const { originAirport, destinationAirport, departureDate } = req.query;
+  
+  // Build a dynamic MongoDB query object
+  let query = {};
 
-    // Construct dynamic query
-    let query = {};
-    if (originAirport) query.originAirport = originAirport;
-    if (destinationAirport) query.destinationAirport = destinationAirport;
-    if (date) {
-        // Match the exact day in MongoDB regardless of time
-        const start = new Date(date);
-        start.setUTCHours(0, 0, 0, 0);
-        const end = new Date(date);
-        end.setUTCHours(23, 59, 59, 999);
-        query.date = { $gte: start, $lte: end };
-    }
+  if (originAirport) query.originAirport = originAirport;
+  if (destinationAirport) query.destinationAirport = destinationAirport;
+  if (departureDate) {
+    // Match the exact day in MongoDB regardless of time
+    const start = new Date(departureDate);
+    start.setUTCHours(0,0,0,0);
+    const end = new Date(departureDate);
+    end.setUTCHours(23,59,59,999);
+    query.departureDate = { $gte: start, $lte: end };
+  }
+  if (status) query.status = status;
+  
+  if (startDate || endDate) {
+    query.date = {};
+    if (startDate) query.date.$gte = new Date(startDate);
+    if (endDate) query.date.$lte = new Date(endDate);
+  }
 
-    try {
-        const results = await Record.find(query);
-        res.json(results);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+    // Assuming you are using Mongoose
+    const results = await flights.find(query);
+    res.json(results);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 server.get('/flight-search', (req, res) => {
