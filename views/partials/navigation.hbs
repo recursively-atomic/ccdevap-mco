@@ -49,8 +49,8 @@
                     <a class="nav-link fw-bold {{#if (eq page "/admin-reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-reservations")}} href="/admin-reservations"{{/unless}}> Reservation Management </a>
                 </li>
 
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="?"> User Management </a>
+                <li class="nav-item me-3 {{#if (eq page "/admin-users")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold{{#if (eq page "/admin-users")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-users")}} href="/admin-users"{{/unless}}> User Management </a>
                 </li>
             {{/if}}
 

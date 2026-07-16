@@ -1,0 +1,367 @@
+{{> navigation}}
+
+<div class="container mt-5 mb-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary-accent">
+            <div class="row my-md-3 mx-0 p-0 align-items-center">
+                <!-- SEARCH BAR -->
+                <div class="col-lg-6 col-md-12 mb-md-4 mb-lg-0 col-sn-12 my-sm-4 my-4 mt-md-3 mt-lg-0">
+                    <div class="input-group">
+                        <div class="input-group-text bg-dark border-dark">
+                            <i class="text-secondary fa-solid fa-magnifying-glass"></i>
+                        </div>
+
+                        <div class="form-floating">
+                            <input class="form-control bg-light border-dark border-5 text-black rounded-end-3"
+                                   placeholder="">
+                            <label for="search"> Search </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SORT BY DROPDOWN -->
+                <div class="col-lg-3 col-md-6 mb-md-0 mb-sm-4 mb-4">
+                    <div class="dropdown dropdown-center">
+                        <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                data-bs-toggle="dropdown">
+                            Sort By
+                            <span id="sort-type"> User ID (1-9) </span>
+                        </button>
+
+                        <ul class="dropdown-menu bg-dark-subtle" id="sort-dropdown">
+                            <li>
+                                <h4 class="dropdown-header"> Sort By </h4>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="User ID (1-9)">
+                                <a class="dropdown-item text-dark active">
+                                    <i class="fa-solid fa-arrow-down-1-9"></i> User ID
+                                </a>
+                            </li>
+
+                            <li value="User ID (9-1)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-9-1"></i> User ID
+                                </a>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="Last Name (A-Z)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-a-z"></i> Last Name
+                                </a>
+                            </li>
+
+                            <li value="Last Name (Z-A)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-z-a"></i> Last Name
+                                </a>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li value="Saved Pax (1-9)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-1-9"></i> Saved Pax
+                                </a>
+                            </li>
+
+                            <li value="Saved Pax (9-1)">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-arrow-down-9-1"></i> Saved Pax
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FILTER BY DROPDOWN -->
+                <div class="col-lg-3 col-md-6 mb-sm-4 mb-md-0 mb-4">
+                    <div class="dropdown dropdown-center">
+                        <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                                data-bs-toggle="dropdown">
+                            Filter By
+                            <span id="filter-type"> Admins </span>
+                        </button>
+
+                        <ul class="dropdown-menu bg-dark-subtle" id="filter-dropdown">
+                            <li>
+                                <h4 class="dropdown-header"> Filter By </h4>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li>
+                                <h6 class="dropdown-header"> Roles </h6>
+                            </li>
+
+                            <li value="Admins">
+                                <a class="dropdown-item text-dark active">
+                                    <i class="fa-solid fa-user-gear"></i> Admin
+                                </a>
+                            </li>
+
+                            <li value="Staff">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-users"></i> Staff
+                                </a>
+                            </li>
+
+                            <li value="Agents">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-user-pen"></i> Agent
+                                </a>
+                            </li>
+
+                            <li value="Customers">
+                                <a class="dropdown-item text-dark">
+                                    <i class="fa-solid fa-user"></i> Customer
+                                </a>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li>
+                                <h6 class="dropdown-header"> Status </h6>
+                            </li>
+
+                            <li value="Unverified Users">
+                                <a class="dropdown-item text-dark">
+                                    <i class="bi bi-question-circle-fill"></i> Unverified
+                                </a>
+                            </li>
+
+                            <li value="Active Users">
+                                <a class="dropdown-item text-dark">
+                                    <i class="bi bi-check-circle-fill"></i> Active
+                                </a>
+                            </li>
+
+                            <li value="Inactive Users">
+                                <a class="dropdown-item text-dark">
+                                    <i class="bi bi-x-circle-fill"></i> Inactive
+                                </a>
+                            </li>
+
+                            <li value="Suspended Users">
+                                <a class="dropdown-item text-dark">
+                                    <i class="bi bi-exclamation-circle-fill"></i> Suspended
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table text-center table-hover">
+                    <thead class="border-dark border-2">
+                        <tr>
+                            <th class="text-secondary bg-dark" scope="col">
+                                User ID
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Role
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Status
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Last Name
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                First Name
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Birthdate
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Phone Number
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                E-Mail
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Saved Pax
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                User Activity
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-group-divider">
+                        {{#each users}}
+                            <tr>
+                                <th scope="row"> {{this._id}} </th>
+                                <td> {{this.role}} </td>
+                                <td> Active </td>
+                                <td> {{this.lastName}} </td>
+                                <td> {{this.firstName}} </td>
+                                <td> TESTDATE </td>
+                                <td> TESTCONTACT </td>
+                                <td> {{this.emailAddress}} </td>
+                                <td> TESTPAX </td>
+
+                                <td>
+                                    <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                                            data-bs-target="#view-activity"> View </button>
+
+                                    <button class="btn btn-warning btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                                            data-bs-target="#edit-activity"> Edit </button>
+
+                                    <button class="btn btn-danger btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                                            data-bs-target="#delete-activity"> Delete </button>
+                                </td>
+                            </tr>
+
+                            <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer bg-primary-accent">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
+                <h6 class="text-white">
+                    Showing 10 Results Out Of 100,000
+                </h6>
+
+                <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+                    <!-- PAGINATION -->
+                    <nav>
+                        <ul class="pagination m-0">
+                            <li class="page-item">
+                                <a class="page-link disabled">
+                                    <span aria-hidden="true">
+                                        < </span>
+                                </a>
+                            </li>
+
+                            <li class="page-item"><a class="page-link active"> 1 </a></li>
+                            <li class="page-item"><a class="page-link"> ... </a></li>
+                            <li class="page-item"><a class="page-link"> 10 </a></li>
+
+                            <li class="page-item">
+                                <a class="page-link">
+                                    <span aria-hidden="true"> > </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VIEW USER ACTIVITY MODAL -->
+<div class="modal fade" id="view-activity" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> User [USER ID] Activity </h2>
+            </div>
+
+            <div class="modal-body bg-white fw-bolder text-dark">
+                ...
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT USER ACTIVITY MODAL -->
+<div class="modal fade" id="edit-activity" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> Edit User [USER ID] Activity </h2>
+            </div>
+
+            <div class="modal-body bg-white fw-bolder text-dark">
+                ...
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button class="btn btn-success text-white" onclick="hideModalShowToast('edit-activity', 'edit-toast')">
+                    Save Changes
+                </button>
+
+                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT FLIGHT TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
+     id="edit-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body">
+            Successfully saved changes on user [USER ID]!
+        </div>
+
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+<!-- DELETE USER ACTIVITY MODAL -->
+<div class="modal fade" id="delete-activity" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> Are you sure? </h2>
+            </div>
+
+            <div class="modal-footer d-flex bg-light">
+                <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                    No
+                </button>
+
+                <button class="btn btn-danger text-white"
+                        onclick="hideModalShowToast('delete-activity', 'delete-toast')">
+                    Yes, Delete It
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE FLIGHT TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
+     id="delete-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body">
+            Deleted User [USER ID]!
+        </div>
+
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+{{> footer}}

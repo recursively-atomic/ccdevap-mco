@@ -298,8 +298,10 @@ server.get("/user-profile", async (req, res) => {
 });
 
 server.get('/admin-profile', async (req, res) => {
-    if (!req.session.user || req.session.user.role !== "admin") {
+    if (!req.session.user) {
         return res.redirect("/login");
+    } else if (req.session.user.role != "admin") {
+        return res.redirect("/");
     }
 
     const user = await getUserById(req.session.user._id);
@@ -320,11 +322,19 @@ server.get("/user/:id", async (req, res) => {
 });
 
 server.get("/admin-users", async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    } else if (req.session.user.role != "admin") {
+        return res.redirect("/");
+    }
+
     try {
         const users = await getAllUsers();
         res.render("admin-users", {
-            users,
-            layout: "main"
+            page: '/admin-users',
+            script: '/scripts/admin/admin-users.js',
+            role: req.session.user.role,
+            users: users
         });
 
     } catch (err) {
@@ -424,6 +434,8 @@ server.get('/flight-search', (req, res) => {
 server.get('/admin-flights', (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
+    } else if (req.session.user.role != "admin") {
+        return res.redirect("/");
     }
 
     res.render('admin-flights', {
