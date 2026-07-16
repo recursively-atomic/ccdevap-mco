@@ -12,7 +12,8 @@ async function loadFlights() {
         flights.forEach(flight => {
             const departure = new Date(flight.departureDateTime).toLocaleString();
             const arrival = new Date(flight.arrivalDateTime).toLocaleString();
-            const capacityStatus = flight.availableSeats > 0 ? 'Available' : 'Full';
+            // capacityStatus is already computed on server, but we can also compute here
+            const capacity = flight.capacityStatus || (flight.availableSeats > 0 ? 'Available' : 'Full');
 
             tableBody.innerHTML += `
                 <tr>
@@ -22,7 +23,7 @@ async function loadFlights() {
                     <td>${departure}</td>
                     <td>${arrival}</td>
                     <td>${flight.flightStatus}</td>
-                    <td>${capacityStatus}</td>
+                    <td>${capacity}</td>
                     <td>
                         <button class="btn btn-success btn-sm" onclick="openViewModal('${flight._id}')" data-bs-toggle="modal" data-bs-target="#view-flight">View</button>
                         <button class="btn btn-warning btn-sm" onclick="openEditModal('${flight._id}')" data-bs-toggle="modal" data-bs-target="#edit-flight">Edit</button>
@@ -37,106 +38,81 @@ async function loadFlights() {
         console.error(error);
     }
 }
-
 window.onload = loadFlights;
 
-// Delete
-function openDeleteModal(id) {
-    selectedFlightId = id;
-}
-
-async function confirmDelete() {
-    await deleteFlight(selectedFlightId);
-    hideModalShowToast("delete-flight", "delete-toast");
-}
-
+// Delete functions
+function openDeleteModal(id) { selectedFlightId = id; }
+async function confirmDelete() { await deleteFlight(selectedFlightId); hideModalShowToast("delete-flight", "delete-toast"); }
 async function deleteFlight(id) {
     try {
         await fetch(`${API_URL}/${id}`, { method: "DELETE" });
         loadFlights();
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) { console.error(error); }
 }
 
 // Add flight
 async function addFlight() {
     const flight = {
         flightNumber: document.getElementById("flightNumber").value,
-        airline: document.getElementById("airline").value,
         origin: document.getElementById("origin").value,
         destination: document.getElementById("destination").value,
         departureDateTime: document.getElementById("departureDateTime").value,
         arrivalDateTime: document.getElementById("arrivalDateTime").value,
-        ticketPrice: parseFloat(document.getElementById("ticketPrice").value),
-        availableSeats: 16,
-        layovers: 0,
         flightStatus: document.getElementById("flightStatus").value || 'On Time'
     };
-
     try {
         const response = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(flight)
         });
-        const data = await response.json();
-        console.log(data);
+        await response.json();
         hideModalShowToast("add-flight", "add-toast");
         loadFlights();
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) { console.error(error); }
 }
 window.addFlight = addFlight;
 
-// Edit
+// Edit functions
 async function openEditModal(id) {
     selectedFlightId = id;
     try {
         const response = await fetch(`${API_URL}/${id}`);
         const flight = await response.json();
         document.getElementById("editFlightNumber").value = flight.flightNumber;
-        document.getElementById("editAirline").value = flight.airline || '';
         document.getElementById("editOrigin").value = flight.origin;
         document.getElementById("editDestination").value = flight.destination;
-        document.getElementById("editDepartureDateTime").value = flight.departureDateTime ? new Date(flight.departureDateTime).toISOString().slice(0,16) : '';
-        document.getElementById("editArrivalDateTime").value = flight.arrivalDateTime ? new Date(flight.arrivalDateTime).toISOString().slice(0,16) : '';
-        document.getElementById("editTicketPrice").value = flight.ticketPrice || '';
+        // Format datetime-local value: YYYY-MM-DDTHH:mm
+        const dep = new Date(flight.departureDateTime);
+        const arr = new Date(flight.arrivalDateTime);
+        document.getElementById("editDepartureDateTime").value = dep.toISOString().slice(0,16);
+        document.getElementById("editArrivalDateTime").value = arr.toISOString().slice(0,16);
         document.getElementById("editFlightStatus").value = flight.flightStatus || 'On Time';
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) { console.error(error); }
 }
 
 async function saveFlightChanges() {
     const updatedFlight = {
         flightNumber: document.getElementById("editFlightNumber").value,
-        airline: document.getElementById("editAirline").value,
         origin: document.getElementById("editOrigin").value,
         destination: document.getElementById("editDestination").value,
         departureDateTime: document.getElementById("editDepartureDateTime").value,
         arrivalDateTime: document.getElementById("editArrivalDateTime").value,
-        ticketPrice: parseFloat(document.getElementById("editTicketPrice").value),
         flightStatus: document.getElementById("editFlightStatus").value
     };
-
     try {
         const response = await fetch(`${API_URL}/${selectedFlightId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedFlight)
         });
-        const data = await response.json();
-        console.log(data);
+        await response.json();
         hideModalShowToast("edit-flight", "edit-toast");
         loadFlights();
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) { console.error(error); }
 }
 
-// View
+// View functions
 async function openViewModal(id) {
     try {
         const response = await fetch(`${API_URL}/${id}`);
@@ -147,8 +123,31 @@ async function openViewModal(id) {
         document.getElementById("viewDeparture").textContent = new Date(flight.departureDateTime).toLocaleString();
         document.getElementById("viewArrival").textContent = new Date(flight.arrivalDateTime).toLocaleString();
         document.getElementById("viewStatus").textContent = flight.flightStatus;
-        document.getElementById("viewCapacity").textContent = flight.availableSeats > 0 ? 'Available' : 'Full';
-    } catch (error) {
-        console.error(error);
-    }
+        document.getElementById("viewCapacity").textContent = flight.capacityStatus || (flight.availableSeats > 0 ? 'Available' : 'Full');
+    } catch (error) { console.error(error); }
+}
+
+// ============================
+// TOAST / MODAL UTILITY
+// ============================
+function hideModalShowToast(modalID, toastID) {
+    const modal = document.getElementById(modalID);
+    const toast = document.getElementById(toastID);
+    if (!modal || !toast) return;
+
+    document.activeElement.blur();
+
+    const modalInstance =
+        bootstrap.Modal.getInstance(modal) ||
+        new bootstrap.Modal(modal);
+
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
+
+    modalInstance.hide();
+    toastInstance.show();
 }

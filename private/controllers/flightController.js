@@ -4,54 +4,46 @@ const model = require('../models/flightModel');
 exports.getFlights = async (req, res) => {
     try {
         const flights = await model.find().lean();
-        res.json(flights);
+        // Add computed capacityStatus
+        const result = flights.map(f => ({
+            ...f,
+            capacityStatus: f.availableSeats > 0 ? 'Available' : 'Full'
+        }));
+        res.json(result);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Get a single flight by ID
+// Get a single flight
 exports.getFlight = async (req, res) => {
     try {
         const flight = await model.findById(req.params.id).lean();
         if (!flight) return res.status(404).json({ message: 'Flight not found' });
-        res.json(flight);
+        res.json({
+            ...flight,
+            capacityStatus: flight.availableSeats > 0 ? 'Available' : 'Full'
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
-// Create a new flight
+// Create a flight
 exports.createFlight = async (req, res) => {
     try {
-        const {
-            flightNumber,
-            airline,
-            origin,
-            destination,
-            departureDateTime,
-            arrivalDateTime,
-            availableSeats,
-            layovers,
-            ticketPrice,
-            flightStatus
-        } = req.body;
-
+        const { flightNumber, origin, destination, departureDateTime, arrivalDateTime, flightStatus } = req.body;
         const newFlight = new model({
             flightNumber,
-            airline,
             origin,
             destination,
             departureDateTime,
             arrivalDateTime,
-            availableSeats: availableSeats || 16,
-            layovers: layovers || 0,
-            ticketPrice,
-            flightStatus: flightStatus || 'On Time'
+            flightStatus: flightStatus || 'On Time',
+            // These will use defaults from schema
         });
-
         const saved = await newFlight.save();
         res.status(201).json(saved);
     } catch (error) {
@@ -63,9 +55,10 @@ exports.createFlight = async (req, res) => {
 // Update a flight
 exports.updateFlight = async (req, res) => {
     try {
+        const { flightNumber, origin, destination, departureDateTime, arrivalDateTime, flightStatus } = req.body;
         const updated = await model.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            { flightNumber, origin, destination, departureDateTime, arrivalDateTime, flightStatus },
             { new: true, runValidators: true }
         ).lean();
         if (!updated) return res.status(404).json({ message: 'Flight not found' });
