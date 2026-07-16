@@ -1,35 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('../controllers/reservationController');
+const { getSeatMap, updateSeat, updateStatus } = require('../controllers/reservationController');
 
-router.get('/flight-book', async (req, res) => {
-    try {
-        const seatMap = await getSeatMap("TESTFLIGHT");
-
-        res.status(200).render('booking', {
-            page: '/flight-book',
-            script: '/scripts/user/booking.js',
-            role: userRole,
-            seats: seatMap
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
-    }
-});
-
-router.post('/flight-book', async (req, res) => {
-    try {
-        const reservation = await createReservation(req.body);
-        res.status(200).json({ success: true });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
-    }
-});
-
-router.put('/api/:reservationNumber', async (req, res) => {
+router.put('/:reservationNumber', async (req, res) => {
     try {
         const reservationNumber = req.params.reservationNumber;
         const { seatNumber } = req.body;
@@ -43,7 +17,7 @@ router.put('/api/:reservationNumber', async (req, res) => {
     }
 });
 
-router.put('/api/:reservationNumber/cancel', async (req, res) => {
+router.put('/:reservationNumber/cancel', async (req, res) => {
     try {
         const reservationNumber = req.params.reservationNumber;
         const updated = await updateStatus(reservationNumber, 'Cancelled');
@@ -54,7 +28,7 @@ router.put('/api/:reservationNumber/cancel', async (req, res) => {
     }
 });
 
-router.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
+router.get('/:flightNumber/:selectedSeat', async (req, res) => {
     try {
         const flightNumber = req.params.flightNumber;
         const selectedSeat = req.params.selectedSeat;
@@ -73,72 +47,6 @@ router.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
         res.render('seatsModal', {
             layout: false,
             seats: modifiedSeatMap
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/reservations', async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1, limit = 3;
-        const { reservations, totalReservations } = await getReservations(page, limit, "TESTUSER");
-        const totalPages = Math.ceil(totalReservations / limit);
-
-        let pagination;
-
-        if (!req.query.page && totalPages > 1) {
-            return res.redirect('/reservations?page=1');
-        }
-
-        pagination = {
-            currentPage: page,
-            totalPages: totalPages,
-            totalResults: totalReservations,
-            resultsPerPage: limit,
-            baseUrl: '/reservations?page='
-        };
-
-        res.status(200).render('reservations', {
-            page: '/reservations',
-            script: '/scripts/user/reservations.js',
-            role: userRole,
-            reservationCards: reservations,
-            pagination: pagination
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/admin/reservations', async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1, limit = 10;
-        const { reservations, totalReservations } = await getReservations(page, limit);
-        const totalPages = Math.ceil(totalReservations / limit);
-
-        let pagination;
-
-        if (!req.query.page && totalPages > 1) {
-            return res.redirect('/admin/reservations?page=1');
-        }
-
-        pagination = {
-            currentPage: page,
-            totalPages: totalPages,
-            totalResults: totalReservations,
-            resultsPerPage: limit,
-            baseUrl: '/admin/reservations?page='
-        };
-
-        res.status(200).render('admin-reservations', {
-            page: '/admin/reservations',
-            script: '/scripts/admin/admin-flights.js',
-            role: userRole,
-            reservationRows: reservations,
-            pagination: pagination
         });
     } catch (error) {
         console.error(error);

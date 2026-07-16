@@ -4,9 +4,10 @@ const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
 const cors = require('cors');
 const path = require('path');
+const server = express();
+
 const { connectToMongo } = require('./private/connection');
 const { createUser, getUserById, getUserByEmail, getAllUsers, updateUser, changePassword } = require('./private/controllers/userController');
-const server = express();
 
 const handlebars = expressHandlebars.create({
     extname: 'hbs',
@@ -38,9 +39,6 @@ const handlebars = expressHandlebars.create({
     }
 });
 
-const userRole = 'admin';
-// For testing lang
-
 const reservationRoutes = require('./private/routes/reservationRoutes');
 const flightRoutes = require("./private/routes/flightRoutes");
 
@@ -60,15 +58,113 @@ server.use(session({
     saveUninitialized: false
 }));
 
-server.use("/", reservationRoutes);
+server.use("/api", reservationRoutes);
 server.use("/api/flights", flightRoutes);
+
+const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('./private/controllers/reservationController');
+
+server.get('/reservations', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1, limit = 3;
+        const { reservations, totalReservations } = await getReservations(page, limit, "TESTUSER");
+        const totalPages = Math.ceil(totalReservations / limit);
+
+        let pagination;
+
+        if (!req.query.page && totalPages > 1) {
+            return res.redirect('/reservations?page=1');
+        }
+
+        pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalReservations,
+            resultsPerPage: limit,
+            baseUrl: '/reservations?page='
+        };
+
+        res.status(200).render('reservations', {
+            page: '/reservations',
+            script: '/scripts/user/reservations.js',
+            role: req.session.user.role,
+            reservationCards: reservations,
+            pagination: pagination
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+server.get('/admin-reservations', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1, limit = 10;
+        const { reservations, totalReservations } = await getReservations(page, limit);
+        const totalPages = Math.ceil(totalReservations / limit);
+
+        let pagination;
+
+        if (!req.query.page && totalPages > 1) {
+            return res.redirect('/admin-reservations?page=1');
+        }
+
+        pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalReservations,
+            resultsPerPage: limit,
+            baseUrl: '/admin-reservations?page='
+        };
+
+        res.status(200).render('admin-reservations', {
+            page: '/admin-reservations',
+            script: '/scripts/admin/admin-reservations.js',
+            role: req.session.user.role,
+            reservationRows: reservations,
+            pagination: pagination
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+server.get('/flight-book', async (req, res) => {
+    try {
+        if (req.session.user) {
+            const seatMap = await getSeatMap("TESTFLIGHT");
+
+            res.status(200).render('booking', {
+                page: '/flight-book',
+                script: '/scripts/user/booking.js',
+                role: req.session.user.role,
+                seats: seatMap
+            });
+        } else {
+            res.redirect('/login');
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+server.post('/flight-book', async (req, res) => {
+    try {
+        const reservation = await createReservation(req.body);
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
 
 server.get('/', (req, res) => {
     if (req.session.user) {
         res.render('index', {
             page: '/',
             script: '/scripts/index.js',
-            role: req.session.user
+            role: req.session.user.role,
         });
     } else {
         res.redirect('/login');
@@ -76,7 +172,7 @@ server.get('/', (req, res) => {
 });
 
 server.get("/register", (req, res) => {
-    res.render('register', { message: "user registration page" });
+    res.render('register');
 });
 
 server.post("/register", async (req, res) => {
@@ -86,7 +182,7 @@ server.post("/register", async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).send("Registration Failed.");
+        res.status(500).json({ success: false });
     }
 });
 
@@ -191,19 +287,25 @@ server.get("/user-profile", async (req, res) => {
 
     const user = await getUserById(req.session.user._id);
     res.render('user', {
+        page: '/user-profile',
+        script: '/scripts/user/profile.js',
+        role: req.session.user.role,
         user: user
     });
 });
 
-server.get("/admin-profile", async (req, res) => {
+server.get('/admin-profile', async (req, res) => {
     if (!req.session.user || req.session.user.role !== "admin") {
         return res.redirect("/login");
     }
 
     const user = await getUserById(req.session.user._id);
 
-    res.render("admin", {
-        user
+    res.render('admin', {
+        page: '/admin-profile',
+        script: '/scripts/admin/admin-dashboard.js',
+        role: req.session.user.role,
+        user: user
     });
 });
 

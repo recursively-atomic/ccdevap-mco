@@ -1,5 +1,5 @@
-<!--Admin User Management-->
-{{> header}}
+{{> navigation}}
+
 <div class="container mt-5 mb-5">
         <div class="card d-flex shadow-lg">
             <div class="card-header text-center text-white bg-primary-accent">
@@ -264,7 +264,7 @@
          id="dashboard-toast">
         <div class="d-flex align-items-center">
             <div class="toast-body text-nowrap">
-                Welcome Administrator
+                Welcome Administrator {{user.firstName}} {{user.lastName}}!
             </div>
 
             <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>

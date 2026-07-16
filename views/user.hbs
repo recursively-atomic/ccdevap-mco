@@ -1,1059 +1,1045 @@
 {{> navigation}}
 
 <div class="container mt-5 mb-5">
-        <!-- TABS -->
-        <ul class="nav nav-tabs nav-fill column-gap-3 row-gap-3 border-0">
-            <li class="nav-item">
-                <button class="nav-link active" id="profile-information-tab" data-bs-toggle="tab"
-                        data-bs-target="#profile-information-pane">
-                    Profile Information
-                </button>
-            </li>
+    <!-- TABS -->
+    <ul class="nav nav-tabs nav-fill column-gap-3 row-gap-3 border-0">
+        <li class="nav-item">
+            <button class="nav-link active" id="profile-information-tab" data-bs-toggle="tab"
+                    data-bs-target="#profile-information-pane">
+                Profile Information
+            </button>
+        </li>
 
-            <li class="nav-item">
-                <button class="nav-link" id="passenger-information-tab" data-bs-toggle="tab"
-                        data-bs-target="#passenger-information-pane">
-                    Passenger Information
-                </button>
-            </li>
+        <li class="nav-item">
+            <button class="nav-link" id="passenger-information-tab" data-bs-toggle="tab"
+                    data-bs-target="#passenger-information-pane">
+                Passenger Information
+            </button>
+        </li>
 
-            <li class="nav-item">
-                <button class="nav-link" id="saved-passengers-tab" data-bs-toggle="tab"
-                        data-bs-target="#saved-passengers-pane">
-                    Saved Passengers
-                </button>
-            </li>
+        <li class="nav-item">
+            <button class="nav-link" id="saved-passengers-tab" data-bs-toggle="tab"
+                    data-bs-target="#saved-passengers-pane">
+                Saved Passengers
+            </button>
+        </li>
 
-            <li class="nav-item">
-                <button class="nav-link" id="payment-information-tab" data-bs-toggle="tab"
-                        data-bs-target="#payment-information-pane">
-                    Payment Information
-                </button>
-            </li>
+        <li class="nav-item">
+            <button class="nav-link" id="payment-information-tab" data-bs-toggle="tab"
+                    data-bs-target="#payment-information-pane">
+                Payment Information
+            </button>
+        </li>
 
-            <li class="nav-item">
-                <button class="nav-link" id="notifcation-preferences-tab" data-bs-toggle="tab"
-                        data-bs-target="#notifcation-preferences-pane">
-                    Notification Preferences
-                </button>
-            </li>
+        <li class="nav-item">
+            <button class="nav-link" id="notifcation-preferences-tab" data-bs-toggle="tab"
+                    data-bs-target="#notifcation-preferences-pane">
+                Notification Preferences
+            </button>
+        </li>
 
-            <li class="nav-item">
-                <button class="nav-link" id="travel-history-tab" data-bs-toggle="tab"
-                        data-bs-target="#travel-history-pane">
-                    Travel History
-                </button>
-            </li>
-        </ul>
+        <li class="nav-item">
+            <button class="nav-link" id="travel-history-tab" data-bs-toggle="tab" data-bs-target="#travel-history-pane">
+                Travel History
+            </button>
+        </li>
+    </ul>
 
-        <!-- TAB CONTENTS -->
-        <div class="tab-content px-4 pt-3 bg-white border-start border-end border-bottom border-top
+    <!-- TAB CONTENTS -->
+    <div class="tab-content px-4 pt-3 bg-white border-start border-end border-bottom border-top
              rounded-3 border-white rounded-top-0 border-top">
 
-            <!-- PROFILE INFORMATION TAB -->
-            <div class="tab-pane fade show active" id="profile-information-pane">
-                <!-- PROFILE PICTURE AND INFORMATION -->
-                <div class="m-4">
-                    <div class="row d-flex align-items-center">
-                        <div class="col-lg-3 col-md-4 col-sm-12 position-relative card-hover">
-                            <img class="d-block rounded-3 shadow-lg img-fluid"
-                                 src="https://picsum.photos/1280/1280?random=1" id="profile-picture">
+        <!-- PROFILE INFORMATION TAB -->
+        <div class="tab-pane fade show active" id="profile-information-pane">
+            <!-- PROFILE PICTURE AND INFORMATION -->
+            <div class="m-4">
+                <div class="row d-flex align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-12 position-relative card-hover">
+                        <img class="d-block rounded-3 shadow-lg img-fluid"
+                             src="https://picsum.photos/1280/1280?random=1" id="profile-picture">
 
-                            <button class="btn mb-3 bottom-0 position-absolute start-50 translate-middle-x btn-sm btn-tertiary text-black text-nowrap"
-                                    onclick="$('#change-profile').click();">
-                                Change Profile
-                            </button>
-
-                            <input class="d-none" type="file" accept="image/*" id="change-profile">
-                        </div>
-
-                        <div class="col-lg-9 col-md-8 col-sm-12 mt-sm-3 mt-3 text-dark">
-                            <p class="m-0 p-0 fs-1 fw-bolder" id="profile-name" data-firstname="{{user.firstName}}"
-                            data-lastname="{{user.lastName}}"> {{user.lastName}}, {{user.firstName}} </p>
-
-                            <div class="d-flex align-items-center m-0">
-                                <h4 class="m-0 p-0 pe-1"> E-Mail: </h2>
-                                    <p class="m-0 p-0 fs-4" id="profile-email"> {{user.emailAddress}} </p>
-                            </div>
-
-                            <div class="d-flex align-items-center m-0">
-                                <h4 class="m-0 p-0 pe-1"> Contact Number: </h2>
-                                    <p class="m-0 p-0 fs-4" id="profile-contact"> {{user.contactNumber}} </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                <!-- PROFILE UPDATE OPTIONS -->
-                <div class="m-4 mb-0">
-                    <div class="row text-black">
-                        <div class="col-lg-6 col-md-6 mb-sm-4 mb-4 mb-lg-4">
-                            <h4 class="text-primary-accent"> Current Password </h4>
-
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark"><i
-                                       class="text-secondary fa-solid fa-lock-open"></i></div>
-                                <input id="current-password" class="form-control bg-light border-dark border-2 text-black" type="password"
-                                       placeholder="Current Password">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4">
-                            <h4 class="text-primary-accent"> New Password </h4>
-
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark"><i
-                                       class="text-secondary fa-solid fa-lock"></i></div>
-                                <input id="new-password" class="form-control bg-light border-dark border-2 text-black" type="password"
-                                       placeholder="New Password">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4 gap-2 d-flex justify-content-center">
-                    <button id="save-password-btn" class="btn btn-lg btn-primary text-white">
-                        Save Changes
-                    </button>
-
-                    <button id="update-profile-btn" class="btn btn-lg btn-secondary text-white">
-                        Update Profile Information
-                    </button>
-                </div>
-
-                <!-- UPDATE PROFILE MODAL -->
-                <div class="modal fade" id="update-profile-modal" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-
-                            <div class="modal-header bg-dark text-white">
-                                <h5 class="modal-title">
-                                    Update Profile Information
-                                </h5>
-
-                                <button class="btn-close btn-close-white" data-bs-dismiss="modal">
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-                                <input type="hidden" id="profile-user-id">
-
-                                <div class="mb-3">
-                                    <label class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="edit-first-name">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="edit-last-name">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" id="edit-email">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Contact Number</label>
-                                    <input type="text" class="form-control" id="edit-contact">
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button class="btn btn-success" id="save-profile-btn">
-                                    Save Changes
-                                </button>
-
-                                <button class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Cancel
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PASSENGER/PASSWORD TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                     id="password-toast">
-                    <div class="d-flex align-items-center">
-                        <div class="text-nowrap toast-body">
-                            Successfully changed password!
-                        </div>
-
-                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 text-bg-success"
-                    id="profile-toast">
-
-                    <div class="d-flex align-items-center">
-                        <div class="toast-body">
-                            Profile updated successfully!
-                        </div>
-
-                        <button class="btn-close btn-close-white me-2 m-auto"
-                                data-bs-dismiss="toast">
+                        <button class="btn mb-3 bottom-0 position-absolute start-50 translate-middle-x btn-sm btn-tertiary text-black text-nowrap"
+                                onclick="$('#change-profile').click();">
+                            Change Profile
                         </button>
+
+                        <input class="d-none" type="file" accept="image/*" id="change-profile">
                     </div>
 
+                    <div class="col-lg-9 col-md-8 col-sm-12 mt-sm-3 mt-3 text-dark">
+                        <p class="m-0 p-0 fs-1 fw-bolder" id="profile-name" data-firstname="{{user.firstName}}"
+                           data-lastname="{{user.lastName}}"> {{user.lastName}}, {{user.firstName}} </p>
+
+                        <div class="d-flex align-items-center m-0">
+                            <h4 class="m-0 p-0 pe-1"> E-Mail: </h2>
+                                <p class="m-0 p-0 fs-4" id="profile-email"> {{user.emailAddress}} </p>
+                        </div>
+
+                        <div class="d-flex align-items-center m-0">
+                            <h4 class="m-0 p-0 pe-1"> Contact Number: </h2>
+                                <p class="m-0 p-0 fs-4" id="profile-contact"> {{user.contactNumber}} </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- PASSENGER INFORMATION TAB -->
-            <div class="tab-pane fade" id="passenger-information-pane">
-                <!-- PASSPORT INFORMATION SECTION -->
-                <h2 class="text-primary"> Passport Information </h2>
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <!-- PROFILE UPDATE OPTIONS -->
+            <div class="m-4 mb-0">
+                <div class="row text-black">
+                    <div class="col-lg-6 col-md-6 mb-sm-4 mb-4 mb-lg-4">
+                        <h4 class="text-primary-accent"> Current Password </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark"><i
+                                   class="text-secondary fa-solid fa-lock-open"></i></div>
+                            <input id="current-password" class="form-control bg-light border-dark border-2 text-black"
+                                   type="password" placeholder="Current Password">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4">
+                        <h4 class="text-primary-accent"> New Password </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark"><i
+                                   class="text-secondary fa-solid fa-lock"></i></div>
+                            <input id="new-password" class="form-control bg-light border-dark border-2 text-black"
+                                   type="password" placeholder="New Password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4 gap-2 d-flex justify-content-center">
+                <button id="save-password-btn" class="btn btn-lg btn-primary text-white">
+                    Save Changes
+                </button>
+
+                <button id="update-profile-btn" class="btn btn-lg btn-secondary text-white">
+                    Update Profile Information
+                </button>
+            </div>
+
+            <!-- UPDATE PROFILE MODAL -->
+            <div class="modal fade" id="update-profile-modal" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-dark text-white">
+                            <h5 class="modal-title">
+                                Update Profile Information
+                            </h5>
+
+                            <button class="btn-close btn-close-white" data-bs-dismiss="modal">
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <input type="hidden" id="profile-user-id">
+
+                            <div class="mb-3">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="edit-first-name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="edit-last-name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="edit-email">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Contact Number</label>
+                                <input type="text" class="form-control" id="edit-contact">
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-success" id="save-profile-btn">
+                                Save Changes
+                            </button>
+
+                            <button class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSENGER/PASSWORD TOAST -->
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+                 id="password-toast">
+                <div class="d-flex align-items-center">
+                    <div class="text-nowrap toast-body">
+                        Successfully changed password!
+                    </div>
+
+                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 text-bg-success"
+                 id="profile-toast">
+
+                <div class="d-flex align-items-center">
+                    <div class="toast-body">
+                        Profile updated successfully!
+                    </div>
+
+                    <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PASSENGER INFORMATION TAB -->
+        <div class="tab-pane fade" id="passenger-information-pane">
+            <!-- PASSPORT INFORMATION SECTION -->
+            <h2 class="text-primary"> Passport Information </h2>
+
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <div class="m-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 mb-sm-4 mb-4">
+                        <h4 class="text-primary-accent"> Country Code </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-map-fill"></i>
+                            </div>
+
+                            <input id="country-code" class="form-control bg-light border-dark border-2 text-black"
+                                   type="text" value="{{user.countryCode}}" placeholder="AAA">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 mb-sm-4 mb-4">
+                        <h4 class="text-primary-accent"> Passport Code </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-postcard-fill"></i>
+                            </div>
+
+                            <input id="passport-code" class="form-control bg-light border-dark border-2 text-black"
+                                   type="text" value="{{user.passportCode}}" placeholder="A12345678">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4">
+                        <h4 class="text-primary-accent"> Expiration Date </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-calendar2-fill"></i>
+                            </div>
+
+                            <input id="passport-expiration"
+                                   class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                   type="date" value="{{user.passportExpiration}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PERSONAL INFORMATION SECTION -->
+            <h2 class="text-primary"> Personal Information </h2>
+
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <!-- PASSENGER NAME -->
+            <div class="m-4">
+                <h4 class="text-primary-accent"> Name </h4>
+
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                            </div>
+
+                            <input id="first-name" name="firstName"
+                                   class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                   type="text" value="{{user.firstName}}">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                            </div>
+
+                            <input id="last-name" name="lastName"
+                                   class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                   type="text" value="{{user.lastName}}">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-pen-fill"></i></i>
+                            </div>
+
+                            <select id="suffix" class="form-select bg-light border-dark border-2 text-black">
+                                <option selected hidden> Select A Suffix </option>
+                                <option> None </option>
+                                <option> Jr. </option>
+                                <option> Sr. </option>
+                                <option> II </option>
+                                <option> III </option>
+                                <option> IV </option>
+                                <option> V </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BIRTHDATE -->
+            <div class="mx-4 mb-4">
+                <h4 class="text-primary-accent"> Birthdate </h4>
+
+                <div class="row align-items-center">
+                    <div class="col-lg-12 col-mid-12 col-sm-12 col-12" id="date-container">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-calendar2-fill"></i>
+                            </div>
+
+                            <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                   type="date" id="date-input">
+
+                            <div class="invalid-feedback">
+                                Select A Date Before Or On Today!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-none" id="age-badge-container">
+                        <span class="badge p-2 rounded-pill text-bg-primary text-white card-hover shadow"
+                              id="age-badge"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mx-4 mb-4">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mb-sm-4 mb-4">
+                        <!-- GENDER -->
+                        <h4 class="text-primary-accent"> Gender </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-person-fill"></i>
+                            </div>
+
+                            <select id="gender-select" class="form-select bg-light border-dark border-2 text-black">
+                                <option selected hidden> Select Gender </option>
+                                <option> Prefer Not To Answer </option>
+                                <option> Not Listed </option>
+                                <option> Male </option>
+                                <option> Female </option>
+                                <option> Transgender Male </option>
+                                <option> Transgender Female </option>
+                                <option> Non-Binary </option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 d-none" id="other-gender-container">
+                            <input class="form-control bg-light border-dark text-black" type="text"
+                                   placeholder="Please Specify" id="other-gender-input">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6">
+                        <!-- NATIONALITY -->
+                        <h4 class="text-primary-accent"> Nationality </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-flag-fill"></i>
+                            </div>
+
+                            <select id="nationality" class="form-select bg-light border-dark border-2 text-black">
+                                <option selected hidden> Select A Nationality </option>
+                                <option> Afghan </option>
+                                <option> Bahamian </option>
+                                <option> Cambodian </option>
+                                <option> Danish </option>
+                                <option> East Timorese </option>
+                                <option> Filipino </option>
+                                <option> Gabonese </option>
+                                <option> Haitian </option>
+                                <option> Icelander </option>
+                                <option> Jamaican </option>
+                                <option> Kazakhstani </option>
+                                <option> Laotian </option>
+                                <option> Macedonian </option>
+                                <option> Namibian </option>
+                                <option> Omani </option>
+                                <option> Pakistani </option>
+                                <option> Qatari </option>
+                                <option> Romanian </option>
+                                <option> Saint Lucian </option>
+                                <option> Taiwanese </option>
+                                <option> Ugandan </option>
+                                <option> Venezuelan </option>
+                                <option> Welsh </option>
+                                <option> Yemenite </option>
+                                <option> Zambian </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT INFORMATION TAB -->
+            <h2 class="text-primary"> Contact Information </h2>
+
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <div class="m-4">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
+                        <!-- E-MAIL -->
+                        <h4 class="text-primary-accent"> E-Mail </h4>
+
+                        <div class="input-group">
+                            <input id="email-address" class="form-control bg-light border-dark border-2 text-black"
+                                   type="text" placeholder="email-address">
+
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-at"></i>
+                            </div>
+
+                            <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                   placeholder="domain.com">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 mb-0">
+                        <!-- PHONE NUMBER -->
+                        <h4 class="text-primary-accent"> Phone Number </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary bi bi-telephone-fill"></i>
+                            </div>
+
+                            <input id="phone-code"
+                                   class="form-control bg-light border-dark border-end-0 border-2 text-black"
+                                   type="text" placeholder="00">
+                            <input id="phone-number" class="w-50 form-control bg-light border-dark border-2 text-black"
+                                   type="text" placeholder="123456789">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4 text-center">
+                <button id="save-passenger-btn" class="btn btn-lg btn-primary text-white" onclick="savePassenger()">
+                    Save Passenger
+                </button>
+            </div>
+
+            <!-- PASSENGER TOAST -->
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+                 id="passenger-toast">
+                <div class="d-flex align-items-center">
+                    <div class="text-nowrap toast-body">
+                        Successfully saved passenger {{user.firstName}} {{user.lastName}}!
+                    </div>
+
+                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SAVED PASSENGERS TAB -->
+        <div class="tab-pane fade" id="saved-passengers-pane">
+            <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 m-4">
+                <button id="add-passenger-btn" class="btn m-0 btn-success text-white">
+                    Add Passenger
+                    <!-- This would go to the passenger information tab in profile.html -->
+                </button>
+
+                {{> pagination}}
+            </div>
+
+            <!-- DELETE PASSENGER MODAL -->
+            <div class="modal fade" data-bs-backdrop="static" id="delete-passenger">
+                <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+                    <div class="modal-content">
+                        <div class="modal-header bg-dark text-white">
+                            <h2 class="modal-title fs-5"> Are you sure? </h2>
+                        </div>
+
+                        <div class="modal-footer d-flex bg-light">
+                            <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                                No
+                            </button>
+
+                            <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+                                Yes, Delete It
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAYMENT INFORMATION TAB -->
+        <div class="tab-pane fade" id="payment-information-pane">
+            <h2 class="text-primary"> Payment Method </h2>
+
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <div class="container">
+                <div class="m-4">
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <h4 class="text-primary-accent"> Method </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-wallet"></i>
+                            </div>
+
+                            <select id="payment-method-select" class="form-select bg-light border-dark 
+                                border-2 text-black">
+                                <option selected hidden> Select A Payment Method </option>
+                                <option> Cash </option>
+                                <option> Credit Card </option>
+                                <option> Debit Card </option>
+                                <option> Digital Wallet </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT FIELDS FOR CREDIT OR DEBIT CARD -->
+            <div class="container m-0 px-0 d-none" id="card-input-fields">
+                <h2 class="text-primary"> Account Information </h2>
 
                 <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                <div class="m-4">
+                <div class="m-4 px-3">
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 mb-sm-4 mb-4">
-                            <h4 class="text-primary-accent"> Country Code </h4>
+                        <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Cardholder </h4>
 
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-map-fill"></i>
+                                    <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
                                 </div>
 
-                                <input id="country-code" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       value="{{user.countryCode}}" placeholder="AAA">
+                                <input id="cardHolderFirstName"
+                                       class="form-control bg-light border-dark border-2 border-end-0 text-black"
+                                       type="text" placeholder="Brook Remi">
+                                <input id="cardHolderLastName"
+                                       class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="Doe">
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-4 mb-sm-4 mb-4">
-                            <h4 class="text-primary-accent"> Passport Code </h4>
+                        <div class="col-lg-6 col-md-12">
+                            <h4 class="text-primary-accent"> Send E-Receipts At E-Mail </h4>
 
                             <div class="input-group">
+                                <input id="receiptEmail" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="email-address">
+
                                 <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-postcard-fill"></i>
+                                    <i class="text-secondary fa-solid fa-at"></i>
                                 </div>
 
-                                <input id="passport-code" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       value="{{user.passportCode}}" placeholder="A12345678">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-4">
-                            <h4 class="text-primary-accent"> Expiration Date </h4>
-
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-calendar2-fill"></i>
-                                </div>
-
-                                <input id="passport-expiration" class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                       type="date" value="{{user.passportExpiration}}">
+                                <input id="receiptEmailDomain"
+                                       class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="domain.com">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- PERSONAL INFORMATION SECTION -->
-                <h2 class="text-primary"> Personal Information </h2>
-
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                <!-- PASSENGER NAME -->
-                <div class="m-4">
-                    <h4 class="text-primary-accent"> Name </h4>
-
+                <div class="m-4 px-3">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Country </h4>
+
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                    <i class="text-secondary bi bi-globe-central-south-asia"></i>
                                 </div>
 
-                                <input id="first-name" name="firstName" class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.firstName}}">
+                                <select id="country" class="form-select bg-light border-dark border-2 text-black">
+                                    <option selected hidden> Select A Country </option>
+                                    <option> Afghanistan </option>
+                                    <option> Bahamas </option>
+                                    <option> Cambodia </option>
+                                    <option> Denmark </option>
+                                    <option> Gabon </option>
+                                    <option> Haiti </option>
+                                    <option> Iceland </option>
+                                    <option> Jamaica </option>
+                                    <option> Kazakhstan </option>
+                                    <option> Laos </option>
+                                    <option> Namibia </option>
+                                    <option> North Macedonia </option>
+                                    <option> Oman </option>
+                                    <option> Pakistan </option>
+                                    <option> Philippines </option>
+                                    <option> Qatar </option>
+                                    <option> Romania </option>
+                                    <option> Saint Lucia </option>
+                                    <option> Taiwan </option>
+                                    <option> Timor-Leste </option>
+                                    <option> Uganda </option>
+                                    <option> United Kingdown </option>
+                                    <option> Venezuela </option>
+                                    <option> Yemen </option>
+                                    <option> Zambia </option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
+                        <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Region </h4>
+
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                    <i class="text-secondary fa-solid fa-location-dot"></i>
                                 </div>
 
-                                <input id="last-name" name="lastName" class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.lastName}}">
+                                <input id="billingRegion" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" value="{{user.region}}" placeholder="Province Town">
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-md-6">
+                            <h4 class="text-primary-accent"> ZIP Code </h4>
+
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-pen-fill"></i></i>
+                                    <i class="text-secondary bi bi-inboxes-fill"></i>
                                 </div>
 
-                                <select id="suffix" class="form-select bg-light border-dark border-2 text-black">
-                                    <option selected hidden> Select A Suffix </option>
-                                    <option> None </option>
-                                    <option> Jr. </option>
-                                    <option> Sr. </option>
-                                    <option> II </option>
-                                    <option> III </option>
-                                    <option> IV </option>
-                                    <option> V </option>
-                                </select>
+                                <input id="zipCode" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" value="{{user.zipCode}}" placeholder="1AA1">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- BIRTHDATE -->
-                <div class="mx-4 mb-4">
-                    <h4 class="text-primary-accent"> Birthdate </h4>
-
-                    <div class="row align-items-center">
-                        <div class="col-lg-12 col-mid-12 col-sm-12 col-12" id="date-container">
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-calendar2-fill"></i>
-                                </div>
-
-                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                       type="date" id="date-input">
-
-                                <div class="invalid-feedback">
-                                    Select A Date Before Or On Today!
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-none" id="age-badge-container">
-                            <span class="badge p-2 rounded-pill text-bg-primary text-white card-hover shadow"
-                                  id="age-badge"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mx-4 mb-4">
+                <div class="m-4 px-3">
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 mb-sm-4 mb-4">
-                            <!-- GENDER -->
-                            <h4 class="text-primary-accent"> Gender </h4>
+                        <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Card Information </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-table-cells"></i>
+                                </div>
+
+                                <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
+                                       type="text" value="{{user.cardNumber}}" placeholder="1234 0000 0000 0000"
+                                       maxlength="19" id="card-number">
+
+                                <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
+                                       type="month" value="{{user.cardExpiry}}" id="card-expiry">
+
+                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       value="{{user.cardCvn}}" placeholder="CVN" maxlength="4" id="card-cvn">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-12 mb-lg-0 mb-sm-4 mb-4 mb-md-0">
+                            <h4 class="text-primary-accent"> Billing Address </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-envelope-paper-fill"></i>
+                                </div>
+
+                                <input id="billingAddress1"
+                                       class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       value="{{user.addressLine1}}" placeholder="Address Line 1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-lg-0 mt-md-4">
+                        <div class="col-lg-6 col-md-0"></div>
+
+                        <div class="col-lg-6 col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary bi bi-envelope-paper-fill"></i>
+                                </div>
+
+                                <input id="billingAddress2"
+                                       class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       value="{{user.addressLine2}}" placeholder="Address Line 2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INPUT FIELDS FOR DIGITAL WALLETS  -->
+            <div class="container m-0 p-0 d-none" id="digital-input-fields">
+                <h2 class="text-primary"> Account Information </h2>
+
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                <div class="m-4 px-3 mb-md-0">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 mb-sm-4 mb-4">
+                            <h4 class="text-primary-accent"> Account Name </h4>
 
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary bi bi-person-fill"></i>
                                 </div>
 
-                                <select id="gender-select" class="form-select bg-light border-dark border-2 text-black">
-                                    <option selected hidden> Select Gender </option>
-                                    <option> Prefer Not To Answer </option>
-                                    <option> Not Listed </option>
-                                    <option> Male </option>
-                                    <option> Female </option>
-                                    <option> Transgender Male </option>
-                                    <option> Transgender Female </option>
-                                    <option> Non-Binary </option>
-                                </select>
-                            </div>
-
-                            <div class="mt-4 d-none" id="other-gender-container">
-                                <input class="form-control bg-light border-dark text-black" type="text"
-                                       placeholder="Please Specify" id="other-gender-input">
+                                <input id="accountName" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" value="{{user.firstName}} {{user.lastName}}">
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-md-6">
-                            <!-- NATIONALITY -->
-                            <h4 class="text-primary-accent"> Nationality </h4>
-
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-flag-fill"></i>
-                                </div>
-
-                                <select id="nationality" class="form-select bg-light border-dark border-2 text-black">
-                                    <option selected hidden> Select A Nationality </option>
-                                    <option> Afghan </option>
-                                    <option> Bahamian </option>
-                                    <option> Cambodian </option>
-                                    <option> Danish </option>
-                                    <option> East Timorese </option>
-                                    <option> Filipino </option>
-                                    <option> Gabonese </option>
-                                    <option> Haitian </option>
-                                    <option> Icelander </option>
-                                    <option> Jamaican </option>
-                                    <option> Kazakhstani </option>
-                                    <option> Laotian </option>
-                                    <option> Macedonian </option>
-                                    <option> Namibian </option>
-                                    <option> Omani </option>
-                                    <option> Pakistani </option>
-                                    <option> Qatari </option>
-                                    <option> Romanian </option>
-                                    <option> Saint Lucian </option>
-                                    <option> Taiwanese </option>
-                                    <option> Ugandan </option>
-                                    <option> Venezuelan </option>
-                                    <option> Welsh </option>
-                                    <option> Yemenite </option>
-                                    <option> Zambian </option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTACT INFORMATION TAB -->
-                <h2 class="text-primary"> Contact Information </h2>
-
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                <div class="m-4">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
-                            <!-- E-MAIL -->
-                            <h4 class="text-primary-accent"> E-Mail </h4>
-
-                            <div class="input-group">
-                                <input id="email-address" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="email-address">
-
-                                <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary fa-solid fa-at"></i>
-                                </div>
-
-                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="domain.com">
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-12 mb-0">
-                            <!-- PHONE NUMBER -->
-                            <h4 class="text-primary-accent"> Phone Number </h4>
-
-                            <div class="input-group">
-                                <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary bi bi-telephone-fill"></i>
-                                </div>
-
-                                <input id="phone-code" class="form-control bg-light border-dark border-end-0 border-2 text-black"
-                                       type="text" placeholder="00">
-                                <input id="phone-number" class="w-50 form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="123456789">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4 text-center">
-                    <button id="save-passenger-btn" class="btn btn-lg btn-primary text-white" onclick="savePassenger()">
-                        Save Passenger
-                    </button>
-                </div>
-
-                <!-- PASSENGER TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                     id="passenger-toast">
-                    <div class="d-flex align-items-center">
-                        <div class="text-nowrap toast-body">
-                            Successfully saved passenger {{user.firstName}} {{user.lastName}}!
-                        </div>
-
-                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SAVED PASSENGERS TAB -->
-            <div id="saved-passengers-list">
-                <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 m-4">
-                    <button id="add-passenger-btn" class="btn m-0 btn-success text-white">
-                        Add Passenger
-                        <!-- This would go to the passenger information tab in profile.html -->
-                    </button>
-
-                    <!-- PAGINATION -->
-                    <nav>
-                        <ul class="pagination m-0">
-                            <li class="page-item">
-                                <a class="page-link disabled">
-                                    <span aria-hidden="true">
-                                        < </span>
-                                </a>
-                            </li>
-
-                            <li class="page-item"><a class="page-link active"> 1 </a></li>
-                            <li class="page-item"><a class="page-link"> ... </a></li>
-                            <li class="page-item"><a class="page-link"> 10 </a></li>
-
-                            <li class="page-item">
-                                <a class="page-link">
-                                    <span aria-hidden="true"> > </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-
-                <!-- DELETE PASSENGER MODAL -->
-                <div class="modal fade" data-bs-backdrop="static" id="delete-passenger">
-                    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
-                        <div class="modal-content">
-                            <div class="modal-header bg-dark text-white">
-                                <h2 class="modal-title fs-5"> Are you sure? </h2>
-                            </div>
-
-                            <div class="modal-footer d-flex bg-light">
-                                <button class="btn btn-success text-white" data-bs-dismiss="modal">
-                                    No
-                                </button>
-
-                                <button class="btn btn-danger text-white" data-bs-dismiss="modal">
-                                    Yes, Delete It
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- PAYMENT INFORMATION TAB -->
-            <div class="tab-pane fade" id="payment-information-pane">
-                <h2 class="text-primary"> Payment Method </h2>
-
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                <div class="container">
-                    <div class="m-4">
                         <div class="col-lg-6 col-md-6 col-sm-12">
-                            <h4 class="text-primary-accent"> Method </h4>
+                            <h4 class="text-primary-accent"> Account Number </h4>
 
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
-                                    <i class="text-secondary fa-solid fa-wallet"></i>
+                                    <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
                                 </div>
 
-                                <select id="payment-method-select" class="form-select bg-light border-dark 
-                                border-2 text-black">
-                                    <option selected hidden> Select A Payment Method </option>
-                                    <option> Cash </option>
-                                    <option> Credit Card </option>
-                                    <option> Debit Card </option>
-                                    <option> Digital Wallet </option>
-                                </select>
+                                <input id="accountNumber" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" value="{{user.accountNumber}}" placeholder="01234567890">
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <!-- INPUT FIELDS FOR CREDIT OR DEBIT CARD -->
-                <div class="container m-0 px-0 d-none" id="card-input-fields">
-                    <h2 class="text-primary"> Account Information </h2>
-
-                    <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                    <div class="m-4 px-3">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
-                                <h4 class="text-primary-accent"> Cardholder </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
-                                    </div>
-
-                                    <input id="cardHolderFirstName" class="form-control bg-light border-dark border-2 border-end-0 text-black"
-                                           type="text" placeholder="Brook Remi">
-                                    <input id="cardHolderLastName" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           placeholder="Doe">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-12">
-                                <h4 class="text-primary-accent"> Send E-Receipts At E-Mail </h4>
-
-                                <div class="input-group">
-                                    <input id="receiptEmail" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           placeholder="email-address">
-
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary fa-solid fa-at"></i>
-                                    </div>
-
-                                    <input id="receiptEmailDomain" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           placeholder="domain.com">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="m-4 px-3">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-6 mb-md-4 mb-sm-4 mb-4">
-                                <h4 class="text-primary-accent"> Country </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-globe-central-south-asia"></i>
-                                    </div>
-
-                                    <select id="country" class="form-select bg-light border-dark border-2 text-black">
-                                        <option selected hidden> Select A Country </option>
-                                        <option> Afghanistan </option>
-                                        <option> Bahamas </option>
-                                        <option> Cambodia </option>
-                                        <option> Denmark </option>
-                                        <option> Gabon </option>
-                                        <option> Haiti </option>
-                                        <option> Iceland </option>
-                                        <option> Jamaica </option>
-                                        <option> Kazakhstan </option>
-                                        <option> Laos </option>
-                                        <option> Namibia </option>
-                                        <option> North Macedonia </option>
-                                        <option> Oman </option>
-                                        <option> Pakistan </option>
-                                        <option> Philippines </option>
-                                        <option> Qatar </option>
-                                        <option> Romania </option>
-                                        <option> Saint Lucia </option>
-                                        <option> Taiwan </option>
-                                        <option> Timor-Leste </option>
-                                        <option> Uganda </option>
-                                        <option> United Kingdown </option>
-                                        <option> Venezuela </option>
-                                        <option> Yemen </option>
-                                        <option> Zambia </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-sm-4 mb-4">
-                                <h4 class="text-primary-accent"> Region </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary fa-solid fa-location-dot"></i>
-                                    </div>
-
-                                    <input id="billingRegion" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.region}}" placeholder="Province Town">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6">
-                                <h4 class="text-primary-accent"> ZIP Code </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-inboxes-fill"></i>
-                                    </div>
-
-                                    <input id="zipCode" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.zipCode}}" placeholder="1AA1">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="m-4 px-3">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4">
-                                <h4 class="text-primary-accent"> Card Information </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary fa-solid fa-table-cells"></i>
-                                    </div>
-
-                                    <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
-                                           type="text" value="{{user.cardNumber}}" placeholder="1234 0000 0000 0000" maxlength="19"
-                                           id="card-number">
-
-                                    <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
-                                           type="month" value="{{user.cardExpiry}}" id="card-expiry">
-
-                                    <input class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.cardCvn}}" placeholder="CVN" maxlength="4" id="card-cvn">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-12 mb-lg-0 mb-sm-4 mb-4 mb-md-0">
-                                <h4 class="text-primary-accent"> Billing Address </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-envelope-paper-fill"></i>
-                                    </div>
-
-                                    <input id="billingAddress1" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.addressLine1}}" placeholder="Address Line 1">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-lg-0 mt-md-4">
-                            <div class="col-lg-6 col-md-0"></div>
-
-                            <div class="col-lg-6 col-md-12">
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-envelope-paper-fill"></i>
-                                    </div>
-
-                                    <input id="billingAddress2" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.addressLine2}}" placeholder="Address Line 2">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- INPUT FIELDS FOR DIGITAL WALLETS  -->
-                <div class="container m-0 p-0 d-none" id="digital-input-fields">
-                    <h2 class="text-primary"> Account Information </h2>
-
-                    <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                    <div class="m-4 px-3 mb-md-0">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12 mb-sm-4 mb-4">
-                                <h4 class="text-primary-accent"> Account Name </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-person-fill"></i>
-                                    </div>
-
-                                    <input id="accountName" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.firstName}} {{user.lastName}}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <h4 class="text-primary-accent"> Account Number </h4>
-
-                                <div class="input-group">
-                                    <div class="input-group-text bg-dark border-dark">
-                                        <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
-                                    </div>
-
-                                    <input id="accountNumber" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                           value="{{user.accountNumber}}" placeholder="01234567890">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4 text-center">
-                    <button id="save-payment-btn" class="btn btn-lg btn-primary text-white" onclick="savePayment()">
-                        Save Payment Information
-                    </button>
-                </div>
-
-                <!-- PAYMENT TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                     id="payment-toast">
-                    <div class="d-flex align-items-center">
-                        <div class="text-nowrap toast-body">
-                            Successfully saved payment method and information!
-                        </div>
-
-                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             </div>
 
-            <!-- NOTIFICATION PREFERENCES TAB -->
-            <div class="tab-pane fade" id="notifcation-preferences-pane">
-                <!-- TRIP AND FLIGHT STATUS SECTION -->
+            <div class="mb-4 text-center">
+                <button id="save-payment-btn" class="btn btn-lg btn-primary text-white" onclick="savePayment()">
+                    Save Payment Information
+                </button>
+            </div>
+
+            <!-- PAYMENT TOAST -->
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+                 id="payment-toast">
                 <div class="d-flex align-items-center">
-                    <h2 class="text-primary">
-                        <i class="me-2 fa-solid fa-plane-circle-check fa-xs"></i>
-                    </h2>
+                    <div class="text-nowrap toast-body">
+                        Successfully saved payment method and information!
+                    </div>
 
-                    <h2 class="text-secondary">
-                        Trip and Flight Status
-                    </h2>
+                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                 </div>
+            </div>
+        </div>
 
-                <p class="m-0 p-0 text-dark fw-bolder">
-                    Crucial updates regarding your active or upcoming flights, highly recommended for all travelers!
-                </p>
+        <!-- NOTIFICATION PREFERENCES TAB -->
+        <div class="tab-pane fade" id="notifcation-preferences-pane">
+            <!-- TRIP AND FLIGHT STATUS SECTION -->
+            <div class="d-flex align-items-center">
+                <h2 class="text-primary">
+                    <i class="me-2 fa-solid fa-plane-circle-check fa-xs"></i>
+                </h2>
 
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
+                <h2 class="text-secondary">
+                    Trip and Flight Status
+                </h2>
+            </div>
 
-                <div class="m-4">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 col-sm-0"></div>
+            <p class="m-0 p-0 text-dark fw-bolder">
+                Crucial updates regarding your active or upcoming flights, highly recommended for all travelers!
+            </p>
 
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <div class="m-4">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-sm-0"></div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
                              align-items-center justify-content-center text-secondary">
-                            <h4><i class="me-2 bi bi-envelope-paper-fill"></i></h4>
-                            <h4> E-Mail </h4>
-                        </div>
+                        <h4><i class="me-2 bi bi-envelope-paper-fill"></i></h4>
+                        <h4> E-Mail </h4>
+                    </div>
 
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 mb-sm-4 mb-4 d-flex
                              align-items-center justify-content-center text-secondary">
-                            <h4><i class="me-2 bi bi-chat-square-quote-fill"></i></h4>
-                            <h4> SMS </h4>
-                        </div>
-                    </div>
-
-                    <div class="row mb-4">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
-                            <h6 class="m-0 p-0 text-secondary fw-bolder text"> Flight Changes and Cancellations </h6>
-                            <p class="m-0 p-0 text-dark"> Real-time updates about critical schedule changes. </p>
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="flight-changes-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="flight-changes-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
-                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Gate and Baggage Changes </h6>
-                            <p class="m-0 p-0 text-dark"> Instant alerts for gate updates and luggage carousel numbers.
-                            </p>
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="gate-baggage-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="gate-baggage-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
+                        <h4><i class="me-2 bi bi-chat-square-quote-fill"></i></h4>
+                        <h4> SMS </h4>
                     </div>
                 </div>
 
-                <!-- CHECK-IN AND BOARDING SECTION -->
-                <div class="d-flex align-items-center mt-5">
-                    <h2 class="text-primary">
-                        <i class="me-2 fa-solid fa-ticket fa-xs"></i>
-                    </h2>
-
-                    <h2 class="text-secondary"> Check-In and Boarding </h2>
-                </div>
-
-                <p class="m-0 p-0 text-dark fw-bolder">
-                    Time-sensitive reminders to help you prepare for departure day.
-                </p>
-
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                <div class="m-4">
-                    <div class="row mb-4">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
-                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Check-In Reminders </h6>
-                            <p class="m-0 p-0 text-dark"> Alerts when the 24-hour check-in window officially opens. </p>
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="check-in-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="check-in-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
+                <div class="row mb-4">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <h6 class="m-0 p-0 text-secondary fw-bolder text"> Flight Changes and Cancellations </h6>
+                        <p class="m-0 p-0 text-dark"> Real-time updates about critical schedule changes. </p>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
-                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Boarding Announcements </h6>
-                            <p class="m-0 p-0 text-dark"> Alerts when your specific zone or group is called to board.
-                            </p>
-                        </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="flight-changes-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
 
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="boarding-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="boarding-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="flight-changes-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
                     </div>
                 </div>
 
-                <!-- DEALS AND PROMOTIONS SECTION -->
-                <div class="d-flex align-items-center mt-5">
-                    <h2 class="text-primary">
-                        <i class="me-2 fa-solid fa-wand-magic-sparkles fa-xs"></i>
-                    </h2>
-
-                    <h2 class="text-secondary"> Deals and Promotions </h2>
-                </div>
-
-                <p class="m-0 p-0 text-dark fw-bolder">
-                    Discounts, flash sales, and tailored travel inspiration based on your history.
-                </p>
-
-                <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                <div class="m-4">
-                    <div class="row mb-4">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
-                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Fare Sales and Special Offers </h6>
-                            <p class="m-0 p-0 text-dark"> Price drops and limited discounts on routes you watch. </p>
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="fare-sales-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="fare-sales-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <h6 class="m-0 p-0 text-secondary fw-bolder"> Gate and Baggage Changes </h6>
+                        <p class="m-0 p-0 text-dark"> Instant alerts for gate updates and luggage carousel numbers.
+                        </p>
                     </div>
 
-                    <div class="row mb-4">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
-                            <h6 class="m-0 p-0 text-secondary fw-bolder"> Partner Discounts </h6>
-                            <p class="m-0 p-0 text-dark"> Exclusive deals on car rentals, hotels, and airport lounges.
-                            </p>
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="partner-discounts-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="partner-discounts-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="gate-baggage-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
                     </div>
-                </div>
 
-                <hr class="mx-0 px-0 border border-3 border-dark rounded-3 opacity-100">
-
-                <div class="m-4">
-                    <div class="row mb-4">
-                        <div class="col-lg-8 col-md-6 col-sm-12 col-12 text-dark fw-bolder">
-                            <p> Subscribe to all e-mail or SMS notifcations. </p>
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="all-notifications-email" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-
-                        <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
-                            <input id="all-notifications-sms" class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
-                                   type="checkbox">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BUTTON PANEL SECTION -->
-                <div class="d-flex align-items-center justify-content-center gap-3 m-4">
-                    <button id="save-preferences-btn" class="btn btn-primary btn-lg text-white">
-                        Save Preferences
-                    </button>
-
-                    <button id="discard-changes-btn" class="btn btn-danger btn-lg text-white"> Discard Changes </button>
-                    <!-- This would reset the notification preference in profile.html -->
-                </div>
-
-                <!-- PREFERENCE TOAST -->
-                <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                     id="preference-toast">
-                    <div class="d-flex align-items-center">
-                        <div class="text-nowrap toast-body">
-                            Successfully saved notification preferences!
-                        </div>
-
-                        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="gate-baggage-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
                     </div>
                 </div>
             </div>
 
-            <!-- TRAVEL HISTORY TAB -->
-            <div class="tab-pane fade" id="travel-history-pane">
-                 <div id="travel-history-list"></div>
-                <!-- PAGINATIONS -->
-                <nav class="d-flex justify-content-center">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link disabled">
-                                <span aria-hidden="true">
-                                    < </span>
-                            </a>
-                        </li>
+            <!-- CHECK-IN AND BOARDING SECTION -->
+            <div class="d-flex align-items-center mt-5">
+                <h2 class="text-primary">
+                    <i class="me-2 fa-solid fa-ticket fa-xs"></i>
+                </h2>
 
-                        <li class="page-item"><a class="page-link active"> 1 </a></li>
-                        <li class="page-item"><a class="page-link"> ... </a></li>
-                        <li class="page-item"><a class="page-link"> 10 </a></li>
+                <h2 class="text-secondary"> Check-In and Boarding </h2>
+            </div>
 
-                        <li class="page-item">
-                            <a class="page-link">
-                                <span aria-hidden="true"> > </span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+            <p class="m-0 p-0 text-dark fw-bolder">
+                Time-sensitive reminders to help you prepare for departure day.
+            </p>
 
-                <!-- RESERVATION DETAILS MODAL -->
-                <div class="modal fade" id="reservation-details" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header bg-dark text-white">
-                                <h2 class="modal-title fs-5"> FID 1234 Reservation Details </h2>
-                            </div>
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                            <div class="modal-body bg-white fw-bolder text-dark">
-                                ...
-                            </div>
+            <div class="m-4">
+                <div class="row mb-4">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <h6 class="m-0 p-0 text-secondary fw-bolder"> Check-In Reminders </h6>
+                        <p class="m-0 p-0 text-dark"> Alerts when the 24-hour check-in window officially opens. </p>
+                    </div>
 
-                            <div class="modal-footer bg-light">
-                                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                            </div>
-                        </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="check-in-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="check-in-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
                     </div>
                 </div>
 
-                <!-- PASSENGER DETAILS MODAL -->
-                <div class="modal fade" id="passenger-details" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header bg-dark text-white">
-                                <h2 class="modal-title fs-5"> FID 1234 Passenger Details </h2>
-                            </div>
+                <div class="row">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <h6 class="m-0 p-0 text-secondary fw-bolder"> Boarding Announcements </h6>
+                        <p class="m-0 p-0 text-dark"> Alerts when your specific zone or group is called to board.
+                        </p>
+                    </div>
 
-                            <div class="modal-body bg-white fw-bolder text-dark">
-                                ...
-                            </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="boarding-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
 
-                            <div class="modal-footer bg-light">
-                                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                            </div>
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="boarding-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+                </div>
+            </div>
+
+            <!-- DEALS AND PROMOTIONS SECTION -->
+            <div class="d-flex align-items-center mt-5">
+                <h2 class="text-primary">
+                    <i class="me-2 fa-solid fa-wand-magic-sparkles fa-xs"></i>
+                </h2>
+
+                <h2 class="text-secondary"> Deals and Promotions </h2>
+            </div>
+
+            <p class="m-0 p-0 text-dark fw-bolder">
+                Discounts, flash sales, and tailored travel inspiration based on your history.
+            </p>
+
+            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+            <div class="m-4">
+                <div class="row mb-4">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <h6 class="m-0 p-0 text-secondary fw-bolder"> Fare Sales and Special Offers </h6>
+                        <p class="m-0 p-0 text-dark"> Price drops and limited discounts on routes you watch. </p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="fare-sales-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="fare-sales-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 mb-sm-4 mb-4">
+                        <h6 class="m-0 p-0 text-secondary fw-bolder"> Partner Discounts </h6>
+                        <p class="m-0 p-0 text-dark"> Exclusive deals on car rentals, hotels, and airport lounges.
+                        </p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="partner-discounts-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="partner-discounts-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mx-0 px-0 border border-3 border-dark rounded-3 opacity-100">
+
+            <div class="m-4">
+                <div class="row mb-4">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 text-dark fw-bolder">
+                        <p> Subscribe to all e-mail or SMS notifcations. </p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="all-notifications-email"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-6 d-flex align-items-center justify-content-center">
+                        <input id="all-notifications-sms"
+                               class="m-0 form-check form-check-inline form-check-input border-3 border-primary was-checked-primary"
+                               type="checkbox">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUTTON PANEL SECTION -->
+            <div class="d-flex align-items-center justify-content-center gap-3 m-4">
+                <button id="save-preferences-btn" class="btn btn-primary btn-lg text-white">
+                    Save Preferences
+                </button>
+
+                <button id="discard-changes-btn" class="btn btn-danger btn-lg text-white"> Discard Changes </button>
+                <!-- This would reset the notification preference in profile.html -->
+            </div>
+
+            <!-- PREFERENCE TOAST -->
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+                 id="preference-toast">
+                <div class="d-flex align-items-center">
+                    <div class="text-nowrap toast-body">
+                        Successfully saved notification preferences!
+                    </div>
+
+                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRAVEL HISTORY TAB -->
+        <div class="tab-pane fade" id="travel-history-pane">
+            <div id="travel-history-list"></div>
+
+            {{#if pagination}}
+                {{> pagination}}
+            {{else}}
+                <h2 class="text-primary text-center p-5"> No Previous Travels </h2>
+            {{/if}}
+
+            <!-- RESERVATION DETAILS MODAL -->
+            <div class="modal fade" id="reservation-details" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-dark text-white">
+                            <h2 class="modal-title fs-5"> FID 1234 Reservation Details </h2>
+                        </div>
+
+                        <div class="modal-body bg-white fw-bolder text-dark">
+                            ...
+                        </div>
+
+                        <div class="modal-footer bg-light">
+                            <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PASSENGER DETAILS MODAL -->
+            <div class="modal fade" id="passenger-details" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-dark text-white">
+                            <h2 class="modal-title fs-5"> FID 1234 Passenger Details </h2>
+                        </div>
+
+                        <div class="modal-body bg-white fw-bolder text-dark">
+                            ...
+                        </div>
+
+                        <div class="modal-footer bg-light">
+                            <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                                Close
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
 {{> footer}}

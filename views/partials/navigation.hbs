@@ -33,20 +33,20 @@
                     <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}}href="/reservations"{{/unless}}> My Reservations </a>
                 </li>
 
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="?"> Profile </a>
+                <li class="nav-item me-3 {{#if (eq page "/user-profile")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/user-profile")}}disabled text-light{{/if}}" {{#unless (eq page "/user-profile")}}href="/user-profile"{{/unless}}> Profile </a>
                 </li>
             {{else if (eq role 'admin')}}
-                <li class="nav-item me-3">
-                    <a class="nav-link fw-bold" href="?"> Dashboard </a>
+                <li class="nav-item me-3 {{#if (eq page "/admin-profile")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/admin-profile")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-profile")}} href="/admin-profile"{{/unless}}> Dashboard </a>
                 </li>
 
                 <li class="nav-item me-3">
                     <a class="nav-link fw-bold" href="?"> Flight Management </a>
                 </li>
 
-                <li class="nav-item me-3 {{#if (eq page "/admin/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/admin/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/admin/reservations")}} href="/admin/reservations"{{/unless}}> Reservation Management </a>
+                <li class="nav-item me-3 {{#if (eq page "/admin-reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/admin-reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-reservations")}} href="/admin-reservations"{{/unless}}> Reservation Management </a>
                 </li>
 
                 <li class="nav-item me-3">
@@ -55,7 +55,7 @@
             {{/if}}
 
             <li class="nav-item me-3">
-                <a class="nav-link fw-bold" href="/register"> Sign In or Register </a>
+                <a class="nav-link fw-bold" href="/logout"> Log Out </a>
             </li>
             {{!-- Tapos pag logged in na, Sign Out na dapat nakalagay --}}
         </ul>
