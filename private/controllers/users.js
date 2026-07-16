@@ -5,7 +5,6 @@ const Users = require('../models/users');
  * 
  * 
  * @param {Object} data is an object containing all of the user input.
- * 
  * @returns {Promise} the status of the creation of the document.
  */
 async function createUser(data) {

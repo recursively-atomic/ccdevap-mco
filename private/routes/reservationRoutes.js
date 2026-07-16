@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('./private/controllers/reservationController');
 
-server.get('/flight-book', async (req, res) => {
+const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('../controllers/reservationController');
+
+router.get('/flight-book', async (req, res) => {
     try {
         const seatMap = await getSeatMap("TESTFLIGHT");
 
@@ -18,7 +19,7 @@ server.get('/flight-book', async (req, res) => {
     }
 });
 
-server.post('/flight-book', async (req, res) => {
+router.post('/flight-book', async (req, res) => {
     try {
         const reservation = await createReservation(req.body);
         res.status(200).json({ success: true });
@@ -28,7 +29,7 @@ server.post('/flight-book', async (req, res) => {
     }
 });
 
-server.put('/api/:reservationNumber', async (req, res) => {
+router.put('/api/:reservationNumber', async (req, res) => {
     try {
         const reservationNumber = req.params.reservationNumber;
         const { seatNumber } = req.body;
@@ -42,7 +43,7 @@ server.put('/api/:reservationNumber', async (req, res) => {
     }
 });
 
-server.put('/api/:reservationNumber/cancel', async (req, res) => {
+router.put('/api/:reservationNumber/cancel', async (req, res) => {
     try {
         const reservationNumber = req.params.reservationNumber;
         const updated = await updateStatus(reservationNumber, 'Cancelled');
@@ -53,7 +54,7 @@ server.put('/api/:reservationNumber/cancel', async (req, res) => {
     }
 });
 
-server.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
+router.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
     try {
         const flightNumber = req.params.flightNumber;
         const selectedSeat = req.params.selectedSeat;
@@ -79,7 +80,7 @@ server.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
     }
 });
 
-server.get('/reservations', async (req, res) => {
+router.get('/reservations', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 3;
         const { reservations, totalReservations } = await getReservations(page, limit, "TESTUSER");
@@ -112,7 +113,7 @@ server.get('/reservations', async (req, res) => {
     }
 });
 
-server.get('/admin/reservations', async (req, res) => {
+router.get('/admin/reservations', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
         const { reservations, totalReservations } = await getReservations(page, limit);
@@ -144,3 +145,5 @@ server.get('/admin/reservations', async (req, res) => {
         res.status(500).json({ success: false });
     }
 });
+
+module.exports = router;

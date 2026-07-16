@@ -4,6 +4,7 @@
         "dev": "nodemon server.js -e js, html, css"
     },
     "dependencies": {
+        "cors": "^2.8.6",
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "express-handlebars": "^9.0.1",

@@ -1,10 +1,11 @@
 const Users = require('./private/models/users');
 const express = require('express');
-const session = require("express-session");
+const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
+const cors = require('cors');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
-const { createUser, getUserById, getUserByEmail, getAllUsers, updateUser, changePassword} = require('./private/controllers/users');
+const { createUser, getUserById, getUserByEmail, getAllUsers, updateUser, changePassword } = require('./private/controllers/users');
 const server = express();
 
 const handlebars = expressHandlebars.create({
@@ -40,9 +41,8 @@ const handlebars = expressHandlebars.create({
 const userRole = 'admin';
 // For testing lang
 
-const reservationRoutes = require('./routes/reservationRoutes');
-// Import Routes
-const flightRoutes = require("./routes/flightRoutes");
+const reservationRoutes = require('./private/routes/reservationRoutes');
+const flightRoutes = require("./private/routes/flightRoutes");
 
 server.engine('hbs', handlebars.engine);
 
@@ -54,21 +54,25 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(path.join(__dirname, 'public')));
 
-server.use('/', reservationRoutes);
-server.use("/api/flights", flightRoutes);
-
 server.use(session({
     secret: "airline-secret-key",
     resave: false,
     saveUninitialized: false
 }));
 
+server.use("/", reservationRoutes);
+server.use("/api/flights", flightRoutes);
+
 server.get('/', (req, res) => {
-    res.render('index', {
-        page: '/',
-        script: '/scripts/index.js',
-        role: userRole
-    });
+    if (!req.session.user) {
+        res.render('index', {
+            page: '/',
+            script: '/scripts/index.js',
+            role: req.session.user
+        });
+    } else {
+        res.redirect('/register');
+    }
 });
 
 server.get("/register", (req, res) => {
@@ -99,11 +103,11 @@ server.post("/login", async (req, res) => {
         });
 
         if (!user) {
-            return res.send("User not found.");
+            return res.send("User Not Found!");
         }
 
         if (user.password !== password) {
-            return res.send("Incorrect password.");
+            return res.send("Incorrect Password!");
         }
 
         req.session.user = {
@@ -115,8 +119,8 @@ server.post("/login", async (req, res) => {
         if (user.role === "admin") {
             return res.redirect("/admin-profile");
         }
-        res.redirect("/user-profile");
 
+        res.redirect("/user-profile");
     } catch (err) {
         console.log(err);
         res.status(500).send("Login failed.");
@@ -185,8 +189,8 @@ server.get("/user-profile", async (req, res) => {
         return res.redirect("/login");
     }
     const user = await getUserById(req.session.user._id);
-    res.render("user", {
-        user
+    res.render('user', {
+        user: user
     });
 });
 

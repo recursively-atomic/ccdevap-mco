@@ -1,4 +1,4 @@
-const flights = require("../data/flights");
+let flights = [];
 
 exports.getFlights = (req, res) => {
     res.json(flights);
