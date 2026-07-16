@@ -4,6 +4,7 @@ const path = require('path');
 const { connectToMongo } = require('./private/connection');
 const { createReservation } = require('./private/controllers/reservations');
 const server = express();
+const flights = require('./private/models/flights');
 
 const handlebars = expressHandlebars.create({
     extname: 'hbs',
@@ -41,27 +42,36 @@ server.get('/flight-book', (req, res) => {
     });
 });
 
-server.get('/api/search', async (req, res) => {
-  const { originAirport, destinationAirport, date } = req.query;
+app.get('/api/search', async (req, res) => {
+  const { originAirport, destinationAirport, departureDate } = req.query;
   
-  // Construct dynamic query
+  // Build a dynamic MongoDB query object
   let query = {};
+
   if (originAirport) query.originAirport = originAirport;
   if (destinationAirport) query.destinationAirport = destinationAirport;
-  if (date) {
+  if (departureDate) {
     // Match the exact day in MongoDB regardless of time
-    const start = new Date(date);
+    const start = new Date(departureDate);
     start.setUTCHours(0,0,0,0);
-    const end = new Date(date);
+    const end = new Date(departureDate);
     end.setUTCHours(23,59,59,999);
-    query.date = { $gte: start, $lte: end };
+    query.departureDate = { $gte: start, $lte: end };
+  }
+  if (status) query.status = status;
+  
+  if (startDate || endDate) {
+    query.date = {};
+    if (startDate) query.date.$gte = new Date(startDate);
+    if (endDate) query.date.$lte = new Date(endDate);
   }
 
   try {
-    const results = await Record.find(query);
+    // Assuming you are using Mongoose
+    const results = await flights.find(query);
     res.json(results);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).send(err);
   }
 });
 
@@ -92,7 +102,5 @@ connectToMongo((err) => {
         server.listen(process.env.SERVER_PORT, () => {
             console.log(`Server Running On http://localhost:${process.env.SERVER_PORT}!`);
         });
-    }
-});
     }
 });
