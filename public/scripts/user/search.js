@@ -40,25 +40,32 @@ document.getElementById('searchForm').addEventListener('submit', async (e) => {
 
           <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
             <i class="fa-solid fa-plane me-2 p-0"></i>
-            <span class="m-0 p-0">${item.flightNumber}</span>
+            <span class="m-0 p-0">${item.flightNumber} - ${item.airline}</span>
+          </h4>
+
+          <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
+            <i class="fa-solid fa-plane me-2 p-0"></i>
+            <span class="m-0 p-0"> Origin:${item.origin} Destination:${item.destination}</span>
           </h4>
 
           <h6 class="d-flex align-items-center m-0 mb-1 text-tertiary fw-bolder">
             <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-            <span class="m-0 p-0 me-1">${item.departureTime} - ${item.arrivalTime}</span>
+            <span class="m-0 p-0 me-1">Departure: ${item.departureDate} ${item.departureTime} - ${item.arrivalDate} ${item.arrivalTime}</span>
           </h6>
 
           <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
             <i class="bi bi-stoplights-fill me-2 p-0"></i>
-            <span class="m-0 p-0">No Layovers</span>
+            <span class="m-0 p-0">Layovers: ${item.layovers}</span>
           </h6>
 
-          <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+            <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
+                <div class="d-flex flex-column gap-2 align-items-center w-100">
+                    <button class="btn btn-success btn-lg text-white" data-bs-toggle="modal"
+                                  data-bs-target="#view-flight"> View Details </button>
 
-          <button class="btn btn-lg btn-success border-4 text-white m-0 w-100 book-btn" data-flight="${item.flightNumber}">
-            <span class="d-block fw-bolder">Book</span>
-            <small class="d-block fst-italic">Seats left: ${item.availableSeats}</small>
-          </button>
+                    <button onclick="window.location.href='/views/booking'" class="btn btn-primary">Book Now</button>
+                </div>
+            </div>  
 
         </div>
       </div>

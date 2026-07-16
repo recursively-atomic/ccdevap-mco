@@ -1,4 +1,4 @@
-{{> navigation}}
+    {{> navigation}}
 
 <!-- BACKEND IMPLEMENTED SEARCH -->
 <form action="/searchFlights" method="GET" class="container mt-5 mb-5" id ="searchForm">
@@ -610,297 +610,27 @@
                 <div class="row row-gap-lg-4 my-3 m-0 row-gap-md-4 row-gap-sm-4 row-gap-4">
 
                     <div id="resultsContainer" class="row g-4"></div>
-
-                    {{!-- <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 25,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2i text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> CA101 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 10:00 - 12:30 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 2h 30m </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> No Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-danger border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 10 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 50,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> FA100 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 10:00 - 22:00 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 12h </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> 2 Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-success border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 24 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 50,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> FA101 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 08:00 - 20:00 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 12h </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> 2 Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-danger border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 05 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 20,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> AF100 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 09:00 - 14:00 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 5h </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> 0 Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-success border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 13 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 10,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> AF101 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 11:00 - 13:00 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 2h </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> 0 Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-danger border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 09 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 40,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> SA100 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 07:00 - 22:00 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 15h </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> 3 Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-success border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 40 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
-                            <div class="d-flex justify-content-between">
-                                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px"
-                                     src="/media/company-logo.png">
-                                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP 40,000 </h4>
-                            </div>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                                <i class="fa-solid fa-plane me-2 p-0"></i>
-                                <p class="m-0 p-0"> SA101 </p>
-                            </h4>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
-                                <p class="m-0 p-0 me-1"> 07:00 - 22:00 </p>
-                                <p class="m-0 p-0"> ( </p>
-                                <p class="m-0 p-0"> 15h </p>
-                                <p class="m-0 p-0"> ) </p>
-                            </h6>
-
-                            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                                <i class="bi bi-stoplights-fill me-2 p-0"></i>
-                                <p class="m-0 p-0"> 3 Layovers </p>
-                            </h6>
-
-                            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
-
-                            <button class="btn btn-lg btn-success border-4 text-white m-0">
-                                <p class="m-0 p-0 fw-bolder"> Book </p>
-                                <h6 class="m-0 p-0 fst-italic"> 50 Seats Left </h6>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="card-footer bg-primary-accent">
-                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
-                    <h6 class="text-white">
-                        Showing 10 Results Out Of 100,000
-                    </h6>
+    <!-- VIEW DETAILS MODAL -->
+    <div class="modal fade" id="viewFlight" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h2 class="modal-title fs-5"> FLIGHT Details </h2>
+                </div>
 
-                    <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
-                        <!-- PAGINATION -->
-                        <nav>
-                            <ul class="pagination m-0">
-                                <li class="page-item">
-                                    <a class="page-link disabled">
-                                        <span aria-hidden="true">
-                                            < </span>
-                                    </a>
-                                </li>
+                <div class="modal-body bg-white fw-bolder text-dark">
+                    ...
+                </div>
 
-                                <li class="page-item"><a class="page-link active"> 1 </a></li>
-                                <li class="page-item"><a class="page-link"> ... </a></li>
-                                <li class="page-item"><a class="page-link"> 10 </a></li>
-
-                                <li class="page-item">
-                                    <a class="page-link">
-                                        <span aria-hidden="true"> > </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div> --}}
+                <div class="modal-footer bg-light">
+                    <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
