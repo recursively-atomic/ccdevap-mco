@@ -12,14 +12,7 @@ const session = require("express-session");
 const expressHandlebars = require('express-handlebars');
 const path = require('path');
 const { connectToMongo } = require('./private/connection');
-const {
-    createUser,
-    getUserById,
-    getUserByEmail,
-    getAllUsers,
-    updateUser,
-    changePassword
-} = require('./private/controllers/users');
+const { createUser, getUserById, getUserByEmail, getAllUsers, updateUser, changePassword} = require('./private/controllers/users');
 
 const server = express();
 
@@ -67,6 +60,7 @@ server.engine('hbs', handlebars.engine);
 server.set('view engine', 'hbs');
 server.set('views', path.join(__dirname, 'views'));
 
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(path.join(__dirname, 'public'))); // Exposes every file in the public folder
@@ -238,7 +232,7 @@ server.post("/register", async (req, res) => {
 });
 
 server.get('/login', (req, res) => {
-    res.render('login', { message: "user login page"});
+    res.render('login', { message: "user login page" });
 });
 
 server.post("/login", async (req, res) => {
@@ -258,9 +252,9 @@ server.post("/login", async (req, res) => {
         }
 
         req.session.user = {
-        _id: user._id,
-        emailAddress: user.emailAddress,
-        role: user.role
+            _id: user._id,
+            emailAddress: user.emailAddress,
+            role: user.role
         };
 
         if (user.role === "admin") {
@@ -316,7 +310,7 @@ server.put("/api/profile", async (req, res) => {
         );
 
         req.session.user.emailAddress = user.emailAddress;
-        
+
         res.json({
             success: true,
             user
@@ -422,27 +416,27 @@ server.get('/flight-book', (req, res) => {
 });
 
 server.get('/api/search', async (req, res) => {
-  const { originAirport, destinationAirport, date } = req.query;
-  
-  // Construct dynamic query
-  let query = {};
-  if (originAirport) query.originAirport = originAirport;
-  if (destinationAirport) query.destinationAirport = destinationAirport;
-  if (date) {
-    // Match the exact day in MongoDB regardless of time
-    const start = new Date(date);
-    start.setUTCHours(0,0,0,0);
-    const end = new Date(date);
-    end.setUTCHours(23,59,59,999);
-    query.date = { $gte: start, $lte: end };
-  }
+    const { originAirport, destinationAirport, date } = req.query;
 
-  try {
-    const results = await Record.find(query);
-    res.json(results);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    // Construct dynamic query
+    let query = {};
+    if (originAirport) query.originAirport = originAirport;
+    if (destinationAirport) query.destinationAirport = destinationAirport;
+    if (date) {
+        // Match the exact day in MongoDB regardless of time
+        const start = new Date(date);
+        start.setUTCHours(0, 0, 0, 0);
+        const end = new Date(date);
+        end.setUTCHours(23, 59, 59, 999);
+        query.date = { $gte: start, $lte: end };
+    }
+
+    try {
+        const results = await Record.find(query);
+        res.json(results);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 server.post('/flight-book', (req, res) => {
@@ -464,6 +458,12 @@ server.get('/reservations', (req, res) => {
         script: '/scripts/user/reservations.js'
     });
 });
+
+// Import Routes
+const flightRoutes = require("./routes/flightRoutes");
+
+// Flight Routes
+server.use("/api/flights", flightRoutes);
 
 connectToMongo((err) => {
     if (err) {
