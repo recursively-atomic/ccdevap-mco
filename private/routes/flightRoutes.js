@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const { getFlights } = require("../controllers/flightController");
+const { getFlights } = require('../controllers/flightController');
 
 router.get('/flight-search', (req, res) => {
     if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "user") {
-        return res.redirect("/admin-profile");
+        return res.redirect('/login');
+    } else if (req.session.user.role != 'user') {
+        return res.redirect('/dashboard');
     }
 
-    res.render('search', {
+    res.render('flight-search', {
         page: '/flight-search',
         script: '/scripts/user/search.js',
         role: req.session.user.role,
@@ -51,11 +51,11 @@ router.get('/flight-search', (req, res) => {
 //     }
 // });
 
-router.get('/admin-flights', async (req, res) => {
+router.get('/flights', async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     } else if (req.session.user.role != "admin") {
-        return res.redirect("/");
+        return res.redirect("/home");
     }
 
     try {
@@ -66,7 +66,7 @@ router.get('/admin-flights', async (req, res) => {
         let pagination;
 
         if (!req.query.page && totalPages > 1) {
-            return res.redirect('/admin-flights?page=1');
+            return res.redirect('/flights?page=1');
         }
 
         pagination = {
@@ -74,12 +74,12 @@ router.get('/admin-flights', async (req, res) => {
             totalPages: totalPages,
             totalResults: totalFlights,
             resultsPerPage: limit,
-            baseUrl: '/admin-flights?page='
+            baseUrl: '/flights?page='
         };
 
-        res.status(200).render('admin-flights', {
-            page: '/admin-flights',
-            script: '/scripts/admin/admin-flights.js',
+        res.status(200).render('flights', {
+            page: '/flights',
+            script: '/scripts/admin/flights.js',
             role: req.session.user.role,
             flightRows: flights,
             pagination: pagination

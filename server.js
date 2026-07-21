@@ -1,3 +1,6 @@
+
+require('dotenv').config();
+
 const express = require('express');
 const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
@@ -55,6 +58,29 @@ server.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+if (process.env.NODE_ENV !== 'production') {
+    const livereload = require("livereload");
+    const connectLiveReload = require("connect-livereload");
+    
+    // Watch your templates and static assets directly
+    const liveReloadServer = livereload.createServer({
+        exts: ['hbs', 'css', 'js'],
+        exclusions: [/node_modules/]
+    });
+    // Adjust "/views" and "/public" if your folders are named differently
+    liveReloadServer.watch([__dirname + "/views", __dirname + "/public"]);
+
+    // Middleware to inject the refresh script into your HBS views automatically
+    server.use(connectLiveReload());
+
+    // Instantly refreshes the browser after nodemon reboots the server
+    liveReloadServer.server.once("connection", () => {
+        setTimeout(() => {
+            liveReloadServer.refresh("/");
+        }, 100);
+    });
+}
 
 server.use("/", userRoutes);
 server.use("/", flightRoutes);

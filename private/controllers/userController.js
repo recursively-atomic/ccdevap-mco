@@ -7,9 +7,7 @@ async function getUserById(id) {
 
 // READ USING EMAIL (used for login)
 async function getUserByEmail(email) {
-    return await model.findOne({
-        emailAddress: email
-    }).lean();;
+    return await model.findOne({ emailAddress: email }).lean();
 }
 
 // READ ALL (Admin)

@@ -17,8 +17,8 @@
     <div class="navbar-collapse collapse" id="main-menu">
         <ul class="navbar-nav ms-auto">
             {{#if (eq role 'user')}}
-                <li class="nav-item me-3 {{#if (eq page "/")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/")}}disabled text-light{{/if}}" {{#unless (eq page "/")}}href="/"{{/unless}}> Home </a>
+                <li class="nav-item me-3 {{#if (eq page "/home")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/home")}}disabled text-light{{/if}}" {{#unless (eq page "/home")}}href="/home"{{/unless}}> Home </a>
                 </li>
 
                 <li class="nav-item me-3 {{#if (eq page "/flight-search")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
@@ -29,28 +29,28 @@
                     <a class="nav-link fw-bold {{#if (eq page "/flight-book")}}disabled text-light{{/if}}" {{#unless (eq page "/flight-book")}}href="/flight-book"{{/unless}}> Reserve A Flight </a>
                 </li>
 
-                <li class="nav-item me-3 {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}}href="/reservations"{{/unless}}> My Reservations </a>
+                <li class="nav-item me-3 {{#if (eq page "/my-reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/my-reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/my-reservations")}}href="/my-reservations"{{/unless}}> My Reservations </a>
                 </li>
 
-                <li class="nav-item me-3 {{#if (eq page "/user-profile")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/user-profile")}}disabled text-light{{/if}}" {{#unless (eq page "/user-profile")}}href="/user-profile"{{/unless}}> Profile </a>
+                <li class="nav-item me-3 {{#if (eq page "/profile")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/profile")}}disabled text-light{{/if}}" {{#unless (eq page "/profile")}}href="/profile"{{/unless}}> Profile </a>
                 </li>
             {{else if (eq role 'admin')}}
-                <li class="nav-item me-3 {{#if (eq page "/admin-profile")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/admin-profile")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-profile")}} href="/admin-profile"{{/unless}}> Dashboard </a>
+                <li class="nav-item me-3 {{#if (eq page "/dashboard")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/dashboard")}}disabled text-light{{/if}}" {{#unless (eq page "/dashboard")}} href="/dashboard"{{/unless}}> Dashboard </a>
                 </li>
 
-                <li class="nav-item me-3 {{#if (eq page "/admin-flights")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/admin-flights")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-flights")}} href="/admin-flights"{{/unless}}> Flight Management </a>
+                <li class="nav-item me-3 {{#if (eq page "/flights")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/flights")}}disabled text-light{{/if}}" {{#unless (eq page "/flights")}} href="/flights"{{/unless}}> Flight Management </a>
                 </li>
 
-                <li class="nav-item me-3 {{#if (eq page "/admin-reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/admin-reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-reservations")}} href="/admin-reservations"{{/unless}}> Reservation Management </a>
+                <li class="nav-item me-3 {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}} href="/reservations"{{/unless}}> Reservation Management </a>
                 </li>
 
-                <li class="nav-item me-3 {{#if (eq page "/admin-users")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold{{#if (eq page "/admin-users")}}disabled text-light{{/if}}" {{#unless (eq page "/admin-users")}} href="/admin-users"{{/unless}}> User Management </a>
+                <li class="nav-item me-3 {{#if (eq page "/users")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-3 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold{{#if (eq page "/users")}}disabled text-light{{/if}}" {{#unless (eq page "/users")}} href="/users"{{/unless}}> User Management </a>
                 </li>
             {{/if}}
 

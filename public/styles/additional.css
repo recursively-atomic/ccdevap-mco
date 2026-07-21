@@ -255,6 +255,10 @@ input[type="range"].form-range::-webkit-slider-thumb {
     height: 30px;
 }
 
+.h-45px {
+    height: 45px;
+}
+
 .square-100px {
     height: 100px;
     width: 100px;
@@ -336,4 +340,10 @@ input[type="range"].form-range::-webkit-slider-thumb {
 /* LAYOUT STYLES */
 .z-max {
     z-index: 9999;
+}
+
+.bg-cover-center {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }

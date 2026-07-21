@@ -5,11 +5,15 @@ const model = require('../models/userModel');
 const { getUserById, getUserByEmail, getUsers, createUser, updateUser, updatePassword } = require('../controllers/userController');
 
 router.get('/', (req, res) => {
+    res.redirect('/home');
+});
+
+router.get('/home', (req, res) => {
     if (!req.session.user) {
         res.redirect('/login');
     } else {
-        res.render('index', {
-            page: '/',
+        res.render('home', {
+            page: '/home',
             script: '/scripts/index.js',
             role: req.session.user.role,
         });
@@ -31,16 +35,16 @@ router.post("/register", async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login', { message: "user login page" });
+    res.render('login', {
+        script: '/scripts/login.js',
+    });
 });
 
 router.post("/login", async (req, res) => {
     try {
-        const email = req.body.emailAddress;
-        const password = req.body.password;
-        const user = await model.findOne({
-            emailAddress: email
-        });
+        const email = req.body['email-address'];
+        const password = req.body['password'];
+        const user = await getUserByEmail(email);
 
         if (!user) {
             return res.send("User Not Found!");
@@ -57,10 +61,10 @@ router.post("/login", async (req, res) => {
         };
 
         if (user.role === "admin") {
-            return res.redirect("/admin-profile");
+            return res.redirect('/dashboard');
         }
-        
-        res.redirect("/user-profile");
+
+        res.redirect("/profile");
     } catch (err) {
         console.log(err);
         res.status(500).send("Login failed.");
@@ -124,21 +128,21 @@ router.put("/api/profile", async (req, res) => {
     }
 });
 
-router.get("/user-profile", async (req, res) => {
+router.get("/profile", async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     }
 
     const user = await getUserById(req.session.user._id);
-    res.render('user', {
-        page: '/user-profile',
+    res.render('profile', {
+        page: '/profile',
         script: '/scripts/user/profile.js',
         role: req.session.user.role,
         user: user
     });
 });
 
-router.get('/admin-profile', async (req, res) => {
+router.get('/dashboard', async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     } else if (req.session.user.role != "admin") {
@@ -147,9 +151,9 @@ router.get('/admin-profile', async (req, res) => {
 
     const user = await getUserById(req.session.user._id);
 
-    res.render('admin', {
-        page: '/admin-profile',
-        script: '/scripts/admin/admin-dashboard.js',
+    res.render('dashboard', {
+        page: '/dashboard',
+        script: '/scripts/admin/dashboard.js',
         role: req.session.user.role,
         user: user
     });
@@ -162,22 +166,22 @@ router.get("/user/:id", async (req, res) => {
     });
 });
 
-router.get("/admin-users", async (req, res) => {
+router.get("/users", async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     } else if (req.session.user.role != "admin") {
-        return res.redirect("/");
+        return res.redirect("/home");
     }
 
     try {
         const users = await getUsers();
-        res.render("admin-users", {
-            page: '/admin-users',
-            script: '/scripts/admin/admin-users.js',
+
+        res.render("users", {
+            page: '/users',
+            script: '/scripts/admin/users.js',
             role: req.session.user.role,
             users: users
         });
-
     } catch (err) {
         console.log(err);
         res.status(500).send("Unable to load users.");

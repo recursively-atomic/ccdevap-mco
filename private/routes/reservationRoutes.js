@@ -3,16 +3,55 @@ const router = express.Router();
 
 const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('../controllers/reservationController');
 
-router.get('/reservations', async (req, res) => {
+router.get('/my-reservations', async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/login");
     } else if (req.session.user.role != "user") {
-        return res.redirect("/");
+        return res.redirect("/dashboard");
     }
 
     try {
         const page = parseInt(req.query.page) || 1, limit = 3;
         const { reservations, totalReservations } = await getReservations(page, limit, req.session.user._id);
+        const totalPages = Math.ceil(totalReservations / limit);
+
+        let pagination;
+
+        if (!req.query.page && totalPages > 1) {
+            return res.redirect('/my-reservations?page=1');
+        }
+
+        pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalReservations,
+            resultsPerPage: limit,
+            baseUrl: '/my-reservations?page='
+        };
+
+        res.status(200).render('my-reservations', {
+            page: '/my-reservations',
+            script: '/scripts/user/my-reservations.js',
+            role: req.session.user.role,
+            reservationCards: reservations,
+            pagination: pagination
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/reservations', async (req, res) => {
+    if (!req.session.user) {
+        return res.redirect("/login");
+    } else if (req.session.user.role != "admin") {
+        return res.redirect("/home");
+    }
+
+    try {
+        const page = parseInt(req.query.page) || 1, limit = 10;
+        const { reservations, totalReservations } = await getReservations(page, limit);
         const totalPages = Math.ceil(totalReservations / limit);
 
         let pagination;
@@ -31,46 +70,7 @@ router.get('/reservations', async (req, res) => {
 
         res.status(200).render('reservations', {
             page: '/reservations',
-            script: '/scripts/user/reservations.js',
-            role: req.session.user.role,
-            reservationCards: reservations,
-            pagination: pagination
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/admin-reservations', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "admin") {
-        return res.redirect("/");
-    }
-
-    try {
-        const page = parseInt(req.query.page) || 1, limit = 10;
-        const { reservations, totalReservations } = await getReservations(page, limit);
-        const totalPages = Math.ceil(totalReservations / limit);
-
-        let pagination;
-
-        if (!req.query.page && totalPages > 1) {
-            return res.redirect('/admin-reservations?page=1');
-        }
-
-        pagination = {
-            currentPage: page,
-            totalPages: totalPages,
-            totalResults: totalReservations,
-            resultsPerPage: limit,
-            baseUrl: '/admin-reservations?page='
-        };
-
-        res.status(200).render('admin-reservations', {
-            page: '/admin-reservations',
-            script: '/scripts/admin/admin-reservations.js',
+            script: '/scripts/admin/reservations.js',
             role: req.session.user.role,
             reservationRows: reservations,
             pagination: pagination
@@ -82,19 +82,21 @@ router.get('/admin-reservations', async (req, res) => {
 });
 
 router.get('/flight-book', async (req, res) => {
-    try {
-        if (req.session.user) {
-            const seatMap = await getSeatMap("TESTFLIGHT");
+    if (!req.session.user) {
+        return res.redirect("/login");
+    } else if (req.session.user.role != "user") {
+        return res.redirect("/dashboard");
+    }
 
-            res.status(200).render('booking', {
-                page: '/flight-book',
-                script: '/scripts/user/booking.js',
-                role: req.session.user.role,
-                seats: seatMap
-            });
-        } else {
-            res.redirect('/login');
-        }
+    try {
+        const seatMap = await getSeatMap("TESTFLIGHT");
+
+        res.status(200).render('booking', {
+            page: '/flight-book',
+            script: '/scripts/user/flight-book.js',
+            role: req.session.user.role,
+            seats: seatMap
+        });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false });
