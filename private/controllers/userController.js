@@ -13,7 +13,7 @@ async function getUserByEmail(email) {
 }
 
 // READ ALL (Admin)
-async function getAllUsers() {
+async function getUsers() {
     return await model.find().sort({
         lastName: 1,
         firstName: 1
@@ -56,7 +56,7 @@ async function updateUser(id, data) {
 }
 
 //CHANGE PASSWORD
-async function changePassword(userId, currentPassword, newPassword) {
+async function updatePassword(userId, currentPassword, newPassword) {
     const user = await model.findById(userId);
     if (!user) {
         throw new Error("User not found.");
@@ -70,4 +70,4 @@ async function changePassword(userId, currentPassword, newPassword) {
     return user;
 }
 
-module.exports = { getUserById, getUserByEmail, getAllUsers, createUser, updateUser, changePassword };
+module.exports = { getUserById, getUserByEmail, getUsers, createUser, updateUser, updatePassword };

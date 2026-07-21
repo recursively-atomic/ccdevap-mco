@@ -1,45 +1,6 @@
 const API_URL = "http://localhost:3000/api/flights";
 let selectedFlightId = null;
 
-// Load flights
-async function loadFlights() {
-    try {
-        const response = await fetch(API_URL);
-        const flights = await response.json();
-        const tableBody = document.getElementById("flightTableBody");
-        tableBody.innerHTML = "";
-
-        flights.forEach(flight => {
-            const departure = new Date(flight.departureDateTime).toLocaleString();
-            const arrival = new Date(flight.arrivalDateTime).toLocaleString();
-            // capacityStatus is already computed on server, but we can also compute here
-            const capacity = flight.capacityStatus || (flight.availableSeats > 0 ? 'Available' : 'Full');
-
-            tableBody.innerHTML += `
-                <tr>
-                    <td>${flight.flightNumber}</td>
-                    <td>${flight.origin}</td>
-                    <td>${flight.destination}</td>
-                    <td>${departure}</td>
-                    <td>${arrival}</td>
-                    <td>${flight.flightStatus}</td>
-                    <td>${capacity}</td>
-                    <td>
-                        <button class="btn btn-success btn-sm" onclick="openViewModal('${flight._id}')" data-bs-toggle="modal" data-bs-target="#view-flight">View</button>
-                        <button class="btn btn-warning btn-sm" onclick="openEditModal('${flight._id}')" data-bs-toggle="modal" data-bs-target="#edit-flight">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${flight._id}')" data-bs-toggle="modal" data-bs-target="#delete-flight">Delete</button>
-                    </td>
-                </tr>
-            `;
-        });
-
-        document.getElementById("flightCount").textContent = flights.length;
-    } catch (error) {
-        console.error(error);
-    }
-}
-window.onload = loadFlights;
-
 // Delete functions
 function openDeleteModal(id) { selectedFlightId = id; }
 async function confirmDelete() { await deleteFlight(selectedFlightId); hideModalShowToast("delete-flight", "delete-toast"); }

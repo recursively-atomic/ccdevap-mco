@@ -44,7 +44,7 @@ async function getReservations(page, limit, userId = null) {
     const filter = userId ? { userId } : {};
 
     const totalReservations = await model.countDocuments(filter);
-    const reservations = await model.find(filter).sort({ 'reservationNumber': 1 }).skip(skip).limit(limit).lean();
+    const reservations = await model.find(filter).sort({ 'createdAt': 1 }).skip(skip).limit(limit).lean();
 
     return { reservations, totalReservations };
 }

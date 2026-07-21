@@ -57,6 +57,9 @@ const schema = new mongoose.Schema({
         enum: ['Confirmed', 'Pending', 'Cancelled', 'Waitlisted', 'Rescheduled'],
         default: 'Pending'
     }
-});
+},
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model('reservations', schema);

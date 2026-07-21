@@ -5,51 +5,55 @@ const schema = new mongoose.Schema({
         type: String,
         required: true
     },
+
     airline: {
         type: String,
-        default: 'Unknown'  // Not in HBS, but we provide a default
+        default: 'Unknown'
     },
+
     originAirport: {
         type: String,
         required: true
     },
+
     destinationAirport: {
         type: String,
         required: true
     },
-    departureDate: {
+
+    departureDatetime: {
         type: Date,
         required: true
     },
-    arrivalDate: {
+
+    arrivalDatetime: {
         type: Date,
         required: true
     },
-    departureTime: {
-        type: String,
-        required: true
-    },
-    arrivalTime: {
-        type: String,
-        required: true
-    },
+
     availableSeats: {
         type: Number,
         default: 16
     },
+
     layovers: {
         type: Number,
         default: 0
     },
+
     ticketPrice: {
         type: Number,
-        default: 0          // Not in HBS, but we set a default
+        default: 0
     },
+
     flightStatus: {
         type: String,
         enum: ['On Time', 'Delayed', 'Rescheduled', 'Cancelled'],
         default: 'On Time'
     }
-});
+},
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model('flights', schema);

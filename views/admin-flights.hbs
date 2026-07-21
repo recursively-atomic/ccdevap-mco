@@ -46,9 +46,11 @@
                         </tr>
                     </thead>
 
-                    <!-- JS handles inserting rows -->
-                    <tbody id="flightTableBody" class="table-group-divider">
+                    <tbody class="table-group-divider">
+                        {{> flightRows}}
 
+                        <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -56,9 +58,8 @@
 
         <div class="card-footer bg-primary-accent">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
-
                 <h6 class="text-white">
-                    Showing <span id="flightCount">0</span> Flights
+                    Showing {{pagination.resultsPerPage}} Results Out Of {{pagination.totalResults}}
                 </h6>
 
                 <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
@@ -67,37 +68,7 @@
                         Add Flight
                     </button>
 
-                    <!-- PAGINATION -->
-                    <nav>
-                        <ul class="pagination m-0">
-
-                            <li class="page-item">
-                                <a class="page-link disabled">
-                                    <span aria-hidden="true">&lt;</span>
-                                </a>
-                            </li>
-
-                            <li class="page-item">
-                                <a class="page-link active">1</a>
-                            </li>
-
-                            <li class="page-item">
-                                <a class="page-link disabled">...</a>
-                            </li>
-
-                            <li class="page-item">
-                                <a class="page-link">10</a>
-                            </li>
-
-                            <li class="page-item">
-                                <a class="page-link">
-                                    <span aria-hidden="true">&gt;</span>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </nav>
-
+                    {{> pagination}}
                 </div>
             </div>
         </div>
@@ -454,4 +425,4 @@
     </div>
 </div>
 
-        {{> footer}}
+{{> footer}}

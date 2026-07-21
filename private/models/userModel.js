@@ -34,8 +34,10 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: "user",
-        required: true
     }
-}, { timestamps: true });
+},
+    {
+        timestamps: true
+    });
 
 module.exports = mongoose.model('users', userSchema);

@@ -1,20 +1,13 @@
 const model = require('../models/flightModel');
 
-// Get all flights
-exports.getFlights = async (req, res) => {
-    try {
-        const flights = await model.find().lean();
-        // Add computed capacityStatus
-        const result = flights.map(f => ({
-            ...f,
-            capacityStatus: f.availableSeats > 0 ? 'Available' : 'Full'
-        }));
-        res.json(result);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
+async function getFlights(page, limit) {
+    const skip = (page - 1) * limit;
+
+    const totalFlights = await model.countDocuments();
+    const flights = await model.find().sort({ 'createdAt': 1 }).skip(skip).limit(limit).lean();
+
+    return { flights, totalFlights };
+}
 
 // Get a single flight
 exports.getFlight = async (req, res) => {
@@ -80,3 +73,5 @@ exports.deleteFlight = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+module.exports = { getFlights };
