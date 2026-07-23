@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getFlights } = require('../controllers/flightController');
+const { getFlights, getLastFlight, createFlight } = require('../controllers/flightController');
 
 router.get('/flight-search', (req, res) => {
     if (!req.session.user) {
@@ -87,6 +87,69 @@ router.get('/flights', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false });
+    }
+});
+
+router.post('/flights', async (req, res) => {
+    try {
+        const lastFlight = await getLastFlight();
+        const newFlightNumber = lastFlight ? lastFlight.flightNumber + 1 : 1;
+        const flightData = {
+            flightNumber: newFlightNumber,
+            airline: req.body['airline'],
+            originAirport: {
+                iata: req.body['origin-iata'],
+                location: req.body['origin-location'],
+                name: req.body['origin-name']
+            },
+            destinationAirport: {
+                iata: req.body['destination-iata'],
+                location: req.body['destination-location'],
+                name: req.body['destination-name']
+            },
+            departureDatetime: new Date(req.body['departure-datetime'] + 'Z'),
+            arrivalDatetime: new Date(req.body['arrival-datetime'] + 'Z'),
+            baseFare: Number(req.body['base-fare'])
+        };
+
+        await createFlight(flightData);
+        res.status(200).json({ success: true, flightNumber: newFlightNumber });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/flights-table', async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1, limit = 10;
+        const { flights, totalFlights } = await getFlights(page, limit);
+        const totalPages = Math.ceil(totalFlights / limit);
+
+        let pagination;
+
+        if (!req.query.page && totalPages > 1) {
+            return res.redirect('/flights?page=1');
+        }
+
+        pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalFlights,
+            resultsPerPage: limit,
+            baseUrl: '/flights?page='
+        };
+
+        res.status(200).render('flights', {
+            page: '/flights',
+            script: '/scripts/admin/flights.js',
+            role: req.session.user.role,
+            flightRows: flights,
+            pagination: pagination
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500);
     }
 });
 

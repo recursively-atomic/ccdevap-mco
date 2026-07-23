@@ -2,23 +2,49 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
     flightNumber: {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        unique: true,
     },
 
     airline: {
         type: String,
-        default: 'Unknown'
+        required: true,
+        enum: ['Cebu Atlantic', 'Filipino Airlines', 'AirFAST', 'Sunray Air'],
     },
 
     originAirport: {
-        type: String,
-        required: true
+        iata: {
+            type: String,
+            required: true
+        },
+
+        location: {
+            type: String,
+            required: true
+        },
+
+        name: {
+            type: String,
+            required: true
+        }
     },
 
     destinationAirport: {
-        type: String,
-        required: true
+        iata: {
+            type: String,
+            required: true
+        },
+
+        location: {
+            type: String,
+            required: true
+        },
+
+        name: {
+            type: String,
+            required: true
+        }
     },
 
     departureDatetime: {
@@ -41,19 +67,20 @@ const schema = new mongoose.Schema({
         default: 0
     },
 
-    ticketPrice: {
+    baseFare: {
         type: Number,
         default: 0
     },
 
     flightStatus: {
         type: String,
-        enum: ['On Time', 'Delayed', 'Rescheduled', 'Cancelled'],
-        default: 'On Time'
+        enum: ['Scheduled', 'In Air', 'Delayed', 'Rescheduled', 'Cancelled'],
+        default: 'Scheduled'
     }
 },
     {
         timestamps: true
-    });
+    }
+);
 
 module.exports = mongoose.model('flights', schema);

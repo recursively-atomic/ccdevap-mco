@@ -1,51 +1,79 @@
-<!--Register Template-->
-<body class=" bg-dark" style="background-image: url('https://picsum.photos/200/300/?blur=2'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card shadow-sm rounded-3 p-4 mt-5 mb-5">
-                    <img class="d-inline-block align-items-center mb-2 square-40px bg-dark p-1" src="/media/images/company-logo.png">
+<body>
+    <img src="https://picsum.photos/1920/1080/?blur=5"
+         class="position-fixed top-0 start-0 w-100 h-100 z-n1 object-fit-cover">
 
-                    <h2 class="text-center mb-4"> Register </h2>
+    <div class="container m-auto">
+        <div class="row justify-content-center">
+            <div class="col-10 col-sm-9 col-md-7 col-lg-4">
+                <div class="card shadow-sm rounded-3 p-4 mt-5 mb-5 bg-dark">
+                    <img class="d-inline-block align-items-center mb-2 square-40px p-1"
+                         src="/media/images/company-logo.png">
+
+                    <h2 class="text-center fw-bolder text-primary mb-4"> Register </h2>
+
                     <form id="register-form" method="POST" action="/register">
                         <div class="mb-3">
-                            <label for="emailAddress" class="form-label"> Email Address </label>
-                            <input type="email" class="form-control" id="emailAddress" name="emailAddress" 
-                            placeholder="Enter your email" required>
+                            <h4 class="text-secondary"> E-Mail Address </h4>
+
+                            <div class="input-group">
+                                <input name="email-address"
+                                       class="form-control bg-light border-secondary border-2 text-black h-45px"
+                                       type="email" placeholder="Enter Your Email" required>
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="firstName" class="form-label"> First Name </label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" 
-                            placeholder="Enter your first name" required>
+                            <h4 class="text-secondary"> First Name </h4>
+
+                            <div class="input-group">
+                                <input name="first-name"
+                                       class="form-control bg-light border-secondary border-2 text-black h-45px"
+                                       type="text" placeholder="Enter Your First Name" required>
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="lastName" class="form-label"> Last Name </label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" 
-                            placeholder="Enter your last name" required>
+                            <h4 class="text-secondary"> Last Name </h4>
+
+                            <div class="input-group">
+                                <input name="last-name"
+                                       class="form-control bg-light border-secondary border-2 text-black h-45px"
+                                       type="text" placeholder="Enter Your Last Name" required>
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label"> Password </label>
-                            <input type="password" class="form-control" id="password" name="password" 
-                            placeholder="Enter your password" required>
+                            <h4 class="text-secondary"> Password </h4>
+
+                            <div class="input-group">
+                                <input id="password" name="password"
+                                       class="form-control bg-light border-secondary border-2 text-black h-45px"
+                                       type="password" placeholder="Enter Your Password" required>
+
+                                <button id="toggle-password" type="button"
+                                        class="input-group-text bg-secondary border-secondary border-2">
+                                    <i id="toggle-icon" class="fa-solid fa-eye text-primary-accent"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div class="mb-3 form-text">
-                            <label>Password Requirements:</label> <br>
-                            <label>* At least 8 characters</label> <br>
-                            <label>* At least 1 uppercase letter</label> <br>
-                            <label>* At least 1 lowercase letter</label> <br>
-                            <label>* At least 1 number</label> <br>
-                            <label>* At least 1 special character</label>
+                        <div class="form-text text-warning">
+                            <label> Password Requirements: </label><br>
+                            <label> * At least 8 characters </label><br>
+                            <label> * At least 1 uppercase letter </label><br>
+                            <label> * At least 1 lowercase letter </label><br>
+                            <label> * At least 1 number </label><br>
+                            <label> * At least 1 special character </label>
                         </div>
 
-                        <input type="hidden" name="role" value="user">
-                        
-                        <button type="submit" class="btn btn-secondary w-100"> Register </button>
+                        <button type="submit" class="mt-3 btn btn-lg fw-bold text-light btn-secondary w-100">
+                            Register
+                        </button>
+
                         <div class="mt-3 text-center">
-                            <a href="/login" class="text-decoration-none"> Already have an account? Log in </a>
+                            <a href="/login" class="text-decoration-none text-tertiary">
+                                Already Have An Account? Log In!
+                            </a>
                         </div>
                     </form>
                 </div>

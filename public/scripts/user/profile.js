@@ -238,7 +238,7 @@ function formatCardNumber() {
         // Gets the cursor's old position before text formatting
         const oldPosition = input.selectionStart;
 
-        // Remove non-digits and cap it to 16 digits
+        // Removes non-digits and caps it to 16 digits
         const digits = inputValue.replace(/\D/g, '').slice(0, 16);
 
         // Adds a space every 4 digits
@@ -248,13 +248,13 @@ function formatCardNumber() {
         // Sets the card number's input to the formatted input
         input.value = formatted;
 
-        // Calculate the difference of the length of the old to the formatted input
+        // Calculates the difference of the length of the old to the formatted input
         difference = input.value.length - inputValue.length;
 
-        // Calculate the expected cursor position after the formatting has been done
+        // Calculates the expected cursor position after the formatting has been done
         newPosition = oldPosition + difference;
 
-        // The new position is within the bounds of the user's input
+        // The new position will be within the bounds of the user's input
         newPosition = Math.max(0, Math.min(newPosition, input.value.length));
 
         // Sets the cursor's new position

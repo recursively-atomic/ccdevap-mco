@@ -72,356 +72,358 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- ADD FLIGHT MODAL -->
-        <div class="modal fade" data-bs-backdrop="static" id="add-flight">
-            <div class="modal-dialog modal-dialog-centered text-center">
-                <div class="modal-content">
-
-                    <div class="modal-header bg-dark text-white">
-                        <h2 class="modal-title fs-5 fw-bold">
-                            Add A Flight
-                        </h2>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <!-- Flight Number -->
-                        <h6 class="text-primary-accent text-start">
-                            Flight Number
-                        </h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-hashtag"></i>
-                            </div>
-
-                            <input id="flightNumber" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="CA###">
-                        </div>
-
-                        <!-- Origin -->
-                        <h6 class="text-primary-accent text-start">
-                            Origin
-                        </h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-plane-departure"></i>
-                            </div>
-
-                            <input id="origin" class="form-control bg-light border-dark border-2 text-black" type="text"
-                                   placeholder="Enter Origin">
-                        </div>
-
-                        <!-- Destination -->
-                        <h6 class="text-primary-accent text-start">
-                            Destination
-                        </h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-plane-arrival"></i>
-                            </div>
-
-                            <input id="destination" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="Enter Destination">
-                        </div>
-
-                        <!-- Departure -->
-                        <h6 class="text-primary-accent text-start">
-                            Departure Time
-                        </h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-clock"></i>
-                            </div>
-
-                            <input id="departureDateTime" class="form-control bg-light border-dark border-2 text-black"
-                                   type="datetime-local">
-                        </div>
-
-                        <!-- Arrival -->
-                        <h6 class="text-primary-accent text-start">
-                            Arrival Time
-                        </h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-clock"></i>
-                            </div>
-
-                            <input id="arrivalDateTime" class="form-control bg-light border-dark border-2 text-black"
-                                   type="datetime-local">
-                        </div>
-
-                        <!-- Flight Status -->
-                        <h6 class="text-primary-accent text-start">
-                            Status
-                        </h6>
-
-                        <div class="input-group">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-flag"></i>
-                            </div>
-
-                            <select id="flightStatus" class="form-select bg-light border-dark border-2 text-black">
-
-                                <option selected hidden>Select Flight Status</option>
-                                <option>On Time</option>
-                                <option>Delayed</option>
-                                <option>Rescheduled</option>
-                                <option>Cancelled</option>
-
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer d-flex bg-light">
-
-                        <button class="btn btn-success text-white" onclick="addFlight()">
-                            Add
-                        </button>
-
-                        <button class="btn btn-danger text-white" data-bs-dismiss="modal">
-                            Cancel
-                        </button>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- ADD FLIGHT TOAST -->
-        <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
-             id="add-toast">
-            <div class="d-flex align-items-center">
-                <div class="text-nowrap toast-body">
-                    Successfully saved flight [FLIGHT NUMBER]!
+<!-- ADD FLIGHT MODAL -->
+<div class="modal fade" data-bs-backdrop="static" id="add-flight">
+    <div class="modal-dialog modal-dialog-centered text-center">
+        <div class="modal-content">
+            <form onsubmit="addFlight(event)">
+                <div class="modal-header bg-dark text-white">
+                    <h2 class="modal-title fs-5 fw-bold">
+                        Add A Flight
+                    </h2>
                 </div>
 
-                <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- AIRLINE -->
+                            <h6 class="text-primary-accent text-start">
+                                Airline
+                            </h6>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-flag"></i>
+                                </div>
+
+                                <select name="airline" class="form-select bg-light border-dark border-2 text-black"
+                                        required>
+                                    <option selected hidden value=""> Select Airline </option>
+                                    <option> Cebu Atlantic </option>
+                                    <option> Filipino Airlines </option>
+                                    <option> AirFAST </option>
+                                    <option> Sunray Air </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!-- BASE FARE -->
+                            <h6 class="text-primary-accent text-start">
+                                Base Fare
+                            </h6>
+
+                            <div class="input-group mb-2">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fw-bolder fst-normal"> PHP </i>
+                                </div>
+
+                                <input name="base-fare" id="base-fare"
+                                       class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="Enter Base Fare" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AIRPORT ORIGIN -->
+                    <h6 class="text-primary-accent text-start">
+                        Airport Origin
+                    </h6>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-text bg-dark border-dark">
+                            <i class="text-secondary fa-solid fa-plane-departure"></i>
+                        </div>
+
+                        <input name="origin-iata" class="form-control bg-light border-dark border-2 text-black"
+                               type="text" placeholder="Enter IATA Code" required>
+                        <input name="origin-location" class="form-control bg-light border-dark border-2 text-black"
+                               type="text" placeholder="Enter Locality" required>
+                        <input name="origin-name" class="form-control bg-light border-dark border-2 text-black"
+                               type="text" placeholder="Enter Full Name" required>
+                    </div>
+
+                    <!-- AIRPORT DESTINATION -->
+                    <h6 class="text-primary-accent text-start">
+                        Destination Airport
+                    </h6>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-text bg-dark border-dark">
+                            <i class="text-secondary fa-solid fa-plane-arrival"></i>
+                        </div>
+
+                        <input name="destination-iata" class="form-control bg-light border-dark border-2 text-black"
+                               type="text" placeholder="Enter IATA Code" required>
+                        <input name="destination-location" class="form-control bg-light border-dark border-2 text-black"
+                               type="text" placeholder="Enter Locality" required>
+                        <input name="destination-name" class="form-control bg-light border-dark border-2 text-black"
+                               type="text" placeholder="Enter Full Name" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- DEPARTURE DATETIME -->
+                            <h6 class="text-primary-accent text-start">
+                                Departure Datetime
+                            </h6>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-clock"></i>
+                                </div>
+
+                                <input name="departure-datetime"
+                                       class="form-control bg-light border-dark border-2 text-black"
+                                       type="datetime-local" required>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <!-- ARRIVAL DATETIME -->
+                            <h6 class="text-primary-accent text-start">
+                                Arrival Datetime
+                            </h6>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-clock"></i>
+                                </div>
+
+                                <input name="arrival-datetime"
+                                       class="form-control bg-light border-dark border-2 text-black"
+                                       type="datetime-local" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex bg-light">
+                    <button class="btn btn-success text-white" type="submit">
+                        Add
+                    </button>
+
+                    <button class="btn btn-danger text-white" data-bs-dismiss="modal" type="reset">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ADD FLIGHT TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
+     id="add-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body"></div>
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+</div>
+
+<!-- VIEW FLIGHT MODAL -->
+<div class="modal fade" id="view-flight" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5 fw-bold">
+                    Flight Details
+                </h2>
+            </div>
+
+            <div class="modal-body">
+                <p><strong> Flight Number: </strong>
+                    <span id="viewFlightNumber"></span>
+                </p>
+
+                <p><strong> Origin: </strong>
+                    <span id="viewOrigin"></span>
+                </p>
+
+                <p><strong> Destination: </strong>
+                    <span id="viewDestination"></span>
+                </p>
+
+                <p><strong> Departure: </strong>
+                    <span id="viewDeparture"></span>
+                </p>
+
+                <p><strong> Arrival: </strong>
+                    <span id="viewArrival"></span>
+                </p>
+
+                <p><strong> Status: </strong>
+                    <span id="viewStatus"></span>
+                </p>
+
+                <p><strong> Capacity: </strong>
+                    <span id="viewCapacity"></span>
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- VIEW FLIGHT MODAL -->
-        <div class="modal fade" id="view-flight" data-bs-backdrop="static">
+<!-- EDIT FLIGHT MODAL -->
+<div class="modal fade" data-bs-backdrop="static" id="edit-flight">
+    <div class="modal-dialog modal-dialog-centered text-center">
+        <div class="modal-content">
 
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5 fw-bold">
+                    Edit Flight
+                </h2>
+            </div>
 
-                <div class="modal-content">
+            <div class="modal-body">
 
-                    <div class="modal-header bg-dark text-white">
+                <h6 class="text-primary-accent text-start"> Flight Number </h6>
 
-                        <h2 class="modal-title fs-5 fw-bold">
-                            Flight Details
-                        </h2>
-
+                <div class="input-group mb-3">
+                    <div class="input-group-text bg-dark border-dark">
+                        <i class="text-secondary fa-solid fa-hashtag"></i>
                     </div>
 
-                    <div class="modal-body">
+                    <input id="editFlightNumber" class="form-control bg-light border-dark border-2 text-black"
+                           type="text" placeholder="CA###">
+                </div>
 
-                        <p><strong>Flight Number:</strong>
-                            <span id="viewFlightNumber"></span>
-                        </p>
+                <h6 class="text-primary-accent text-start"> Origin </h6>
 
-                        <p><strong>Origin:</strong>
-                            <span id="viewOrigin"></span>
-                        </p>
-
-                        <p><strong>Destination:</strong>
-                            <span id="viewDestination"></span>
-                        </p>
-
-                        <p><strong>Departure:</strong>
-                            <span id="viewDeparture"></span>
-                        </p>
-
-                        <p><strong>Arrival:</strong>
-                            <span id="viewArrival"></span>
-                        </p>
-
-                        <p><strong>Status:</strong>
-                            <span id="viewStatus"></span>
-                        </p>
-
-                        <p><strong>Capacity:</strong>
-                            <span id="viewCapacity"></span>
-                        </p>
-
+                <div class="input-group mb-3">
+                    <div class="input-group-text bg-dark border-dark">
+                        <i class="text-secondary fa-solid fa-plane-departure"></i>
                     </div>
 
-                    <div class="modal-footer">
+                    <input id="editOrigin" class="form-control bg-light border-dark border-2 text-black" type="text"
+                           placeholder="Enter Origin">
+                </div>
 
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">
+                <h6 class="text-primary-accent text-start"> Destination </h6>
 
-                            Close
-
-                        </button>
-
+                <div class="input-group mb-3">
+                    <div class="input-group-text bg-dark border-dark">
+                        <i class="text-secondary fa-solid fa-plane-arrival"></i>
                     </div>
 
+                    <input id="editDestination" class="form-control bg-light border-dark border-2 text-black"
+                           type="text" placeholder="Enter Destination">
+                </div>
+
+                <h6 class="text-primary-accent text-start"> Departure Time </h6>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-text bg-dark border-dark">
+                        <i class="text-secondary fa-solid fa-clock"></i>
+                    </div>
+
+                    <input id="editDepartureDateTime" class="form-control bg-light border-dark border-2 text-black"
+                           type="datetime-local">
+                </div>
+
+                <h6 class="text-primary-accent text-start"> Arrival Time </h6>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-text bg-dark border-dark">
+                        <i class="text-secondary fa-solid fa-clock"></i>
+                    </div>
+
+                    <input id="editArrivalDateTime" class="form-control bg-light border-dark border-2 text-black"
+                           type="datetime-local">
+                </div>
+
+                <h6 class="text-primary-accent text-start"> Status </h6>
+
+                <div class="input-group">
+                    <div class="input-group-text bg-dark border-dark">
+                        <i class="text-secondary fa-solid fa-flag"></i>
+                    </div>
+
+                    <select id="editFlightStatus" class="form-select bg-light border-dark border-2 text-black">
+
+                        <option> On Time </option>
+                        <option> Delayed </option>
+                        <option> Rescheduled </option>
+                        <option> Cancelled </option>
+
+                    </select>
                 </div>
 
             </div>
 
+            <div class="modal-footer d-flex bg-light">
+
+                <button class="btn btn-success text-white" onclick="saveFlightChanges()">
+
+                    Save Changes
+
+                </button>
+
+                <button class="btn btn-danger text-white" data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- EDIT FLIGHT TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
+     id="edit-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body">
+            Successfully saved changes on flight [FLIGHT NUMBER]!
         </div>
 
-        <!-- EDIT FLIGHT MODAL -->
-        <div class="modal fade" data-bs-backdrop="static" id="edit-flight">
-            <div class="modal-dialog modal-dialog-centered text-center">
-                <div class="modal-content">
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+</div>
 
-                    <div class="modal-header bg-dark text-white">
-                        <h2 class="modal-title fs-5 fw-bold">
-                            Edit Flight
-                        </h2>
-                    </div>
+<!-- DELETE FLIGHT MODAL -->
+<div class="modal fade" id="delete-flight" data-bs-backdrop="static">
+    <div class="modal-dialog modal-sm modal-dialog-centered text-center">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5"> Are you sure? </h2>
+            </div>
 
-                    <div class="modal-body">
+            <div class="modal-footer d-flex bg-light">
+                <button class="btn btn-success text-white" data-bs-dismiss="modal">
+                    No
+                </button>
 
-                        <h6 class="text-primary-accent text-start">Flight Number</h6>
+                <button class="btn btn-danger text-white" onclick="confirmDelete()">
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-hashtag"></i>
-                            </div>
+                    Yes, Delete It
 
-                            <input id="editFlightNumber" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="CA###">
-                        </div>
-
-                        <h6 class="text-primary-accent text-start">Origin</h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-plane-departure"></i>
-                            </div>
-
-                            <input id="editOrigin" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="Enter Origin">
-                        </div>
-
-                        <h6 class="text-primary-accent text-start">Destination</h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-plane-arrival"></i>
-                            </div>
-
-                            <input id="editDestination" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="Enter Destination">
-                        </div>
-
-                        <h6 class="text-primary-accent text-start">Departure Time</h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-clock"></i>
-                            </div>
-
-                            <input id="editDepartureDateTime"
-                                   class="form-control bg-light border-dark border-2 text-black" type="datetime-local">
-                        </div>
-
-                        <h6 class="text-primary-accent text-start">Arrival Time</h6>
-
-                        <div class="input-group mb-3">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-clock"></i>
-                            </div>
-
-                            <input id="editArrivalDateTime"
-                                   class="form-control bg-light border-dark border-2 text-black" type="datetime-local">
-                        </div>
-
-                        <h6 class="text-primary-accent text-start">Status</h6>
-
-                        <div class="input-group">
-                            <div class="input-group-text bg-dark border-dark">
-                                <i class="text-secondary fa-solid fa-flag"></i>
-                            </div>
-
-                            <select id="editFlightStatus" class="form-select bg-light border-dark border-2 text-black">
-
-                                <option>On Time</option>
-                                <option>Delayed</option>
-                                <option>Rescheduled</option>
-                                <option>Cancelled</option>
-
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer d-flex bg-light">
-
-                        <button class="btn btn-success text-white" onclick="saveFlightChanges()">
-
-                            Save Changes
-
-                        </button>
-
-                        <button class="btn btn-danger text-white" data-bs-dismiss="modal">
-
-                            Cancel
-
-                        </button>
-
-                    </div>
-
-                </div>
+                </button>
             </div>
         </div>
-        <!-- EDIT FLIGHT TOAST -->
-        <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
-             id="edit-toast">
-            <div class="d-flex align-items-center">
-                <div class="text-nowrap toast-body">
-                    Successfully saved changes on flight [FLIGHT NUMBER]!
-                </div>
+    </div>
+</div>
 
-                <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-            </div>
+<!-- DELETE FLIGHT TOAST -->
+<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
+     id="delete-toast">
+    <div class="d-flex align-items-center">
+        <div class="text-nowrap toast-body">
+            Deleted [FLIGHT NUMBER]!
         </div>
 
-        <!-- DELETE FLIGHT MODAL -->
-        <div class="modal fade" id="delete-flight" data-bs-backdrop="static">
-            <div class="modal-dialog modal-sm modal-dialog-centered text-center">
-                <div class="modal-content">
-                    <div class="modal-header bg-dark text-white">
-                        <h2 class="modal-title fs-5"> Are you sure? </h2>
-                    </div>
-
-                    <div class="modal-footer d-flex bg-light">
-                        <button class="btn btn-success text-white" data-bs-dismiss="modal">
-                            No
-                        </button>
-
-                        <button class="btn btn-danger text-white" onclick="confirmDelete()">
-
-                            Yes, Delete It
-
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- DELETE FLIGHT TOAST -->
-        <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
-             id="delete-toast">
-            <div class="d-flex align-items-center">
-                <div class="text-nowrap toast-body">
-                    Deleted [FLIGHT NUMBER]!
-                </div>
-
-                <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-            </div>
-        </div>
+        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
     </div>
 </div>
 

@@ -341,9 +341,3 @@ input[type="range"].form-range::-webkit-slider-thumb {
 .z-max {
     z-index: 9999;
 }
-
-.bg-cover-center {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-}

@@ -9,41 +9,48 @@ async function getFlights(page, limit) {
     return { flights, totalFlights };
 }
 
-// Get a single flight
-exports.getFlight = async (req, res) => {
-    try {
-        const flight = await model.findById(req.params.id).lean();
-        if (!flight) return res.status(404).json({ message: 'Flight not found' });
-        res.json({
-            ...flight,
-            capacityStatus: flight.availableSeats > 0 ? 'Available' : 'Full'
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
+// exports.getFlight = async (req, res) => {
+//     try {
+//         const flight = await model.findById(req.params.id).lean();
+//         if (!flight) return res.status(404).json({ message: 'Flight not found' });
+//         res.json({
+//             ...flight,
+//             capacityStatus: flight.availableSeats > 0 ? 'Available' : 'Full'
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// };
 
-// Create a flight
-exports.createFlight = async (req, res) => {
-    try {
-        const { flightNumber, origin, destination, departureDateTime, arrivalDateTime, flightStatus } = req.body;
-        const newFlight = new model({
-            flightNumber,
-            origin,
-            destination,
-            departureDateTime,
-            arrivalDateTime,
-            flightStatus: flightStatus || 'On Time',
-            // These will use defaults from schema
-        });
-        const saved = await newFlight.save();
-        res.status(201).json(saved);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
+async function getLastFlight() {
+    return await model.findOne().sort({ flightNumber: -1 }).select('flightNumber').lean();
+}
+
+async function createFlight(flightData) {
+    const flight = new model({
+        flightNumber: flightData.flightNumber,
+        airline: flightData.airline,
+
+        originAirport: {
+            iata: flightData.originAirport.iata,
+            location: flightData.originAirport.location,
+            name: flightData.originAirport.name
+        },
+
+        destinationAirport: {
+            iata: flightData.destinationAirport.iata,
+            location: flightData.destinationAirport.location,
+            name: flightData.destinationAirport.name
+        },
+
+        departureDatetime: flightData.departureDatetime,
+        arrivalDatetime: flightData.arrivalDatetime,
+        baseFare: flightData.baseFare
+    });
+
+    return flight.save();
+}
 
 // Update a flight
 exports.updateFlight = async (req, res) => {
@@ -74,4 +81,4 @@ exports.deleteFlight = async (req, res) => {
     }
 };
 
-module.exports = { getFlights };
+module.exports = { getFlights, getLastFlight, createFlight };

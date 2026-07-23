@@ -1,21 +1,24 @@
 {{#each flightRows}}
-    <tr>
-        <td> {{this.flightNumber}} </td>
-        <td> {{this.origin}} </td>
-        <td> {{this.destination}} </td>
-        <td> {{this.departure}} </td>
-        <td> {{this.arrival}} </td>
+    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+        <th> CA {{pad this.flightNumber 4 '0'}} </th>
+        <td> {{this.originAirport.iata}} ({{this.originAirport.location}}) </td>
+        <td> {{this.destinationAirport.iata}} ({{this.destinationAirport.location}}) </td>
+        <td> {{formatDate this.departureDatetime}} </td>
+        <td> {{formatDate this.arrivalDatetime}} </td>
         <td> {{this.flightStatus}} </td>
-        <td> {{this.capacity}} </td>
+        <td> {{#if (eq this.availableSeats 0)}} Full {{else if (lte this.availableSeats 5)}} Limited {{else if (gt this.availableSeats 5)}} Available {{/if}} </td>
         <td>
-            <button class="btn btn-success btn-sm" onclick="openViewModal('{{thid._id}}')" data-bs-toggle="modal"
+            <button class="btn btn-success btn-sm text-white fw-bolder" onclick="openViewModal('{{thid._id}}')" data-bs-toggle="modal"
                     data-bs-target="#view-flight"> View </button>
 
-            <button class="btn btn-warning btn-sm" onclick="openEditModal('{{thid._id}}')" data-bs-toggle="modal"
+            <button class="btn btn-warning btn-sm text-white fw-bolder" onclick="openEditModal('{{thid._id}}')" data-bs-toggle="modal"
                     data-bs-target="#edit-flight"> Edit </button>
                     
-            <button class="btn btn-danger btn-sm" onclick="openDeleteModal('{{thid._id}}')" data-bs-toggle="modal"
+            <button class="btn btn-danger btn-sm text-white fw-bolder" onclick="openDeleteModal('{{thid._id}}')" data-bs-toggle="modal"
                     data-bs-target="#delete-flight"> Delete </button>
         </td>
+    </tr>
+
+    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
     </tr>
 {{/each}}

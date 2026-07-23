@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 const express = require('express');
@@ -39,7 +38,20 @@ const handlebars = expressHandlebars.create({
             args.pop();
             return args.every(Boolean);
         },
-        format: (input) => input.toLocaleString('en-US')
+        formatNumber: (input) => input.toLocaleString('en-US'),
+        formatDate: (date) => {
+            const options = {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false // Set to true for AM/PM format
+            };
+
+            return Intl.DateTimeFormat('en-US', options).format(date)
+        },
+        pad: (input, length, padding) => String(input).padStart(length, padding)
     }
 });
 
@@ -59,28 +71,25 @@ server.use(session({
     saveUninitialized: false
 }));
 
+// ============================================================================
+// RELOADS THE FRONTEND WHENEVER A CHANGE IS MADE
 if (process.env.NODE_ENV !== 'production') {
     const livereload = require("livereload");
     const connectLiveReload = require("connect-livereload");
-    
-    // Watch your templates and static assets directly
     const liveReloadServer = livereload.createServer({
         exts: ['hbs', 'css', 'js'],
         exclusions: [/node_modules/]
     });
-    // Adjust "/views" and "/public" if your folders are named differently
+
     liveReloadServer.watch([__dirname + "/views", __dirname + "/public"]);
-
-    // Middleware to inject the refresh script into your HBS views automatically
     server.use(connectLiveReload());
-
-    // Instantly refreshes the browser after nodemon reboots the server
     liveReloadServer.server.once("connection", () => {
         setTimeout(() => {
             liveReloadServer.refresh("/");
         }, 100);
     });
 }
+// ============================================================================
 
 server.use("/", userRoutes);
 server.use("/", flightRoutes);

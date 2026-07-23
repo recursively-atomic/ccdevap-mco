@@ -91,7 +91,7 @@ router.get('/flight-book', async (req, res) => {
     try {
         const seatMap = await getSeatMap("TESTFLIGHT");
 
-        res.status(200).render('booking', {
+        res.status(200).render('flight-book', {
             page: '/flight-book',
             script: '/scripts/user/flight-book.js',
             role: req.session.user.role,

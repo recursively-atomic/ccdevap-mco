@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
     reservationNumber: {
         type: String,
-        unique: true,
-        required: true
+        unique: true
     },
 
     flightNumber: {
@@ -60,6 +59,7 @@ const schema = new mongoose.Schema({
 },
     {
         timestamps: true
-    });
+    }
+);
 
 module.exports = mongoose.model('reservations', schema);
