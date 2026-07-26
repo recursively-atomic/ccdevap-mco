@@ -108,9 +108,7 @@ async function showViewModal(flightID) {
         }
 
         $('#duration-badge').text(formatDuration(flightData.departureDatetime, flightData.arrivalDatetime));
-    } catch (error) {
-        console.error(error);
-    }
+    } finally { }
 }
 
 async function showEditModal(flightID) {
@@ -159,9 +157,7 @@ async function showEditModal(flightID) {
 
         $('#edit-d-datetime').val(formatDatetime(flightData.departureDatetime));
         $('#edit-a-datetime').val(formatDatetime(flightData.arrivalDatetime));
-    } catch (error) {
-        console.error(error);
-    }
+    } finally { }
 }
 
 async function updateFlight(event) {
@@ -278,7 +274,9 @@ async function createFlight(event) {
                 refreshFlightTable();
             }, 1000);
         }
-    } finally { }
+    } finally {
+        form.reset();
+    }
 }
 
 function showDeleteModal(flightID) {
@@ -301,7 +299,7 @@ async function deleteFlight() {
 
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
             hideModalShowToast('delete-flight', 'delete-toast', `Deleted ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
-            
+
             setTimeout(() => {
                 refreshFlightTable();
             }, 1000);

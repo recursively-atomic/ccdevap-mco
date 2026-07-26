@@ -44,60 +44,52 @@ async function createFlight(flightData) {
     return flight.save();
 }
 
-// // Update a flight
-// exports.updateFlight = async (req, res) => {
-//     try {
-//         const { flightNumber, origin, destination, departureDateTime, arrivalDateTime, flightStatus } = req.body;
-//         const updated = await model.findByIdAndUpdate(
-//             req.params.id,
-//             { flightNumber, origin, destination, departureDateTime, arrivalDateTime, flightStatus },
-//             { new: true, runValidators: true }
-//         ).lean();
-//         if (!updated) return res.status(404).json({ message: 'Flight not found' });
-//         res.json(updated);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// };
-
-function isEqual(a, b) {
-    return a === b;
-}
-
-function isAirportEqual(a, b) {
+function isEqualAirports(a, b) {
     return a.iata === b.iata && a.location === b.location && a.name === b.name;
 }
 
 async function updateFlight(flightData) {
     const currentData = await getFlight(flightData._id);
 
-    // make varaiblebe for the current and new data to make it less wide yung code hshs
+    const currentOrigAirport = currentData.originAirport;
+    const newOrigAirport = flightData.originAirport;
+    const currentDestAirport = currentData.destinationAirport;
+    const newDestAirport = flightData.destinationAirport;
+
+    const currentDeptDt = new Date(currentData.departureDatetime).getTime();
+    const newDeptDt = new Date(flightData.departureDatetime).getTime();
+    const currentArrDt = new Date(currentData.arrivalDatetime).getTime();
+    const newArrDt = new Date(flightData.arrivalDatetime).getTime();
+
+    const currentBf = currentData.baseFare;
+    const newBf = flightData.baseFare;
+    const currentStatus = currentData.flightStatus;
+    const newStatus = flightData.flightStatus;
 
     const updates = {};
 
-    if (!isAirportEqual(flightData.originAirport, currentData.originAirport)) {
-        updates.originAirport = flightData.originAirport;
+    if (!isEqualAirports(newOrigAirport, currentOrigAirport)) {
+        updates.originAirport = newOrigAirport;
     }
 
-    if (!isAirportEqual(flightData.destinationAirport, currentData.destinationAirport)) {
-        updates.destinationAirport = flightData.destinationAirport;
+    if (!isEqualAirports(newDestAirport, currentDestAirport)) {
+        updates.destinationAirport = newDestAirport;
     }
 
-    if (new Date(flightData.departureDatetime).getTime() !== new Date(currentData.departureDatetime).getTime()) {
+    if (newDeptDt !== currentDeptDt) {
         updates.departureDatetime = flightData.departureDatetime;
     }
 
-    if (new Date(flightData.arrivalDatetime).getTime() !== new Date(currentData.arrivalDatetime).getTime()) {
+    if (newArrDt !== currentArrDt) {
         updates.arrivalDatetime = flightData.arrivalDatetime;
     }
 
-    if (!isEqual(flightData.baseFare, currentData.baseFare)) {
-        updates.baseFare = flightData.baseFare;
+    if (!(newBf === currentBf)) {
+        updates.baseFare = newBf;
     }
 
-    if (!isEqual(flightData.flightStatus, currentData.flightStatus)) {
-        updates.flightStatus = flightData.flightStatus;
+    if (!(newStatus === currentStatus)) {
+        updates.flightStatus = newStatus;
     }
 
     if (Object.keys(updates).length === 0) {

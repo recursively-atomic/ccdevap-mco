@@ -34,11 +34,9 @@ router.post("/register", async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    // res.render('login', {
-    //     script: '/scripts/login.js',
-    // }); !! TESTING
-
-    res.redirect('/flights');
+    res.render('login', {
+        script: '/scripts/login.js',
+    });
 });
 
 router.post("/login", async (req, res) => {

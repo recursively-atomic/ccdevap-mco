@@ -52,11 +52,11 @@ router.get('/flight-search', (req, res) => {
 // });
 
 router.get('/flights', async (req, res) => {
-    // if (!req.session.user) {
-    //     return res.redirect("/login");
-    // } else if (req.session.user.role != "admin") {
-    //     return res.redirect("/home");
-    // } !! TESTING
+    if (!req.session.user) {
+        return res.redirect("/login");
+    } else if (req.session.user.role != "admin") {
+        return res.redirect("/home");
+    }
 
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
@@ -80,7 +80,7 @@ router.get('/flights', async (req, res) => {
         res.status(200).render('flights', {
             page: '/flights',
             script: '/scripts/admin/flights.js',
-            role: 'admin', // req.session.user.role, !! TESTING 
+            role: req.session.user.role,
             flightsCard: {
                 flightRows: flights,
                 pagination: pagination
