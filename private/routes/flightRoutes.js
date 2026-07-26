@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { getFlights, getLastFlight, createFlight } = require('../controllers/flightController');
+const { getFlights, getFlight, getLastFlight, createFlight, updateFlight, deleteFlight } = require('../controllers/flightController');
 
 router.get('/flight-search', (req, res) => {
     if (!req.session.user) {
@@ -10,7 +10,7 @@ router.get('/flight-search', (req, res) => {
         return res.redirect('/dashboard');
     }
 
-    res.render('flight-search', {
+    res.render('flightSearch', {
         page: '/flight-search',
         script: '/scripts/user/search.js',
         role: req.session.user.role,
@@ -52,11 +52,11 @@ router.get('/flight-search', (req, res) => {
 // });
 
 router.get('/flights', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "admin") {
-        return res.redirect("/home");
-    }
+    // if (!req.session.user) {
+    //     return res.redirect("/login");
+    // } else if (req.session.user.role != "admin") {
+    //     return res.redirect("/home");
+    // } !! TESTING
 
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
@@ -80,12 +80,13 @@ router.get('/flights', async (req, res) => {
         res.status(200).render('flights', {
             page: '/flights',
             script: '/scripts/admin/flights.js',
-            role: req.session.user.role,
-            flightRows: flights,
-            pagination: pagination
+            role: 'admin', // req.session.user.role, !! TESTING 
+            flightsCard: {
+                flightRows: flights,
+                pagination: pagination
+            }
         });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -102,20 +103,21 @@ router.post('/flights', async (req, res) => {
                 location: req.body['origin-location'],
                 name: req.body['origin-name']
             },
+
             destinationAirport: {
                 iata: req.body['destination-iata'],
                 location: req.body['destination-location'],
                 name: req.body['destination-name']
             },
+
             departureDatetime: new Date(req.body['departure-datetime'] + 'Z'),
             arrivalDatetime: new Date(req.body['arrival-datetime'] + 'Z'),
             baseFare: Number(req.body['base-fare'])
         };
 
         await createFlight(flightData);
-        res.status(200).json({ success: true, flightNumber: newFlightNumber });
-    } catch (error) {
-        console.error(error);
+        res.status(200).json({ success: true, flightNumber: newFlightNumber, airline: flightData.airline });
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -123,13 +125,14 @@ router.post('/flights', async (req, res) => {
 router.get('/api/flights-table', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
-        const { flights, totalFlights } = await getFlights(page, limit);
-        const totalPages = Math.ceil(totalFlights / limit);
+        let { flights, totalFlights } = await getFlights(page, limit);
+        const totalPages = Math.max(Math.ceil(totalFlights / limit));
 
         let pagination;
 
-        if (!req.query.page && totalPages > 1) {
-            return res.redirect('/flights?page=1');
+        if (page > totalPages) {
+            page = totalPages;
+            ({ flights, totalFlights } = await getFlights(page, limit));
         }
 
         pagination = {
@@ -140,29 +143,63 @@ router.get('/api/flights-table', async (req, res) => {
             baseUrl: '/flights?page='
         };
 
-        res.status(200).render('flights', {
-            page: '/flights',
-            script: '/scripts/admin/flights.js',
-            role: req.session.user.role,
-            flightRows: flights,
-            pagination: pagination
+        res.status(200).render('partials/flightsCard', {
+            layout: false,
+            flightsCard: {
+                flightRows: flights,
+                pagination: pagination
+            }
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500);
+    } catch {
+        res.status(500).json({ success: false });
     }
 });
 
-// Get ONE flight
-// router.get("/api/flights/:id", flightController.getFlight);
+router.get('/api/:flightID', async (req, res) => {
+    try {
+        const flight = await getFlight(req.params.flightID);
+        res.status(200).json({ success: true, flightData: flight });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
 
-// // Create new flight
-// router.post("/api/flights", flightController.createFlight);
+router.put('/api/:flightID', async (req, res) => {
+    try {
+        const flightData = {
+            _id: req.params.flightID,
+            originAirport: {
+                iata: req.body['edit-o-iata'],
+                location: req.body['edit-o-location'],
+                name: req.body['edit-o-name']
+            },
 
-// // Update a flight
-// router.put("/api/flights/:id", flightController.updateFlight)
+            destinationAirport: {
+                iata: req.body['edit-d-iata'],
+                location: req.body['edit-d-location'],
+                name: req.body['edit-d-name']
+            },
 
-// // Delete a flight
-// router.delete("/api/flights/:id", flightController.deleteFlight);
+            departureDatetime: new Date(req.body['edit-d-datetime']),
+            arrivalDatetime: new Date(req.body['edit-a-datetime']),
+            baseFare: Number(req.body['edit-fare']),
+            flightStatus: req.body['edit-status']
+        };
+
+        const updatedFlight = await updateFlight(flightData);
+        res.status(200).json({ success: true, airline: updatedFlight.airline, flightNumber: updatedFlight.flightNumber });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.delete('/api/:flightID', async (req, res) => {
+    try {
+        const deletedFlight = await deleteFlight(req.params.flightID);
+        res.status(200).json({ success: true, airline: deletedFlight.airline, flightNumber: deletedFlight.flightNumber });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
 
 module.exports = router;

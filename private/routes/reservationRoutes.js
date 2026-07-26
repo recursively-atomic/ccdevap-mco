@@ -91,7 +91,7 @@ router.get('/flight-book', async (req, res) => {
     try {
         const seatMap = await getSeatMap("TESTFLIGHT");
 
-        res.status(200).render('flight-book', {
+        res.status(200).render('flightBook', {
             page: '/flight-book',
             script: '/scripts/user/flight-book.js',
             role: req.session.user.role,
@@ -130,7 +130,7 @@ router.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
             })
         );
 
-        res.render('seatsModal', {
+        res.render('partials/seats', {
             layout: false,
             seats: modifiedSeatMap
         });

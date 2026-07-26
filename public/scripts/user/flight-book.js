@@ -535,7 +535,7 @@ function confirmBooking() {
     if (Object.values(stepsDone).every(Boolean)) {
         const reservationData = getReservationData();
 
-        fetch('/flight-book', {
+        fetch('/flightBook', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

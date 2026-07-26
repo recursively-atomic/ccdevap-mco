@@ -39,17 +39,23 @@ const handlebars = expressHandlebars.create({
             return args.every(Boolean);
         },
         formatNumber: (input) => input.toLocaleString('en-US'),
-        formatDate: (date) => {
+        getDate: (datetime) => {
             const options = {
-                month: '2-digit',
+                month: 'long',
                 day: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false // Set to true for AM/PM format
+                year: 'numeric'
             };
 
-            return Intl.DateTimeFormat('en-US', options).format(date)
+            return Intl.DateTimeFormat('en-US', options).format(datetime)
+        },
+        getTime: (datetime) => {
+            const options = {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            };
+
+            return Intl.DateTimeFormat('en-US', options).format(datetime);
         },
         pad: (input, length, padding) => String(input).padStart(length, padding)
     }

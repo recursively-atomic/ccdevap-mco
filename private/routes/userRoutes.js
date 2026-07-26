@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const model = require('../models/userModel');
 const { getUserById, getUserByEmail, getUsers, createUser, updateUser, updatePassword } = require('../controllers/userController');
 
 router.get('/', (req, res) => {
@@ -35,9 +34,11 @@ router.post("/register", async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('login', {
-        script: '/scripts/login.js',
-    });
+    // res.render('login', {
+    //     script: '/scripts/login.js',
+    // }); !! TESTING
+
+    res.redirect('/flights');
 });
 
 router.post("/login", async (req, res) => {

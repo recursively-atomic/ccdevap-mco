@@ -248,7 +248,7 @@ input[type="range"].form-range::-webkit-slider-thumb {
 }
 
 .w-135px {
-    width: 135px;
+    width: 135px !important;
 }
 
 .h-30px {
