@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+    userNumber: {
+        type: Number,
+        required: true,
+        unique: true,
+    },
+
     emailAddress: {
         type: String,
-        unique: true,
-        required: true
+        required: true,
+        unique: true
     },
 
     password: {
@@ -24,7 +30,6 @@ const userSchema = new mongoose.Schema({
 
     contactNumber: {
         type: String,
-        default: ""
     },
 
     passportCode: {
@@ -33,7 +38,8 @@ const userSchema = new mongoose.Schema({
 
     role: {
         type: String,
-        default: "user",
+        enum: ['user', 'admin'],
+        default: "user"
     }
 },
     {

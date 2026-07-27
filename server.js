@@ -19,6 +19,7 @@ const handlebars = expressHandlebars.create({
     partialsDir: path.join(__dirname, 'views', 'partials'),
     helpers: {
         eq: (a, b) => a == b,
+        neq: (a, b) => a != b,
         gt: (a, b) => a > b,
         gte: (a, b) => a >= b,
         lt: (a, b) => a < b,
@@ -39,6 +40,7 @@ const handlebars = expressHandlebars.create({
             return args.every(Boolean);
         },
         formatNumber: (input) => input.toLocaleString('en-US'),
+        formatTitleCase: (input) => input.toLowerCase().replace(/\b\w/g, character => character.toUpperCase()),
         getDate: (datetime) => {
             const options = {
                 month: 'long',
@@ -92,7 +94,7 @@ if (process.env.NODE_ENV !== 'production') {
     liveReloadServer.server.once("connection", () => {
         setTimeout(() => {
             liveReloadServer.refresh("/");
-        }, 100);
+        }, 1);
     });
 }
 // ============================================================================

@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { getFlights, getFlight, getLastFlight, createFlight, updateFlight, deleteFlight } = require('../controllers/flightController');
+const { getFlight, getLastFlightNumber, getFlights, createFlight, updateFlight, deleteFlight } = require('../controllers/flightController');
 
 router.get('/flight-search', (req, res) => {
     if (!req.session.user) {
@@ -53,9 +53,9 @@ router.get('/flight-search', (req, res) => {
 
 router.get('/flights', async (req, res) => {
     if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "admin") {
-        return res.redirect("/home");
+        return res.redirect('/login');
+    } else if (req.session.user.role != 'admin') {
+        return res.redirect('/home');
     }
 
     try {
@@ -93,8 +93,8 @@ router.get('/flights', async (req, res) => {
 
 router.post('/flights', async (req, res) => {
     try {
-        const lastFlight = await getLastFlight();
-        const newFlightNumber = lastFlight ? lastFlight.flightNumber + 1 : 1;
+        const lastFlightNumber = await getLastFlightNumber();
+        const newFlightNumber = lastFlightNumber ? lastFlightNumber.flightNumber + 1 : 1;
         const flightData = {
             flightNumber: newFlightNumber,
             airline: req.body['airline'],
@@ -122,6 +122,7 @@ router.post('/flights', async (req, res) => {
     }
 });
 
+// APIs
 router.get('/api/flights-table', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;

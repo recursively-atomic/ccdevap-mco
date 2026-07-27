@@ -164,7 +164,7 @@
                     <thead class="border-dark border-2">
                         <tr>
                             <th class="text-secondary bg-dark" scope="col">
-                                User ID
+                                User Number
                             </th>
 
                             <th class="text-secondary bg-dark" scope="col">
@@ -176,11 +176,11 @@
                             </th>
 
                             <th class="text-secondary bg-dark" scope="col">
-                                Last Name
+                                First Name
                             </th>
 
                             <th class="text-secondary bg-dark" scope="col">
-                                First Name
+                                Last Name
                             </th>
 
                             <th class="text-secondary bg-dark" scope="col">
@@ -206,33 +206,7 @@
                     </thead>
 
                     <tbody class="table-group-divider">
-                        {{#each users}}
-                            <tr>
-                                <th scope="row"> {{this._id}} </th>
-                                <td> {{this.role}} </td>
-                                <td> Active </td>
-                                <td> {{this.lastName}} </td>
-                                <td> {{this.firstName}} </td>
-                                <td> TESTDATE </td>
-                                <td> TESTCONTACT </td>
-                                <td> {{this.emailAddress}} </td>
-                                <td> TESTPAX </td>
-
-                                <td>
-                                    <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"
-                                            data-bs-target="#view-activity"> View </button>
-
-                                    <button class="btn btn-warning btn-sm text-white fw-bolder" data-bs-toggle="modal"
-                                            data-bs-target="#edit-activity"> Edit </button>
-
-                                    <button class="btn btn-danger btn-sm text-white fw-bolder" data-bs-toggle="modal"
-                                            data-bs-target="#delete-activity"> Delete </button>
-                                </td>
-                            </tr>
-
-                            <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
-                            </tr>
-                        {{/each}}
+                        {{> userRows}}
                     </tbody>
                 </table>
             </div>
@@ -241,31 +215,11 @@
         <div class="card-footer bg-primary-accent">
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
                 <h6 class="text-white">
-                    Showing 10 Results Out Of 100,000
+                    Showing {{pagination.resultsPerPage}} Results Out Of {{pagination.totalResults}}
                 </h6>
 
                 <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
-                    <!-- PAGINATION -->
-                    <nav>
-                        <ul class="pagination m-0">
-                            <li class="page-item">
-                                <a class="page-link disabled">
-                                    <span aria-hidden="true">
-                                        < </span>
-                                </a>
-                            </li>
-
-                            <li class="page-item"><a class="page-link active"> 1 </a></li>
-                            <li class="page-item"><a class="page-link"> ... </a></li>
-                            <li class="page-item"><a class="page-link"> 10 </a></li>
-
-                            <li class="page-item">
-                                <a class="page-link">
-                                    <span aria-hidden="true"> > </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                    {{> pagination}}
                 </div>
             </div>
         </div>

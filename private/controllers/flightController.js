@@ -1,22 +1,22 @@
 const model = require('../models/flightModel');
 
-async function getFlights(page, limit) {
-    const skip = (page - 1) * limit;
-
-    const totalFlights = await model.countDocuments();
-    const flights = await model.find().sort({ 'createdAt': 1 }).skip(skip).limit(limit).lean();
-
-    return { flights, totalFlights };
-}
-
 async function getFlight(flightID) {
     const flight = await model.findById(flightID).lean();
 
     return flight;
 }
 
-async function getLastFlight() {
+async function getLastFlightNumber() {
     return await model.findOne().sort({ flightNumber: -1 }).select('flightNumber').lean();
+}
+
+async function getFlights(page, limit) {
+    const skip = (page - 1) * limit;
+
+    const totalFlights = await model.countDocuments();
+    const flights = await model.find().sort({ flightNumber: 1 }).skip(skip).limit(limit).lean();
+
+    return { flights, totalFlights };
 }
 
 async function createFlight(flightData) {
@@ -49,7 +49,8 @@ function isEqualAirports(a, b) {
 }
 
 async function updateFlight(flightData) {
-    const currentData = await getFlight(flightData._id);
+    const flightID = flightData._id;
+    const currentData = await getFlight(flightID);
 
     const currentOrigAirport = currentData.originAirport;
     const newOrigAirport = flightData.originAirport;
@@ -96,14 +97,15 @@ async function updateFlight(flightData) {
         return currentData;
     }
 
-    return await model.findOneAndUpdate(
-        { _id: flightData._id },
+    return await model.findByIdAndUpdate(
+        flightID,
         { $set: updates },
-    );
+        { returnDocument: "after" }
+    ).lean();
 }
 
 async function deleteFlight(flightID) {
     return await model.findByIdAndDelete(flightID);
 }
 
-module.exports = { getFlights, getFlight, getLastFlight, createFlight, updateFlight, deleteFlight };
+module.exports = {getFlight, getLastFlightNumber, getFlights, createFlight, updateFlight, deleteFlight };

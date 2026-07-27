@@ -33,7 +33,6 @@ function changeProfile() {
  * Enables a user to change their password.
  */
 async function savePassword() {
-
     const currentPassword = $("#current-password").val().trim();
     const newPassword = $("#new-password").val().trim();
 
@@ -45,13 +44,8 @@ async function savePassword() {
     try {
         const response = await fetch("/api/users/change-password", {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                currentPassword,
-                newPassword
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ currentPassword, newPassword })
         });
 
         const result = await response.json();
@@ -60,26 +54,30 @@ async function savePassword() {
             $("#current-password").val("");
             $("#new-password").val("");
             showToast("password-toast");
-
         } else {
             alert(result.message);
         }
 
-    } catch (err) {
-        console.error(err);
-        alert("Something went wrong.");
-    }
+    } finally { }
 }
 
 /**
  * Opens a modal for users to edit their profile information.
  */
 function openProfileModal() {
+    const email = $("#profile-email").text().trim();
+    const [username, domain] = email.split('@');
+    const contact = $('#profile-contact').text().trim();
+    const [code, number] = contact.split(' ');
 
-    $("#edit-first-name").val($("#profile-name").data("firstname"));
-    $("#edit-last-name").val($("#profile-name").data("lastname"));
-    $("#edit-email").val($("#profile-email").text().trim());
-    $("#edit-contact").val($("#profile-contact").text().trim());
+    $("#edit-first-name").val($("#profile-name").data("first-name"));
+    $("#edit-last-name").val($("#profile-name").data("last-name"));
+
+    $("#edit-email-user").val(username);
+    $('#edit-email-domain').val(domain);
+
+    $("#edit-phone-code").val(code.replace(/\+/g, ''));
+    $('#edit-phone-number').val(number);
 
     const modal = new bootstrap.Modal(
         document.getElementById("update-profile-modal")
@@ -92,12 +90,14 @@ function openProfileModal() {
  * Saves the profile information that was edited from the modal.
  */
 async function saveProfileInformation() {
+    const code = $("#edit-phone-code").val().trim() ? '+' + $("#edit-phone-code").val().trim() : '';
+    const number = $('#edit-phone-number').val().trim() ? $('#edit-phone-number').val().trim() : '';
 
     const data = {
         firstName: $("#edit-first-name").val().trim(),
         lastName: $("#edit-last-name").val().trim(),
-        emailAddress: $("#edit-email").val().trim(),
-        contactNumber: $("#edit-contact").val().trim()
+        emailAddress: $("#edit-email-user").val().trim() + '@' + $("#edit-email-domain").val().trim(),
+        contactNumber: code && number ? code + ' ' + number : ''
     };
 
     const response = await fetch("/api/profile", {
@@ -141,7 +141,7 @@ async function saveProfileInformation() {
 function showToast(toastID) {
     const toast = document.getElementById(toastID);
     document.activeElement.blur();
-    
+
     const toastInstance =
         bootstrap.Toast.getInstance(toast) ||
         new bootstrap.Toast(toast, {
@@ -309,7 +309,7 @@ function showInputFields(clearFields = true) {
 
                 // Clear wallet fields
                 if (clearFields) {
-                clearDigitalWalletFields();
+                    clearDigitalWalletFields();
                 }
                 break;
 
@@ -319,7 +319,7 @@ function showInputFields(clearFields = true) {
 
                 // Clear card fields
                 if (clearFields) {
-                clearCardFields();
+                    clearCardFields();
                 }
                 break;
 
@@ -330,8 +330,8 @@ function showInputFields(clearFields = true) {
 
                 // Clear everything
                 if (clearFields) {
-                clearCardFields();
-                clearDigitalWalletFields();
+                    clearCardFields();
+                    clearDigitalWalletFields();
                 }
                 break;
         }

@@ -20,24 +20,23 @@ async function checkCredentials(event) {
     event.preventDefault();
 
     try {
-        const response = await fetch('/login', {
+        const response = await fetch('/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
 
-        if (response.redirected) {
-            window.location.href = response.url;
-            return;
-        }
-
         const result = await response.json();
 
-        if (!result.success) {
-            if (response.status === 404) {
-                showToast('#bad-outcome', 'User not found in the system!');
-            } else if (response.status === 401) {
-                showToast('#bad-outcome', 'Incorrect credentials!');
+        if (result.success) {
+            showToast('#good-outcome', `Successfully registered ${result.user.firstName} ${result.user.lastName}!`);
+
+            setTimeout(() => {
+                window.location.href = result.redirect;
+            }, 1000);
+        } else if (!result.success) {
+            if (response.status === 409) {
+                showToast('#bad-outcome', 'This email is already taken!');
             }
         }
     } finally {

@@ -5,9 +5,9 @@ const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus
 
 router.get('/my-reservations', async (req, res) => {
     if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "user") {
-        return res.redirect("/dashboard");
+        return res.redirect('/login');
+    } else if (req.session.user.role != 'user') {
+        return res.redirect('/dashboard');
     }
 
     try {
@@ -44,9 +44,9 @@ router.get('/my-reservations', async (req, res) => {
 
 router.get('/reservations', async (req, res) => {
     if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "admin") {
-        return res.redirect("/home");
+        return res.redirect('/login');
+    } else if (req.session.user.role != 'admin') {
+        return res.redirect('/home');
     }
 
     try {
@@ -83,13 +83,15 @@ router.get('/reservations', async (req, res) => {
 
 router.get('/flight-book', async (req, res) => {
     if (!req.session.user) {
-        return res.redirect("/login");
-    } else if (req.session.user.role != "user") {
-        return res.redirect("/dashboard");
+        return res.redirect('/login');
+    } else if (req.session.user.role != 'user') {
+        return res.redirect('/dashboard');
+    } else if (!req.session.user.selectedFlight) {
+        return res.redirect('/flight-search');
     }
 
     try {
-        const seatMap = await getSeatMap("TESTFLIGHT");
+        const seatMap = await getSeatMap('TESTFLIGHT');
 
         res.status(200).render('flightBook', {
             page: '/flight-book',

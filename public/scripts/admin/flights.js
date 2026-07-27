@@ -111,6 +111,19 @@ async function showViewModal(flightID) {
     } finally { }
 }
 
+function formatDatetime(mongooseDatetime) {
+    const datetime = new Date(mongooseDatetime);
+    const pad = (num) => String(num).padStart(2, '0');
+
+    const year = datetime.getFullYear();
+    const month = pad(datetime.getMonth() + 1);
+    const day = pad(datetime.getDate());
+    const hours = pad(datetime.getHours());
+    const minutes = pad(datetime.getMinutes());
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
 async function showEditModal(flightID) {
     const $editModal = $('#edit-flight');
     const $title = $editModal.find('.modal-title');
@@ -160,92 +173,8 @@ async function showEditModal(flightID) {
     } finally { }
 }
 
-async function updateFlight(event) {
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    event.preventDefault();
-    data['edit-fare'] = data['edit-fare'].replace(/\,/g, '');
-
-    try {
-        const response = await fetch(`/api/${selectedFlightID}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            let airline = result.airline;
-
-            airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
-            hideModalShowToast('edit-flight', 'edit-toast', `Successfully saved changes on ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
-
-            setTimeout(() => {
-                refreshFlightTable();
-            }, 1000);
-        }
-    } finally { }
-}
-
-function formatDatetime(mongooseDatetime) {
-    const datetime = new Date(mongooseDatetime);
-    const pad = (num) => String(num).padStart(2, '0');
-
-    const year = datetime.getFullYear();
-    const month = pad(datetime.getMonth() + 1);
-    const day = pad(datetime.getDate());
-    const hours = pad(datetime.getHours());
-    const minutes = pad(datetime.getMinutes());
-
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
-/**
- * Hides a modal and shows a toast with an optional display text.
- * 
- * @param {string} modalID the modal's ID.
- * @param {string} toastID the toast's ID.
- * @param {string} text the toast's display text.
- */
-function hideModalShowToast(modalID, toastID, text = '') {
-    const modal = document.getElementById(modalID);
-    const toast = document.getElementById(toastID);
-    const toastBody = toast.querySelector('.toast-body');
-
-    document.activeElement.blur();
-
-    if (text) {
-        toastBody.textContent = text;
-    }
-
-    const modalInstance =
-        bootstrap.Modal.getInstance(modal) ||
-        new bootstrap.Modal(modal);
-
-    const toastInstance =
-        bootstrap.Toast.getInstance(toast) ||
-        new bootstrap.Toast(toast, {
-            delay: 2000,
-            autohide: true
-        });
-
-    modalInstance.hide();
-    toastInstance.show();
-}
-
-function refreshFlightTable() {
-    const page = new URLSearchParams(window.location.search).get('page') || 1;
-
-    $.ajax({
-        url: `/api/flights-table?page=${page}`,
-        type: 'GET',
-        success: function (html) {
-            $('#flights-card').html(html);
-        }
-    });
+function showDeleteModal(flightID) {
+    selectedFlightID = flightID;
 }
 
 async function createFlight(event) {
@@ -279,8 +208,34 @@ async function createFlight(event) {
     }
 }
 
-function showDeleteModal(flightID) {
-    selectedFlightID = flightID;
+async function updateFlight(event) {
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    event.preventDefault();
+    data['edit-fare'] = data['edit-fare'].replace(/\,/g, '');
+
+    try {
+        const response = await fetch(`/api/${selectedFlightID}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            let airline = result.airline;
+
+            airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+            hideModalShowToast('edit-flight', 'edit-toast', `Successfully saved changes on ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
+
+            setTimeout(() => {
+                refreshFlightTable();
+            }, 1000);
+        }
+    } finally { }
 }
 
 async function deleteFlight() {
@@ -305,4 +260,49 @@ async function deleteFlight() {
             }, 1000);
         }
     } finally { }
+}
+
+function refreshFlightTable() {
+    const page = new URLSearchParams(window.location.search).get('page') || 1;
+
+    $.ajax({
+        url: `/api/flights-table?page=${page}`,
+        type: 'GET',
+        success: function (html) {
+            $('#flights-card').html(html);
+        }
+    });
+}
+
+/**
+ * Hides a modal and shows a toast with an optional display text.
+ * 
+ * @param {string} modalID the modal's ID.
+ * @param {string} toastID the toast's ID.
+ * @param {string} text the toast's display text.
+ */
+function hideModalShowToast(modalID, toastID, text = '') {
+    const modal = document.getElementById(modalID);
+    const toast = document.getElementById(toastID);
+    const toastBody = toast.querySelector('.toast-body');
+
+    document.activeElement.blur();
+
+    if (text) {
+        toastBody.textContent = text;
+    }
+
+    const modalInstance =
+        bootstrap.Modal.getInstance(modal) ||
+        new bootstrap.Modal(modal);
+
+    const toastInstance =
+        bootstrap.Toast.getInstance(toast) ||
+        new bootstrap.Toast(toast, {
+            delay: 2000,
+            autohide: true
+        });
+
+    modalInstance.hide();
+    toastInstance.show();
 }
