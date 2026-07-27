@@ -14,6 +14,12 @@ router.get('/', (req, res) => {
 });
 
 router.get('/home', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    } else if (req.session.user.role != 'user') {
+        return res.redirect('/dashboard');
+    }
+
     res.status(200).render('home', {
         page: '/home',
         script: '/scripts/home.js',
@@ -179,7 +185,6 @@ router.get('/logout', (req, res) => {
 });
 
 // APIs
-
 router.get('/api/users', async (req, res) => {
     try {
         const users = await getUsers();

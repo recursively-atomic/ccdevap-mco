@@ -1,27 +1,7 @@
 let requiredFields;
 
-const templateSource = document.getElementById('resultsTemplate').innerHTML;
-const template = Handlebars.compile(templateSource);
-
-document.getElementById('searchForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-
-  // Serialize form data
-  const formData = new FormData(this);
-  const queryParams = new URLSearchParams(formData).toString();
-
-  // Send AJAX request
-  fetch(`/api/search?${queryParams}`)
-    .then(response => response.json())
-    .then(data => {
-      // Render data into Handlebars template
-      const html = template({ results: data });
-      document.getElementById('resultsContainer').innerHTML = html;
-    })
-    .catch(error => console.error('Error fetching data:', error));
-});
-
 $(function () {
+    getFlightLocations();
     getRequiredFields();
     showPriceRangeInput();
     bindSearchInformationEvents();
@@ -29,6 +9,45 @@ $(function () {
     bindListItemValue('#sort-dropdown', '#sort-type', false);
     bindListItemValue('#filter-dropdown', '#filter-type', true);
 });
+
+async function getFlightLocations() {
+    const $departureSelect = $('#departure-select');
+    const $arrivalSelect = $('#arrival-select');
+
+    await bindLocations($departureSelect, $arrivalSelect);
+}
+
+async function bindLocations(departureDropdown, arrivalSelect) {
+    try {
+        const [originResponse, destinationResponse] = await Promise.all([
+            fetch('/api/flight-origins'),
+            fetch('/api/flight-destinations')
+        ]);
+
+        const originResult = await originResponse.json();
+        const destinationResult = await destinationResponse.json();
+
+        if (!originResult.success || !destinationResult.success) {
+            return;
+        }
+
+        originResult.origins.forEach(origin => {
+            departureDropdown.append(
+                $('<option>', {
+                    text: origin.location,
+                })
+            );
+        });
+
+        destinationResult.destinations.forEach(origin => {
+            arrivalSelect.append(
+                $('<option>', {
+                    text: origin.location,
+                })
+            );
+        });
+    } finally { }
+}
 
 /**
  * Gets all the required fields by first getting the elements with the
@@ -66,42 +85,6 @@ function checkSearchInformation() {
         // Checks if a field has the proper data, and flags
         // accordingly through the requireFields array.
         switch (field.selector) {
-            case '#flight-type':
-                if ($(`${field.selector} > input[name='trip-type']:checked`).length) {
-                    const flightType = $((`${field.selector} > input[name='trip-type']:checked`)).val();
-                    const arrivalSelect = requiredFields.find(field => field.selector == '#arrival-select');
-                    const arrivalDate = requiredFields.find(field => field.selector == '#arrival-date');
-
-                    if (flightType === 'one-way') {
-                        arrivalSelect.isFilled = true;
-                        arrivalDate.isFilled = true;
-
-                        $(arrivalSelect.selector).removeClass('bg-light text-black').addClass('bg-dark text-dark');
-                        $(arrivalSelect.selector).val('').prop('disabled', true);
-
-                        $(arrivalDate.selector).removeClass('bg-light text-black').addClass('bg-dark text-dark');
-                        $(arrivalDate.selector).attr('type', 'text').val('-').prop('disabled', true);
-                    } else if (flightType === 'round-trip') {
-                        if ($(arrivalSelect.selector).val() !== '') {
-                            arrivalSelect.isFilled = true;
-                        } else {
-                            arrivalSelect.isFilled = false;
-                        }
-
-                        if ($(arrivalDate.selector).val() !== '') {
-                            arrivalDate.isFilled = true;
-                        } else {
-                            arrivalDate.isFilled = false;
-                        }
-
-                        $(arrivalSelect.selector).removeClass('bg-dark text-dark').addClass('bg-light text-black').prop('disabled', false);
-                        $(arrivalDate.selector).removeClass('bg-dark text-dark').addClass('bg-light text-black');
-                        $(arrivalDate.selector).attr('type', 'date').prop('disabled', false);
-                    }
-                } else {
-                    field.isFilled = false;
-                }
-                break;
             default:
                 if (value !== '') {
                     field.isFilled = true;
@@ -162,32 +145,6 @@ function showMissingFields() {
         // Checks if a field has the proper data, and flags
         // accordingly through the requireFields array.
         switch (field.selector) {
-            case '#flight-type':
-                if ($(`${field.selector} > input[name='trip-type']:checked`).length) {
-                    const flightType = $((`${field.selector} > input[name='trip-type']:checked`)).val();
-                    const arrivalSelect = requiredFields.find(field => field.selector == '#arrival-select');
-                    const arrivalDate = requiredFields.find(field => field.selector == '#arrival-date');
-
-                    if (flightType === 'one-way') {
-                        $(arrivalSelect.selector).removeClass('is-invalid').addClass('is-valid');
-                        $(arrivalDate.selector).removeClass('is-invalid').addClass('is-valid');
-                    } else if (flightType === 'round-trip') {
-                        if ($(arrivalSelect.selector).val() !== '') {
-                            $(arrivalSelect.selector).removeClass('is-invalid').addClass('is-valid');
-                        } else {
-                            $(arrivalSelect.selector).removeClass('is-valid').addClass('is-invalid');
-                        }
-
-                        if ($(arrivalDate.selector).val() !== '') {
-                            $(arrivalDate.selector).removeClass('is-invalid').addClass('is-valid');
-                        } else {
-                            $(arrivalDate.selector).removeClass('is-valid').addClass('is-invalid');
-                        }
-                    }
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                }
-                break;
             default:
                 if (value !== '') {
                     $(field.selector).removeClass('is-invalid').addClass('is-valid');
@@ -197,6 +154,28 @@ function showMissingFields() {
                 break;
         }
     });
+}
+
+function getFlightsFromQuery() {
+    const $departureSelect = $('#departure-select');
+    const $arrivalSelect = $('#arrival-select');
+    const $departureDate = $('#departure-date');
+
+    console.log($departureSelect, $arrivalSelect, $departureDate);
+
+    // try {
+    //     const response = await fetch('/api/search');
+    //     const result = response.json();
+
+    //     if (result.success) {
+    //         showToast('#complete', `Booking confirmed under ${reservationData.reservationNumber}!`);
+
+    //         setTimeout(() => {
+    //             window.location.href = '/reservations';
+    //         }, 1000);
+    //     }
+
+    // } finally { }
 }
 
 /**
@@ -213,6 +192,8 @@ function searchFlights() {
     } else {
         $('#flight-results').removeClass('d-block').addClass('d-none');
     }
+
+    await getFlightsFromQuery();
 }
 
 /**

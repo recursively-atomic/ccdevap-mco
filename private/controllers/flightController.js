@@ -10,6 +10,40 @@ async function getLastFlightNumber() {
     return await model.findOne().sort({ flightNumber: -1 }).select('flightNumber').lean();
 }
 
+async function getFlightOrigins() {
+    return await model.aggregate([
+        {
+            $group: {
+                _id: '$originAirport.iata',
+                iata: { $first: '$originAirport.iata' },
+                location: { $first: '$originAirport.location' },
+                name: { $first: '$originAirport.name' }
+            }
+        },
+        { $project: { _id: 0, iata: 1, location: 1, name: 1 } },
+        { $sort: { iata: 1 } }
+    ]);
+}
+
+async function getFlightDestinations() {
+    return await model.aggregate([
+        {
+            $group: {
+                _id: '$destinationAirport.iata',
+                iata: { $first: '$destinationAirport.iata' },
+                location: { $first: '$destinationAirport.location' },
+                name: { $first: '$destinationAirport.name' }
+            }
+        },
+        { $project: { _id: 0, iata: 1, location: 1, name: 1 } },
+        { $sort: { iata: 1 } }
+    ]);
+}
+
+async function getFlightsByQuery() {
+    
+}
+
 async function getFlights(page, limit) {
     const skip = (page - 1) * limit;
 
@@ -108,4 +142,4 @@ async function deleteFlight(flightID) {
     return await model.findByIdAndDelete(flightID);
 }
 
-module.exports = {getFlight, getLastFlightNumber, getFlights, createFlight, updateFlight, deleteFlight };
+module.exports = { getFlight, getLastFlightNumber, getFlightOrigins, getFlightDestinations, getFlightsByQuery, getFlights, createFlight, updateFlight, deleteFlight };

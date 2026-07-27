@@ -1,4 +1,4 @@
-$(function () {    
+$(function () {
     autocompleteLocations();
 });
 
@@ -6,50 +6,78 @@ $(function () {
  * Provides autocomplete to the origin and destination text input
  * in the flight search quick widget.
  */
-function autocompleteLocations() {
-    const $data = $('#result');
-    
-    // Sample data of airports
-    const locations = [
-        { name: 'Bacolod', code: 'BCD' },
-        { name: 'Cagayan de Oro', code: 'CGY' },
-        { name: 'Davao', code: 'DVO' },
-        { name: 'El Nido', code: 'ENI' },
-        { name: 'General Santos', code: 'GES' },
-        { name: 'Iloilo', code: 'ILO' },
-        { name: 'Kalibo', code: 'KLO' },
-        { name: 'Laoag', code: 'LAO' },
-        { name: 'Manila', code: 'MNL' },
-        { name: 'Naga', code: 'WNP' },
-        { name: 'Ozamiz', code: 'OZC' },
-        { name: 'Pagadian', code: 'PAG' },
-        { name: 'Roxas', code: 'RXS' },
-        { name: 'San Jose, Mindoro', code: 'SJI' },
-        { name: 'Tacloban', code: 'TAC' },
-        { name: 'Virac', code: 'VRC' },
-        { name: 'Zamboanga', code: 'ZAM' }
-    ];
+async function autocompleteLocations() {
+    const $origin = $('#origin-result');
+    const $destination = $('#destination-result');
 
-    // Populating the datalist with all the sample data
-    locations.forEach(location => {
-        const $option = $('<option>').val(location.name).attr('data-code', location.code);
+    $origin.empty();
+    $destination.empty();
+    await bindLocations($origin, $destination);
 
-        $data.append($option);
+    $('#origin, #destination').off('focus').on('focus', function () {
+        $(this).val('');
+        $(this).removeData('code');
     });
 
-    // Updating the datalist when a user inputs something
     $('#origin, #destination').off('change').on('change', function () {
-        const $input = $(this);
-        const value = $input.val();
-        let $match, code, location;
-
-        $match = $data.find('option').filter(function () {
-            return $(this).val() === value;
+        const $textField = $(this);
+        const $data = $textField.attr('id') === 'origin' ? $origin : $destination;
+        const $match = $data.find('option').filter(function () {
+            return $(this).val() === $textField.val();
         }).first();
 
-        code = $match.attr('data-code');
-        location = $match.attr('value');
+        let code, location, originCode, destionationCode;
 
-        $input.val(location + " " + code);
+        if (!$match.length) {
+            return;
+        }
+
+        code = $match.attr('data-code');
+        location = $match.val();
+        originCode = $('#origin').data('code');
+        destinationCode = $('#destination').data('code');
+
+        $textField.data('code', code);
+        $textField.val(`${location} ${code}`);
+
+        if ((originCode && destinationCode) && originCode === destinationCode) {
+            $textField.val('');
+            $textField.removeData('code');
+            $textField.focus();
+        }
     });
+}
+
+async function bindLocations(originInput, destinationInput) {
+    try {
+        const [originResponse, destinationResponse] = await Promise.all([
+            fetch('/api/flight-origins'),
+            fetch('/api/flight-destinations')
+        ]);
+
+        const originResult = await originResponse.json();
+        const destinationResult = await destinationResponse.json();
+
+        if (!originResult.success || !destinationResult.success) {
+            return;
+        }
+
+        originResult.origins.forEach(origin => {
+            originInput.append(
+                $('<option>', {
+                    value: origin.location,
+                    'data-code': origin.iata
+                })
+            );
+        });
+
+        destinationResult.destinations.forEach(destination => {
+            destinationInput.append(
+                $('<option>', {
+                    value: destination.location,
+                    'data-code': destination.iata
+                })
+            );
+        });
+    } finally { }
 }

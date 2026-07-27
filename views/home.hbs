@@ -29,9 +29,10 @@
                         </div>
 
                         <div class="form-floating">
-                            <input type="text"
+                            <input id="origin" type="text" placeholder=""
                                    class="form-control bg-light border-dark border-5 text-black rounded-end-3"
-                                   id="origin" placeholder="" list="result">
+                                   list="origin-result">
+
                             <label class="ms-1" for="origin"> Flight Origin </label>
                         </div>
                     </div>
@@ -44,9 +45,10 @@
                         </div>
 
                         <div class="form-floating">
-                            <input type="text"
+                            <input id="destination" type="text" placeholder=""
                                    class="form-control bg-light border-dark border-5 text-black rounded-end-3"
-                                   id="destination" placeholder="" list="result">
+                                   list="destination-result">
+                                   
                             <label class="ms-1" for="destination"> Flight Destination </label>
                         </div>
                     </div>
@@ -59,7 +61,8 @@
             </div>
         </div>
 
-        <datalist id="result"></datalist>
+        <datalist id="origin-result"></datalist>
+        <datalist id="destination-result"></datalist>
     </div>
 </div>
 

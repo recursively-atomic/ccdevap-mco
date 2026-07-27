@@ -24,6 +24,7 @@ function changeProfile() {
             fileReader.onload = function (secondEvent) {
                 $('#profile-picture').attr('src', secondEvent.target.result);
             };
+            
             fileReader.readAsDataURL(file);
         }
     });

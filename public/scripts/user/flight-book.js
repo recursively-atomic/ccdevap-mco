@@ -535,24 +535,22 @@ function confirmBooking() {
     if (Object.values(stepsDone).every(Boolean)) {
         const reservationData = getReservationData();
 
-        fetch('/flightBook', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-
-            body: JSON.stringify(reservationData)
-        })
-            .then(response => response.json())
-            .then((result) => {
-                if (result.success) {
-                    showToast('#complete', `Booking confirmed under ${reservationData.reservationNumber}!`);
-
-                    setTimeout(() => {
-                        window.location.href = '/reservations';
-                    }, 1000);
-                }
+        try {
+            const response = await fetch('/flight-book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(reservationData)
             });
+            const result = response.json();
+
+            if (result.success) {
+                showToast('#complete', `Booking confirmed under ${reservationData.reservationNumber}!`);
+
+                setTimeout(() => {
+                    window.location.href = result.redirect;
+                }, 1000);
+            }
+        } finally { }
     } else {
         showToast('#incomplete');
     }

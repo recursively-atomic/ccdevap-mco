@@ -1,7 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const { getFlight, getLastFlightNumber, getFlights, createFlight, updateFlight, deleteFlight } = require('../controllers/flightController');
+const {
+    getFlight,
+    getLastFlightNumber,
+    getFlightOrigins,
+    getFlightDestinations,
+    getFlightsByQuery,
+    getFlights,
+    createFlight,
+    updateFlight,
+    deleteFlight
+} = require('../controllers/flightController');
 
 router.get('/flight-search', (req, res) => {
     if (!req.session.user) {
@@ -12,44 +22,10 @@ router.get('/flight-search', (req, res) => {
 
     res.render('flightSearch', {
         page: '/flight-search',
-        script: '/scripts/user/search.js',
+        script: '/scripts/user/flight-search.js',
         role: req.session.user.role,
     });
 });
-
-// router.get('/api/search', async (req, res) => {
-//     const { originAirport, destinationAirport, departureDate } = req.query;
-
-//     // Build a dynamic MongoDB query object
-//     let query = {};
-
-//     if (originAirport) query.originAirport = originAirport;
-//     if (destinationAirport) query.destinationAirport = destinationAirport;
-//     if (departureDate) {
-//         // Match the exact day in MongoDB regardless of time
-//         const start = new Date(departureDate);
-//         start.setUTCHours(0, 0, 0, 0);
-//         const end = new Date(departureDate);
-//         end.setUTCHours(23, 59, 59, 999);
-//         query.departureDate = { $gte: start, $lte: end };
-//     }
-
-//     if (status) query.status = status;
-
-//     if (startDate || endDate) {
-//         query.date = {};
-//         if (startDate) query.date.$gte = new Date(startDate);
-//         if (endDate) query.date.$lte = new Date(endDate);
-//     }
-
-//     try {
-//         // Assuming you are using Mongoose
-//         const results = await flights.find(query);
-//         res.json(results);
-//     } catch (err) {
-//         res.status(500).send(err);
-//     }
-// });
 
 router.get('/flights', async (req, res) => {
     if (!req.session.user) {
@@ -123,6 +99,15 @@ router.post('/flights', async (req, res) => {
 });
 
 // APIs
+router.get('/api/search', async (req, res) => {
+    try {
+        const flights = await flights.getFlightsByQuery();
+        res.result(200).json({ success: true, flights: flights });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.get('/api/flights-table', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
@@ -151,6 +136,24 @@ router.get('/api/flights-table', async (req, res) => {
                 pagination: pagination
             }
         });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/flight-origins', async (req, res) => {
+    try {
+        const origins = await getFlightOrigins();
+        res.status(200).json({ success: true, origins: origins });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/flight-destinations', async (req, res) => {
+    try {
+        const destinations = await getFlightDestinations();
+        res.status(200).json({ success: true, destinations: destinations });
     } catch {
         res.status(500).json({ success: false });
     }
