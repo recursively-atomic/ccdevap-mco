@@ -3,9 +3,9 @@
 <div class="container mt-5 mb-5">
     <div class="card bg-transparent border-0">
         <div class="row">
-            <div class="col-lg-8 mb-4">
+            <div class="col-lg-8">
                 <!-- PROGRESS BAR -->
-                <div class="card mb-4 bg-transparent border-0">
+                <div class="card mb-5 bg-transparent border-0">
                     <div class="card-header p-4 bg-primary-accent rounded-5 shadow-lg">
                         <div class="progress rounded-pill h-30px bg-warning">
                             <div class="progress-bar bg-success fs-6 pb-1"></div>
@@ -14,7 +14,7 @@
                 </div>
 
                 <!-- PASSENGER INFORMATION -->
-                <div class="card mb-4 shadow-lg">
+                <div class="card mb-5 shadow-lg">
                     <div class="card-header text-center text-white bg-primary-accent">
                         <h2 class="mt-2"> Passenger Information </h2>
                     </div>
@@ -382,7 +382,7 @@
                 </div>
 
                 <!-- MEAL SELECTION -->
-                <div class="card mb-4 shadow-lg">
+                <div class="card mb-5 shadow-lg">
                     <div class="card-header text-center text-white bg-primary-accent">
                         <h2 class="mt-2"> Meal Selection </h2>
                     </div>
@@ -433,7 +433,7 @@
                 </div>
 
                 <!-- SEAT SELECTION -->
-                <div class="card mb-4 shadow-lg">
+                <div class="card mb-5 shadow-lg">
                     <div class="card-header text-center text-white bg-primary-accent">
                         <h2 class="mt-2"> Seat Selection </h2>
                     </div>
@@ -450,7 +450,7 @@
                 </div>
 
                 <!-- EXTRA SERVICES -->
-                <div class="card shadow-lg">
+                <div class="card shadow-lg mb-md-5 mb-lg-0 mb-sm-5 mb-5">
                     <div class="card-header text-center text-white bg-primary-accent">
                         <h2 class="mt-2"> Extra Services </h2>
                     </div>
@@ -518,17 +518,25 @@
 
                         <div class="d-flex align-items-center m-0 p-0 text-dark">
                             <p class="m-0 p-0 ps-3 fw-bolder"> Origin: </p>
-                            <p class="m-0 p-0 ps-1"> TESTAIRPORT </p>
+                            <p class="m-0 p-0 ps-1"> {{flight.originAirport.name}} </p>
                         </div>
 
                         <div class="d-flex align-items-center m-0 p-0 text-dark">
                             <p class="m-0 p-0 ps-3 fw-bolder"> Destination: </p>
-                            <p class="m-0 p-0 ps-1"> TESTAIRPORT </p>
+                            <p class="m-0 p-0 ps-1"> {{flight.destinationAirport.name}} </p>
                         </div>
 
                         <div class="d-flex align-items-center m-0 p-0 text-dark">
                             <p class="m-0 p-0 ps-3 fw-bolder"> Flight Number: </p>
-                            <p class="m-0 p-0 ps-1"> TESTFLIGHT </p>
+
+                            <p class="m-0 p-0 ps-1">
+                            {{#if (eq flight.airline 'Cebu Atlantic')}} CA
+                                {{else if (eq flight.airline 'Filipino Airlines')}} FA
+                                {{else if (eq flight.airline 'AirFAST')}} AF
+                                {{else if (eq flight.airline 'Sunray Air')}} SA {{/if}}
+
+                                {{pad flight.flightNumber 4 '0'}}
+                            </p>
                         </div>
 
                         <div class="d-flex align-items-center m-0 p-0 text-dark">
@@ -560,9 +568,7 @@
                             <p class="m-0 p-0 ps-1" id="no-extra-services"></p>
                         </div>
 
-                        <div class="m-0 p-0 text-dark" id="has-extra-services">
-
-                        </div>
+                        <div class="m-0 p-0 text-dark" id="has-extra-services"></div>
 
                         <hr class="border border-3 border-dark rounded-3 opacity-100">
 
@@ -570,7 +576,10 @@
 
                         <div class="d-flex align-items-center m-0 p-0 text-dark">
                             <p class="m-0 p-0 ps-3 fw-bolder"> Base Fare: </p>
-                            <p class="m-0 p-0 ps-1" id="base-fare"></p>
+
+                            <p class="m-0 p-0 ps-1" id="base-fare">
+                                {{formatNumber flight.baseFare}}
+                            </p>
                         </div>
 
                         <div class="d-flex align-items-center m-0 p-0 text-dark">

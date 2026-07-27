@@ -1,10 +1,11 @@
 const model = require('../models/reservationModel');
+const flight = require('../models/flightModel');
 
 /**
  * Creates a seat map of a specific flight that keeps track of
  * seat availability.
  * 
- * @param {String} flightNumber the specific flight to create a seat map of.
+ * @param {Number} identifier the specific flight to create a seat map of.
  * @returns {Object} the seat map.
  */
 async function getSeatMap(flightNumber) {
@@ -30,23 +31,32 @@ async function getSeatMap(flightNumber) {
     return seatMap;
 }
 
-/**
- * Gets all of the reservations that are associated to a certain user or not and
- * limits the results according to the `limit` parameter.
- * 
- * @param {Number} page the page of the reservation results.
- * @param {Number} limit the maximum amount of reservations that can be displayed per page.
- * @param {String} userId an optional specific user.
- * @returns {[Object, Number]} the reservations and the total amount of reservations.
- */
-async function getReservations(page, limit, userId = null) {
+async function getReservation(identifier) {
+    const reservation = await model.findOne({ identifier }).lean();
+    const flightData = await flight.findOne({ flightNumber: reservation.flightNumber }).lean();
+    const { flightNumber, ...rest } = reservation;
+    
+    return { ...rest, flight: flightData };
+}
+
+async function getReservations(page, limit, userNumber = null) {
     const skip = (page - 1) * limit;
-    const filter = userId ? { userId } : {};
+    const filter = userNumber ? { userNumber } : {};
 
     const totalReservations = await model.countDocuments(filter);
-    const reservations = await model.find(filter).sort({ 'createdAt': 1 }).skip(skip).limit(limit).lean();
+    const reservations = await model.find(filter).sort({ createdAt: 1 }).skip(skip).limit(limit).lean();
 
-    return { reservations, totalReservations };
+    const flightNumbers = [...new Set(reservations.map(reservation => reservation.flightNumber))];
+    const flights = await flight.find({ flightNumber: { $in: flightNumbers } }).lean();
+    const flightMap = new Map(flights.map(flight => [flight.flightNumber, flight]));
+
+    const reservationsWithFlights = reservations.map(reservation => {
+        const { flightNumber, ...rest } = reservation;
+
+        return { ...rest, flight: flightMap.get(flightNumber) };
+    });
+
+    return { reservations: reservationsWithFlights, totalReservations };
 }
 
 /**
@@ -57,10 +67,11 @@ async function getReservations(page, limit, userId = null) {
  * @returns {Promise} the status of the creation of the document.
  */
 async function createReservation(reservationData) {
+    const updatedFlight = await flight.findOneAndUpdate({ flightNumber: reservationData.flightNumber, availableSeats: { $gt: 0 } }, { $inc: { availableSeats: -1 } });
     const reservation = new model({
-        reservationNumber: reservationData.reservationNumber,
+        identifier: reservationData.identifier,
         flightNumber: reservationData.flightNumber,
-        userId: reservationData.userId,
+        userNumber: reservationData.userNumber,
         email: reservationData.email,
         firstName: reservationData.firstName,
         lastName: reservationData.lastName,
@@ -80,25 +91,24 @@ async function createReservation(reservationData) {
  * @param {String} newSeat the new selected seat to be associated to the reservation.
  * @returns {Promise} the status after updating the document.
  */
-async function updateSeat(reservationNumber, newSeat) {
+async function updateSeat(identifier, newSeat) {
     return await model.findOneAndUpdate(
-        { reservationNumber },
+        { identifier },
         { seatNumber: newSeat }
     );
 }
 
-/**
- * Updates the status of a reservation.
- * 
- * @param {String} reservationNumber the reservation to be updated.
- * @param {String} newStatus the new status of the reservation.
- * @returns {Promise} the status after updating the document.
- */
-async function updateStatus(reservationNumber, newStatus) {
+async function updateStatus(identifier, newStatus) {
+    const reservation = await model.findOne({ identifier });
+
+    if (newStatus === 'Cancelled') {
+        await flight.findOneAndUpdate({ flightNumber: reservation.flightNumber }, { $inc: { availableSeats: 1 } });
+    }
+
     return await model.findOneAndUpdate(
-        { reservationNumber },
+        { identifier },
         { status: newStatus }
     );
 }
 
-module.exports = { getSeatMap, getReservations, createReservation, updateSeat, updateStatus };
+module.exports = { getSeatMap, getReservation, getReservations, createReservation, updateSeat, updateStatus };

@@ -244,7 +244,7 @@ async function deleteFlight() {
     try {
         const response = await fetch(`/api/${selectedFlightID}`, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' }
         });
 
         const result = await response.json();
@@ -265,13 +265,18 @@ async function deleteFlight() {
 function refreshFlightTable() {
     const page = new URLSearchParams(window.location.search).get('page') || 1;
 
-    $.ajax({
-        url: `/api/flights-table?page=${page}`,
-        type: 'GET',
-        success: function (html) {
-            $('#flights-card').html(html);
+    try {
+        const response = await fetch(`/api/flights-table?page=${page}`, {
+            method: 'GET'
+        });
+
+        const markup = await response.text();
+        const $flightsCard = $('#flights-card');
+
+        if ($flightsCard) {
+            $flightsCard.innerHTML = markup;
         }
-    });
+    } finally { }
 }
 
 /**

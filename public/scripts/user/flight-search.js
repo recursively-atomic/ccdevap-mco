@@ -8,13 +8,59 @@ $(function () {
     checkSearchInformation();
     bindListItemValue('#sort-dropdown', '#sort-type', false);
     bindListItemValue('#filter-dropdown', '#filter-type', true);
+
+    $(document).on('click', '#search-results a[href*="page="]', function (event) {
+        event.preventDefault();
+
+        const href = $(this).attr('href');
+        const page = new URLSearchParams(href.split('?')[1]).get('page');
+
+        if (page) {
+            performSearch(parseInt(page));
+        }
+    });
 });
 
 async function getFlightLocations() {
+    const parameters = new URLSearchParams(window.location.search);
+    const origin = parameters.get('origin');
+    const destination = parameters.get('destination');
+
     const $departureSelect = $('#departure-select');
     const $arrivalSelect = $('#arrival-select');
 
     await bindLocations($departureSelect, $arrivalSelect);
+    
+    if (origin && destination) {
+        $departureSelect.val(origin);
+        $arrivalSelect.val(destination);
+
+        updateDropdowns($departureSelect, $arrivalSelect);
+    }
+
+    $departureSelect.on('change', function () {
+        updateDropdowns($departureSelect, $arrivalSelect);
+    });
+
+    $arrivalSelect.on('change', function () {
+        updateDropdowns($departureSelect, $arrivalSelect);
+    });
+}
+
+function updateDropdowns($departure, $arrival) {
+    const departureIata = $departure.find(':selected').data('iata');
+    const arrivalIata = $arrival.find(':selected').data('iata');
+
+    $departure.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
+    $arrival.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
+
+    if (arrivalIata) {
+        $departure.find(`option[data-iata="${arrivalIata}"]`).prop('hidden', true).prop('disabled', true);
+    }
+
+    if (departureIata) {
+        $arrival.find(`option[data-iata="${departureIata}"]`).prop('hidden', true).prop('disabled', true);
+    }
 }
 
 async function bindLocations(departureDropdown, arrivalSelect) {
@@ -35,14 +81,20 @@ async function bindLocations(departureDropdown, arrivalSelect) {
             departureDropdown.append(
                 $('<option>', {
                     text: origin.location,
+                    'data-iata': origin.iata,
+                    'data-location': origin.location,
+                    'data-name': origin.name
                 })
             );
         });
 
-        destinationResult.destinations.forEach(origin => {
+        destinationResult.destinations.forEach(destination => {
             arrivalSelect.append(
                 $('<option>', {
-                    text: origin.location,
+                    text: destination.location,
+                    'data-iata': destination.iata,
+                    'data-location': destination.location,
+                    'data-name': destination.name
                 })
             );
         });
@@ -156,26 +208,25 @@ function showMissingFields() {
     });
 }
 
-function getFlightsFromQuery() {
-    const $departureSelect = $('#departure-select');
-    const $arrivalSelect = $('#arrival-select');
-    const $departureDate = $('#departure-date');
+async function performSearch(page) {
+    const $departureOption = $('#departure-select').find('option:selected');
+    const $arrivalOption = $('#arrival-select').find('option:selected');
+    const query = {
+        departureIata: $departureOption.attr('data-iata'),
+        arrivalIata: $arrivalOption.attr('data-iata'),
+        departureDate: $('#departure-date').val(),
+    };
 
-    console.log($departureSelect, $arrivalSelect, $departureDate);
+    const parameters = new URLSearchParams({ ...query, page });
 
-    // try {
-    //     const response = await fetch('/api/search');
-    //     const result = response.json();
+    try {
+        const response = await fetch(`/api/search?${parameters.toString()}`);
+        const result = await response.json();
 
-    //     if (result.success) {
-    //         showToast('#complete', `Booking confirmed under ${reservationData.reservationNumber}!`);
-
-    //         setTimeout(() => {
-    //             window.location.href = '/reservations';
-    //         }, 1000);
-    //     }
-
-    // } finally { }
+        if (result.success) {
+            $('#search-results').html(result.html);
+        }
+    } finally { }
 }
 
 /**
@@ -183,17 +234,16 @@ function getFlightsFromQuery() {
  * a flight, and if successful, it will display the flight
  * resutls card.
  */
-function searchFlights() {
+async function searchFlights() {
     bindMissingFieldsEvents();
     showMissingFields();
 
     if (requiredFields.every(field => field.isFilled)) {
+        await performSearch(1);
         $('#flight-results').removeClass('d-none').addClass('d-block');
     } else {
         $('#flight-results').removeClass('d-block').addClass('d-none');
     }
-
-    await getFlightsFromQuery();
 }
 
 /**
@@ -223,4 +273,100 @@ function bindListItemValue(dropdown, display, hasSubmenu) {
             $dropdownSubmenu.find('.dropdown-header-item').addClass('active');
         }
     });
+}
+
+function formatDuration(departure, arrival) {
+    const difference = Math.abs(new Date(arrival) - new Date(departure));
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let display = [];
+
+    if (days != 0) {
+        display.push(`${days} D`);
+    }
+
+    if (hours != 0) {
+        display.push(`${hours} H`);
+    }
+
+    if (minutes != 0) {
+        display.push(`${minutes} M`);
+    }
+
+    return display.join(' ');
+}
+
+async function showViewModal(flightNumber) {
+    const $viewModal = $('#view-flight');
+    const $title = $viewModal.find('.modal-title');
+
+    const $statusBagde = $('#status-badge');
+    const $capacityBadge = $('#capacity-badge');
+
+    const dateOptions = { month: 'long', day: '2-digit', year: 'numeric' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+
+    try {
+        const response = await fetch(`/api/flight/${flightNumber}`);
+        const result = await response.json();
+
+        if (!result.success) {
+            return;
+        }
+
+        const flightData = result.flightData;
+        let airline = flightData.airline;
+        let originAirport = flightData.originAirport;
+        let destinationAirport = flightData.destinationAirport;
+        let capacity = flightData.availableSeats;
+        let status = flightData.flightStatus;
+
+        airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+        $title.text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);
+
+        $('#flight-number').text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')}`);
+        $('#flight-fare').text(`PHP ${(flightData.baseFare).toLocaleString('en-US')}`);
+
+        $('#departure-iata').text(originAirport.iata);
+        $('#departure-location').text(originAirport.location);
+        $('#departure-name').text(originAirport.name);
+        $('#departure-day').text(Intl.DateTimeFormat('en-US', dateOptions).format(new Date(flightData.departureDatetime)));
+        $('#departure-time').text(Intl.DateTimeFormat('en-US', timeOptions).format(new Date(flightData.departureDatetime)));
+
+        $('#arrival-iata').text(destinationAirport.iata);
+        $('#arrival-location').text(destinationAirport.location);
+        $('#arrival-name').text(destinationAirport.name);
+        $('#arrival-day').text(Intl.DateTimeFormat('en-US', dateOptions).format(new Date(flightData.arrivalDatetime)));
+        $('#arrival-time').text(Intl.DateTimeFormat('en-US', timeOptions).format(new Date(flightData.arrivalDatetime)));
+
+        if (status == 'Cancelled') {
+            $statusBagde.text(status);
+            $statusBagde.addClass('text-bg-danger');
+        } else if (status == 'Delayed' || status == 'Rescheduled') {
+            $statusBagde.text('status');
+            $statusBagde.addClass('text-bg-warning');
+        } else if (status == 'Scheduled' || status == 'In Air') {
+            $statusBagde.text(status);
+            $statusBagde.addClass('text-bg-success');
+        }
+
+        if (capacity == 0) {
+            $capacityBadge.text('Full Flight');
+            $capacityBadge.addClass('text-bg-danger');
+        } else if (capacity <= 5) {
+            $capacityBadge.text('Limited Seats');
+            $capacityBadge.addClass('text-bg-warning');
+        } else if (capacity >= 6 && capacity <= 16) {
+            $capacityBadge.text('Available Flight');
+            $capacityBadge.addClass('text-bg-success');
+        }
+
+        $('#duration-badge').text(formatDuration(flightData.departureDatetime, flightData.arrivalDatetime));
+    } finally { }
+}
+
+async function continueBooking(flightNumber) {
+    window.location.href = `/api/select-flight/${flightNumber}`;
 }

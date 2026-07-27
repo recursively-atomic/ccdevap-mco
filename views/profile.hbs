@@ -77,15 +77,13 @@
                             <p class="m-0 p-0 fs-4" id="profile-email"> {{user.emailAddress}} </p>
                         </div>
 
-                        {{#if (neq user.contactNumber '')}}
-                            <div class="d-flex align-items-center m-0">
-                                <h4 class="m-0 p-0 pe-1"> Contact Number: </h4>
+                        <div class="d-flex align-items-center m-0">
+                            <h4 class="m-0 p-0 pe-1"> Contact Number: </h4>
 
-                                <p class="m-0 p-0 fs-4" id="profile-contact">
-                                    {{user.contactNumber}}
-                                </p>
-                            </div>
-                        {{/if}}
+                            <p class="m-0 p-0 fs-4" id="profile-contact">
+                                {{user.contactNumber}}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -210,30 +208,22 @@
                 </div>
             </div>
 
-            <!-- PASSENGER/PASSWORD TOAST -->
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                 id="password-toast">
+            <!-- PASSWORD UPDATE INCCOMPLETE AND PROFILE UPDATE ERROR TOAST -->
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
+                 id="negative-toast">
                 <div class="d-flex align-items-center">
-                    <div class="text-nowrap toast-body">
-                        Successfully changed password!
-                    </div>
-
+                    <div class="text-nowrap toast-body"></div>
                     <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                 </div>
             </div>
 
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 text-bg-success"
-                 id="profile-toast">
-
+            <!-- UPDATE PASSWORD AND UPDATE PROFILE TOAST -->
+            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
+                 id="positive-toast">
                 <div class="d-flex align-items-center">
-                    <div class="toast-body">
-                        Profile updated successfully!
-                    </div>
-
-                    <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast">
-                    </button>
+                    <div class="text-nowrap toast-body"></div>
+                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
                 </div>
-
             </div>
         </div>
 
@@ -460,8 +450,8 @@
                                 <i class="text-secondary fa-solid fa-at"></i>
                             </div>
 
-                            <input class="form-control bg-light border-dark border-2 text-black" type="text"
-                                   placeholder="domain.com">
+                            <input id="domain-address" class="form-control bg-light border-dark border-2 text-black"
+                                   type="text" placeholder="domain.com">
                         </div>
                     </div>
 
@@ -505,14 +495,7 @@
 
         <!-- SAVED PASSENGERS TAB -->
         <div class="tab-pane fade" id="saved-passengers-pane">
-            <div class="d-flex justify-content-center align-items-center flex-wrap gap-3 m-4">
-                <button id="add-passenger-btn" class="btn m-0 btn-success text-white">
-                    Add Passenger
-                    <!-- This would go to the passenger information tab in profile.html -->
-                </button>
-
-                {{> pagination}}
-            </div>
+            <h2 class="text-primary text-center p-5"> No Saved Passengers </h2>
 
             <!-- DELETE PASSENGER MODAL -->
             <div class="modal fade" data-bs-backdrop="static" id="delete-passenger">

@@ -12,6 +12,7 @@ async function autocompleteLocations() {
 
     $origin.empty();
     $destination.empty();
+
     await bindLocations($origin, $destination);
 
     $('#origin, #destination').off('focus').on('focus', function () {
@@ -26,7 +27,7 @@ async function autocompleteLocations() {
             return $(this).val() === $textField.val();
         }).first();
 
-        let code, location, originCode, destionationCode;
+        let code, location;
 
         if (!$match.length) {
             return;
@@ -34,18 +35,30 @@ async function autocompleteLocations() {
 
         code = $match.attr('data-code');
         location = $match.val();
-        originCode = $('#origin').data('code');
-        destinationCode = $('#destination').data('code');
 
         $textField.data('code', code);
         $textField.val(`${location} ${code}`);
-
-        if ((originCode && destinationCode) && originCode === destinationCode) {
-            $textField.val('');
-            $textField.removeData('code');
-            $textField.focus();
-        }
+        updateLocations($origin, $destination);
     });
+}
+
+function updateLocations($origin, $destination) {
+    const originCode = $('#origin').data('code');
+    const destinationCode = $('#destination').data('code');
+
+    const originOptions = $origin.data('options');
+    const destinationOptions = $destination.data('options');
+
+    $origin.html(originOptions);
+    $destination.html(destinationOptions);
+
+    if (originCode) {
+        $destination.find(`option[data-code="${originCode}"]`).remove();
+    }
+
+    if (destinationCode) {
+        $origin.find(`option[data-code="${destinationCode}"]`).remove();
+    }
 }
 
 async function bindLocations(originInput, destinationInput) {
@@ -79,5 +92,22 @@ async function bindLocations(originInput, destinationInput) {
                 })
             );
         });
+
+        originInput.data('options', originInput.html());
+        destinationInput.data('options', destinationInput.html());
     } finally { }
+}
+
+async function continueSearch(event) {
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    data['origin'] = data['origin'].split(' ')[0];
+    data['destination'] = data['destination'].split(' ')[0];
+
+    const parameters = new URLSearchParams(data);
+
+    event.preventDefault();
+    window.location.href = `/flight-search?${parameters.toString()}`;
 }

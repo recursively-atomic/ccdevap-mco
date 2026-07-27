@@ -1,7 +1,13 @@
 const model = require('../models/flightModel');
 
-async function getFlight(flightID) {
-    const flight = await model.findById(flightID).lean();
+async function getFlight(flightIndetifier) {
+    let flight;
+
+    if (typeof flightIndetifier == 'string') {
+        flight = await model.findById(flightIndetifier).lean();
+    } else if (typeof flightIndetifier == 'number') {
+        flight = await model.findOne({ flightNumber: flightIndetifier }).lean();
+    }
 
     return flight;
 }
@@ -40,8 +46,31 @@ async function getFlightDestinations() {
     ]);
 }
 
-async function getFlightsByQuery() {
-    
+async function getFlightsByQuery(queryData, page, limit) {
+    const skip = (page - 1) * limit, filter = { flightStatus: { $nin: ['In Air', 'Cancelled'] } };
+    let totalFlights, flights;
+
+    if (queryData.departureIata) {
+        filter['originAirport.iata'] = queryData.departureIata;
+    }
+
+    if (queryData.arrivalIata) {
+        filter['destinationAirport.iata'] = queryData.arrivalIata;
+    }
+
+    if (queryData.departuredate) {
+        const dayStart = new Date(queryData.departuredate);
+        const dayEnd = new Date(queryData.departuredate);
+
+        dayStart.setUTCHours(0, 0, 0, 0);
+        dayEnd.setUTCHours(23, 59, 59, 999);
+        filter.departureDatetime = { $gte: dayStart, $lte: dayEnd };
+    }
+
+    totalFlights = await model.countDocuments(filter);
+    flights = await model.find(filter).skip(skip).limit(limit).lean();
+
+    return { flights, totalFlights };
 }
 
 async function getFlights(page, limit) {

@@ -1,7 +1,13 @@
 const model = require('../models/userModel');
 
-async function getUserById(id) {
-    return await model.findById(id).lean();
+async function getUserById(userId) {
+    return await model.findById(userId).lean();
+}
+
+async function getUserNumberById(userId) {
+    const { userNumber } = await model.findOne({ _id: userId }).select('userNumber').lean();
+
+    return userNumber;
 }
 
 async function getUserByEmail(email) {
@@ -41,10 +47,10 @@ async function createUser(userData) {
 }
 
 // UPDATE USER INFORMATION
-async function updateUser(id, data) {
+async function updateUser(userId, data) {
     // make it like updateFlight
     return await model.findByIdAndUpdate(
-        id,
+        userId,
         {
             $set: {
                 firstName: data.firstName,
@@ -59,16 +65,9 @@ async function updateUser(id, data) {
 
 async function updatePassword(userId, currentPassword, newPassword) {
     const user = await model.findById(userId);
-    if (!user) {
-        throw new Error("User not found.");
-    }
-
-    if (user.password !== currentPassword) {
-        throw new Error("Current password is incorrect.");
-    }
-
     user.password = newPassword;
+
     return await user.save();
 }
 
-module.exports = { getUserById, getUserByEmail, getLastUserNumber, getUsers, createUser, updateUser, updatePassword };
+module.exports = { getUserById, getUserNumberById, getUserByEmail, getLastUserNumber, getUsers, createUser, updateUser, updatePassword };

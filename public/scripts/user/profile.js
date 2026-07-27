@@ -8,6 +8,10 @@ $(function () {
     $("#save-password-btn").on("click", savePassword);
     $("#update-profile-btn").on("click", openProfileModal);
     $("#save-profile-btn").on("click", saveProfileInformation);
+
+    if ($('#profile-contact').text().trim() == 0) {
+        $('#profile-contact').closest('div').addClass('d-none');
+    }
 });
 
 /**
@@ -24,7 +28,7 @@ function changeProfile() {
             fileReader.onload = function (secondEvent) {
                 $('#profile-picture').attr('src', secondEvent.target.result);
             };
-            
+
             fileReader.readAsDataURL(file);
         }
     });
@@ -38,12 +42,12 @@ async function savePassword() {
     const newPassword = $("#new-password").val().trim();
 
     if (!currentPassword || !newPassword) {
-        alert("Please fill in both password fields.");
+        showToast('#negative-toast', 'Fill in both password fields!');
         return;
     }
 
     try {
-        const response = await fetch("/api/users/change-password", {
+        const response = await fetch("/api/user/change-password", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ currentPassword, newPassword })
@@ -54,11 +58,10 @@ async function savePassword() {
         if (result.success) {
             $("#current-password").val("");
             $("#new-password").val("");
-            showToast("password-toast");
+            showToast('#positive-toast', 'Successfully changed password!');
         } else {
-            alert(result.message);
+            showToast('#negative-toast', 'test');
         }
-
     } finally { }
 }
 
@@ -103,45 +106,60 @@ async function saveProfileInformation() {
 
     const response = await fetch("/api/profile", {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     });
 
     const result = await response.json();
 
     if (!result.success) {
-        alert(result.message || "Failed to update profile.");
+        showToast('#negative-toast', 'Failed to update profile!');
         return;
     }
 
-    // Update the displayed information immediately
-    $("#profile-name").text(
-        result.user.lastName + ", " + result.user.firstName
-    );
-
+    $("#profile-name").text(result.user.lastName + ", " + result.user.firstName);
     $("#profile-email").text(result.user.emailAddress);
-
     $("#profile-contact").text(result.user.contactNumber);
+
+    const email = $("#profile-email").text().trim();
+    const [username, domain] = email.split('@');
+    const contact = $('#profile-contact').text().trim();
+    const [codeOnly, numberOnly] = contact.split(' ');
+
+    $("#email-address").val(username);
+    $('#domain-address').val(domain);
+
+    $('#phone-code').val(codeOnly.replace(/\+/g, ''));
+    $('#phone-number').val(numberOnly);
+
+    if ($('#profile-contact').text().trim() == 0) {
+        $('#profile-contact').closest('div').addClass('d-none');
+    } else {
+        $('#profile-contact').closest('div').removeClass('d-none');
+    }
 
     bootstrap.Modal.getInstance(
         document.getElementById("update-profile-modal")
     ).hide();
 
-    bootstrap.Toast.getOrCreateInstance(
-        document.getElementById("profile-toast")
-    ).show();
+    showToast('#positive-toast', 'Profile updated successfully!');
 }
 
 /**
- * Displays a toast.
+ * Displays a toast with an optional display text.
  * 
  * @param {string} toastID the toast's ID.
+ * @param {string} text the toast's display text.
  */
-function showToast(toastID) {
-    const toast = document.getElementById(toastID);
+function showToast(toastID, text = '') {
+    const toast = document.querySelector(toastID);
+    const toastBody = toast.querySelector('.toast-body');
+
     document.activeElement.blur();
+
+    if (text) {
+        toastBody.textContent = text;
+    }
 
     const toastInstance =
         bootstrap.Toast.getInstance(toast) ||
@@ -149,6 +167,7 @@ function showToast(toastID) {
             delay: 2000,
             autohide: true
         });
+
     toastInstance.show();
 }
 

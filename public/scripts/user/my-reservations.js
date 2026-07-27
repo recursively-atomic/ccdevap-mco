@@ -1,8 +1,5 @@
 $(function () {
     changeDropdownDisplay();
-    viewReservation();
-    editReservation();
-    cancelReservation();
 });
 
 /**
@@ -73,104 +70,82 @@ function hideModalShowToast(modalID, toastID, text = '') {
  * Views the details of a reservations by editing a modal's
  * title and content.
  */
-function viewReservation() {
+async function showViewModal(identifier) {
     const $viewModal = $('#view-reservation');
+    const $title = $viewModal.find('.modal-title');
+    const $identifier = $('#identifier');
+    const $status = $('#status');
+    const $flightNumber = $('#flight-number');
+    const $seatNumber = $('#seat-number');
+    const $passengerName = $('#passenger-name');
 
-    $viewModal.on('show.bs.modal', function (event) {
-        const $button = $(event.relatedTarget);
-        const reservationNumber = $button.data('reservation-number');
-        const passengerName = $button.data('passenger-name');
-        const flightNumber = $button.data('flight-number');
-        const seatNumber = $button.data('seat-number');
-        const status = $button.data('status');
-        const statusBackground = $button.data('status-bg');
+    try {
+        const response = await fetch(`/api/read-reservation/${identifier}`);
+        const result = await response.json();
 
-        const $title = $viewModal.find('.modal-title');
-        const $body = $viewModal.find('.modal-body');
+        if (!result.success) {
+            return
+        }
 
-        $title.text(`${reservationNumber} Details`);
-        $body.html(`
-            <div class="d-flex align-items-center m-0 text-secondary">
-                <div class="container d-flex flex-row p-0">
-                    <h2 class="mb-0 me-2 fw-bold"> ${reservationNumber} </h2>
+        const reservation = result.reservation;
+        const flight = reservation.flight;
+        let airline = flight.airline;
 
-                    <span class="badge fs-6 rounded-pill ${statusBackground} text-white p-2 m-0 d-flex align-items-center">
-                        ${status}
-                    </span>
-                </div>                
-            </div>
+        airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
 
-            <h4 class="d-flex align-items-center m-0 p-0 text-dark">
-                <p class="m-0 p-0 ps-3"> ${flightNumber} </p>
-                <i class="m-0 p-0 bi bi-dot"></i>
-                <p class="m-0 p-0"> ${seatNumber} </p>
-            </h4>
-
-            <h4 class="m-0 p-0 ps-3 text-dark"> ${passengerName} </h4>
-        `);
-    });
+        $title.text(`${identifier} Details`);
+        $identifier.text(reservation.identifier);
+        $status.text(reservation.status);
+        $flightNumber.text(`${airline} ${String(flight.flightNumber).padStart(4, '0')}`);
+        $seatNumber.text(reservation.seatNumber);
+        $passengerName.text(`${reservation.firstName} ${reservation.lastName} ${reservation.suffix ? reservation.suffix : ''}`);
+    } finally { }
 }
 
-/**
- * Edits a reservation's associated seat.
- */
-function editReservation() {
+async function showEditModal(identifier) {
     const $editModal = $('#edit-reservation');
+    const $title = $editModal.find('.modal-title');
     const $seatMap = $('#seat-map');
+    const $saveButton = $('#save-button');
     const editData = {
-        reservationNumber: null,
-        newSeat: null
+        seat: null
     };
 
-    $editModal.on('show.bs.modal', function (event) {
-        const $button = $(event.relatedTarget);
-        const reservationNumber = $button.data('reservation-number');
-        const flightNumber = $button.data('flight-number');
-        const seatNumber = $button.data('seat-number');
+    try {
+        const response = await fetch(`/api/read-seat/${identifier}`);
+        const markup = await response.text();
 
-        editData.reservationNumber = reservationNumber;
-        editData.newSeat = seatNumber;
+        if (response.status != 200) {
+            return
+        }
 
-        $editModal.find('.modal-title').text('Edit ' + reservationNumber);
-        $seatMap.html('...Loading Seat Map...');
+        $title.text(`Edit ${identifier}`);
+        $seatMap.html(markup);
+        editData.seat = $seatMap.find('.seat.selected').text().trim();
+        attachSeatSelection($seatMap, editData);
 
-        $.ajax({
-            url: `/api/${flightNumber}/${seatNumber}`,
-            method: 'GET',
-            success: function (html) {
-                $seatMap.html(html);
-                attachSeatSelection($seatMap, editData);
-            },
-            error: function () {
-                $seatMap.html('Error Loading Seat Map!');
-            }
+        $saveButton.off('click').on('click', async function () {
+            await updateReservationSeat(identifier, editData);
         });
-    });
+    } finally { }
+}
 
-    $('#save-button').off('click').on('click', function () {
-        $.ajax({
-            url: `/api/${editData.reservationNumber}`,
+async function updateReservationSeat(identifier, editData) {
+    try {
+        const response = await fetch(`/api/update-seat/${identifier}`, {
             method: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify({ seatNumber: editData.newSeat }),
-            success: function () {
-                const $card = $(`.card[data-reservation-number="${editData.reservationNumber}"]`);
-
-                if ($card.length) {
-                    $card.find('[data-seat-number]').data('seat-number', editData.newSeat);
-                }
-
-                hideModalShowToast(
-                    'edit-reservation',
-                    'edit-toast',
-                    `Successfully changed seat to ${editData.newSeat} for reservation ${editData.reservationNumber}!`
-                );
-            },
-            error: function (xhr) {
-                alert('Editing Error: ' + xhr.responseText + '!');
-            }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seatNumber: editData.seat })
         });
-    });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            return;
+        }
+
+        hideModalShowToast('edit-reservation', 'edit-toast', `Successfully changed seat to ${editData.seat} for reservation ${identifier}!`);
+    } finally { }
 }
 
 /**
@@ -186,52 +161,35 @@ function attachSeatSelection($seatMap, editData) {
     $seats.off('click').on('click', function () {
         if (!$(this).hasClass('occupied')) {
             $seats.removeClass('selected').addClass('available');
-            $(this).addClass('selected');
+            $(this).removeClass('available').addClass('selected');
 
-            editData.newSeat = $(this).text().trim();
+            editData.seat = $(this).text().trim();
         }
     });
 }
 
-/**
- * Cancels a reservation by changing the reservation's status
- *  to 'Cancelled'.
- */
-function cancelReservation() {
+async function showCancelModal(identifier) {
     const $cancelModal = $('#cancel-reservation');
-    const cancelData = {
-        reservationNumber: null
-    };
+    const $card = $(`.card[data-identifier="${identifier}"]`);
+    const $badge = $card.find('.badge');
 
-    $cancelModal.on('show.bs.modal', function (event) {
-        const $button = $(event.relatedTarget);
-        const reservationNumber = $button.data('reservation-number');
-        cancelData.reservationNumber = reservationNumber;
-    });
+    $('#cancel-button').off('click').on('click', async function () {
+        try {
+            const response = await fetch(`/api/update-cancel/${identifier}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' }
+            })
 
-    $('#cancel-button').off('click').on('click', function () {
-        $.ajax({
-            url: `/api/${cancelData.reservationNumber}/cancel`,
-            method: 'PUT',
-            contentType: 'application/json',
-            success: function () {
-                const $card = $(`.card[data-reservation-number="${cancelData.reservationNumber}"]`);
+            const result = await response.json();
 
-                if ($card.length) {
-                    const $badge = $card.find('.badge');
-
-                    $badge.text('Cancelled')
-                          .removeClass('text-bg-success text-bg-warning')
-                          .addClass('text-bg-danger');
-
-                    $card.find('.btn').prop('disabled', true);
-                }
-
-                hideModalShowToast('cancel-reservation', 'cancel-toast', `Cancelled Reservation ${cancelData.reservationNumber}!`);
-            },
-            error: function (xhr) {
-                alert('Cancellation Error: ' + xhr.responseText + '!');
+            if (!result.success || !$card.length) {
+                return
             }
-        });
+            
+            $badge.text('Cancelled').removeClass('text-bg-success text-bg-warning').addClass('text-bg-danger');
+            $card.find('.btn').prop('disabled', true);
+
+            hideModalShowToast('cancel-reservation', 'cancel-toast', `Cancelled reservation ${identifier}!`);
+        } finally { }
     });
 }

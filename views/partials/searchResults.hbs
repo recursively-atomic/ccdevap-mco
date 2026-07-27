@@ -1,0 +1,17 @@
+<div class="card-body">
+    <div class="row row-gap-lg-4 my-3 m-0 row-gap-md-4 row-gap-sm-4 row-gap-4">
+        {{> flightCards}}
+    </div>
+</div>
+
+<div class="card-footer bg-primary-accent">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
+        <h6 class="text-white">
+            Showing {{pagination.resultsPerPage}} Results Out Of {{pagination.totalResults}}
+        </h6>
+
+        <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
+            {{> pagination}}
+        </div>
+    </div>
+</div>

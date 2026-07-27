@@ -1,7 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const { getUserById, getUserByEmail, getLastUserNumber, getUsers, createUser, updateUser, updatePassword } = require('../controllers/userController');
+const { getFlights } = require('../controllers/flightController');
+const { getReservations } = require('../controllers/reservationController');
+const {
+    getUserById,
+    getUserNumberById,
+    getUserByEmail,
+    getLastUserNumber,
+    getUsers,
+    createUser,
+    updateUser,
+    updatePassword
+} = require('../controllers/userController');
 
 router.get('/', (req, res) => {
     if (!req.session.user) {
@@ -13,17 +24,24 @@ router.get('/', (req, res) => {
     }
 });
 
-router.get('/home', (req, res) => {
+router.get('/home', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     } else if (req.session.user.role != 'user') {
         return res.redirect('/dashboard');
     }
 
+    req.session.user.selectedFlight = null;
+    const { reservations } = await getReservations(0, 0, await getUserNumberById(req.session.user._id));
+    const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled').length;
+    const { totalFlights } = await getFlights(0, 0);
+
     res.status(200).render('home', {
         page: '/home',
         script: '/scripts/home.js',
         role: req.session.user.role,
+        reservations: activeReservations,
+        flights: totalFlights
     });
 });
 
@@ -101,14 +119,20 @@ router.get('/profile', async (req, res) => {
         return res.redirect('/dashboard');
     }
 
-    const user = await getUserById(req.session.user._id);
+    req.session.user.selectedFlight = null;
 
-    res.status(200).render('profile', {
-        page: '/profile',
-        script: '/scripts/user/profile.js',
-        role: req.session.user.role,
-        user: user
-    });
+    try {
+        const user = await getUserById(req.session.user._id);
+
+        res.status(200).render('profile', {
+            page: '/profile',
+            script: '/scripts/user/profile.js',
+            role: req.session.user.role,
+            user: user
+        });
+    } catch {
+        res.status(500).json({ success: false });
+    }
 });
 
 router.get('/dashboard', async (req, res) => {
@@ -162,6 +186,7 @@ router.get('/users', async (req, res) => {
             page: '/users',
             script: '/scripts/admin/users.js',
             role: req.session.user.role,
+            currentUser: req.session.user._id,
             userRows: users,
             pagination: pagination
         });
@@ -185,18 +210,25 @@ router.get('/logout', (req, res) => {
 });
 
 // APIs
+router.get('/api/user-number', async (req, res) => {
+    try {
+        const userNumber = await getUserNumberById(req.session.user._id);
+        res.status(200).json({ success: true, userNumber: userNumber });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.get('/api/users', async (req, res) => {
     try {
         const users = await getUsers();
         res.json(users);
-    } catch (err) {
-        res.status(500).json({
-            error: err.message
-        });
+    } catch {
+        res.status(500).json({ success: false });
     }
 });
 
-router.put('/api/users/change-password', async (req, res) => {
+router.put('/api/user/change-password', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     } else if (req.session.user.role != 'user') {
@@ -208,11 +240,8 @@ router.put('/api/users/change-password', async (req, res) => {
         await updatePassword(req.session.user._id, currentPassword, newPassword);
 
         res.status(200).json({ success: true });
-    } catch (err) {
-        res.status(400).json({
-            success: false,
-            message: err.message
-        });
+    } catch {
+        res.status(500).json({ success: false });
     }
 });
 
@@ -225,12 +254,8 @@ router.put('/api/profile', async (req, res) => {
 
         req.session.user.emailAddress = user.emailAddress;
         res.status(200).json({ success: true, user });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false,
-            message: 'Unable to update profile.'
-        });
+    } catch {
+        res.status(500).json({ success: false });
     }
 });
 
@@ -239,27 +264,17 @@ router.get('/api/users/:id', async (req, res) => {
         const user = await getUserById(req.params.id);
         res.json(user);
 
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
+    } catch {
+        res.status(500).json({ success: false });
     }
 });
 
 router.put('/api/users/:id', async (req, res) => {
     try {
         const updatedUser = await updateUser(req.params.id, req.body);
-        res.json({
-            success: true,
-            user: updatedUser
-        });
-
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: err.message
-        });
+        res.status(200).json({ success: true, user: updatedUser });
+    } catch {
+        res.status(500).json({ success: false });
     }
 });
 

@@ -1,8 +1,8 @@
 {{> navigation}}
 
 <!-- FLIGHT SEARCH -->
-<div class="container mt-5 mb-5">
-    <div class="card d-flex shadow-lg">
+<div class="container mt-5">
+    <div class="card d-flex shadow-lg mb-5">
         <!-- DEFAULT SEARCH OPTIONS -->
         <div class="card-header text-center text-white bg-primary-accent">
             <h2 class="mt-2"> Flight Search </h2>
@@ -228,7 +228,7 @@
                                             <option selected hidden value="">
                                                 Select A Preferred Airline
                                             </option>
-                                            
+
                                             <option> Cebu Atlantic </option>
                                             <option> Filipino Airlines </option>
                                             <option> AirFAST </option>
@@ -313,7 +313,7 @@
     </div>
 
     <!-- FLIGHT SEARCH RESULTS -->
-    <div class="card d-flex mt-4 shadow-lg" id="flight-results">
+    <div class="card d-flex mt-5 mb-5 shadow-lg d-none" id="flight-results">
         <div class="card-header text-center text-white bg-primary-accent">
             <div class="row mx-2 my-4">
                 <!-- SORT BY DROPDOWN -->
@@ -544,21 +544,79 @@
             </div>
         </div>
 
-        <div class="card-body">
-            <div class="row row-gap-lg-4 my-3 m-0 row-gap-md-4 row-gap-sm-4 row-gap-4">
-                {{> flightCards}}
-            </div>
+        <div id="search-results">
+            {{> searchResults}}
         </div>
+    </div>
+</div>
 
-        <div class="card-footer bg-primary-accent">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 m-3">
-                <h6 class="text-white">
-                    Showing {{pagination.resultsPerPage}} Results Out Of {{pagination.totalResults}}
-                </h6>
+<!-- VIEW FLIGHT MODAL -->
+<div id="view-flight" class="modal fade" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h2 class="modal-title fs-5 fw-bold"></h2>
+            </div>
 
-                <div class="d-flex justify-content-center align-items-center flex-wrap gap-3">
-                    {{> pagination}}
+            <div class="modal-body">
+                <div class="d-flex align-items-center m-0 text-primary justify-content-between">
+                    <h2 id="flight-number" class="mb-0 me-2"></h2>
+                    <h2 id="flight-fare" class="m-0 p-0 ps-3 text-success text-end text-nowrap"></h2>
                 </div>
+
+                <hr class="border border-3 rounded-3 border-dark opacity-100">
+
+                <div class="row gap-3">
+                    <!-- FLIGHT DEPARTURE DETAILS -->
+                    <div class="col">
+                        <div class="d-flex align-items-center m-0 p-0 text-secondary">
+                            <i class="fa-solid fa-plane-departure fa-xl"></i>
+                            <h6 class="m-2 fw-bolder"> Departure </h6>
+                        </div>
+
+                        <div class="d-flex align-items-center m-0 p-0 text-primary-accent fw-bolder">
+                            <p id="departure-iata" class="mb m-0 p-0 ps-3"></p>
+                            <i class="m-0 p-0 bi bi-dot mb"></i>
+                            <p id="departure-location" class="m-0 p-0"></p>
+                        </div>
+
+                        <p id="departure-name" class="m-0 p-0 ps-4 text-dark"></p>
+                        <p id="departure-day" class="m-0 p-0 ps-3 text-primary-accent fw-bolder"></p>
+                        <p id="departure-time" class="m-0 p-0 ps-3 text-primary-accent fw-bolder"></p>
+                    </div>
+
+                    <!-- FLIGHT ARRIVAL DETAILS -->
+                    <div class="col">
+                        <div class="d-flex align-items-center m-0 p-0 text-secondary">
+                            <i class="fa-solid fa-plane-arrival fa-xl"></i>
+                            <h6 class="m-2 fw-bolder"> Arrival </h6>
+                        </div>
+
+                        <div class="d-flex align-items-center m-0 p-0 text-primary-accent fw-bolder">
+                            <p id="arrival-iata" class="mb-auto m-0 p-0 ps-3"></p>
+                            <i class="m-0 p-0 bi bi-dot mb-auto"></i>
+                            <p id="arrival-location" class="m-0 p-0"></p>
+                        </div>
+
+                        <p id="arrival-name" class="m-0 p-0 ps-4 text-dark"></p>
+                        <p id="arrival-day" class="m-0 p-0 ps-3 text-primary-accent fw-bolder"></p>
+                        <p id="arrival-time" class="m-0 p-0 ps-3 text-primary-accent fw-bolder"></p>
+                    </div>
+                </div>
+
+                <hr class="border border-3 rounded-3 border-dark opacity-100">
+
+                <div class="d-flex justify-content-center gap-3 fs-5">
+                    <span id="status-badge" class="badge p-2 rounded-pill text-white"></span>
+                    <span id="capacity-badge" class="badge p-2 rounded-pill text-white"></span>
+                    <span id="duration-badge" class="badge p-2 text-bg-primary rounded-pill text-white"></span>
+                </div>
+            </div>
+
+            <div class="modal-footer bg-light">
+                <button class="btn btn-primary text-white" data-bs-dismiss="modal">
+                    Close
+                </button>
             </div>
         </div>
     </div>

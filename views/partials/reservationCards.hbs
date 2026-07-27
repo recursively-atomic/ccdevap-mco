@@ -1,11 +1,11 @@
 {{#each reservationCards}}
-    <div class="card m-4 p-4 mb-4 card-hover-sm bg-primary-accent shadow" data-reservation-number="{{this.reservationNumber}}">
+    <div class="card m-4 p-4 mb-4 card-hover-sm bg-primary-accent shadow" data-identifier="{{this.identifier}}">
         <div class="row">
             <div class="col-lg-9 col-md-12">
                 <!-- FLIGHT ID AND FLIGHT STATUS -->
                 <div class="d-flex align-items-center m-0 text-secondary justify-content-between">
                     <div class="container d-flex flex-row p-0">
-                        <h2 class="mb-0 me-2"> {{this.reservationNumber}} </h2>
+                        <h2 class="mb-0 me-2"> {{this.identifier}} </h2>
 
                         <span class="badge fs-6 rounded-pill text-bg-{{#if (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}
                                     text-white p-2 m-0 d-flex align-items-center">
@@ -13,7 +13,8 @@
                         </span>
                     </div>
 
-                    <h2 class="m-0 p-0 ps-3 text-light text-end text-nowrap"> PHP {{formatNumber this.totalAmount}} </h2>
+                    <h2 class="m-0 p-0 ps-3 text-light text-end text-nowrap"> PHP {{formatNumber this.totalAmount}}
+                    </h2>
                 </div>
 
                 <!-- FLIGHT TYPE AND PASSENGER AMOUNT -->
@@ -34,18 +35,12 @@
                             <h6 class="m-2 fw-bolder"> Departure </h6>
                         </div>
 
-                        <p class="m-0 p-0 ps-3 text-light"> TESTAIRPORT </p>
+                        <p class="m-0 p-0 ps-3 text-light"> {{this.flight.originAirport.name}} </p>
 
                         <div class="d-flex align-items-center m-0 p-0 text-light">
-                            <p class="m-0 p-0 ps-3"> TESTGATE </p>
+                            <p class="m-0 p-0 ps-3"> {{getDate this.flight.departureDatetime}} </p>
                             <i class="m-0 p-0 bi bi-dot"></i>
-                            <p class="m-0 p-0"> TESTIME </p>
-                        </div>
-
-                        <div class="d-flex align-items-center m-0 p-0 text-light">
-                            <p class="m-0 p-0 ps-3"> TESTDATE </p>
-                            <i class="m-0 p-0 bi bi-dot"></i>
-                            <p class="m-0 p-0"> TESTTIME </p>
+                            <p class="m-0 p-0"> {{getTime this.flight.departureDatetime}} </p>
                         </div>
                     </div>
 
@@ -56,16 +51,12 @@
                             <h6 class="m-2 fw-bolder"> Arrival </h6>
                         </div>
 
-                        <p class="m-0 p-0 ps-3 text-light">
-                            TESTAIRPORT
-                        </p>
-
-                        <p class="m-0 p-0 ps-3 text-light"> TESTGATE </p>
+                        <p class="m-0 p-0 ps-3 text-light"> {{this.flight.destinationAirport.name}} </p>
 
                         <div class="d-flex align-items-center m-0 p-0 text-light">
-                            <p class="m-0 p-0 ps-3"> TESTDATE </p>
+                            <p class="m-0 p-0 ps-3"> {{getDate this.flight.arrivalDatetime}} </p>
                             <i class="m-0 p-0 bi bi-dot"></i>
-                            <p class="m-0 p-0"> TESTTIME </p>
+                            <p class="m-0 p-0"> {{getTime this.flight.arrivalDatetime}} </p>
                         </div>
                     </div>
                 </div>
@@ -73,28 +64,23 @@
 
             <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
                 <div class="d-flex flex-column gap-2 align-items-center w-100">
-                    <button class="btn btn-success btn-lg text-white" data-bs-toggle="modal"
-                            data-bs-target="#view-reservation" data-reservation-number="{{this.reservationNumber}}"
-                            data-flight-number="{{this.flightNumber}}"
-                            data-passenger-name="{{this.firstName}} {{this.lastName}}{{#if this.suffix}} {{this.suffix}}{{/if}}"
-                            data-seat-number="{{this.seatNumber}}" data-status="{{this.status}}"
-                            data-status-bg="text-bg-{{#if (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}"
-                            {{#if (eq this.status 'Cancelled')}}disabled{{/if}}>
+                    <button class="btn btn-success btn-lg text-white" onclick="showViewModal('{{this.identifier}}')"
+                            data-bs-toggle="modal" data-bs-target="#view-reservation">
                         View Details
                     </button>
 
-                    <button class="btn btn-warning btn-lg text-white" data-bs-toggle="modal"
-                            data-bs-target="#edit-reservation" data-reservation-number="{{this.reservationNumber}}"
-                            data-flight-number="{{this.flightNumber}}" data-seat-number="{{this.seatNumber}}"
-                            {{#if (eq this.status 'Cancelled')}}disabled{{/if}}>
+                    <button class="btn btn-warning btn-lg text-white" onclick="showEditModal('{{this.identifier}}')"
+                            data-bs-toggle="modal" data-bs-target="#edit-reservation">
                         Edit Details
                     </button>
 
-                    <button class="btn btn-danger btn-lg text-white" data-bs-toggle="modal"
-                            data-bs-target="#cancel-reservation" data-reservation-number="{{this.reservationNumber}}" {{#if (eq this.status 'Cancelled')}}disabled{{/if}}>
+                    <button class="btn btn-danger btn-lg text-white" onclick="showCancelModal('{{this.identifier}}')"
+                            data-bs-toggle="modal" data-bs-target="#cancel-reservation">
                         Cancel Reservation </button>
                 </div>
             </div>
         </div>
     </div>
+{{else}}
+    <h2 class="text-primary text-center p-5 m-0"> No Active Reservations </h2>
 {{/each}}

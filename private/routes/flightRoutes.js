@@ -20,10 +20,15 @@ router.get('/flight-search', (req, res) => {
         return res.redirect('/dashboard');
     }
 
+    const { origin, destination } = req.query;
+    req.session.user.selectedFlight = null;
+
     res.render('flightSearch', {
         page: '/flight-search',
         script: '/scripts/user/flight-search.js',
         role: req.session.user.role,
+        origin: origin,
+        destination: destination
     });
 });
 
@@ -37,7 +42,7 @@ router.get('/flights', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
         const { flights, totalFlights } = await getFlights(page, limit);
-        const totalPages = Math.ceil(totalFlights / limit);
+        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
 
         let pagination;
 
@@ -99,10 +104,35 @@ router.post('/flights', async (req, res) => {
 });
 
 // APIs
+router.get('/api/flight-number', (req, res) => {
+    res.status(200).json({ success: true, flightNumber: req.session.user.selectedFlight });
+});
+
 router.get('/api/search', async (req, res) => {
     try {
-        const flights = await flights.getFlightsByQuery();
-        res.result(200).json({ success: true, flights: flights });
+        const page = parseInt(req.query.page) || 1, limit = 8;
+
+        const { flights, totalFlights } = await getFlightsByQuery(req.query, page, limit);
+        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
+        const pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalFlights,
+            resultsPerPage: limit,
+            baseUrl: '/flight-search?page='
+        };
+
+        res.status(200).render('partials/searchResults', {
+            layout: false,
+            flightCards: flights,
+            pagination: pagination
+        }, (err, html) => {
+            if (err) {
+                return res.status(500).json({ success: false });
+            }
+
+            res.status(200).json({ success: true, html });
+        });
     } catch {
         res.status(500).json({ success: false });
     }
@@ -112,7 +142,7 @@ router.get('/api/flights-table', async (req, res) => {
     try {
         const page = parseInt(req.query.page) || 1, limit = 10;
         let { flights, totalFlights } = await getFlights(page, limit);
-        const totalPages = Math.max(Math.ceil(totalFlights / limit));
+        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
 
         let pagination;
 
@@ -154,6 +184,15 @@ router.get('/api/flight-destinations', async (req, res) => {
     try {
         const destinations = await getFlightDestinations();
         res.status(200).json({ success: true, destinations: destinations });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/flight/:flightNumber', async (req, res) => {
+    try {
+        const flight = await getFlight(parseInt(req.params.flightNumber));
+        res.status(200).json({ success: true, flightData: flight });
     } catch {
         res.status(500).json({ success: false });
     }

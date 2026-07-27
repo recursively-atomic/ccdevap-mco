@@ -1,7 +1,7 @@
 {{> navigation}}
 
 <!-- HERO SECTION -->
-<div class="carousel slide">
+<div class="carousel slide mt-5">
     <div class="carousel-inner">
         <div class="carousel-item active shadow-lg">
             <img class="d-block rounded-3 shadow-lg img-fluid mx-auto" src="https://picsum.photos/1280/720/?blur=5">
@@ -20,45 +20,45 @@
         <h2 class="card-header bg-primary-accent text-white"> In Need Of A Quick Flight? </h2>
 
         <div class="card-body rounded-bottom bg-secondary-accent">
-            <div class="row d-flex align-items-center">
+            <form onsubmit="continueSearch(event)">
+                <div class="row d-flex align-items-center">
+                    <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-plane-departure"></i>
+                            </div>
 
-                <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
-                    <div class="input-group">
-                        <div class="input-group-text bg-dark border-dark">
-                            <i class="text-secondary fa-solid fa-plane-departure"></i>
-                        </div>
+                            <div class="form-floating">
+                                <input id="origin" name="origin" type="text" placeholder=""
+                                       class="form-control bg-light border-dark border-5 text-black rounded-end-3"
+                                       list="origin-result" required>
 
-                        <div class="form-floating">
-                            <input id="origin" type="text" placeholder=""
-                                   class="form-control bg-light border-dark border-5 text-black rounded-end-3"
-                                   list="origin-result">
-
-                            <label class="ms-1" for="origin"> Flight Origin </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
-                    <div class="input-group">
-                        <div class="input-group-text bg-dark border-dark">
-                            <i class="text-secondary fa-solid fa-plane-arrival"></i>
-                        </div>
-
-                        <div class="form-floating">
-                            <input id="destination" type="text" placeholder=""
-                                   class="form-control bg-light border-dark border-5 text-black rounded-end-3"
-                                   list="destination-result">
-                                   
-                            <label class="ms-1" for="destination"> Flight Destination </label>
+                                <label class="ms-1" for="origin"> Flight Origin </label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-lg-4 col-md-12">
-                    <a class="btn btn-lg btn-primary w-100 text-white"> Search Flights </a>
-                    <!-- This would go to search.html -->
+                    <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-3 mb-sm-3 mb-3">
+                        <div class="input-group">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-plane-arrival"></i>
+                            </div>
+
+                            <div class="form-floating">
+                                <input id="destination" name="destination" type="text" placeholder=""
+                                       class="form-control bg-light border-dark border-5 text-black rounded-end-3"
+                                       list="destination-result" required>
+
+                                <label class="ms-1" for="destination"> Flight Destination </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12">
+                        <button class="btn btn-lg btn-primary w-100 text-white" type="submit"> Search Flights </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
 
         <datalist id="origin-result"></datalist>
@@ -122,7 +122,7 @@
     </h2>
 </div>
 
-<div class="container mb-4">
+<div class="container mb-5">
     <div class="row">
         <!-- AVAILABLE FLIGHTS -->
         <div class="card col-lg-4 col-md-6 card-hover-sm mt-lg-4 my-md-3 my-sm-3 my-3 text-center bg-transparent
@@ -132,16 +132,15 @@
             <div class="card-body d-flex flex-column rounded-bottom shadow-lg bg-tertiary-accent">
                 <div class="card bg-white">
                     <div class="card-body pt-3 pb-2">
-                        <h2 class="text-danger"> 4 Flights Left </h2>
+                        <h2 class="text-primary"> {{{flights}}} Active Flights </h2>
                     </div>
                 </div>
 
                 <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                <button class="btn btn-lg btn-secondary mx-auto text-white">
+                <a class="btn btn-lg btn-secondary mx-auto text-white" href="/flight-search">
                     Book A Flight Now
-                    <!-- This would go to booking.html -->
-                </button>
+                </a>
             </div>
         </div>
 
@@ -153,16 +152,15 @@
             <div class="card-body d-flex flex-column rounded-bottom shadow-lg bg-tertiary-accent">
                 <div class="card bg-white">
                     <div class="card-body pt-3 pb-2">
-                        <h2 class="text-success"> 10 Active Bookings </h2>
+                        <h2 class="text-primary"> {{{reservations}}} Active Bookings </h2>
                     </div>
                 </div>
 
                 <hr class="border border-3 border-dark rounded-3 opacity-100">
 
-                <button class="btn btn-lg btn-secondary mt-auto mx-auto text-white">
+                <a class="btn btn-lg btn-secondary mt-auto mx-auto text-white" href="/my-reservations">
                     Manage My Reservations
-                    <!-- This would go to the travel history tab in profile.html -->
-                </button>
+                </a>
             </div>
         </div>
 

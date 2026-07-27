@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
-    reservationNumber: {
+    identifier: {
         type: String,
         unique: true
     },
 
     flightNumber: {
-        type: String,
+        type: Number,
         required: true
     },
 
-    userId: {
-        type: String,
+    userNumber: {
+        type: Number,
         required: true
     },
 

@@ -130,14 +130,32 @@
 </div>
 
 <!-- VIEW RESERVATION MODAL -->
-<div class="modal fade" id="view-reservation" data-bs-backdrop="static">
+<div id="view-reservation" class="modal fade" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h2 class="modal-title fs-5"></h2>
             </div>
 
-            <div class="modal-body bg-white fw-bolder text-dark"></div>
+            <div class="modal-body bg-white fw-bolder text-dark">
+                <div class="d-flex align-items-center m-0 text-secondary">
+                    <div class="container d-flex flex-row p-0">
+                        <h2 id="identifier" class="mb-0 me-2 fw-bold"></h2>
+
+                        <span id="status"
+                              class="badge fs-6 rounded-pill text-white p-2 m-0 d-flex align-items-center">
+                        </span>
+                    </div>
+                </div>
+
+                <h4 class="d-flex align-items-center m-0 p-0 text-dark">
+                    <p id="flight-number" class="m-0 p-0 ps-3"></p>
+                    <i class="m-0 p-0 bi bi-dot"></i>
+                    <p id="seat-number" class="m-0 p-0"> </p>
+                </h4>
+
+                <h4 id="passenger-name" class="m-0 p-0 ps-3 text-dark"> </h4>
+            </div>
 
             <div class="modal-footer bg-light">
                 <button class="btn btn-primary text-white" data-bs-dismiss="modal">

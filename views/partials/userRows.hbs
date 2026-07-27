@@ -5,8 +5,12 @@
             {{#if (eq this.role 'user')}} USR {{/if}}
 
             {{pad this.userNumber 4 '0'}}
+
+            {{#if (eq ../currentUser this._id)}}
+                <span class="fw-medium"> (You) </span>
+            {{/if}}
         </th>
-        
+
         <td> {{formatTitleCase this.role}} </td>
         <td> Active </td>
         <td> {{this.firstName}} </td>

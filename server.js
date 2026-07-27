@@ -19,26 +19,29 @@ const handlebars = expressHandlebars.create({
     partialsDir: path.join(__dirname, 'views', 'partials'),
     helpers: {
         eq: (a, b) => a == b,
-        neq: (a, b) => a != b,
         gt: (a, b) => a > b,
         gte: (a, b) => a >= b,
         lt: (a, b) => a < b,
         lte: (a, b) => a <= b,
         add: (a, b) => a + b,
         subtract: (a, b) => a - b,
+
         range: (start, end) => {
             const arr = [];
             for (let i = start; i <= end; i++) arr.push(i);
             return arr;
         },
+
         or: (...args) => {
             args.pop();
             return args.some(Boolean);
         },
+
         and: (...args) => {
             args.pop();
             return args.every(Boolean);
         },
+
         formatNumber: (input) => input.toLocaleString('en-US'),
         formatTitleCase: (input) => input.toLowerCase().replace(/\b\w/g, character => character.toUpperCase()),
         getDate: (datetime) => {
@@ -50,6 +53,7 @@ const handlebars = expressHandlebars.create({
 
             return Intl.DateTimeFormat('en-US', options).format(datetime)
         },
+
         getTime: (datetime) => {
             const options = {
                 hour: '2-digit',
@@ -59,7 +63,32 @@ const handlebars = expressHandlebars.create({
 
             return Intl.DateTimeFormat('en-US', options).format(datetime);
         },
-        pad: (input, length, padding) => String(input).padStart(length, padding)
+
+        getDuration: (departure, arrival) => {
+            const difference = Math.abs(new Date(arrival) - new Date(departure));
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+            let display = [];
+
+            if (days != 0) {
+                display.push(`${days} D`);
+            }
+
+            if (hours != 0) {
+                display.push(`${hours} H`);
+            }
+
+            if (minutes != 0) {
+                display.push(`${minutes} M`);
+            }
+
+            return display.join(' ');
+        },
+
+        pad: (input, length, padding) => String(input).padStart(length, padding),
+        blank: (string) => a.length
     }
 });
 

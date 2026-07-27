@@ -1,7 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const { getSeatMap, getReservations, createReservation, updateSeat, updateStatus } = require('../controllers/reservationController');
+const { getUserNumberById } = require('../controllers/userController');
+const { getFlight } = require('../controllers/flightController');
+const {
+    getSeatMap,
+    getReservation,
+    getReservations,
+    createReservation,
+    updateSeat,
+    updateStatus
+} = require('../controllers/reservationController');
 
 router.get('/my-reservations', async (req, res) => {
     if (!req.session.user) {
@@ -10,9 +19,11 @@ router.get('/my-reservations', async (req, res) => {
         return res.redirect('/dashboard');
     }
 
+    req.session.user.selectedFlight = null;
+
     try {
         const page = parseInt(req.query.page) || 1, limit = 3;
-        const { reservations, totalReservations } = await getReservations(page, limit, req.session.user._id);
+        const { reservations, totalReservations } = await getReservations(page, limit, await getUserNumberById(req.session.user._id));
         const totalPages = Math.ceil(totalReservations / limit);
 
         let pagination;
@@ -36,8 +47,7 @@ router.get('/my-reservations', async (req, res) => {
             reservationCards: reservations,
             pagination: pagination
         });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -75,8 +85,7 @@ router.get('/reservations', async (req, res) => {
             reservationRows: reservations,
             pagination: pagination
         });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -91,16 +100,17 @@ router.get('/flight-book', async (req, res) => {
     }
 
     try {
-        const seatMap = await getSeatMap('TESTFLIGHT');
+        const seatMap = await getSeatMap(parseInt(req.session.user.selectedFlight));
+        const flight = await getFlight(parseInt(req.session.user.selectedFlight));
 
         res.status(200).render('flightBook', {
             page: '/flight-book',
             script: '/scripts/user/flight-book.js',
             role: req.session.user.role,
+            flight: flight,
             seats: seatMap
         });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -116,15 +126,31 @@ router.post('/flight-book', async (req, res) => {
 });
 
 // APIs
-router.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
-    try {
-        const flightNumber = req.params.flightNumber;
-        const selectedSeat = req.params.selectedSeat;
+router.get('/api/select-flight/:identifier', async (req, res) => {
+    req.session.user.selectedFlight = req.params.identifier;
+    res.redirect('/flight-book');
+});
 
-        const seatMap = await getSeatMap(flightNumber);
+router.get('/api/read-reservation/:identifier', async (req, res) => {
+    try {
+        const identifier = req.params.identifier;
+        const reservation = await getReservation(identifier);
+
+        res.status(200).json({ success: true, reservation: reservation });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/read-seat/:identifier', async (req, res) => {
+    try {
+        const identifier = req.params.identifier;
+        const reservation = await getReservation(identifier);
+
+        const seatMap = await getSeatMap(reservation.flight.flightNumber);
         const modifiedSeatMap = seatMap.map(row =>
             row.map(seat => {
-                if (seat.number == selectedSeat) {
+                if (seat.number == reservation.seatNumber) {
                     return { ...seat, occupied: false, selected: true };
                 } else {
                     return { ...seat, selected: false };
@@ -132,37 +158,33 @@ router.get('/api/:flightNumber/:selectedSeat', async (req, res) => {
             })
         );
 
-        res.render('partials/seats', {
+        res.status(200).render('partials/seats', {
             layout: false,
             seats: modifiedSeatMap
         });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
 
-router.put('/api/:reservationNumber', async (req, res) => {
+router.put('/api/update-seat/:identifier', async (req, res) => {
     try {
-        const reservationNumber = req.params.reservationNumber;
+        const identifier = req.params.identifier;
         const { seatNumber } = req.body;
 
-        const updatedReservation = await updateSeat(reservationNumber, seatNumber);
-
+        await updateSeat(identifier, seatNumber);
         res.status(200).json({ success: true });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
 
-router.put('/api/:reservationNumber/cancel', async (req, res) => {
+router.put('/api/update-cancel/:identifier', async (req, res) => {
     try {
-        const reservationNumber = req.params.reservationNumber;
-        const updated = await updateStatus(reservationNumber, 'Cancelled');
+        const identifier = req.params.identifier;
+        await updateStatus(identifier, 'Cancelled');
         res.status(200).json({ success: true });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });

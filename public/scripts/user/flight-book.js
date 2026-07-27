@@ -5,14 +5,11 @@ const stepsDone = {
     extraService: false
 };
 
-let requiredFields;
-let seatFare = 3500;
-let classFare = 0;
-let taxAndFee = 400;
-let extraFee = 0;
-let step = 0;
+let requiredFields, baseFare, classFare = 0, taxAndFee = 400, extraFee = 0, step = 0;
 
 $(function () {
+    baseFare = parseInt($('#base-fare').text().replace(/\,/g, ''));
+
     getRequiredFields();
     increaseProgress('mealSelection');
     increaseProgress('extraService');
@@ -389,11 +386,11 @@ function updateBookingSummary() {
     });
 
     $baseFare.text(classFare > 0 ?
-        `PHP ${seatFare.toLocaleString('en-US')} + PHP ${classFare.toLocaleString('en-US')}` : `PHP ${seatFare.toLocaleString('en-US')}`);
+        `PHP ${baseFare.toLocaleString('en-US')} + PHP ${classFare.toLocaleString('en-US')}` : `PHP ${baseFare.toLocaleString('en-US')}`);
 
     $extraFee.text(extraFee > 0 ? 'PHP ' + extraFee.toLocaleString('en-US') : 'PHP 0');
     $taxAndFee.text(`PHP ${taxAndFee.toLocaleString('en-US')}`);
-    $bookingTotal.text(`PHP ${(seatFare + classFare + taxAndFee + extraFee).toLocaleString('en-US')}`);
+    $bookingTotal.text(`PHP ${(baseFare + classFare + taxAndFee + extraFee).toLocaleString('en-US')}`);
 }
 
 /**
@@ -503,17 +500,22 @@ function showMissingFields() {
  * 
  * @returns {Object} an object of the user's inputs.
  */
-function getReservationData() {
+async function getReservationData() {
+    const [flight, user] = await Promise.all([
+        fetch('/api/flight-number').then(response => response.json()),
+        fetch('/api/user-number').then(response => response.json())
+    ]);
+
     let reservationData = {
-        reservationNumber: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
-        flightNumber: 'TESTFLIGHT',
-        userId: 'TESTUSER',
+        identifier: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
+        flightNumber: parseInt(flight.flightNumber),
+        userNumber: parseInt(user.userNumber),
         email: `${requiredFields.find(field => field.selector == '#email-address').value}@${requiredFields.find(field => field.selector == '#domain-address').value}`,
         firstName: requiredFields.find(field => field.selector == '#first-name').value,
         lastName: requiredFields.find(field => field.selector == '#last-name').value,
         passportCode: requiredFields.find(field => field.selector == '#passport-code').value,
         seatNumber: $('#selected-seat').text().trim(),
-        totalAmount: seatFare + classFare + taxAndFee + extraFee
+        totalAmount: baseFare + classFare + taxAndFee + extraFee
     };
 
     if ($('#suffix-select').val() != 'None') {
@@ -528,12 +530,12 @@ function getReservationData() {
  * are filled in and displays a toast if the confirmation
  * is successful or not.
  */
-function confirmBooking() {
+async function confirmBooking() {
     bindMissingFieldsEvents();
     showMissingFields();
 
     if (Object.values(stepsDone).every(Boolean)) {
-        const reservationData = getReservationData();
+        const reservationData = await getReservationData();
 
         try {
             const response = await fetch('/flight-book', {
@@ -541,10 +543,10 @@ function confirmBooking() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(reservationData)
             });
-            const result = response.json();
+            const result = await response.json();
 
             if (result.success) {
-                showToast('#complete', `Booking confirmed under ${reservationData.reservationNumber}!`);
+                showToast('#complete', `Booking confirmed under ${reservationData.identifier}!`);
 
                 setTimeout(() => {
                     window.location.href = result.redirect;
