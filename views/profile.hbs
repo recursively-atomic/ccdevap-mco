@@ -122,13 +122,14 @@
                     Save Changes
                 </button>
 
-                <button id="update-profile-btn" class="btn btn-lg btn-secondary text-white">
+                <button class="btn btn-lg btn-secondary text-white" onclick="showEditModal()" data-bs-toggle="modal"
+                        data-bs-target="#update-profile">
                     Update Profile Information
                 </button>
             </div>
 
             <!-- UPDATE PROFILE MODAL -->
-            <div class="modal fade" id="update-profile-modal" data-bs-backdrop="static">
+            <div id="update-profile" class="modal fade" data-bs-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header bg-dark text-white">
@@ -330,7 +331,7 @@
                                    type="date" id="date-input">
 
                             <div class="invalid-feedback">
-                                Select A Date Before Or On Today!
+                                Select a date before or on today!
                             </div>
                         </div>
                     </div>
@@ -458,7 +459,7 @@
 
             <div class="mb-4 text-center">
                 <button id="save-passenger-btn" class="btn btn-lg btn-primary text-white"
-                        onclick="showToast('success-toast', 'Successfully saved passenger {{user.firstName}} {{user.lastName}}!')">
+                        onclick="showToast('success-toast', 'Successfully saved passenger [NAME]!')">
                     Save Passenger
                 </button>
             </div>
@@ -571,8 +572,9 @@
                                     <i class="text-secondary bi bi-globe-central-south-asia"></i>
                                 </div>
 
-                                <select id="country" class="form-select bg-light border-dark border-2 text-black">
-                                    <option selected hidden> Select A Country </option>
+                                <select id="billing-country"
+                                        class="form-select bg-light border-dark border-2 text-black">
+                                    <option selected hidden value=""> Select A Country </option>
                                     <option> Afghanistan </option>
                                     <option> Bahamas </option>
                                     <option> Cambodia </option>
@@ -610,7 +612,7 @@
                                     <i class="text-secondary fa-solid fa-location-dot"></i>
                                 </div>
 
-                                <input id="billingRegion" class="form-control bg-light border-dark border-2 text-black"
+                                <input id="billing-region" class="form-control bg-light border-dark border-2 text-black"
                                        type="text" placeholder="Province Town">
                             </div>
                         </div>
@@ -623,7 +625,7 @@
                                     <i class="text-secondary bi bi-inboxes-fill"></i>
                                 </div>
 
-                                <input id="zipCode" class="form-control bg-light border-dark border-2 text-black"
+                                <input id="zip-code" class="form-control bg-light border-dark border-2 text-black"
                                        type="text" placeholder="1AA1">
                             </div>
                         </div>
@@ -640,15 +642,16 @@
                                     <i class="text-secondary fa-solid fa-table-cells"></i>
                                 </div>
 
-                                <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
-                                       type="text" placeholder="1234 0000 0000 0000"
-                                       maxlength="19" id="card-number">
+                                <input id="card-number"
+                                       class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
+                                       type="text" placeholder="1234 0000 0000 0000" maxlength="19">
 
-                                <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
-                                       type="month" id="card-expiry">
+                                <input id="card-expiry"
+                                       class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
+                                       type="month">
 
-                                <input class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="CVN" maxlength="4" id="card-cvn">
+                                <input id="card-cvn" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="CVN" maxlength="4">
                             </div>
                         </div>
 
@@ -660,7 +663,7 @@
                                     <i class="text-secondary bi bi-envelope-paper-fill"></i>
                                 </div>
 
-                                <input id="billingAddress1"
+                                <input id="billing-address-1"
                                        class="form-control bg-light border-dark border-2 text-black" type="text"
                                        placeholder="Address Line 1">
                             </div>
@@ -676,7 +679,7 @@
                                     <i class="text-secondary bi bi-envelope-paper-fill"></i>
                                 </div>
 
-                                <input id="billingAddress2"
+                                <input id="billing-address-2"
                                        class="form-control bg-light border-dark border-2 text-black" type="text"
                                        placeholder="Address Line 2">
                             </div>
@@ -702,7 +705,7 @@
                                 </div>
 
                                 <input id="account-name" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.firstName}} {{user.lastName}}" placeholder="John Doe">
+                                       type="text" placeholder="John Doe">
                             </div>
                         </div>
 

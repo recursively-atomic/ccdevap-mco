@@ -132,7 +132,7 @@ async function performSearch(page) {
     const parameters = new URLSearchParams({ ...query, page });
 
     try {
-        const response = await fetch(`/api/search?${parameters.toString()}`);
+        const response = await fetch(`/api/search-flight?${parameters.toString()}`);
         const result = await response.json();
 
         if (result.success) {
@@ -169,7 +169,7 @@ async function showViewModal(flightNumber) {
     const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
 
     try {
-        const response = await fetch(`/api/flight/${flightNumber}`);
+        const response = await fetch(`/api/read-flight/${flightNumber}`);
         const result = await response.json();
 
         if (!result.success) {

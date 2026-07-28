@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const { getUserNumberById } = require('../controllers/userController');
 const { getFlight } = require('../controllers/flightController');
 const {
     getSeatMap,
@@ -22,9 +21,9 @@ router.get('/my-reservations', async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
-        const page = parseInt(req.query.page) || 1, limit = 3;
-        const { reservations, totalReservations } = await getReservations(page, limit, await getUserNumberById(req.session.user._id));
-        const totalPages = Math.ceil(totalReservations / limit);
+        let page = parseInt(req.query.page) || 1, limit = 3;
+        const { reservations, totalReservations } = await getReservations(page, limit, parseInt(req.session.user.number));
+        const totalPages = Math.max(1, Math.ceil(totalReservations / limit));
 
         let pagination;
 
@@ -60,9 +59,9 @@ router.get('/reservations', async (req, res) => {
     }
 
     try {
-        const page = parseInt(req.query.page) || 1, limit = 10;
+        let page = parseInt(req.query.page) || 1, limit = 10;
         const { reservations, totalReservations } = await getReservations(page, limit);
-        const totalPages = Math.ceil(totalReservations / limit);
+        const totalPages = Math.max(1, Math.ceil(totalReservations / limit));
 
         let pagination;
 
@@ -126,8 +125,8 @@ router.post('/flight-book', async (req, res) => {
 });
 
 // APIs
-router.get('/api/select-flight/:identifier', async (req, res) => {
-    req.session.user.selectedFlight = req.params.identifier;
+router.get('/api/select-flight/:flightNumber', async (req, res) => {
+    req.session.user.selectedFlight = req.params.flightNumber;
     res.redirect('/flight-book');
 });
 
@@ -142,12 +141,12 @@ router.get('/api/read-reservation/:identifier', async (req, res) => {
     }
 });
 
-router.get('/api/read-seat/:identifier', async (req, res) => {
+router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
     try {
         const identifier = req.params.identifier;
         const reservation = await getReservation(identifier);
 
-        const seatMap = await getSeatMap(reservation.flight.flightNumber);
+        const seatMap = await getSeatMap(parseInt(reservation.flight.flightNumber));
         const modifiedSeatMap = seatMap.map(row =>
             row.map(seat => {
                 if (seat.number == reservation.seatNumber) {
@@ -167,7 +166,7 @@ router.get('/api/read-seat/:identifier', async (req, res) => {
     }
 });
 
-router.put('/api/update-seat/:identifier', async (req, res) => {
+router.put('/api/update-reservation-seat/:identifier', async (req, res) => {
     try {
         const identifier = req.params.identifier;
         const { seatNumber } = req.body;
@@ -179,7 +178,7 @@ router.put('/api/update-seat/:identifier', async (req, res) => {
     }
 });
 
-router.put('/api/update-cancel/:identifier', async (req, res) => {
+router.put('/api/update-reservation-cancel/:identifier', async (req, res) => {
     try {
         const identifier = req.params.identifier;
         await updateStatus(identifier, 'Cancelled');

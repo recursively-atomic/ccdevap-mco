@@ -1,10 +1,4 @@
-const stepsDone = {
-    passengerInformation: false,
-    mealSelection: false,
-    seatSelection: false,
-    extraService: false
-};
-
+const stepsDone = { passengerInformation: false, mealSelection: false, seatSelection: false, extraService: false };
 let baseFare, classFare = 0, taxAndFee = 400, extraFee = 0, step = 0;
 
 $(function () {
@@ -312,8 +306,8 @@ function updateBookingSummary() {
  */
 async function getReservationData() {
     const [flight, user] = await Promise.all([
-        fetch('/api/flight-number').then(response => response.json()),
-        fetch('/api/user-number').then(response => response.json())
+        fetch('/api/read-flight-number').then(response => response.json()),
+        fetch('/api/read-user-number').then(response => response.json())
     ]);
 
     let reservationData = {

@@ -35,7 +35,7 @@ async function getReservation(identifier) {
     const reservation = await model.findOne({ identifier }).lean();
     const flightData = await flight.findOne({ flightNumber: reservation.flightNumber }).lean();
     const { flightNumber, ...rest } = reservation;
-    
+
     return { ...rest, flight: flightData };
 }
 
@@ -67,7 +67,6 @@ async function getReservations(page, limit, userNumber = null) {
  * @returns {Promise} the status of the creation of the document.
  */
 async function createReservation(reservationData) {
-    const updatedFlight = await flight.findOneAndUpdate({ flightNumber: reservationData.flightNumber, availableSeats: { $gt: 0 } }, { $inc: { availableSeats: -1 } });
     const reservation = new model({
         identifier: reservationData.identifier,
         flightNumber: reservationData.flightNumber,
@@ -81,6 +80,7 @@ async function createReservation(reservationData) {
         totalAmount: reservationData.totalAmount
     });
 
+    await flight.findOneAndUpdate({ flightNumber: reservationData.flightNumber, availableSeats: { $gt: 0 } }, { $inc: { availableSeats: -1 } });
     return reservation.save();
 }
 

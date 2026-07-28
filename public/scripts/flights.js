@@ -1,4 +1,4 @@
-let selectedFlightID;
+let selectedFlight;
 
 $(function () {
     formatBaseFare();
@@ -19,6 +19,19 @@ function formatBaseFare() {
     });
 }
 
+function formatDatetime(mongooseDatetime) {
+    const datetime = new Date(mongooseDatetime);
+    const pad = (num) => String(num).padStart(2, '0');
+
+    const year = datetime.getFullYear();
+    const month = pad(datetime.getMonth() + 1);
+    const day = pad(datetime.getDate());
+    const hours = pad(datetime.getHours());
+    const minutes = pad(datetime.getMinutes());
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
 async function showViewModal(flightNumber) {
     const $viewModal = $('#view-flight');
     const $title = $viewModal.find('.modal-title');
@@ -30,7 +43,7 @@ async function showViewModal(flightNumber) {
     const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
 
     try {
-        const response = await fetch(`/api/flight/${flightNumber}`);
+        const response = await fetch(`/api/read-flight/${flightNumber}`);
         const result = await response.json();
 
         if (!result.success) {
@@ -88,30 +101,17 @@ async function showViewModal(flightNumber) {
     } finally { }
 }
 
-function formatDatetime(mongooseDatetime) {
-    const datetime = new Date(mongooseDatetime);
-    const pad = (num) => String(num).padStart(2, '0');
-
-    const year = datetime.getFullYear();
-    const month = pad(datetime.getMonth() + 1);
-    const day = pad(datetime.getDate());
-    const hours = pad(datetime.getHours());
-    const minutes = pad(datetime.getMinutes());
-
-    return `${year}-${month}-${day}T${hours}:${minutes}`;
-}
-
-async function showEditModal(flightID) {
+async function showEditModal(flightNumber) {
     const $editModal = $('#edit-flight');
     const $title = $editModal.find('.modal-title');
 
     const $status = $('#edit-status');
     const statusOptions = ['Scheduled', 'In Air', 'Delayed', 'Rescheduled', 'Cancelled'];
 
-    selectedFlightID = flightID;
+    selectedFlight = flightNumber;
 
     try {
-        const response = await fetch(`/api/${flightID}`);
+        const response = await fetch(`/api/read-flight/${flightNumber}`);
         const result = await response.json();
 
         if (!result.success) {
@@ -150,8 +150,8 @@ async function showEditModal(flightID) {
     } finally { }
 }
 
-function showDeleteModal(flightID) {
-    selectedFlightID = flightID;
+function showDeleteModal(flightNumber) {
+    selectedFlight = flightNumber;
 }
 
 async function createFlight(event) {
@@ -177,7 +177,7 @@ async function createFlight(event) {
             hideModalShowToast('add-flight', 'success-toast', `Successfully saved flight ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
-                refreshFlightTable();
+                updateFlightsTable();
             }, 1000);
         }
     } finally {
@@ -194,7 +194,7 @@ async function updateFlight(event) {
     data['edit-fare'] = data['edit-fare'].replace(/\,/g, '');
 
     try {
-        const response = await fetch(`/api/${selectedFlightID}`, {
+        const response = await fetch(`/api/update-flight/${selectedFlight}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -209,7 +209,7 @@ async function updateFlight(event) {
             hideModalShowToast('edit-flight', 'success-toast', `Successfully saved changes on ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
-                refreshFlightTable();
+                updateFlightsTable();
             }, 1000);
         }
     } finally { }
@@ -219,7 +219,7 @@ async function deleteFlight() {
     event.preventDefault();
 
     try {
-        const response = await fetch(`/api/${selectedFlightID}`, {
+        const response = await fetch(`/api/delete-flight/${selectedFlight}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -231,19 +231,19 @@ async function deleteFlight() {
 
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
             hideModalShowToast('delete-flight', 'danger-toast', `Deleted ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
-
+            
             setTimeout(() => {
-                refreshFlightTable();
+                updateFlightsTable();
             }, 1000);
         }
     } finally { }
 }
 
-async function refreshFlightTable() {
+async function updateFlightsTable() {
     const page = new URLSearchParams(window.location.search).get('page') || 1;
 
     try {
-        const response = await fetch(`/api/flights-table?page=${page}`, {
+        const response = await fetch(`/api/get-flights-table?page=${page}`, {
             method: 'GET'
         });
 

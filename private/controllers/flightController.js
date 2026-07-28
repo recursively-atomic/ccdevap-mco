@@ -1,15 +1,7 @@
 const model = require('../models/flightModel');
 
-async function getFlight(flightIndetifier) {
-    let flight;
-
-    if (typeof flightIndetifier == 'string') {
-        flight = await model.findById(flightIndetifier).lean();
-    } else if (typeof flightIndetifier == 'number') {
-        flight = await model.findOne({ flightNumber: flightIndetifier }).lean();
-    }
-
-    return flight;
+async function getFlight(flightNumber) {
+    return await model.findOne({ flightNumber: flightNumber }).lean();
 }
 
 async function getLastFlightNumber() {
@@ -112,8 +104,7 @@ function isEqualAirports(a, b) {
 }
 
 async function updateFlight(flightData) {
-    const flightID = flightData._id;
-    const currentData = await getFlight(flightID);
+    const currentData = await getFlight(parseInt(flightData.flightNumber));
 
     const currentOrigAirport = currentData.originAirport;
     const newOrigAirport = flightData.originAirport;
@@ -148,27 +139,27 @@ async function updateFlight(flightData) {
         updates.arrivalDatetime = flightData.arrivalDatetime;
     }
 
-    if (!(newBf === currentBf)) {
+    if (newBf !== currentBf) {
         updates.baseFare = newBf;
     }
 
-    if (!(newStatus === currentStatus)) {
-        updates.status = status;
+    if (newStatus !== currentStatus) {
+        updates.status = newStatus;
     }
 
     if (Object.keys(updates).length === 0) {
         return currentData;
     }
 
-    return await model.findByIdAndUpdate(
-        flightID,
+    return await model.findOneAndUpdate(
+        { flightNumber: flightData.flightNumber },
         { $set: updates },
         { returnDocument: "after" }
     ).lean();
 }
 
-async function deleteFlight(flightID) {
-    return await model.findByIdAndDelete(flightID);
+async function deleteFlight(flightNumber) {
+    return await model.findOneAndDelete({ flightNumber: flightNumber });
 }
 
 module.exports = { getFlight, getLastFlightNumber, getFlightOrigins, getFlightDestinations, getFlightsByQuery, getFlights, createFlight, updateFlight, deleteFlight };

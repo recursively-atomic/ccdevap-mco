@@ -1,13 +1,7 @@
 const model = require('../models/userModel');
 
-async function getUserById(userId) {
-    return await model.findById(userId).lean();
-}
-
-async function getUserNumberById(userId) {
-    const { userNumber } = await model.findOne({ _id: userId }).select('userNumber').lean();
-
-    return userNumber;
+async function getUser(userNumber) {
+    return await model.findOne({ userNumber: userNumber }).lean();
 }
 
 async function getUserByEmail(email) {
@@ -46,28 +40,53 @@ async function createUser(userData) {
     return await user.save();
 }
 
-// UPDATE USER INFORMATION
-async function updateUser(userId, data) {
-    // make it like updateFlight
-    return await model.findByIdAndUpdate(
-        userId,
-        {
-            $set: {
-                firstName: data.firstName,
-                lastName: data.lastName,
-                emailAddress: data.emailAddress,
-                contactNumber: data.contactNumber
-            }
-        },
-        { returnDocument: "after" }
-    );
-}
+async function updateUser(userData) {
+    const currentData = await getUser(userData.userNumber);
 
-async function updatePassword(userId, currentPassword, newPassword) {
-    const user = await model.findById(userId);
-    user.password = newPassword;
+    const newFirstName = userData.firstName;
+    const newLastName = userData.lastName;
+    const newEmailAddress = userData.emailAddress;
+    const newContactNumber = userData.contactNumber ? userData.contactNumber.trim() : '';
+
+    const updates = {};
+
+    if (newFirstName.trim() !== currentData.firstName) {
+        updates.firstName = newFirstName.trim()
+    }
+
+    if (newLastName.trim() !== currentData.lastName) {
+        updates.lastName = newLastName.trim();
+    }
+
+    if (newEmailAddress.trim() !== currentData.emailAddress) {
+        updates.emailAddress = newEmailAddress.trim();
+    }
+
+    if (newContactNumber.trim() !== currentData.contactNumber) {
+        updates.contactNumber = newContactNumber.trim();
+    }
+
+    if (Object.keys(updates).length === 0) {
+        return currentData;
+    }
+
+    const updatedUser = await model.findOneAndUpdate(
+        { userNumber: userData.userNumber },
+        { $set: updates },
+        { returnDocument: "after" }
+    ).lean();
+
+    return updatedUser;
+};
+
+async function updatePassword(userData) {
+    const user = await model.findOne({ userNumber: userData.userNumber });
+
+    if (userData.currentPassword === user.password) {
+        user.password = userData.newPassword;
+    }
 
     return await user.save();
 }
 
-module.exports = { getUserById, getUserNumberById, getUserByEmail, getLastUserNumber, getUsers, createUser, updateUser, updatePassword };
+module.exports = { getUser, getUserByEmail, getLastUserNumber, getUsers, createUser, updateUser, updatePassword };

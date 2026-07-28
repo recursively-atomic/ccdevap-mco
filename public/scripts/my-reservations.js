@@ -44,7 +44,7 @@ async function showEditModal(identifier) {
     };
 
     try {
-        const response = await fetch(`/api/read-seat/${identifier}`);
+        const response = await fetch(`/api/read-reservation-seat/${identifier}`);
         const markup = await response.text();
 
         if (response.status != 200) {
@@ -59,24 +59,6 @@ async function showEditModal(identifier) {
         $saveButton.off('click.save').on('click.save', async function () {
             await updateReservationSeat(identifier, editData);
         });
-    } finally { }
-}
-
-async function updateReservationSeat(identifier, editData) {
-    try {
-        const response = await fetch(`/api/update-seat/${identifier}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ seatNumber: editData.seat })
-        });
-
-        const result = await response.json();
-
-        if (!result.success) {
-            return;
-        }
-
-        hideModalShowToast('edit-reservation', 'success-toast', `Successfully changed seat to ${editData.seat} for reservation ${identifier}!`);
     } finally { }
 }
 
@@ -100,6 +82,24 @@ function attachSeatSelection($seatMap, editData) {
     });
 }
 
+async function updateReservationSeat(identifier, editData) {
+    try {
+        const response = await fetch(`/api/update-reservation-seat/${identifier}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ seatNumber: editData.seat })
+        });
+
+        const result = await response.json();
+
+        if (!result.success) {
+            return;
+        }
+
+        hideModalShowToast('edit-reservation', 'success-toast', `Successfully changed seat to ${editData.seat} for reservation ${identifier}!`);
+    } finally { }
+}
+
 async function showCancelModal(identifier) {
     const $cancelModal = $('#cancel-reservation');
     const $card = $(`.card[data-identifier="${identifier}"]`);
@@ -107,7 +107,7 @@ async function showCancelModal(identifier) {
 
     $('#cancel-button').off('click.cancel').on('click.cancel', async function () {
         try {
-            const response = await fetch(`/api/update-cancel/${identifier}`, {
+            const response = await fetch(`/api/update-reservation-cancel/${identifier}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' }
             })
@@ -121,7 +121,7 @@ async function showCancelModal(identifier) {
             $badge.text('Cancelled').removeClass('text-bg-success text-bg-warning').addClass('text-bg-danger');
             $card.find('.btn').prop('disabled', true);
 
-            hideModalShowToast('cancel-reservation', 'cancel-toast', `Cancelled reservation ${identifier}!`);
+            hideModalShowToast('cancel-reservation', 'danger-toast', `Cancelled reservation ${identifier}!`);
         } finally { }
     });
 }

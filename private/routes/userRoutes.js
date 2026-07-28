@@ -4,8 +4,7 @@ const router = express.Router();
 const { getFlights } = require('../controllers/flightController');
 const { getReservations } = require('../controllers/reservationController');
 const {
-    getUserById,
-    getUserNumberById,
+    getUser,
     getUserByEmail,
     getLastUserNumber,
     getUsers,
@@ -32,7 +31,7 @@ router.get('/home', async (req, res) => {
     }
 
     req.session.user.selectedFlight = null;
-    const { reservations } = await getReservations(0, 0, await getUserNumberById(req.session.user._id));
+    const { reservations } = await getReservations(0, 0, parseInt(req.session.user.number));
     const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled').length;
     const { flights } = await getFlights(0, 0);
     const activeFlights = flights.filter(flight => flight.status !== 'Cancelled').length;
@@ -96,9 +95,10 @@ router.post('/login', async (req, res) => {
         }
 
         req.session.user = {
-            _id: user._id,
+            number: user.userNumber,
             emailAddress: user.emailAddress,
-            role: user.role
+            role: user.role,
+            selectedFlight: null
         };
 
         if (user.role == 'admin') {
@@ -123,7 +123,7 @@ router.get('/profile', async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
-        const user = await getUserById(req.session.user._id);
+        const user = await getUser(parseInt(req.session.user.number));
 
         res.status(200).render('profile', {
             page: '/profile',
@@ -144,7 +144,7 @@ router.get('/dashboard', async (req, res) => {
     }
 
     try {
-        const user = await getUserById(req.session.user._id);
+        const user = await getUser(parseInt(req.session.user.number));
 
         res.render('dashboard', {
             page: '/dashboard',
@@ -165,9 +165,9 @@ router.get('/users', async (req, res) => {
     }
 
     try {
-        const page = parseInt(req.query.page) || 1, limit = 10;
+        let page = parseInt(req.query.page) || 1, limit = 10;
         const { users, totalUsers } = await getUsers();
-        const totalPages = Math.ceil(totalUsers / limit);
+        const totalPages = Math.max(1, Math.ceil(totalUsers / limit));
 
         let pagination;
 
@@ -187,21 +187,13 @@ router.get('/users', async (req, res) => {
             page: '/users',
             script: '/scripts/users.js',
             role: req.session.user.role,
-            currentUser: req.session.user._id,
+            currentUser: req.session.user.number,
             userRows: users,
             pagination: pagination
         });
     } catch {
         res.status(500).json({ success: false });
     }
-});
-
-router.get('/user/:id', async (req, res) => {
-    const user = await getUserById(req.params.id);
-
-    res.render('profile', {
-        user: user
-    });
 });
 
 router.get('/logout', (req, res) => {
@@ -211,25 +203,16 @@ router.get('/logout', (req, res) => {
 });
 
 // APIs
-router.get('/api/user-number', async (req, res) => {
+router.get('/api/read-user-number', async (req, res) => {
     try {
-        const userNumber = await getUserNumberById(req.session.user._id);
-        res.status(200).json({ success: true, userNumber: userNumber });
+        const user = await getUser(req.session.user.number);
+        res.status(200).json({ success: true, userNumber: user.number });
     } catch {
         res.status(500).json({ success: false });
     }
 });
 
-router.get('/api/users', async (req, res) => {
-    try {
-        const users = await getUsers();
-        res.json(users);
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.put('/api/user/change-password', async (req, res) => {
+router.put('/api/update-user-password', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     } else if (req.session.user.role != 'user') {
@@ -238,41 +221,32 @@ router.put('/api/user/change-password', async (req, res) => {
 
     try {
         const { currentPassword, newPassword } = req.body;
-        await updatePassword(req.session.user._id, currentPassword, newPassword);
+        const userData = {
+            userNumber: req.session.user.number,
+            currentPassword,
+            newPassword
+        }
 
+        await updatePassword(userData);
         res.status(200).json({ success: true });
     } catch {
         res.status(500).json({ success: false });
     }
 });
 
-router.put('/api/profile', async (req, res) => {
+router.put('/api/update-user-profile', async (req, res) => {
     try {
-        const user = await updateUser(
-            req.session.user._id,
-            req.body
-        );
+        const userData = {
+            userNumber: req.session.user.number,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            emailAddress: req.body.emailAddress,
+            contactNumber: req.body.contactNumber
+        }
 
-        req.session.user.emailAddress = user.emailAddress;
-        res.status(200).json({ success: true, user });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
+        const updatedUser = await updateUser(userData);
+        req.session.user.emailAddress = updatedUser.emailAddress;
 
-router.get('/api/users/:id', async (req, res) => {
-    try {
-        const user = await getUserById(req.params.id);
-        res.json(user);
-
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.put('/api/users/:id', async (req, res) => {
-    try {
-        const updatedUser = await updateUser(req.params.id, req.body);
         res.status(200).json({ success: true, user: updatedUser });
     } catch {
         res.status(500).json({ success: false });

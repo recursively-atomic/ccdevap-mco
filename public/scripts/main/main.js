@@ -1,8 +1,10 @@
 let requiredFields;
 
 /**
- * @param {*} toastID 
- * @param {*} text 
+ * Shows a cloned toast with an optional display text.
+ * 
+ * @param {String} toastID is the id of the template toast.
+ * @param {String} text is the toast's text.
  */
 function showToast(toastID, text = '') {
     const toastTemplate = document.getElementById(toastID);
@@ -34,9 +36,10 @@ function showToast(toastID, text = '') {
 
 /**
  * Hides a modal and shows a cloned toast with an optional display text.
- * @param {string} modalID the modal's ID.
- * @param {string} toastID id of the template toast element in the DOM.
- * @param {string} text the toast's display text.
+ * 
+ * @param {String} modalID is the modal's ID.
+ * @param {String} toastID is the id of the template toast.
+ * @param {String} text is the toast's text.
  */
 function hideModalShowToast(modalID, toastID, text = '') {
     const modal = document.getElementById(modalID);
@@ -86,9 +89,9 @@ function changeDropdownDisplay(sortHasSubmenu, filterHasSubmenu) {
  * Searches the value that the dropdown's display should take
  * according to the `.dropdown-item` that the user selected.
  * 
- * @param {HTMLElement} dropdown is the dropdown containing the `.dropdown-item` that was clicked.
- * @param {HTMLElement} display is the dropdown's appending text display.
- * @param {Boolean} hasSubmenu is the flag if the dropdown has submenus. 
+ * @param {String} dropdown is the dropdown id containing the `.dropdown-item` that was clicked.
+ * @param {String} display is the id of the dropdown's text display.
+ * @param {Boolean} hasSubmenu is a flag if the dropdown has submenus. 
  */
 function bindListItemValue(dropdown, display, hasSubmenu) {
     const $dropdown = $(dropdown);
@@ -114,6 +117,12 @@ function bindListItemValue(dropdown, display, hasSubmenu) {
 /**
  * Gets all the required fields by first getting the elements with the
  * `.required-field` class and getting their ids.
+ * 
+ * 
+ * Appends different metadata to the required fields depending
+ * on who called the function.
+ * 
+ * @param {String} script is the caller's file name.
  */
 function getRequiredFields(script) {
     requiredFields = $('.required-field').map(function () {
@@ -133,7 +142,7 @@ function getRequiredFields(script) {
 
 /**
  * Binds `showMissingFields()` to all of the required fields for
- * searching a flight, whenver a field's input has changed.
+ * completing a process.
  */
 function bindMissingFieldsEvents() {
     requiredFields.forEach(function (field) {
@@ -145,7 +154,12 @@ function bindMissingFieldsEvents() {
 
 /**
  * Displays to the user the emtpy fields that are required
- * to confirm a booking.
+ * to finish a process.
+ * 
+ * 
+ * Validates data differently depending on who called the function.
+ * 
+ * @param {String} script is the caller's file name.
  */
 function showMissingFields(script) {
     requiredFields.forEach(function (field) {
@@ -208,6 +222,12 @@ function showMissingFields(script) {
     });
 }
 
+/**
+ * A helper function to `showMissingFields` for handling default data validation.
+ * 
+ * @param {String} field is the id of the field to be validated.
+ * @param {String} value is the field's value.
+ */
 function handleDefaultValidation(field, value) {
     if (value !== '') {
         $(field.selector).removeClass('is-invalid').addClass('is-valid');
@@ -216,6 +236,14 @@ function handleDefaultValidation(field, value) {
     }
 }
 
+/**
+ * Displays an age range badge depending on the user's data of birth.
+ * 
+ * 
+ * Validates the date of birth depending on who called the function.
+ * 
+ * @param {String} script is the caller's file name.
+ */
 function showAgeBadge(script) {
     const $dateContainer = $('#date-container');
     const $dateInput = $('#date-input');
@@ -272,6 +300,16 @@ function showAgeBadge(script) {
     });
 }
 
+/**
+ * A helper function to `showAgeBadge` for the calculation of the age range of the user's
+ * birth date.
+ * 
+ * 
+ * The age ranges are 'Infant', 'Child', 'Adult' and 'Senior'
+ * 
+ * @param {String} birthDateString is the user's birth date.
+ * @returns the age range.
+ */
 function calculateAgeCategory(birthDateString) {
     const currentDate = new Date();
     const birthDate = new Date(birthDateString);
@@ -290,7 +328,7 @@ function calculateAgeCategory(birthDateString) {
 }
 
 /**
- * Shows an "please specify" text field when the user selects "not listed"
+ * Shows a 'Please Specify" text field when the user selects "Not Listed"
  * in the gender dropdown.
  */
 function showSpecifyGender() {
@@ -309,11 +347,22 @@ function showSpecifyGender() {
     });
 }
 
+/**
+ * Fetches flight origins and destinations to append to elements.
+ * 
+ * 
+ * Appends different metadata on the specified elements depending
+ * on who called the function.
+ * 
+ * @param {String} originInput is the id of the element that will be appended with flight origins.
+ * @param {String} destinationInput is the id of the element that will be appended with flight destinations.
+ * @param {String} script is the caller's file name.
+ */
 async function bindLocations(originInput, destinationInput, script) {
     try {
         const [originResponse, destinationResponse] = await Promise.all([
-            fetch('/api/flight-origins'),
-            fetch('/api/flight-destinations')
+            fetch('/api/get-flight-origins'),
+            fetch('/api/get-flight-destinations')
         ]);
 
         const originResult = await originResponse.json();
@@ -354,6 +403,14 @@ async function bindLocations(originInput, destinationInput, script) {
     } finally { }
 }
 
+/**
+ * Formats the duration of a flight from its departure and arrival datetime
+ * to `# D # H # M`.
+ * 
+ * @param {Date} departure is the flight's departure from its origin in datetime.
+ * @param {Date} arrival is the flight's arrival to its destination in datetime.
+ * @returns the formatted string.
+ */
 function formatDuration(departure, arrival) {
     const difference = Math.abs(new Date(arrival) - new Date(departure));
     const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -379,8 +436,13 @@ function formatDuration(departure, arrival) {
 
 /**
  * Submits the login or registration form and handles the response.
- * @param {Event} event - the form submit event.
- * @param {string} mode - 'login' or 'register'.
+ * 
+ * 
+ * Handles the response differently depending on who called the
+ * function.
+ * 
+ * @param {Event} event is the event of submitting a form.
+ * @param {String} script is the caller's file name.
  */
 async function checkCredentials(event, script) {
     const form = event.target;
@@ -428,6 +490,9 @@ async function checkCredentials(event, script) {
     }
 }
 
+/**
+ * Toggles a password field's masking of the inputted text.
+ */
 function togglePassword() {
     $('#toggle-password').off('click.password').on('click.password', function () {
         const $password = $('#password');

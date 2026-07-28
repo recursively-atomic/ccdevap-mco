@@ -40,7 +40,7 @@ router.get('/flights', async (req, res) => {
     }
 
     try {
-        const page = parseInt(req.query.page) || 1, limit = 10;
+        let page = parseInt(req.query.page) || 1, limit = 10;
         const { flights, totalFlights } = await getFlights(page, limit);
         const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
 
@@ -104,13 +104,13 @@ router.post('/flights', async (req, res) => {
 });
 
 // APIs
-router.get('/api/flight-number', (req, res) => {
+router.get('/api/read-flight-number', (req, res) => {
     res.status(200).json({ success: true, flightNumber: req.session.user.selectedFlight });
 });
 
-router.get('/api/search', async (req, res) => {
+router.get('/api/search-flight', async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1, limit = 8;
+        let page = parseInt(req.query.page) || 1, limit = 8;
 
         const { flights, totalFlights } = await getFlightsByQuery(req.query, page, limit);
         const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
@@ -138,9 +138,9 @@ router.get('/api/search', async (req, res) => {
     }
 });
 
-router.get('/api/flights-table', async (req, res) => {
+router.get('/api/get-flights-table', async (req, res) => {
     try {
-        const page = parseInt(req.query.page) || 1, limit = 10;
+        let page = parseInt(req.query.page) || 1, limit = 10;
         let { flights, totalFlights } = await getFlights(page, limit);
         const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
 
@@ -166,12 +166,13 @@ router.get('/api/flights-table', async (req, res) => {
                 pagination: pagination
             }
         });
-    } catch {
+    } catch (error) {
+        console.error('Error in get-flights-table:', error);   // log for debugging
         res.status(500).json({ success: false });
     }
 });
 
-router.get('/api/flight-origins', async (req, res) => {
+router.get('/api/get-flight-origins', async (req, res) => {
     try {
         const origins = await getFlightOrigins();
         res.status(200).json({ success: true, origins: origins });
@@ -180,7 +181,7 @@ router.get('/api/flight-origins', async (req, res) => {
     }
 });
 
-router.get('/api/flight-destinations', async (req, res) => {
+router.get('/api/get-flight-destinations', async (req, res) => {
     try {
         const destinations = await getFlightDestinations();
         res.status(200).json({ success: true, destinations: destinations });
@@ -189,7 +190,7 @@ router.get('/api/flight-destinations', async (req, res) => {
     }
 });
 
-router.get('/api/flight/:flightNumber', async (req, res) => {
+router.get('/api/read-flight/:flightNumber', async (req, res) => {
     try {
         const flight = await getFlight(parseInt(req.params.flightNumber));
         res.status(200).json({ success: true, flightData: flight });
@@ -198,19 +199,10 @@ router.get('/api/flight/:flightNumber', async (req, res) => {
     }
 });
 
-router.get('/api/:flightID', async (req, res) => {
-    try {
-        const flight = await getFlight(req.params.flightID);
-        res.status(200).json({ success: true, flightData: flight });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.put('/api/:flightID', async (req, res) => {
+router.put('/api/update-flight/:flightNumber', async (req, res) => {
     try {
         const flightData = {
-            _id: req.params.flightID,
+            flightNumber: parseInt(req.params.flightNumber),
             originAirport: {
                 iata: req.body['edit-o-iata'],
                 location: req.body['edit-o-location'],
@@ -236,9 +228,9 @@ router.put('/api/:flightID', async (req, res) => {
     }
 });
 
-router.delete('/api/:flightID', async (req, res) => {
+router.delete('/api/delete-flight/:flightNumber', async (req, res) => {
     try {
-        const deletedFlight = await deleteFlight(req.params.flightID);
+        const deletedFlight = await deleteFlight(parseInt(req.params.flightNumber));
         res.status(200).json({ success: true, airline: deletedFlight.airline, flightNumber: deletedFlight.flightNumber });
     } catch {
         res.status(500).json({ success: false });
