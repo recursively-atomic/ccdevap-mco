@@ -1,20 +1,20 @@
 {{#each flightCards}}
     <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card bg-primary-accent card-hover-sm p-2 shadow">
+        <div class="p-2 card card-hover-sm bg-primary-accent shadow">
             <div class="d-flex justify-content-between">
-                <img class="img-thumbnail bg-dark border-dark m-0 p-0 square-40px" {{#if (eq
+                <img class="m-0 p-0 bg-dark border-dark img-thumbnail square-40px" {{#if (eq
                      this.airline 'Cebu Atlantic' )}} src="/media/images/cebu-atlantic.png" {{else if (eq
                      this.airline 'Filipino Airlines' )}} src="/media/images/filipino-airlines.png" {{else if (eq
                      this.airline 'AirFAST' )}} src="/media/images/airfast.png" {{else if (eq this.airline 'Sunray Air'
                      )}} src="/media/images/sunray-air.png" {{/if}}>
 
-                <h4 class="fw-bold mt-1 m-0 p-0 text-light"> PHP {{formatNumber this.baseFare}} </h4>
+                <h4 class="mt-1 m-0 p-0 fw-bold text-light"> PHP {{formatNumber this.baseFare}} </h4>
             </div>
 
-            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+            <hr class="m-0 my-2 border border-3 border-tertiary-accent rounded-3 opacity-100">
 
-            <h4 class="d-flex align-items-center m-0 mb-2 text-secondary fw-bolder">
-                <i class="fa-solid fa-plane me-2 p-0"></i>
+            <h4 class="d-flex m-0 mb-2 align-items-center text-secondary fw-bolder">
+                <i class="me-2 p-0 fa-solid fa-plane"></i>
 
                 <p class="m-0 p-0">
                     {{#if (eq this.airline 'Cebu Atlantic')}} CA
@@ -26,29 +26,29 @@
                 </p>
             </h4>
 
-            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                <i class="fa-solid fa-hourglass-start fa-sm me-1"></i>
+            <h6 class="d-flex m-0 align-items-center text-tertiary fw-bolder">
+                <i class="me-1 fa-solid fa-hourglass-start fa-sm"></i>
                 <p class="m-0 p-0 me-1"> {{getTime this.departureDatetime}} - {{getTime this.arrivalDatetime}} </p>
                 <p class="m-0 p-0"> ( </p>
                 <p class="m-0 p-0"> {{getDuration this.departureDatetime this.arrivalDatetime}} </p>
                 <p class="m-0 p-0"> ) </p>
             </h6>
 
-            <h6 class="d-flex align-items-center m-0 text-tertiary fw-bolder">
-                <i class="bi bi-stoplights-fill me-2 p-0"></i>
+            <h6 class="d-flex m-0 align-items-center text-tertiary fw-bolder">
+                <i class="me-2 p-0 bi bi-stoplights-fill"></i>
                 <p class="m-0 p-0"> No Layovers </p>
             </h6>
 
-            <hr class="border border-3 border-tertiary-accent rounded-3 opacity-100 m-0 my-2">
+            <hr class="m-0 my-2 border border-3 border-tertiary-accent rounded-3 opacity-100">
 
-            <button class="btn btn-lg btn-primary border-4 text-white m-0 mb-2"
+            <button class="m-0 mb-2 btn btn-lg btn-primary border-4 text-white"
                     onclick="continueBooking({{this.flightNumber}})">
 
                 <p class="m-0 p-0 fw-bolder"> Book </p>
                 <h6 class="m-0 p-0 text-light"> ({{this.availableSeats}}/16 Seats) </h6>
             </button>
 
-            <button class="btn btn-lg btn-secondary border-4 text-white m-0"
+            <button class="m-0 btn btn-lg btn-secondary border-4 text-white"
                     onclick="showViewModal('{{this.flightNumber}}')" data-bs-toggle="modal"
                     data-bs-target="#view-flight">
 
@@ -57,5 +57,5 @@
         </div>
     </div>
 {{else}}
-    <h2 class="text-primary text-center p-5 m-0"> No Flights Found </h2>
+    <h2 class="p-5 m-0 text-primary text-center"> No Flights FSound </h2>
 {{/each}}

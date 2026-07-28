@@ -213,12 +213,6 @@ router.get('/api/read-user-number', async (req, res) => {
 });
 
 router.put('/api/update-user-password', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'user') {
-        return res.redirect('/dashboard');
-    }
-
     try {
         const { currentPassword, newPassword } = req.body;
         const userData = {

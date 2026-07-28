@@ -23,7 +23,7 @@
                                 Airline
                             </h6>
 
-                            <div class="input-group mb-3">
+                            <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-flag"></i>
                                 </div>
@@ -45,7 +45,7 @@
                                 Base Fare
                             </h6>
 
-                            <div class="input-group mb-2">
+                            <div class="mb-2 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fw-bolder fst-normal"> PHP </i>
                                 </div>
@@ -62,7 +62,7 @@
                         Airport Origin
                     </h6>
 
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <div class="input-group-text bg-dark border-dark">
                             <i class="text-secondary fa-solid fa-plane-departure"></i>
                         </div>
@@ -80,7 +80,7 @@
                         Airport Destination
                     </h6>
 
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <div class="input-group-text bg-dark border-dark">
                             <i class="text-secondary fa-solid fa-plane-arrival"></i>
                         </div>
@@ -100,7 +100,7 @@
                                 Departure Datetime
                             </h6>
 
-                            <div class="input-group mb-3">
+                            <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-clock"></i>
                                 </div>
@@ -117,7 +117,7 @@
                                 Arrival Datetime
                             </h6>
 
-                            <div class="input-group mb-3">
+                            <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-clock"></i>
                                 </div>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <div class="modal-footer d-flex bg-light">
+                <div class="d-flex modal-footer bg-light">
                     <button class="btn btn-success text-white" type="submit">
                         Add
                     </button>
@@ -153,7 +153,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="d-flex align-items-center m-0 text-primary justify-content-between">
+                <div class="d-flex m-0 align-items-center text-primary justify-content-between">
                     <h2 id="flight-number" class="mb-0 me-2"></h2>
                     <h2 id="flight-fare" class="m-0 p-0 ps-3 text-success text-end text-nowrap"></h2>
                 </div>
@@ -163,13 +163,13 @@
                 <div class="row gap-3">
                     <!-- FLIGHT DEPARTURE DETAILS -->
                     <div class="col">
-                        <div class="d-flex align-items-center m-0 p-0 text-secondary">
+                        <div class="d-flex m-0 p-0 align-items-center text-secondary">
                             <i class="fa-solid fa-plane-departure fa-xl"></i>
                             <h6 class="m-2 fw-bolder"> Departure </h6>
                         </div>
 
-                        <div class="d-flex align-items-center m-0 p-0 text-primary-accent fw-bolder">
-                            <p id="departure-iata" class="mb m-0 p-0 ps-3"></p>
+                        <div class="d-flex m-0 p-0 align-items-center text-primary-accent fw-bolder">
+                            <p id="departure-iata" class="m-0 p-0 ps-3 mb"></p>
                             <i class="m-0 p-0 bi bi-dot mb"></i>
                             <p id="departure-location" class="m-0 p-0"></p>
                         </div>
@@ -181,14 +181,14 @@
 
                     <!-- FLIGHT ARRIVAL DETAILS -->
                     <div class="col">
-                        <div class="d-flex align-items-center m-0 p-0 text-secondary">
+                        <div class="d-flex m-0 p-0 align-items-center text-secondary">
                             <i class="fa-solid fa-plane-arrival fa-xl"></i>
                             <h6 class="m-2 fw-bolder"> Arrival </h6>
                         </div>
 
-                        <div class="d-flex align-items-center m-0 p-0 text-primary-accent fw-bolder">
+                        <div class="d-flex m-0 p-0 align-items-center text-primary-accent fw-bolder">
                             <p id="arrival-iata" class="mb-auto m-0 p-0 ps-3"></p>
-                            <i class="m-0 p-0 bi bi-dot mb-auto"></i>
+                            <i class="m-0 p-0 mb-auto bi bi-dot"></i>
                             <p id="arrival-location" class="m-0 p-0"></p>
                         </div>
 
@@ -200,10 +200,10 @@
 
                 <hr class="border border-3 rounded-3 border-dark opacity-100">
 
-                <div class="d-flex justify-content-center gap-3 fs-5">
-                    <span id="status-badge" class="badge p-2 rounded-pill text-white"></span>
-                    <span id="capacity-badge" class="badge p-2 rounded-pill text-white"></span>
-                    <span id="duration-badge" class="badge p-2 text-bg-primary rounded-pill text-white"></span>
+                <div class="d-flex gap-3 justify-content-center fs-5">
+                    <span id="status-badge" class="p-2 badge rounded-pill text-white"></span>
+                    <span id="capacity-badge" class="p-2 badge rounded-pill text-white"></span>
+                    <span id="duration-badge" class="p-2 badge text-bg-primary rounded-pill text-white"></span>
                 </div>
             </div>
 
@@ -233,7 +233,7 @@
                                 Base Fare
                             </h6>
 
-                            <div class="input-group mb-2">
+                            <div class="mb-2 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fw-bolder fst-normal"> PHP </i>
                                 </div>
@@ -250,7 +250,7 @@
                                 Flight Status
                             </h6>
 
-                            <div class="input-group mb-3">
+                            <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-flag"></i>
                                 </div>
@@ -268,7 +268,7 @@
                         Airport Origin
                     </h6>
 
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <div class="input-group-text bg-dark border-dark">
                             <i class="text-secondary fa-solid fa-plane-departure"></i>
                         </div>
@@ -289,7 +289,7 @@
                         Airport Destination
                     </h6>
 
-                    <div class="input-group mb-3">
+                    <div class="mb-3 input-group">
                         <div class="input-group-text bg-dark border-dark">
                             <i class="text-secondary fa-solid fa-plane-arrival"></i>
                         </div>
@@ -312,7 +312,7 @@
                                 Departure Datetime
                             </h6>
 
-                            <div class="input-group mb-3">
+                            <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-clock"></i>
                                 </div>
@@ -329,7 +329,7 @@
                                 Arrival Datetime
                             </h6>
 
-                            <div class="input-group mb-3">
+                            <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-clock"></i>
                                 </div>
@@ -342,7 +342,7 @@
                     </div>
                 </div>
 
-                <div class="modal-footer d-flex bg-light">
+                <div class="d-flex modal-footer bg-light">
                     <button class="btn btn-success text-white" type="submit">
                         Save
                     </button>
@@ -364,7 +364,7 @@
                 <h2 class="modal-title fs-5"> Are you sure? </h2>
             </div>
 
-            <div class="modal-footer d-flex bg-light">
+            <div class="d-flex modal-footer bg-light">
                 <button class="btn btn-success text-white" data-bs-dismiss="modal">
                     No
                 </button>

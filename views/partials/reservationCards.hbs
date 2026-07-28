@@ -1,14 +1,13 @@
 {{#each reservationCards}}
-    <div class="card m-4 p-4 mb-4 card-hover-sm bg-primary-accent shadow" data-identifier="{{this.identifier}}">
+    <div class="m-4 p-4 mb-4 card card-hover-sm bg-primary-accent shadow" data-identifier="{{this.identifier}}">
         <div class="row">
             <div class="col-lg-9 col-md-12">
                 <!-- FLIGHT ID AND FLIGHT STATUS -->
-                <div class="d-flex align-items-center m-0 text-secondary justify-content-between">
+                <div class="d-flex m-0 align-items-center text-secondary justify-content-between">
                     <div class="container d-flex flex-row p-0">
                         <h2 class="mb-0 me-2"> {{this.identifier}} </h2>
 
-                        <span class="badge fs-6 rounded-pill text-bg-{{#if (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}
-                                    text-white p-2 m-0 d-flex align-items-center">
+                        <span class="d-flex p-2 m-0 badge fs-6 rounded-pill text-bg-{{#if text-white align-items-center (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}">
                             {{this.status}}
                         </span>
                     </div>
@@ -18,7 +17,7 @@
                 </div>
 
                 <!-- FLIGHT TYPE AND PASSENGER AMOUNT -->
-                <div class="d-flex align-items-center m-0 text-light">
+                <div class="d-flex m-0 align-items-center text-light">
                     <h4 class="m-0 p-0"> One-Way Trip </h4>
                     <i class="m-0 p-0 bi bi-dot display-6"></i>
                     <h4 class="m-0 p-0"> {{this.lastName}}{{#if this.suffix}} {{this.suffix}}{{/if}}, {{this.firstName}}
@@ -30,14 +29,14 @@
                 <div class="row">
                     <!-- FLIGHT DEPARTURE DETAILS -->
                     <div class="col-lg-6 col-md-12 col-sm-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
-                        <div class="d-flex align-items-center m-0 p-0 text-tertiary">
+                        <div class="d-flex m-0 p-0 align-items-center text-tertiary">
                             <i class="fa-solid fa-plane-departure fa-xl"></i>
                             <h6 class="m-2 fw-bolder"> Departure </h6>
                         </div>
 
                         <p class="m-0 p-0 ps-3 text-light"> {{this.flight.originAirport.name}} </p>
 
-                        <div class="d-flex align-items-center m-0 p-0 text-light">
+                        <div class="d-flex m-0 p-0 align-items-center text-light">
                             <p class="m-0 p-0 ps-3"> {{getDate this.flight.departureDatetime}} </p>
                             <i class="m-0 p-0 bi bi-dot"></i>
                             <p class="m-0 p-0"> {{getTime this.flight.departureDatetime}} </p>
@@ -46,14 +45,14 @@
 
                     <!-- FLIGHT ARRIVAL DETAILS -->
                     <div class="col-lg-6 col-md-12 mb-sm-4 mb-4 mb-lg-0">
-                        <div class="d-flex align-items-center m-0 p-0 text-tertiary">
+                        <div class="d-flex m-0 p-0 align-items-center text-tertiary">
                             <i class="fa-solid fa-plane-arrival fa-xl"></i>
                             <h6 class="m-2 fw-bolder"> Arrival </h6>
                         </div>
 
                         <p class="m-0 p-0 ps-3 text-light"> {{this.flight.destinationAirport.name}} </p>
 
-                        <div class="d-flex align-items-center m-0 p-0 text-light">
+                        <div class="d-flex m-0 p-0 align-items-center text-light">
                             <p class="m-0 p-0 ps-3"> {{getDate this.flight.arrivalDatetime}} </p>
                             <i class="m-0 p-0 bi bi-dot"></i>
                             <p class="m-0 p-0"> {{getTime this.flight.arrivalDatetime}} </p>
@@ -82,5 +81,5 @@
         </div>
     </div>
 {{else}}
-    <h2 class="text-primary text-center p-5 m-0"> No Active Reservations </h2>
+    <h2 class="p-5 m-0 text-primary text-center"> No Active Reservations </h2>
 {{/each}}

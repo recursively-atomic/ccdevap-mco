@@ -2,7 +2,7 @@
 
 <!-- FLIGHT SEARCH -->
 <div class="container mt-5">
-    <div class="card d-flex shadow-lg mb-5">
+    <div class="d-flex mb-5 card shadow-lg">
         <!-- DEFAULT SEARCH OPTIONS -->
         <div class="card-header text-center text-white bg-primary-accent">
             <h2 class="mt-2"> Flight Search </h2>
@@ -205,7 +205,7 @@
             <div class="accordion" id="advanced-search-options">
                 <div class="accordion-item shadow border-secondary-accent rounded-0 border-4">
                     <h2 class="accordion-header bg-secondary-accent">
-                        <button class="accordion-button bg-secondary-accent text-white collapsed fw-bolder accordion-button-white"
+                        <button class="accordion-button collapsed accordion-button-white bg-secondary-accent text-white fw-bolder"
                                 type="button" data-bs-toggle="collapse" data-bs-target="#search-options">
                             Advanced Search Options (Front-end Only)
                         </button>
@@ -240,7 +240,7 @@
                                 <div class="col-lg-6 col-md-12">
                                     <h4 class="text-secondary-accent"> Preferred Price Range </h4>
 
-                                    <div class="d-flex align-items-center gap-3">
+                                    <div class="d-flex gap-3 align-items-center">
                                         <div class="input-group w-135px">
                                             <div class="input-group-text bg-tertiary border-tertiary">
                                                 <i class="text-primary-accent fw-bolder fst-normal"> PHP </i>
@@ -250,7 +250,7 @@
                                                    type="text" id="min-price" value="5,000" readonly>
                                         </div>
 
-                                        <div class="position-relative flex-grow-1 mb-4">
+                                        <div class="flex-grow-1 mb-4 position-relative">
                                             <input type="range" class="form-range position-absolute top-0 start-0 w-100"
                                                    id="min-price-input" min="1000" max="40000" step="1000" value="5000">
 
@@ -276,22 +276,19 @@
                             <div class="row p-0 m-0">
                                 <h4 class="text-secondary-accent"> Additional Options </h4>
 
-                                <div class="col-lg-12 col-md-12 me-0 col-sm-12 col-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 me-0">
                                     <div class="btn-group w-100">
                                         <input type="checkbox" class="btn-check" name="additional-option"
                                                id="direct-flights">
 
-                                        <label class="btn btn-lg btn-outline-secondary rounded-end-lg-0 rounded-end-md-0
-                                                   rounded-end-sm-0 rounded-end-0" for="direct-flights">
+                                        <label class="btn btn-lg btn-outline-secondary rounded-end-lg-0 rounded-end-md-0 rounded-end-sm-0 rounded-end-0" for="direct-flights">
                                             Direct Flights Only
                                         </label>
 
                                         <input type="checkbox" class="btn-check" name="additional-option"
                                                id="flexible-dates">
 
-                                        <label class="btn btn-lg btn-outline-secondary rounded-start-lg-0 border-start-lg-0
-                                                   rounded-start-md-0 border-start-md-0 rounded-start-sm-0 border-start-sm-0
-                                                   rounded-start-0 border-start-0" for="flexible-dates">
+                                        <label class="btn btn-lg btn-outline-secondary rounded-start-lg-0 border-start-lg-0 rounded-start-md-0 border-start-md-0 rounded-start-sm-0 border-start-sm-0 rounded-start-0 border-start-0" for="flexible-dates">
                                             Flexible Dates
                                         </label>
                                     </div>
@@ -304,7 +301,7 @@
         </div>
 
         <div class="card-footer bg-primary-accent">
-            <div class="d-flex justify-content-center m-3">
+            <div class="d-flex m-3 justify-content-center">
                 <button class="btn btn-lg btn-primary text-white" onclick="searchFlights()">
                     Search Flights
                 </button>
@@ -313,13 +310,13 @@
     </div>
 
     <!-- FLIGHT SEARCH RESULTS -->
-    <div class="card d-flex mt-5 mb-5 shadow-lg d-none" id="flight-results">
+    <div class="d-flex d-none mt-5 mb-5 card shadow-lg" id="flight-results">
         <div class="card-header text-center text-white bg-primary-accent">
             <div class="row mx-2 my-4">
                 <!-- SORT BY DROPDOWN -->
                 <div class="col-lg-6 col-md-6 mb-sm-4 mb-md-0 mb-lg-0 mb-4">
                     <div class="dropdown dropdown-center">
-                        <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                        <button class="btn btn-primary btn-lg dropdown-toggle text-white w-100" type="button"
                                 data-bs-toggle="dropdown">
                             Sort By
                             <span id="sort-type"> User ID (1-9) </span>
@@ -378,7 +375,7 @@
                 <!-- FILTER BY DROPDOWN -->
                 <div class="col-lg-6 col-md-6">
                     <div class="dropdown dropdown-center">
-                        <button class="btn btn-primary btn-lg text-white dropdown-toggle w-100" type="button"
+                        <button class="btn btn-primary btn-lg dropdown-toggle text-white w-100" type="button"
                                 data-bs-toggle="dropdown">
                             Filter By
                             <span id="filter-type"> Cebu Atlantic </span>
@@ -393,8 +390,7 @@
 
                             <!-- FILTER BY AIRLINE -->
                             <li class="dropdown-submenu">
-                                <a class="dropdown-header dropdown-header-item text-dark fs-6 py-1
-                                       text-decoration-none active">
+                                <a class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none active">
                                     <i class="fa-solid fa-plane"></i> Airline
                                 </a>
 
@@ -427,8 +423,7 @@
 
                             <!-- FILTER BY PRICE RANGE -->
                             <li class="dropdown-submenu">
-                                <a class="dropdown-header dropdown-header-item text-dark fs-6 py-1
-                                       text-decoration-none">
+                                <a class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
                                     <i class="bi bi-tags-fill"></i> Price Range
                                 </a>
 
@@ -461,8 +456,7 @@
 
                             <!-- FILTER BY LAYOVERS -->
                             <li class="dropdown-submenu">
-                                <a class="dropdown-header dropdown-header-item text-dark fs-6 py-1
-                                       text-decoration-none">
+                                <a class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
                                     <i class="bi bi-stoplights-fill"></i> Layovers
                                 </a>
 
@@ -508,7 +502,7 @@
                             <!-- FILTER BY DEPARTURES -->
                             <li class="dropdown-submenu">
                                 <a
-                                   class="dropdown-header dropdown-header-item text-dark fs-6 py-1 text-decoration-none">
+                                   class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
                                     <i class="fa-solid fa-user-gear"></i> Departure Times
                                 </a>
 
@@ -559,7 +553,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="d-flex align-items-center m-0 text-primary justify-content-between">
+                <div class="d-flex m-0 align-items-center text-primary justify-content-between">
                     <h2 id="flight-number" class="mb-0 me-2"></h2>
                     <h2 id="flight-fare" class="m-0 p-0 ps-3 text-success text-end text-nowrap"></h2>
                 </div>
@@ -569,13 +563,13 @@
                 <div class="row gap-3">
                     <!-- FLIGHT DEPARTURE DETAILS -->
                     <div class="col">
-                        <div class="d-flex align-items-center m-0 p-0 text-secondary">
+                        <div class="d-flex m-0 p-0 align-items-center text-secondary">
                             <i class="fa-solid fa-plane-departure fa-xl"></i>
                             <h6 class="m-2 fw-bolder"> Departure </h6>
                         </div>
 
-                        <div class="d-flex align-items-center m-0 p-0 text-primary-accent fw-bolder">
-                            <p id="departure-iata" class="mb m-0 p-0 ps-3"></p>
+                        <div class="d-flex m-0 p-0 align-items-center text-primary-accent fw-bolder">
+                            <p id="departure-iata" class="m-0 p-0 ps-3 mb"></p>
                             <i class="m-0 p-0 bi bi-dot mb"></i>
                             <p id="departure-location" class="m-0 p-0"></p>
                         </div>
@@ -587,14 +581,14 @@
 
                     <!-- FLIGHT ARRIVAL DETAILS -->
                     <div class="col">
-                        <div class="d-flex align-items-center m-0 p-0 text-secondary">
+                        <div class="d-flex m-0 p-0 align-items-center text-secondary">
                             <i class="fa-solid fa-plane-arrival fa-xl"></i>
                             <h6 class="m-2 fw-bolder"> Arrival </h6>
                         </div>
 
-                        <div class="d-flex align-items-center m-0 p-0 text-primary-accent fw-bolder">
+                        <div class="d-flex m-0 p-0 align-items-center text-primary-accent fw-bolder">
                             <p id="arrival-iata" class="mb-auto m-0 p-0 ps-3"></p>
-                            <i class="m-0 p-0 bi bi-dot mb-auto"></i>
+                            <i class="m-0 p-0 mb-auto bi bi-dot"></i>
                             <p id="arrival-location" class="m-0 p-0"></p>
                         </div>
 
@@ -606,10 +600,10 @@
 
                 <hr class="border border-3 rounded-3 border-dark opacity-100">
 
-                <div class="d-flex justify-content-center gap-3 fs-5">
-                    <span id="status-badge" class="badge p-2 rounded-pill text-white"></span>
-                    <span id="capacity-badge" class="badge p-2 rounded-pill text-white"></span>
-                    <span id="duration-badge" class="badge p-2 text-bg-primary rounded-pill text-white"></span>
+                <div class="d-flex gap-3 justify-content-center fs-5">
+                    <span id="status-badge" class="p-2 badge rounded-pill text-white"></span>
+                    <span id="capacity-badge" class="p-2 badge rounded-pill text-white"></span>
+                    <span id="duration-badge" class="p-2 badge text-bg-primary rounded-pill text-white"></span>
                 </div>
             </div>
 
