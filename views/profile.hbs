@@ -74,13 +74,13 @@
 
                         <div class="d-flex align-items-center m-0">
                             <h4 class="m-0 p-0 pe-1"> E-Mail: </h4>
-                            <p class="m-0 p-0 fs-4" id="profile-email"> {{user.emailAddress}} </p>
+                            <p id="profile-email" class="m-0 p-0 fs-4"> {{user.emailAddress}} </p>
                         </div>
 
                         <div class="d-flex align-items-center m-0">
                             <h4 class="m-0 p-0 pe-1"> Contact Number: </h4>
 
-                            <p class="m-0 p-0 fs-4" id="profile-contact">
+                            <p id="profile-contact" class="m-0 p-0 fs-4">
                                 {{user.contactNumber}}
                             </p>
                         </div>
@@ -207,24 +207,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- PASSWORD UPDATE INCCOMPLETE AND PROFILE UPDATE ERROR TOAST -->
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
-                 id="negative-toast">
-                <div class="d-flex align-items-center">
-                    <div class="text-nowrap toast-body"></div>
-                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                </div>
-            </div>
-
-            <!-- UPDATE PASSWORD AND UPDATE PROFILE TOAST -->
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                 id="positive-toast">
-                <div class="d-flex align-items-center">
-                    <div class="text-nowrap toast-body"></div>
-                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                </div>
-            </div>
         </div>
 
         <!-- PASSENGER INFORMATION TAB -->
@@ -245,7 +227,7 @@
                             </div>
 
                             <input id="country-code" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" value="{{user.countryCode}}" placeholder="AAA">
+                                   type="text" placeholder="AAA">
                         </div>
                     </div>
 
@@ -258,7 +240,7 @@
                             </div>
 
                             <input id="passport-code" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" value="{{user.passportCode}}" placeholder="A12345678">
+                                   type="text" placeholder="A12345678">
                         </div>
                     </div>
 
@@ -272,7 +254,7 @@
 
                             <input id="passport-expiration"
                                    class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                   type="date" value="{{user.passportExpiration}}">
+                                   type="date">
                         </div>
                     </div>
                 </div>
@@ -319,7 +301,7 @@
                             </div>
 
                             <select id="suffix" class="form-select bg-light border-dark border-2 text-black">
-                                <option selected hidden> Select A Suffix </option>
+                                <option selected hidden value=""> Select A Suffix </option>
                                 <option> None </option>
                                 <option> Jr. </option>
                                 <option> Sr. </option>
@@ -475,21 +457,10 @@
             </div>
 
             <div class="mb-4 text-center">
-                <button id="save-passenger-btn" class="btn btn-lg btn-primary text-white" onclick="savePassenger()">
+                <button id="save-passenger-btn" class="btn btn-lg btn-primary text-white"
+                        onclick="showToast('success-toast', 'Successfully saved passenger {{user.firstName}} {{user.lastName}}!')">
                     Save Passenger
                 </button>
-            </div>
-
-            <!-- PASSENGER TOAST -->
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                 id="passenger-toast">
-                <div class="d-flex align-items-center">
-                    <div class="text-nowrap toast-body">
-                        Successfully saved passenger {{user.firstName}} {{user.lastName}}!
-                    </div>
-
-                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                </div>
             </div>
         </div>
 
@@ -564,12 +535,11 @@
                                     <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
                                 </div>
 
-                                <input id="cardHolderFirstName"
+                                <input id="card-first-name"
                                        class="form-control bg-light border-dark border-2 border-end-0 text-black"
                                        type="text" placeholder="Brook Remi">
-                                <input id="cardHolderLastName"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="Doe">
+                                <input id="card-last-name" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="Doe">
                             </div>
                         </div>
 
@@ -577,16 +547,15 @@
                             <h4 class="text-primary-accent"> Send E-Receipts At E-Mail </h4>
 
                             <div class="input-group">
-                                <input id="receiptEmail" class="form-control bg-light border-dark border-2 text-black"
+                                <input id="receipt-email" class="form-control bg-light border-dark border-2 text-black"
                                        type="text" placeholder="email-address">
 
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-at"></i>
                                 </div>
 
-                                <input id="receiptEmailDomain"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="domain.com">
+                                <input id="receipt-domain" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="domain.com">
                             </div>
                         </div>
                     </div>
@@ -642,7 +611,7 @@
                                 </div>
 
                                 <input id="billingRegion" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.region}}" placeholder="Province Town">
+                                       type="text" placeholder="Province Town">
                             </div>
                         </div>
 
@@ -655,7 +624,7 @@
                                 </div>
 
                                 <input id="zipCode" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.zipCode}}" placeholder="1AA1">
+                                       type="text" placeholder="1AA1">
                             </div>
                         </div>
                     </div>
@@ -672,14 +641,14 @@
                                 </div>
 
                                 <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
-                                       type="text" value="{{user.cardNumber}}" placeholder="1234 0000 0000 0000"
+                                       type="text" placeholder="1234 0000 0000 0000"
                                        maxlength="19" id="card-number">
 
                                 <input class="w-25 form-control bg-light border-dark border-2 text-black border-end-0"
-                                       type="month" value="{{user.cardExpiry}}" id="card-expiry">
+                                       type="month" id="card-expiry">
 
                                 <input class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       value="{{user.cardCvn}}" placeholder="CVN" maxlength="4" id="card-cvn">
+                                       placeholder="CVN" maxlength="4" id="card-cvn">
                             </div>
                         </div>
 
@@ -693,7 +662,7 @@
 
                                 <input id="billingAddress1"
                                        class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       value="{{user.addressLine1}}" placeholder="Address Line 1">
+                                       placeholder="Address Line 1">
                             </div>
                         </div>
                     </div>
@@ -709,7 +678,7 @@
 
                                 <input id="billingAddress2"
                                        class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       value="{{user.addressLine2}}" placeholder="Address Line 2">
+                                       placeholder="Address Line 2">
                             </div>
                         </div>
                     </div>
@@ -732,8 +701,8 @@
                                     <i class="text-secondary bi bi-person-fill"></i>
                                 </div>
 
-                                <input id="accountName" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.firstName}} {{user.lastName}}">
+                                <input id="account-name" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" value="{{user.firstName}} {{user.lastName}}" placeholder="John Doe">
                             </div>
                         </div>
 
@@ -745,8 +714,8 @@
                                     <i class="text-secondary bi bi-credit-card-2-front-fill"></i>
                                 </div>
 
-                                <input id="accountNumber" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" value="{{user.accountNumber}}" placeholder="01234567890">
+                                <input id="account-number" class="form-control bg-light border-dark border-2 text-black"
+                                       type="text" placeholder="01234567890">
                             </div>
                         </div>
                     </div>
@@ -754,21 +723,10 @@
             </div>
 
             <div class="mb-4 text-center">
-                <button id="save-payment-btn" class="btn btn-lg btn-primary text-white" onclick="savePayment()">
+                <button id="save-payment-btn" class="btn btn-lg btn-primary text-white"
+                        onclick="showToast('success-toast', 'Successfully saved payment method and information!')">
                     Save Payment Information
                 </button>
-            </div>
-
-            <!-- PAYMENT TOAST -->
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                 id="payment-toast">
-                <div class="d-flex align-items-center">
-                    <div class="text-nowrap toast-body">
-                        Successfully saved payment method and information!
-                    </div>
-
-                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                </div>
             </div>
         </div>
 
@@ -984,24 +942,13 @@
 
             <!-- BUTTON PANEL SECTION -->
             <div class="d-flex align-items-center justify-content-center gap-3 m-4">
-                <button id="save-preferences-btn" class="btn btn-primary btn-lg text-white">
+                <button id="save-preferences-btn" class="btn btn-primary btn-lg text-white"
+                        onclick="showToast('success-toast', 'Successfully saved notification preferences!')">
                     Save Preferences
                 </button>
 
                 <button id="discard-changes-btn" class="btn btn-danger btn-lg text-white"> Discard Changes </button>
                 <!-- This would reset the notification preference in profile.html -->
-            </div>
-
-            <!-- PREFERENCE TOAST -->
-            <div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white"
-                 id="preference-toast">
-                <div class="d-flex align-items-center">
-                    <div class="text-nowrap toast-body">
-                        Successfully saved notification preferences!
-                    </div>
-
-                    <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-                </div>
             </div>
         </div>
 
@@ -1060,5 +1007,6 @@
     </div>
 </div>
 
+{{> toasts}}
 
 {{> footer}}

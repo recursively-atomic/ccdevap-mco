@@ -72,7 +72,7 @@ const schema = new mongoose.Schema({
         default: 0
     },
 
-    flightStatus: {
+    status: {
         type: String,
         enum: ['Scheduled', 'In Air', 'Delayed', 'Rescheduled', 'Cancelled'],
         default: 'Scheduled'

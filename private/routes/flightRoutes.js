@@ -25,7 +25,7 @@ router.get('/flight-search', (req, res) => {
 
     res.render('flightSearch', {
         page: '/flight-search',
-        script: '/scripts/user/flight-search.js',
+        script: '/scripts/flight-search.js',
         role: req.session.user.role,
         origin: origin,
         destination: destination
@@ -60,7 +60,7 @@ router.get('/flights', async (req, res) => {
 
         res.status(200).render('flights', {
             page: '/flights',
-            script: '/scripts/admin/flights.js',
+            script: '/scripts/flights.js',
             role: req.session.user.role,
             flightsCard: {
                 flightRows: flights,
@@ -226,7 +226,7 @@ router.put('/api/:flightID', async (req, res) => {
             departureDatetime: new Date(req.body['edit-d-datetime']),
             arrivalDatetime: new Date(req.body['edit-a-datetime']),
             baseFare: Number(req.body['edit-fare']),
-            flightStatus: req.body['edit-status']
+            status: req.body['edit-status']
         };
 
         const updatedFlight = await updateFlight(flightData);

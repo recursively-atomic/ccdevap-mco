@@ -5,37 +5,23 @@ const stepsDone = {
     extraService: false
 };
 
-let requiredFields, baseFare, classFare = 0, taxAndFee = 400, extraFee = 0, step = 0;
+let baseFare, classFare = 0, taxAndFee = 400, extraFee = 0, step = 0;
 
 $(function () {
     baseFare = parseInt($('#base-fare').text().replace(/\,/g, ''));
 
-    getRequiredFields();
+    getRequiredFields('flight-book');
     increaseProgress('mealSelection');
     increaseProgress('extraService');
     bindPassengerInformationEvents();
     checkPassengerInformation();
-    showAgeBadge();
+    showAgeBadge('flight-book');
     showSpecifyGender();
     updateMealSelection();
     updateSeatSelection();
     updateServiceSelection();
     updateBookingSummary();
 });
-
-/**
- * Gets all the required fields by first getting the elements with the
- * `.required-field` class and getting their ids.
- */
-function getRequiredFields() {
-    requiredFields = $('.required-field').map(function () {
-        return {
-            selector: '#' + $(this).attr('id'),
-            isFilled: false,
-            value: null
-        };
-    }).get();
-}
 
 /**
  * Increases the progress bar by one.
@@ -182,80 +168,6 @@ function checkPassengerInformation() {
 }
 
 /**
- * Shows a badge on what age group the passenger is based on
- * the birthdate inputted.
- */
-function showAgeBadge() {
-    const $dateInput = $('#date-input');
-    const $ageBadgeContainer = $('#age-badge-container');
-    const $ageBadge = $('#age-badge');
-    const $invalidInput = $('#invalid-input');
-    const $noInput = $('#no-input');
-
-    $dateInput.off('change.ageBadge').on('change.ageBadge', function () {
-        const inputValue = $dateInput.val();
-
-        // If there is a date input, show the badge
-        if (inputValue) {
-            const currentDate = new Date();
-            const birthDate = new Date(inputValue);
-            const differenceInDays = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
-            let ageCategories, ageCategory, ageBadgeText;
-
-            ageCategories = [
-                { label: 'Infant', min: 0, max: 730 },
-                { label: 'Child', min: 731, max: 6570 },
-                { label: 'Adult', min: 6571, max: 21900 },
-                { label: 'Senior', min: 21901, max: Infinity }
-            ];
-
-            ageCategory = ageCategories.find(category =>
-                differenceInDays >= category.min && differenceInDays <= category.max);
-            ageBadgeText = ageCategory ? ageCategory.label : '';
-
-            // If the date input is before the current date, show the badge
-            if (ageBadgeText) {
-                $dateInput.removeClass('is-invalid').addClass('is-valid');
-
-                $ageBadgeContainer.removeClass('d-none');
-                $ageBadge.text(ageBadgeText);
-            } else {
-                $dateInput.removeClass('is-valid').addClass('is-invalid');
-
-                $ageBadgeContainer.addClass('d-none');
-
-                $invalidInput.removeClass('d-none');
-                $noInput.addClass('d-none');
-            }
-        } else {
-            $dateInput.removeClass('is-valid').removeClass('is-invalid');
-
-            $ageBadgeContainer.addClass('d-none');
-        }
-    });
-}
-
-/**
- * Shows an "please specify" text field when the user selects "not listed"
- * in the gender dropdown.
- */
-function showSpecifyGender() {
-    const $genderSelect = $('#gender-select');
-    const $otherGenderContainer = $('#other-gender-container');
-    const $otherGenderInput = $('#other-gender-input');
-
-    $genderSelect.off('change.gender').on('change.gender', function () {
-        if ($genderSelect.val() === 'Not Listed') {
-            $otherGenderContainer.removeClass('d-none');
-            $otherGenderInput.focus();
-        } else {
-            $otherGenderContainer.addClass('d-none');
-            $otherGenderInput.val('');
-        }
-    });
-}
-
-/**
  * Displays a toast whenever the user picks a
  * different meal package and displays the chosen
  * meal package in the booking summary.
@@ -266,8 +178,8 @@ function updateMealSelection() {
     $selectedMeal.text('Standard');
     $('#standard').prop('checked', true);
 
-    $('input[name="meal-selection"]').off('change').on('change', function () {
-        showToast('#meal-toast', `Changed meal type to ${$(this).next('label').text().trim().toLowerCase()} meal!`);
+    $('input[name="meal-selection"]').off('change.meal').on('change.meal', function () {
+        showToast('success-toast', `Changed meal type to ${$(this).next('label').text().trim().toLowerCase()} meal!`);
         $selectedMeal.text($(this).next('label').text().trim());
     });
 }
@@ -286,14 +198,14 @@ function updateSeatSelection() {
     $selectedSeat.text('None');
     $selectedClass.text('None');
 
-    $(".seat").off('click').on('click', function () {
+    $(".seat").off('click.seat').on('click.seat', function () {
         increaseProgress('seatSelection');
 
         if (!$(this).hasClass("occupied")) {
             $(".seat").removeClass("selected");
             $(this).addClass("selected");
 
-            showToast('#seat-toast', `Changed seat number to ${$(this).text().trim()}!`);
+            showToast('success-toast', `Changed seat number to ${$(this).text().trim()}!`);
             classFare = 0;
 
             if ($(this).hasClass('economy')) {
@@ -336,7 +248,7 @@ function updateServiceSelection() {
     $noExtraServices.text('None');
     $('#none').prop('checked', true);
 
-    $('input[name="extra-services"], #additional-baggage').off('change').on('change', function () {
+    $('input[name="extra-services"], #additional-baggage').off('change.services').on('change.services', function () {
         switch ($(this).attr('id')) {
             case 'none':
                 $('input[name="extra-services"]').not('#none').prop('checked', false);
@@ -394,108 +306,6 @@ function updateBookingSummary() {
 }
 
 /**
- * Displays a toast with an optional display text.
- * 
- * @param {string} toastID the toast's ID.
- * @param {string} text the toast's display text.
- */
-function showToast(toastID, text = '') {
-    const toast = document.querySelector(toastID);
-    const toastBody = toast.querySelector('.toast-body');
-
-    document.activeElement.blur();
-
-    if (text) {
-        toastBody.textContent = text;
-    }
-
-    const toastInstance =
-        bootstrap.Toast.getInstance(toast) ||
-        new bootstrap.Toast(toast, {
-            delay: 2000,
-            autohide: true
-        });
-
-    toastInstance.show();
-}
-
-/**
- * Binds `showMissingFields()` to all of the required fields for
- * searching a flight, whenver a field's input has changed.
- */
-function bindMissingFieldsEvents() {
-    requiredFields.forEach(function (field) {
-        $(field.selector).off('input.show change.show').on('input.show change.show', function () {
-            showMissingFields();
-        });
-    });
-}
-
-/**
- * Displays to the user the emtpy fields that are required
- * to confirm a booking.
- */
-function showMissingFields() {
-    requiredFields.forEach(function (field) {
-        const value = $(field.selector).val().trim();
-
-        switch (field.selector) {
-            case '#date-input':
-                if (value !== '') {
-                    const currentDate = new Date();
-                    const birthDate = new Date(value);
-                    const differenceInDays = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
-
-                    let ageCategories, ageCategory;
-
-                    ageCategories = [
-                        { label: 'Infant', min: 0, max: 730 },
-                        { label: 'Child', min: 731, max: 6570 },
-                        { label: 'Adult', min: 6571, max: 21900 },
-                        { label: 'Senior', min: 21901, max: Infinity }
-                    ];
-
-                    ageCategory = ageCategories.find(category =>
-                        differenceInDays >= category.min && differenceInDays <= category.max);
-
-                    if (ageCategory) {
-                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                    }
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                    $('#invalid-input').addClass('d-none');
-                    $('#no-input').removeClass('d-none');
-                }
-                break;
-            case '#gender-select':
-                if (value !== '') {
-                    if (value === 'Not Listed') {
-                        if ($('#other-gender-input').val().trim() !== '') {
-                            $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                        } else {
-                            $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                            $('#specify').removeClass('d-none');
-                            $('#select').addClass('d-none');
-                        }
-                    } else {
-                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                    }
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                }
-                break;
-            default:
-                if (value !== '') {
-                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                }
-                break;
-        }
-    });
-}
-
-/**
  * Gets all of the important information about a reservation.
  * 
  * @returns {Object} an object of the user's inputs.
@@ -532,7 +342,7 @@ async function getReservationData() {
  */
 async function confirmBooking() {
     bindMissingFieldsEvents();
-    showMissingFields();
+    showMissingFields('flight-book');
 
     if (Object.values(stepsDone).every(Boolean)) {
         const reservationData = await getReservationData();
@@ -546,7 +356,7 @@ async function confirmBooking() {
             const result = await response.json();
 
             if (result.success) {
-                showToast('#complete', `Booking confirmed under ${reservationData.identifier}!`);
+                showToast('success-toast', `Booking confirmed under ${reservationData.identifier}!`);
 
                 setTimeout(() => {
                     window.location.href = result.redirect;
@@ -554,6 +364,6 @@ async function confirmBooking() {
             }
         } finally { }
     } else {
-        showToast('#incomplete');
+        showToast('danger-toast', 'Complete the booking details first!');
     }
 }

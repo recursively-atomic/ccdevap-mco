@@ -1,18 +1,34 @@
 $(function () {
     changeProfile();
-    showAgeBadge();
+    showAgeBadge('profile');
     showSpecifyGender();
     formatCardNumber();
     showInputFields();
+    updateProfilePage();
 
-    $("#save-password-btn").on("click", savePassword);
-    $("#update-profile-btn").on("click", openProfileModal);
-    $("#save-profile-btn").on("click", saveProfileInformation);
+    $("#save-password-btn").on("click.save", savePassword);
+    $("#update-profile-btn").on("click.update", openProfileModal);
+    $("#save-profile-btn").on("click.save", saveProfileInformation);
+});
+
+function updateProfilePage() {
+    const email = $("#profile-email").text().trim();
+    const [username, domain] = email.split('@');
+    const contact = $('#profile-contact').text().trim();
+    const [codeOnly, numberOnly] = contact.split(' ');
+
+    $("#email-address").val(username);
+    $('#domain-address').val(domain);
+
+    $('#phone-code').val(codeOnly.replace(/\+/g, ''));
+    $('#phone-number').val(numberOnly);
 
     if ($('#profile-contact').text().trim() == 0) {
         $('#profile-contact').closest('div').addClass('d-none');
+    } else {
+        $('#profile-contact').closest('div').removeClass('d-none');
     }
-});
+}
 
 /**
  * Enables a user to change their profile picture.
@@ -20,7 +36,7 @@ $(function () {
 function changeProfile() {
     const $changeProfile = $('#change-profile');
 
-    $changeProfile.off('change').on('change', function (event) {
+    $changeProfile.off('change.picture').on('change.picture', function (event) {
         const file = event.target.files[0];
 
         if (file) {
@@ -42,7 +58,7 @@ async function savePassword() {
     const newPassword = $("#new-password").val().trim();
 
     if (!currentPassword || !newPassword) {
-        showToast('#negative-toast', 'Fill in both password fields!');
+        showToast('danger-toast', 'Fill in both password fields!');
         return;
     }
 
@@ -58,9 +74,7 @@ async function savePassword() {
         if (result.success) {
             $("#current-password").val("");
             $("#new-password").val("");
-            showToast('#positive-toast', 'Successfully changed password!');
-        } else {
-            showToast('#negative-toast', 'test');
+            showToast('success-toast', 'Successfully changed password!');
         }
     } finally { }
 }
@@ -113,7 +127,7 @@ async function saveProfileInformation() {
     const result = await response.json();
 
     if (!result.success) {
-        showToast('#negative-toast', 'Failed to update profile!');
+        showToast('danger-toast', 'Failed to update profile!');
         return;
     }
 
@@ -121,137 +135,20 @@ async function saveProfileInformation() {
     $("#profile-email").text(result.user.emailAddress);
     $("#profile-contact").text(result.user.contactNumber);
 
-    const email = $("#profile-email").text().trim();
-    const [username, domain] = email.split('@');
-    const contact = $('#profile-contact').text().trim();
-    const [codeOnly, numberOnly] = contact.split(' ');
-
-    $("#email-address").val(username);
-    $('#domain-address').val(domain);
-
-    $('#phone-code').val(codeOnly.replace(/\+/g, ''));
-    $('#phone-number').val(numberOnly);
-
-    if ($('#profile-contact').text().trim() == 0) {
-        $('#profile-contact').closest('div').addClass('d-none');
-    } else {
-        $('#profile-contact').closest('div').removeClass('d-none');
-    }
+    updateProfilePage();
 
     bootstrap.Modal.getInstance(
         document.getElementById("update-profile-modal")
     ).hide();
 
-    showToast('#positive-toast', 'Profile updated successfully!');
-}
-
-/**
- * Displays a toast with an optional display text.
- * 
- * @param {string} toastID the toast's ID.
- * @param {string} text the toast's display text.
- */
-function showToast(toastID, text = '') {
-    const toast = document.querySelector(toastID);
-    const toastBody = toast.querySelector('.toast-body');
-
-    document.activeElement.blur();
-
-    if (text) {
-        toastBody.textContent = text;
-    }
-
-    const toastInstance =
-        bootstrap.Toast.getInstance(toast) ||
-        new bootstrap.Toast(toast, {
-            delay: 2000,
-            autohide: true
-        });
-
-    toastInstance.show();
-}
-
-/**
- * Shows a badge on what age group the passenger is based on
- * the birthdate inputted.
- */
-function showAgeBadge() {
-    const $dateContainer = $('#date-container');
-    const $dateInput = $('#date-input');
-    const $ageBadgeContainer = $('#age-badge-container');
-    const $ageBadge = $('#age-badge');
-
-    $dateInput.off('change').on('change', function () {
-        const inputValue = $dateInput.val();
-
-        // If there is a date input, show the badge
-        if (inputValue) {
-            const currentDate = new Date();
-            const birthDate = new Date(inputValue);
-            const differenceInDays = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
-            let ageCategories, ageCategory, ageBadgeText;
-
-            ageCategories = [
-                { label: 'Infant', min: 0, max: 730 },
-                { label: 'Child', min: 731, max: 6570 },
-                { label: 'Adult', min: 6571, max: 21900 },
-                { label: 'Senior', min: 21901, max: Infinity }
-            ];
-
-            ageCategory = ageCategories.find(category =>
-                differenceInDays >= category.min && differenceInDays <= category.max);
-            ageBadgeText = ageCategory ? ageCategory.label : '';
-
-            // If the date input is before the current date, show the badge
-            if (ageBadgeText) {
-                $dateContainer.removeClass('col-lg-12 col-md-12 col-sm-12 col-12');
-                $dateContainer.addClass('col-lg-11 col-md-10 col-sm-10 col-10');
-                $dateInput.removeClass('is-invalid').addClass('is-valid');
-
-                $ageBadgeContainer.removeClass('d-none').addClass('col-lg-1 col-md-2 col-sm-2 col-2');
-                $ageBadge.text(ageBadgeText);
-            } else {
-                $dateContainer.removeClass('col-lg-11 col-md-10 col-sm-10 col-10');
-                $dateContainer.addClass('col-lg-12 col-md-12 col-sm-12 col-12');
-                $dateInput.removeClass('is-valid').addClass('is-invalid');
-
-                $ageBadgeContainer.removeClass('col-lg-1 col-md-2 col-sm-2 col-2').addClass('d-none');
-            }
-        } else {
-            $dateContainer.removeClass('col-lg-11 col-md-10 col-sm-10 col-10');
-            $dateContainer.addClass('col-lg-12 col-md-12 col-sm-12 col-12');
-            $dateInput.removeClass('is-valid').removeClass('is-invalid');
-
-            $ageBadgeContainer.removeClass('col-lg-1 col-md-2 col-sm-2 col-2').addClass('d-none');
-        }
-    });
-}
-
-/**
- * Shows an "please specify" text field when the user selects "not listed"
- * in the gender dropdown.
- */
-function showSpecifyGender() {
-    const $genderSelect = $('#gender-select');
-    const $otherGenderContainer = $('#other-gender-container');
-    const $otherGenderInput = $('#other-gender-input');
-
-    $genderSelect.off('change').on('change', function () {
-        if ($genderSelect.val() === 'Not Listed') {
-            $otherGenderContainer.removeClass('d-none');
-            $otherGenderInput.focus();
-        } else {
-            $otherGenderContainer.addClass('d-none');
-            $otherGenderInput.val('');
-        }
-    });
+    showToast('success-toast', 'Profile updated successfully!');
 }
 
 /**
  * Formats the card number into XXXX XXXX XXXX XXXX.
  */
 function formatCardNumber() {
-    $('#card-number').off('input').on('input', function () {
+    $('#card-number').off('input.card').on('input.card', function () {
         const input = this;
         const inputValue = input.value;
 
@@ -287,38 +184,14 @@ function formatCardNumber() {
  * the user chose in the payment method dropdown.
  */
 function showInputFields(clearFields = true) {
-
     const $paymentMethodSelect = $("#payment-method-select");
     const $cardInputFields = $("#card-input-fields");
     const $digitalInputFields = $("#digital-input-fields");
 
-    function clearCardFields() {
-        $("#cardHolderFirstName").val("");
-        $("#cardHolderLastName").val("");
-
-        $("#receiptEmail").val("");
-
-        $("#billingCountry").val("");
-        $("#billingRegion").val("");
-        $("#zipCode").val("");
-
-        $("#cardNumber").val("");
-        $("#expirationDate").val("");
-        $("#cvn").val("");
-
-        $("#billingAddress1").val("");
-        $("#billingAddress2").val("");
-    }
-
-    function clearDigitalWalletFields() {
-        $("#accountName").val("");
-        $("#accountNumber").val("");
-    }
-
     $cardInputFields.addClass("d-none");
     $digitalInputFields.addClass("d-none");
 
-    $paymentMethodSelect.off("change").on("change", function () {
+    $paymentMethodSelect.off("change.payment").on("change.payment", function () {
 
         switch ($(this).val()) {
 
@@ -356,4 +229,28 @@ function showInputFields(clearFields = true) {
                 break;
         }
     });
+}
+
+function clearCardFields() {
+    $("#card-first-name").val("");
+    $("#card-last-name").val("");
+
+    $("#receipt-email").val("");
+    $("#receipt-domain").val("");
+
+    $("#billingCountry").val("");
+    $("#billingRegion").val("");
+    $("#zipCode").val("");
+
+    $("#cardNumber").val("");
+    $("#expirationDate").val("");
+    $("#cvn").val("");
+
+    $("#billingAddress1").val("");
+    $("#billingAddress2").val("");
+}
+
+function clearDigitalWalletFields() {
+    $("#account-name").val("");
+    $("#account-number").val("");
 }

@@ -144,15 +144,6 @@
     </div>
 </div>
 
-<!-- ADD FLIGHT TOAST -->
-<div id="add-toast"
-     class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
-
 <!-- VIEW FLIGHT MODAL -->
 <div id="view-flight" class="modal fade" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
@@ -365,15 +356,6 @@
     </div>
 </div>
 
-<!-- EDIT FLIGHT TOAST -->
-<div id="edit-toast"
-     class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
-
 <!-- DELETE FLIGHT MODAL -->
 <div class="modal fade" id="delete-flight" data-bs-backdrop="static">
     <div class="modal-dialog modal-sm modal-dialog-centered text-center">
@@ -397,13 +379,6 @@
     </div>
 </div>
 
-<!-- DELETE FLIGHT TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
-     id="delete-toast">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
+{{> toasts}}
 
 {{> footer}}

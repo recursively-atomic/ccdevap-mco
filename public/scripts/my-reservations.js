@@ -1,75 +1,7 @@
 $(function () {
-    changeDropdownDisplay();
+    changeDropdownDisplay(false, false);
 });
 
-/**
- * Changes the sort and filter dropdown's display according
- * to the user's selection.
- */
-function changeDropdownDisplay() {
-    bindListItemValue('#sort-dropdown', '#sort-type');
-    bindListItemValue('#filter-dropdown', '#filter-type');
-}
-
-/**
- * Searches the value that the dropdown's display should take
- * according to the `.dropdown-item` that the user selected.
- * 
- * @param {HTMLElement} dropdown is the dropdown containing the `.dropdown-item` that was clicked.
- * @param {HTMLElement} display is the dropdown's appending text display.
- */
-function bindListItemValue(dropdown, display) {
-    const $dropdown = $(dropdown);
-    const $display = $(display);
-
-    $dropdown.off('click', '.dropdown-item').on('click', '.dropdown-item', function (event) {
-        const $dropdownItem = $(this);
-        const $listItem = $(this).closest('li');
-        const listItemValue = $listItem.attr('value');
-
-        $display.text(listItemValue);
-        $dropdown.find('.dropdown-item').removeClass('active');
-        $dropdownItem.addClass('active');
-    });
-}
-
-/**
- * Hides a modal and shows a toast with an optional display text.
- * 
- * @param {string} modalID the modal's ID.
- * @param {string} toastID the toast's ID.
- * @param {string} text the toast's display text.
- */
-function hideModalShowToast(modalID, toastID, text = '') {
-    const modal = document.getElementById(modalID);
-    const toast = document.getElementById(toastID);
-    const toastBody = toast.querySelector('.toast-body');
-
-    document.activeElement.blur();
-
-    if (text) {
-        toastBody.textContent = text;
-    }
-
-    const modalInstance =
-        bootstrap.Modal.getInstance(modal) ||
-        new bootstrap.Modal(modal);
-
-    const toastInstance =
-        bootstrap.Toast.getInstance(toast) ||
-        new bootstrap.Toast(toast, {
-            delay: 2000,
-            autohide: true
-        });
-
-    modalInstance.hide();
-    toastInstance.show();
-}
-
-/**
- * Views the details of a reservations by editing a modal's
- * title and content.
- */
 async function showViewModal(identifier) {
     const $viewModal = $('#view-reservation');
     const $title = $viewModal.find('.modal-title');
@@ -124,7 +56,7 @@ async function showEditModal(identifier) {
         editData.seat = $seatMap.find('.seat.selected').text().trim();
         attachSeatSelection($seatMap, editData);
 
-        $saveButton.off('click').on('click', async function () {
+        $saveButton.off('click.save').on('click.save', async function () {
             await updateReservationSeat(identifier, editData);
         });
     } finally { }
@@ -144,7 +76,7 @@ async function updateReservationSeat(identifier, editData) {
             return;
         }
 
-        hideModalShowToast('edit-reservation', 'edit-toast', `Successfully changed seat to ${editData.seat} for reservation ${identifier}!`);
+        hideModalShowToast('edit-reservation', 'success-toast', `Successfully changed seat to ${editData.seat} for reservation ${identifier}!`);
     } finally { }
 }
 
@@ -158,7 +90,7 @@ async function updateReservationSeat(identifier, editData) {
 function attachSeatSelection($seatMap, editData) {
     const $seats = $seatMap.find('.seat');
 
-    $seats.off('click').on('click', function () {
+    $seats.off('click.select').on('click.select', function () {
         if (!$(this).hasClass('occupied')) {
             $seats.removeClass('selected').addClass('available');
             $(this).removeClass('available').addClass('selected');
@@ -173,7 +105,7 @@ async function showCancelModal(identifier) {
     const $card = $(`.card[data-identifier="${identifier}"]`);
     const $badge = $card.find('.badge');
 
-    $('#cancel-button').off('click').on('click', async function () {
+    $('#cancel-button').off('click.cancel').on('click.cancel', async function () {
         try {
             const response = await fetch(`/api/update-cancel/${identifier}`, {
                 method: 'PUT',
@@ -185,7 +117,7 @@ async function showCancelModal(identifier) {
             if (!result.success || !$card.length) {
                 return
             }
-            
+
             $badge.text('Cancelled').removeClass('text-bg-success text-bg-warning').addClass('text-bg-danger');
             $card.find('.btn').prop('disabled', true);
 

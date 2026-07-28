@@ -613,44 +613,6 @@
     </div>
 </div>
 
-<!-- MEAL SELECTION TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
-     id="meal-toast">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
-
-<!-- SEAT SELECTION TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
-     id="seat-toast">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
-
-<!-- BOOKING DETAILS INCCOMPLETE TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
-     id="incomplete">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body">
-            Complete the booking details first!
-        </div>
-
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
-
-<!-- BOOKING DETAILS COMPLETE TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
-     id="complete">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
+{{> toasts}}
 
 {{> footer}}

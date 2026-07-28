@@ -42,7 +42,7 @@ router.get('/my-reservations', async (req, res) => {
 
         res.status(200).render('my-reservations', {
             page: '/my-reservations',
-            script: '/scripts/user/my-reservations.js',
+            script: '/scripts/my-reservations.js',
             role: req.session.user.role,
             reservationCards: reservations,
             pagination: pagination
@@ -80,7 +80,7 @@ router.get('/reservations', async (req, res) => {
 
         res.status(200).render('reservations', {
             page: '/reservations',
-            script: '/scripts/admin/reservations.js',
+            script: '/scripts/reservations.js',
             role: req.session.user.role,
             reservationRows: reservations,
             pagination: pagination
@@ -105,7 +105,7 @@ router.get('/flight-book', async (req, res) => {
 
         res.status(200).render('flightBook', {
             page: '/flight-book',
-            script: '/scripts/user/flight-book.js',
+            script: '/scripts/flight-book.js',
             role: req.session.user.role,
             flight: flight,
             seats: seatMap

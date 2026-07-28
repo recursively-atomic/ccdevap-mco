@@ -260,7 +260,8 @@
             </div>
 
             <div class="modal-footer bg-light">
-                <button class="btn btn-success text-white" onclick="hideModalShowToast('edit-activity', 'edit-toast')">
+                <button class="btn btn-success text-white"
+                        onclick="hideModalShowToast('edit-activity', 'success-toast', 'Successfully saved changes on user [USER ID]!')">
                     Save Changes
                 </button>
 
@@ -269,18 +270,6 @@
                 </button>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- EDIT FLIGHT TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-success text-white z-max"
-     id="edit-toast">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body">
-            Successfully saved changes on user [USER ID]!
-        </div>
-
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
     </div>
 </div>
 
@@ -298,7 +287,7 @@
                 </button>
 
                 <button class="btn btn-danger text-white"
-                        onclick="hideModalShowToast('delete-activity', 'delete-toast')">
+                        onclick="hideModalShowToast('delete-activity', 'danger-toast', 'Deleted User [USER ID]')">
                     Yes, Delete It
                 </button>
             </div>
@@ -306,16 +295,6 @@
     </div>
 </div>
 
-<!-- DELETE FLIGHT TOAST -->
-<div class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max"
-     id="delete-toast">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body">
-            Deleted User [USER ID]!
-        </div>
-
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
+{{> toasts}}
 
 {{> footer}}

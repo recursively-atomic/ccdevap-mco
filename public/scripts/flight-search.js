@@ -1,15 +1,12 @@
-let requiredFields;
-
 $(function () {
     getFlightLocations();
-    getRequiredFields();
+    getRequiredFields('flight-search');
     showPriceRangeInput();
     bindSearchInformationEvents();
     checkSearchInformation();
-    bindListItemValue('#sort-dropdown', '#sort-type', false);
-    bindListItemValue('#filter-dropdown', '#filter-type', true);
+    changeDropdownDisplay(false, true);
 
-    $(document).on('click', '#search-results a[href*="page="]', function (event) {
+    $(document).on('click.search', '#search-results a[href*="page="]', function (event) {
         event.preventDefault();
 
         const href = $(this).attr('href');
@@ -29,8 +26,8 @@ async function getFlightLocations() {
     const $departureSelect = $('#departure-select');
     const $arrivalSelect = $('#arrival-select');
 
-    await bindLocations($departureSelect, $arrivalSelect);
-    
+    await bindLocations($departureSelect, $arrivalSelect, 'flight-search');
+
     if (origin && destination) {
         $departureSelect.val(origin);
         $arrivalSelect.val(destination);
@@ -38,11 +35,11 @@ async function getFlightLocations() {
         updateDropdowns($departureSelect, $arrivalSelect);
     }
 
-    $departureSelect.on('change', function () {
+    $departureSelect.on('change.origin', function () {
         updateDropdowns($departureSelect, $arrivalSelect);
     });
 
-    $arrivalSelect.on('change', function () {
+    $arrivalSelect.on('change.destination', function () {
         updateDropdowns($departureSelect, $arrivalSelect);
     });
 }
@@ -61,57 +58,6 @@ function updateDropdowns($departure, $arrival) {
     if (departureIata) {
         $arrival.find(`option[data-iata="${departureIata}"]`).prop('hidden', true).prop('disabled', true);
     }
-}
-
-async function bindLocations(departureDropdown, arrivalSelect) {
-    try {
-        const [originResponse, destinationResponse] = await Promise.all([
-            fetch('/api/flight-origins'),
-            fetch('/api/flight-destinations')
-        ]);
-
-        const originResult = await originResponse.json();
-        const destinationResult = await destinationResponse.json();
-
-        if (!originResult.success || !destinationResult.success) {
-            return;
-        }
-
-        originResult.origins.forEach(origin => {
-            departureDropdown.append(
-                $('<option>', {
-                    text: origin.location,
-                    'data-iata': origin.iata,
-                    'data-location': origin.location,
-                    'data-name': origin.name
-                })
-            );
-        });
-
-        destinationResult.destinations.forEach(destination => {
-            arrivalSelect.append(
-                $('<option>', {
-                    text: destination.location,
-                    'data-iata': destination.iata,
-                    'data-location': destination.location,
-                    'data-name': destination.name
-                })
-            );
-        });
-    } finally { }
-}
-
-/**
- * Gets all the required fields by first getting the elements with the
- * `.required-field` class and getting their ids.
- */
-function getRequiredFields() {
-    requiredFields = $('.required-field').map(function () {
-        return {
-            selector: '#' + $(this).attr('id'),
-            isFilled: $(this).attr('id') === 'flight-type'
-        };
-    }).get();
 }
 
 /**
@@ -157,7 +103,7 @@ function showPriceRangeInput() {
     const $minPrice = $('#min-price');
     const $maxPrice = $('#max-price');
 
-    $minPriceInput.off('input').on('input', function () {
+    $minPriceInput.off('input.max').on('input.max', function () {
         if (parseInt($minPriceInput.val()) >= parseInt($maxPriceInput.val())) {
             $minPriceInput.val(parseInt($maxPriceInput.val()) - 5000);
         }
@@ -165,46 +111,12 @@ function showPriceRangeInput() {
         $minPrice.val(parseInt($minPriceInput.val()).toLocaleString('en-US'));
     });
 
-    $maxPriceInput.off('input').on('input', function () {
+    $maxPriceInput.off('input.min').on('input.min', function () {
         if (parseInt($maxPriceInput.val()) <= parseInt($minPriceInput.val())) {
             $maxPriceInput.val(parseInt($minPriceInput.val()) + 5000);
         }
 
         $maxPrice.val(parseInt($maxPriceInput.val()).toLocaleString('en-US'));
-    });
-}
-
-/**
- * Binds `showMissingFields()` to all of the required fields for
- * searching a flight, whenver a field's input has changed.
- */
-function bindMissingFieldsEvents() {
-    requiredFields.forEach(function (field) {
-        $(field.selector).off('input.show change.show').on('input.show change.show', function () {
-            showMissingFields();
-        });
-    });
-}
-
-/**
- * Displays to the user the emtpy fields that are required
- * to confirm a booking.
- */
-function showMissingFields() {
-    requiredFields.forEach(function (field) {
-        const value = $(field.selector).val().trim();
-
-        // Checks if a field has the proper data, and flags
-        // accordingly through the requireFields array.
-        switch (field.selector) {
-            default:
-                if (value !== '') {
-                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                }
-                break;
-        }
     });
 }
 
@@ -236,7 +148,7 @@ async function performSearch(page) {
  */
 async function searchFlights() {
     bindMissingFieldsEvents();
-    showMissingFields();
+    showMissingFields('flight-search');
 
     if (requiredFields.every(field => field.isFilled)) {
         await performSearch(1);
@@ -244,58 +156,6 @@ async function searchFlights() {
     } else {
         $('#flight-results').removeClass('d-block').addClass('d-none');
     }
-}
-
-/**
- * Searches the value that the dropdown's display should take
- * according to the `.dropdown-item` that the user selected.
- * 
- * @param {HTMLElement} dropdown is the dropdown containing the `.dropdown-item` that was clicked.
- * @param {HTMLElement} display is the dropdown's appending text display.
- * @param {Boolean} hasSubmenu is the flag if the dropdown has submenus. 
- */
-function bindListItemValue(dropdown, display, hasSubmenu) {
-    const $dropdown = $(dropdown);
-    const $display = $(display);
-
-    $dropdown.off('click', '.dropdown-item').on('click', '.dropdown-item', function (event) {
-        const $dropdownItem = $(this);
-        const $listItem = $(this).closest('li');
-        const listItemValue = $listItem.attr('value');
-        const $dropdownSubmenu = $(this).closest('.dropdown-submenu');
-
-        $display.text(listItemValue);
-        $dropdown.find('.dropdown-item').removeClass('active');
-        $dropdownItem.addClass('active');
-
-        if (hasSubmenu) {
-            $dropdown.find('.dropdown-header-item').removeClass('active');
-            $dropdownSubmenu.find('.dropdown-header-item').addClass('active');
-        }
-    });
-}
-
-function formatDuration(departure, arrival) {
-    const difference = Math.abs(new Date(arrival) - new Date(departure));
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-
-    let display = [];
-
-    if (days != 0) {
-        display.push(`${days} D`);
-    }
-
-    if (hours != 0) {
-        display.push(`${hours} H`);
-    }
-
-    if (minutes != 0) {
-        display.push(`${minutes} M`);
-    }
-
-    return display.join(' ');
 }
 
 async function showViewModal(flightNumber) {
@@ -321,7 +181,7 @@ async function showViewModal(flightNumber) {
         let originAirport = flightData.originAirport;
         let destinationAirport = flightData.destinationAirport;
         let capacity = flightData.availableSeats;
-        let status = flightData.flightStatus;
+        let status = flightData.status;
 
         airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
         $title.text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);

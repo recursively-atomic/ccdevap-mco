@@ -10,7 +10,7 @@
 
                 <h2 class="text-center fw-bolder text-primary mb-4"> Log In </h2>
 
-                <form onsubmit="checkCredentials(event)">
+                <form onsubmit="checkCredentials(event, 'login')">
                     <div class="mb-3">
                         <h4 class="text-secondary"> E-Mail Address </h4>
 
@@ -51,11 +51,4 @@
     </div>
 </div>
 
-<!-- BAD OUTCOUME TOAST -->
-<div id="bad-outcome"
-     class="toast position-fixed bottom-0 start-50 translate-middle-x p-2 m-3 w-auto text-bg-danger text-white z-max">
-    <div class="d-flex align-items-center">
-        <div class="text-nowrap toast-body"></div>
-        <button class="me-2 m-auto btn-close btn-close-white" data-bs-dismiss="toast"></button>
-    </div>
-</div>
+{{> toasts}}

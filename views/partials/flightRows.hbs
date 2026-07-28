@@ -14,7 +14,7 @@
         <td> {{getDate this.departureDatetime}} {{getTime this.departureDatetime}} </td>
         <td> {{getDate this.arrivalDatetime}} {{getTime this.arrivalDatetime}} </td>
         <td> PHP {{formatNumber this.baseFare}} </td>
-        <td> {{this.flightStatus}} </td>
+        <td> {{this.status}} </td>
 
         <td>
             {{#if (eq this.availableSeats 0)}} Full
@@ -23,7 +23,7 @@
         </td>
 
         <td>
-            <button class="btn btn-success btn-sm text-white fw-bolder" onclick="showViewModal('{{this._id}}')"
+            <button class="btn btn-success btn-sm text-white fw-bolder" onclick="showViewModal('{{this.flightNumber}}')"
                     data-bs-toggle="modal" data-bs-target="#view-flight"> View </button>
 
             <button class="btn btn-warning btn-sm text-white fw-bolder" onclick="showEditModal('{{this._id}}')"

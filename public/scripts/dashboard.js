@@ -7,13 +7,12 @@ $(function () {
  * Shows the details of a booking reference.
  */
 function showReservationDetails() {
-    $(".view-reservation").off('click').on('click', function () {
+    $(".view-reservation").off('click.view').on('click.view', function () {
         const $viewReservationModal = $("#view-reservation");
         const baseModal = new bootstrap.Modal($viewReservationModal);
 
         const tableRow = $(this).closest("tr");
         const bookingReference = tableRow.find("th:eq(0)").text();
-        // Add more details that align with booking.html
 
         $("#view-reservation .modal-title").html(
             bookingReference + "Details"

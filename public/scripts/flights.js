@@ -19,30 +19,7 @@ function formatBaseFare() {
     });
 }
 
-function formatDuration(departure, arrival) {
-    const difference = Math.abs(new Date(arrival) - new Date(departure));
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-
-    let display = [];
-
-    if (days != 0) {
-        display.push(`${days} D`);
-    }
-
-    if (hours != 0) {
-        display.push(`${hours} H`);
-    }
-
-    if (minutes != 0) {
-        display.push(`${minutes} M`);
-    }
-
-    return display.join(' ');
-}
-
-async function showViewModal(flightID) {
+async function showViewModal(flightNumber) {
     const $viewModal = $('#view-flight');
     const $title = $viewModal.find('.modal-title');
 
@@ -53,7 +30,7 @@ async function showViewModal(flightID) {
     const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
 
     try {
-        const response = await fetch(`/api/${flightID}`);
+        const response = await fetch(`/api/flight/${flightNumber}`);
         const result = await response.json();
 
         if (!result.success) {
@@ -65,7 +42,7 @@ async function showViewModal(flightID) {
         let originAirport = flightData.originAirport;
         let destinationAirport = flightData.destinationAirport;
         let capacity = flightData.availableSeats;
-        let status = flightData.flightStatus;
+        let status = flightData.status;
 
         airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
         $title.text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);
@@ -128,7 +105,7 @@ async function showEditModal(flightID) {
     const $editModal = $('#edit-flight');
     const $title = $editModal.find('.modal-title');
 
-    const $flightStatus = $('#edit-status');
+    const $status = $('#edit-status');
     const statusOptions = ['Scheduled', 'In Air', 'Delayed', 'Rescheduled', 'Cancelled'];
 
     selectedFlightID = flightID;
@@ -150,13 +127,13 @@ async function showEditModal(flightID) {
         $title.text(`Edit ${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);
 
         $('#edit-fare').val((flightData.baseFare).toLocaleString('en-US'));
-        $flightStatus.empty();
+        $status.empty();
 
         for (const status of statusOptions) {
-            if (flightData.flightStatus == status) {
-                $flightStatus.append(`<option selected> ${status} </option>`);
+            if (flightData.status == status) {
+                $status.append(`<option selected> ${status} </option>`);
             } else {
-                $flightStatus.append(`<option> ${status} </option>`);
+                $status.append(`<option> ${status} </option>`);
             }
         }
 
@@ -197,7 +174,7 @@ async function createFlight(event) {
         if (result.success) {
             let airline = result.airline;
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
-            hideModalShowToast('add-flight', 'add-toast', `Successfully saved flight ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
+            hideModalShowToast('add-flight', 'success-toast', `Successfully saved flight ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
                 refreshFlightTable();
@@ -229,7 +206,7 @@ async function updateFlight(event) {
             let airline = result.airline;
 
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
-            hideModalShowToast('edit-flight', 'edit-toast', `Successfully saved changes on ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
+            hideModalShowToast('edit-flight', 'success-toast', `Successfully saved changes on ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
                 refreshFlightTable();
@@ -253,7 +230,7 @@ async function deleteFlight() {
             let airline = result.airline;
 
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
-            hideModalShowToast('delete-flight', 'delete-toast', `Deleted ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
+            hideModalShowToast('delete-flight', 'danger-toast', `Deleted ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
                 refreshFlightTable();
@@ -262,7 +239,7 @@ async function deleteFlight() {
     } finally { }
 }
 
-function refreshFlightTable() {
+async function refreshFlightTable() {
     const page = new URLSearchParams(window.location.search).get('page') || 1;
 
     try {
@@ -274,40 +251,7 @@ function refreshFlightTable() {
         const $flightsCard = $('#flights-card');
 
         if ($flightsCard) {
-            $flightsCard.innerHTML = markup;
+            $flightsCard.html(markup);
         }
     } finally { }
-}
-
-/**
- * Hides a modal and shows a toast with an optional display text.
- * 
- * @param {string} modalID the modal's ID.
- * @param {string} toastID the toast's ID.
- * @param {string} text the toast's display text.
- */
-function hideModalShowToast(modalID, toastID, text = '') {
-    const modal = document.getElementById(modalID);
-    const toast = document.getElementById(toastID);
-    const toastBody = toast.querySelector('.toast-body');
-
-    document.activeElement.blur();
-
-    if (text) {
-        toastBody.textContent = text;
-    }
-
-    const modalInstance =
-        bootstrap.Modal.getInstance(modal) ||
-        new bootstrap.Modal(modal);
-
-    const toastInstance =
-        bootstrap.Toast.getInstance(toast) ||
-        new bootstrap.Toast(toast, {
-            delay: 2000,
-            autohide: true
-        });
-
-    modalInstance.hide();
-    toastInstance.show();
 }

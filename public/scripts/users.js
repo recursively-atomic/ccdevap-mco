@@ -1,0 +1,3 @@
+$(function () {
+    changeDropdownDisplay(false, false);
+});

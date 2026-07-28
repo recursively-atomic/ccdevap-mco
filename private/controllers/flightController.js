@@ -47,7 +47,7 @@ async function getFlightDestinations() {
 }
 
 async function getFlightsByQuery(queryData, page, limit) {
-    const skip = (page - 1) * limit, filter = { flightStatus: { $nin: ['In Air', 'Cancelled'] } };
+    const skip = (page - 1) * limit, filter = { status: { $nin: ['In Air', 'Cancelled'] } };
     let totalFlights, flights;
 
     if (queryData.departureIata) {
@@ -127,8 +127,8 @@ async function updateFlight(flightData) {
 
     const currentBf = currentData.baseFare;
     const newBf = flightData.baseFare;
-    const currentStatus = currentData.flightStatus;
-    const newStatus = flightData.flightStatus;
+    const currentStatus = currentData.status;
+    const newStatus = flightData.status;
 
     const updates = {};
 
@@ -153,7 +153,7 @@ async function updateFlight(flightData) {
     }
 
     if (!(newStatus === currentStatus)) {
-        updates.flightStatus = newStatus;
+        updates.status = status;
     }
 
     if (Object.keys(updates).length === 0) {

@@ -13,14 +13,14 @@ async function autocompleteLocations() {
     $origin.empty();
     $destination.empty();
 
-    await bindLocations($origin, $destination);
+    await bindLocations($origin, $destination, 'home');
 
-    $('#origin, #destination').off('focus').on('focus', function () {
+    $('#origin, #destination').off('focus.field').on('focus.field', function () {
         $(this).val('');
         $(this).removeData('code');
     });
 
-    $('#origin, #destination').off('change').on('change', function () {
+    $('#origin, #destination').off('change.text').on('change.text', function () {
         const $textField = $(this);
         const $data = $textField.attr('id') === 'origin' ? $origin : $destination;
         const $match = $data.find('option').filter(function () {
@@ -61,52 +61,15 @@ function updateLocations($origin, $destination) {
     }
 }
 
-async function bindLocations(originInput, destinationInput) {
-    try {
-        const [originResponse, destinationResponse] = await Promise.all([
-            fetch('/api/flight-origins'),
-            fetch('/api/flight-destinations')
-        ]);
-
-        const originResult = await originResponse.json();
-        const destinationResult = await destinationResponse.json();
-
-        if (!originResult.success || !destinationResult.success) {
-            return;
-        }
-
-        originResult.origins.forEach(origin => {
-            originInput.append(
-                $('<option>', {
-                    value: origin.location,
-                    'data-code': origin.iata
-                })
-            );
-        });
-
-        destinationResult.destinations.forEach(destination => {
-            destinationInput.append(
-                $('<option>', {
-                    value: destination.location,
-                    'data-code': destination.iata
-                })
-            );
-        });
-
-        originInput.data('options', originInput.html());
-        destinationInput.data('options', destinationInput.html());
-    } finally { }
-}
-
 async function continueSearch(event) {
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+    let parameters;
 
     data['origin'] = data['origin'].split(' ')[0];
     data['destination'] = data['destination'].split(' ')[0];
-
-    const parameters = new URLSearchParams(data);
+    parameters = new URLSearchParams(data);
 
     event.preventDefault();
     window.location.href = `/flight-search?${parameters.toString()}`;

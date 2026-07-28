@@ -34,14 +34,15 @@ router.get('/home', async (req, res) => {
     req.session.user.selectedFlight = null;
     const { reservations } = await getReservations(0, 0, await getUserNumberById(req.session.user._id));
     const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled').length;
-    const { totalFlights } = await getFlights(0, 0);
+    const { flights } = await getFlights(0, 0);
+    const activeFlights = flights.filter(flight => flight.status !== 'Cancelled').length;
 
     res.status(200).render('home', {
         page: '/home',
         script: '/scripts/home.js',
         role: req.session.user.role,
         reservations: activeReservations,
-        flights: totalFlights
+        flights: activeFlights
     });
 });
 
@@ -126,7 +127,7 @@ router.get('/profile', async (req, res) => {
 
         res.status(200).render('profile', {
             page: '/profile',
-            script: '/scripts/user/profile.js',
+            script: '/scripts/profile.js',
             role: req.session.user.role,
             user: user
         });
@@ -147,7 +148,7 @@ router.get('/dashboard', async (req, res) => {
 
         res.render('dashboard', {
             page: '/dashboard',
-            script: '/scripts/admin/dashboard.js',
+            script: '/scripts/dashboard.js',
             role: req.session.user.role,
             user: user
         });
@@ -184,7 +185,7 @@ router.get('/users', async (req, res) => {
 
         res.status(200).render('users', {
             page: '/users',
-            script: '/scripts/admin/users.js',
+            script: '/scripts/users.js',
             role: req.session.user.role,
             currentUser: req.session.user._id,
             userRows: users,
