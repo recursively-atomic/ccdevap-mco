@@ -1,24 +1,31 @@
 let selectedFlight;
 
 $(function () {
-    formatBaseFare();
+    $('#base-fare, #edit-fare').on('input.format', formatBaseFare);
 });
 
-function formatBaseFare() {
-    $('#base-fare, #edit-fare').off('input.format').on('input.format', function () {
-        // Removes all non-digit characters
-        let value = $(this).val().replace(/\D/g, '');
+/**
+ * Formats a flight's base format with commas.
+ * 
+ * @param {InputEvent} event is the event of inputting on a field.
+ */
+function formatBaseFare(event) {
+    let value = $(event.target).val().replace(/\D/g, '');
 
-        // Formats the numbers with commas
-        if (value) {
-            value = BigInt(value).toLocaleString('en-US');
-        }
+    // Formats the numbers with commas
+    if (value) {
+        value = BigInt(value).toLocaleString('en-US');
+    }
 
-        // Updates the input field
-        $(this).val(value);
-    });
+    // Updates the input field
+    $(event.target).val(value);
 }
 
+/**
+ * Formats a datetime coming from mongoose for user display.
+ * 
+ * @param {Date} mongooseDatetime is the datetime data coming from mongoose.
+ */
 function formatDatetime(mongooseDatetime) {
     const datetime = new Date(mongooseDatetime);
     const pad = (num) => String(num).padStart(2, '0');
@@ -32,6 +39,11 @@ function formatDatetime(mongooseDatetime) {
     return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
+/**
+ * Displays a flight's details in a modal.
+ * 
+ * @param {String} flightNumber is the flight number.
+ */
 async function showViewModal(flightNumber) {
     const $viewModal = $('#view-flight');
     const $title = $viewModal.find('.modal-title');
@@ -101,6 +113,11 @@ async function showViewModal(flightNumber) {
     } finally { }
 }
 
+/**
+ * Displays a modal where a user can edit a flight's details.
+ * 
+ * @param {String} flightNumber is the flight number.
+ */
 async function showEditModal(flightNumber) {
     const $editModal = $('#edit-flight');
     const $title = $editModal.find('.modal-title');
@@ -150,16 +167,22 @@ async function showEditModal(flightNumber) {
     } finally { }
 }
 
+/**
+ * Displays a confirmation modal whether to delete a reservation 
+ * or not.
+ * 
+ * @param {String} flightNumber is the flight number.
+ */
 function showDeleteModal(flightNumber) {
     selectedFlight = flightNumber;
 }
 
 async function createFlight(event) {
+    event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    event.preventDefault();
     data['base-fare'] = data['base-fare'].replace(/\,/g, '');
 
     try {
@@ -185,12 +208,16 @@ async function createFlight(event) {
     }
 }
 
+/**
+ * Updates a flight's details.
+ * 
+ * @param {SubmitEvent} event is the event of submitting a form.
+ */
 async function updateFlight(event) {
+    event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-
-    event.preventDefault();
     data['edit-fare'] = data['edit-fare'].replace(/\,/g, '');
 
     try {
@@ -215,6 +242,9 @@ async function updateFlight(event) {
     } finally { }
 }
 
+/**
+ * Deletes a flight.
+ */
 async function deleteFlight() {
     event.preventDefault();
 
@@ -231,7 +261,7 @@ async function deleteFlight() {
 
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
             hideModalShowToast('delete-flight', 'danger-toast', `Deleted ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
-            
+
             setTimeout(() => {
                 updateFlightsTable();
             }, 1000);
@@ -239,6 +269,9 @@ async function deleteFlight() {
     } finally { }
 }
 
+/**
+ * Updates the flights table to match the changes they made.
+ */
 async function updateFlightsTable() {
     const page = new URLSearchParams(window.location.search).get('page') || 1;
 

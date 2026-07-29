@@ -358,6 +358,6 @@ async function confirmBooking() {
             }
         } finally { }
     } else {
-        showToast('danger-toast', 'Complete the booking details first!');
+        showToast('warning-toast', 'Complete the booking details first!');
     }
 }

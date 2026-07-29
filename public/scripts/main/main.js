@@ -223,7 +223,7 @@ function showMissingFields(script) {
 }
 
 /**
- * A helper function to `showMissingFields` for handling default data validation.
+ * Handles default data validation.
  * 
  * @param {String} field is the id of the field to be validated.
  * @param {String} value is the field's value.
@@ -301,8 +301,7 @@ function showAgeBadge(script) {
 }
 
 /**
- * A helper function to `showAgeBadge` for the calculation of the age range of the user's
- * birth date.
+ * Calculates age range of the user from their inputted birth date.
  * 
  * 
  * The age ranges are 'Infant', 'Child', 'Adult' and 'Senior'
@@ -404,6 +403,49 @@ async function bindLocations(originInput, destinationInput, script) {
 }
 
 /**
+ * Updates the flight origin and destination options so a user can't
+ * select the same location for both.
+ * 
+ * @param {HTMLElement} $origin is the element containing the flight origins.
+ * @param {HTMLElement} $destination is the element containing the flight destinations.
+ * @param {String} script is the caller's file name.
+ */
+function updateLocations($origin, $destination, script) {
+    if (script === 'home') {
+        const originCode = $('#origin').data('code');
+        const destinationCode = $('#destination').data('code');
+ 
+        const originOptions = $origin.data('options');
+        const destinationOptions = $destination.data('options');
+ 
+        $origin.html(originOptions);
+        $destination.html(destinationOptions);
+ 
+        if (originCode) {
+            $destination.find(`option[data-code="${originCode}"]`).remove();
+        }
+ 
+        if (destinationCode) {
+            $origin.find(`option[data-code="${destinationCode}"]`).remove();
+        }
+    } else {
+        const originIata = $origin.find(':selected').data('iata');
+        const destinationIata = $destination.find(':selected').data('iata');
+ 
+        $origin.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
+        $destination.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
+ 
+        if (destinationIata) {
+            $origin.find(`option[data-iata="${destinationIata}"]`).prop('hidden', true).prop('disabled', true);
+        }
+ 
+        if (originIata) {
+            $destination.find(`option[data-iata="${originIata}"]`).prop('hidden', true).prop('disabled', true);
+        }
+    }
+}
+
+/**
  * Formats the duration of a flight from its departure and arrival datetime
  * to `# D # H # M`.
  * 
@@ -441,16 +483,15 @@ function formatDuration(departure, arrival) {
  * Handles the response differently depending on who called the
  * function.
  * 
- * @param {Event} event is the event of submitting a form.
+ * @param {SubmitEvent} event is the event of submitting a form.
  * @param {String} script is the caller's file name.
  */
 async function checkCredentials(event, script) {
+    event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     const endpoint = script === 'register' ? '/register' : '/login';
-
-    event.preventDefault();
 
     try {
         const response = await fetch(endpoint, {

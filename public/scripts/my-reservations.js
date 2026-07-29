@@ -2,6 +2,11 @@ $(function () {
     changeDropdownDisplay(false, false);
 });
 
+/**
+ * Displays a reservation's details in a modal.
+ * 
+ * @param {String} identifier is the reservation identifier.
+ */
 async function showViewModal(identifier) {
     const $viewModal = $('#view-reservation');
     const $title = $viewModal.find('.modal-title');
@@ -34,6 +39,12 @@ async function showViewModal(identifier) {
     } finally { }
 }
 
+/**
+ * Displays a modal where a user can edit their seat in a
+ * reservation.
+ * 
+ * @param {String} identifier is the reservation identifier.
+ */
 async function showEditModal(identifier) {
     const $editModal = $('#edit-reservation');
     const $title = $editModal.find('.modal-title');
@@ -63,11 +74,10 @@ async function showEditModal(identifier) {
 }
 
 /**
- * Attaches a modified seat map on the modal of editing a reservation,
- * enabling a user to change a reservation's associated seat.
+ * Attaches a modified seat map on the modal during editing a reservation.
  * 
- * @param {HTMLElement} $seatMap the modal body. 
- * @param {Object} editData the edit data.
+ * @param {HTMLElement} $seatMap is the modal body. 
+ * @param {Object} editData is the edit data.
  */
 function attachSeatSelection($seatMap, editData) {
     const $seats = $seatMap.find('.seat');
@@ -82,6 +92,12 @@ function attachSeatSelection($seatMap, editData) {
     });
 }
 
+/**
+ * Updates a reservation's selected seat by the user.
+ * 
+ * @param {String} identifier is the reservation identifier.
+ * @param {Object} editData is the edit data.
+ */
 async function updateReservationSeat(identifier, editData) {
     try {
         const response = await fetch(`/api/update-reservation-seat/${identifier}`, {
@@ -100,6 +116,12 @@ async function updateReservationSeat(identifier, editData) {
     } finally { }
 }
 
+/**
+ * Displays a confirmation modal whether to cancel a reservation 
+ * or not.
+ * 
+ * @param {String} identifier is the reservation identifier.
+ */
 async function showCancelModal(identifier) {
     const $cancelModal = $('#cancel-reservation');
     const $card = $(`.card[data-identifier="${identifier}"]`);

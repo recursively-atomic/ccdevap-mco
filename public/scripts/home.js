@@ -38,30 +38,18 @@ async function autocompleteLocations() {
 
         $textField.data('code', code);
         $textField.val(`${location} ${code}`);
-        updateLocations($origin, $destination);
+        updateLocations($origin, $destination, 'home');
     });
 }
 
-function updateLocations($origin, $destination) {
-    const originCode = $('#origin').data('code');
-    const destinationCode = $('#destination').data('code');
-
-    const originOptions = $origin.data('options');
-    const destinationOptions = $destination.data('options');
-
-    $origin.html(originOptions);
-    $destination.html(destinationOptions);
-
-    if (originCode) {
-        $destination.find(`option[data-code="${originCode}"]`).remove();
-    }
-
-    if (destinationCode) {
-        $origin.find(`option[data-code="${destinationCode}"]`).remove();
-    }
-}
-
+/**
+ * Gets the user's input from the quick flight search widget
+ * and carries the data over to `flight-search`.
+ * 
+ * @param {SubmitEvent} event is the event of submitting a form.
+ */
 async function continueSearch(event) {
+    event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
@@ -70,7 +58,5 @@ async function continueSearch(event) {
     data['origin'] = data['origin'].split(' ')[0];
     data['destination'] = data['destination'].split(' ')[0];
     parameters = new URLSearchParams(data);
-
-    event.preventDefault();
     window.location.href = `/flight-search?${parameters.toString()}`;
 }

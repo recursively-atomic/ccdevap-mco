@@ -8,7 +8,6 @@ $(function () {
 
     $(document).on('click.search', '#search-results a[href*="page="]', function (event) {
         event.preventDefault();
-
         const href = $(this).attr('href');
         const page = new URLSearchParams(href.split('?')[1]).get('page');
 
@@ -18,6 +17,9 @@ $(function () {
     });
 });
 
+/**
+ * Gets the origins and destionas of all flights from the datablase.
+ */
 async function getFlightLocations() {
     const parameters = new URLSearchParams(window.location.search);
     const origin = parameters.get('origin');
@@ -32,32 +34,16 @@ async function getFlightLocations() {
         $departureSelect.val(origin);
         $arrivalSelect.val(destination);
 
-        updateDropdowns($departureSelect, $arrivalSelect);
+        updateLocations($departureSelect, $arrivalSelect, 'flight-search');
     }
 
-    $departureSelect.on('change.origin', function () {
-        updateDropdowns($departureSelect, $arrivalSelect);
+    $departureSelect.off('change.origin').on('change.origin', function () {
+        updateLocations($departureSelect, $arrivalSelect, 'flight-search');
     });
 
-    $arrivalSelect.on('change.destination', function () {
-        updateDropdowns($departureSelect, $arrivalSelect);
+    $arrivalSelect.off('change.destination').on('change.destination', function () {
+        updateLocations($departureSelect, $arrivalSelect, 'flight-search');
     });
-}
-
-function updateDropdowns($departure, $arrival) {
-    const departureIata = $departure.find(':selected').data('iata');
-    const arrivalIata = $arrival.find(':selected').data('iata');
-
-    $departure.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
-    $arrival.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
-
-    if (arrivalIata) {
-        $departure.find(`option[data-iata="${arrivalIata}"]`).prop('hidden', true).prop('disabled', true);
-    }
-
-    if (departureIata) {
-        $arrival.find(`option[data-iata="${departureIata}"]`).prop('hidden', true).prop('disabled', true);
-    }
 }
 
 /**
@@ -120,6 +106,11 @@ function showPriceRangeInput() {
     });
 }
 
+/**
+ * Searches flights from the user's query.
+ * 
+ * @param {String} page is a tracker of what search results to display.
+ */
 async function performSearch(page) {
     const $departureOption = $('#departure-select').find('option:selected');
     const $arrivalOption = $('#arrival-select').find('option:selected');
@@ -143,8 +134,7 @@ async function performSearch(page) {
 
 /**
  * Checks if all of the required details for searching
- * a flight, and if successful, it will display the flight
- * resutls card.
+ * a flight and display the flight resutls card, if successful.
  */
 async function searchFlights() {
     bindMissingFieldsEvents();
@@ -158,6 +148,11 @@ async function searchFlights() {
     }
 }
 
+/**
+ * Displays a flight's details in a modal.
+ * 
+ * @param {String} flightNumber is the flight number.
+ */
 async function showViewModal(flightNumber) {
     const $viewModal = $('#view-flight');
     const $title = $viewModal.find('.modal-title');
@@ -227,6 +222,12 @@ async function showViewModal(flightNumber) {
     } finally { }
 }
 
+/**
+ * Gets the user's selection in the search results and carries
+ * the data over to `flight-book`.
+ * 
+ * @param {String} flightNumber is the flight number the user selected to book under.
+ */
 async function continueBooking(flightNumber) {
     window.location.href = `/api/select-flight/${flightNumber}`;
 }

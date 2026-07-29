@@ -87,8 +87,7 @@ const handlebars = expressHandlebars.create({
             return display.join(' ');
         },
 
-        pad: (input, length, padding) => String(input).padStart(length, padding),
-        blank: (string) => a.length
+        pad: (input, length, padding) => String(input).padStart(length, padding)
     }
 });
 

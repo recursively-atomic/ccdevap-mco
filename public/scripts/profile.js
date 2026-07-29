@@ -6,12 +6,13 @@ $(function () {
 
     $('#change-profile').on('change.picture', changeProfile);
     $('#card-number').on('input.card', (event) => formatCardNumber(event.target));
-    $('#save-profile-btn').on('click.save', saveProfileInformation);
-    $('#save-password-btn').on('click.save', savePassword);
+    $('#save-profile-btn').on('click.save', updateProfileInformation);
+    $('#save-password-btn').on('click.save', updatePassword);
 });
 
 /**
- * Enables a user to change their profile picture.
+ * Changes a user's profile picture depending on their selected
+ * image file from their local storage.
  */
 function changeProfile(event) {
     const file = event.target.files[0];
@@ -26,6 +27,10 @@ function changeProfile(event) {
     }
 }
 
+/**
+ * Clears all of the input fields connected to selecting a
+ * preferred payment method with credit or debit cards.
+ */
 function clearCardFields() {
     $('#card-first-name').val('');
     $('#card-last-name').val('');
@@ -45,12 +50,16 @@ function clearCardFields() {
     $('#billing-address-2').val('');
 }
 
+/**
+ * Clears all of the input fields connected to selecting a
+ * preferred payment method with digital wallets.
+ */
 function clearDigitalWalletFields() {
     $('#account-name').val('');
     $('#account-number').val('');
 }
 /**
- * Formats the card number into XXXX XXXX XXXX XXXX.
+ * Formats the card number field into XXXX XXXX XXXX XXXX.
  */
 function formatCardNumber(input) {
     const inputValue = input.value;
@@ -94,6 +103,12 @@ function showInputFields() {
         (event) => handleFieldVisibility($(event.target).val()));
 }
 
+/**
+ * Makes certain fields visible or not depending on the user's
+ * preferred payment method.
+ * 
+ * @param {String} value is the user's selected payment method preference.
+ */
 function handleFieldVisibility(value) {
     const $cardInputFields = $('#card-input-fields');
     const $digitalInputFields = $('#digital-input-fields');
@@ -126,6 +141,9 @@ function handleFieldVisibility(value) {
     }
 }
 
+/**
+ * Updates the user's profile to match the changes they made.
+ */
 function updateProfilePage() {
     const name = $('#profile-name').text().trim();
     const [last, first] = name.split(',');
@@ -173,9 +191,10 @@ function showEditModal() {
 }
 
 /**
- * Saves the profile information that was edited from the modal.
+ * Updates a user's profile information and displays a toast
+ * on the process' result.
  */
-async function saveProfileInformation() {
+async function updateProfileInformation() {
     const code = $('#edit-phone-code').val().trim() ? '+' + $('#edit-phone-code').val().trim() : '';
     const number = $('#edit-phone-number').val().trim() ? $('#edit-phone-number').val().trim() : '';
 
@@ -209,14 +228,15 @@ async function saveProfileInformation() {
 
 
 /**
- * Enables a user to change their password.
+ * Updates a user's password and displays a toast
+ * on the process' result.
  */
-async function savePassword() {
+async function updatePassword() {
     const currentPassword = $('#current-password').val().trim();
     const newPassword = $('#new-password').val().trim();
 
     if (!currentPassword || !newPassword) {
-        showToast('danger-toast', 'Fill in both password fields!');
+        showToast('warning-toast', 'Fill in both password fields!');
         return;
     }
 
