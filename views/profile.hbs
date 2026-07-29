@@ -94,31 +94,64 @@
             <div class="m-4 mb-0">
                 <div class="row text-black">
                     <div class="col-lg-6 col-md-6 mb-sm-4 mb-4 mb-lg-4">
-                        <h4 class="text-primary-accent"> Current Password </h4>
+                        <h4 class="text-primary-accent"> Current Password
+                            <span class="text-danger fw-bolder"> * </span>
+                        </h4>
 
                         <div class="input-group">
-                            <div class="input-group-text bg-dark border-dark"><i
-                                   class="text-secondary fa-solid fa-lock-open"></i></div>
-                            <input id="current-password" class="form-control bg-light border-dark border-2 text-black"
-                                   type="password" placeholder="Current Password">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-lock-open"></i>
+                            </div>
+
+                            <input id="current-password"
+                                   class="form-control bg-light border-dark border-2 text-black required-field"
+                                   type="password" placeholder="Current Password" data-group="update-password" data-password="{{user.password}}">
+
+                            <button type="button"
+                                    class="input-group-text bg-dark border-dark border-2 rounded-end-3 toggle-password">
+                                <i class="text-secondary fa-solid fa-eye" data-target="#current-password"></i>
+                            </button>
+
+                            <div class="invalid-feedback">
+                                This password field is required!
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-lg-6 col-md-6 mb-md-4 mb-sm-4 mb-4 mb-lg-4">
-                        <h4 class="text-primary-accent"> New Password </h4>
+                        <h4 class="text-primary-accent"> New Password
+                            <span class="text-danger fw-bolder"> * </span>
+                        </h4>
 
                         <div class="input-group">
-                            <div class="input-group-text bg-dark border-dark"><i
-                                   class="text-secondary fa-solid fa-lock"></i></div>
-                            <input id="new-password" class="form-control bg-light border-dark border-2 text-black"
-                                   type="password" placeholder="New Password">
+                            <div class="input-group-text bg-dark border-dark">
+                                <i class="text-secondary fa-solid fa-lock"></i>
+                            </div>
+
+                            <input id="new-password"
+                                   class="form-control bg-light border-dark border-2 text-black required-field"
+                                   type="password" placeholder="New Password" data-group="update-password">
+
+                            <button type="button"
+                                    class="input-group-text bg-dark border-dark border-2 rounded-end-3 toggle-password">
+                                <i class="text-secondary fa-solid fa-eye" data-target="#new-password"></i>
+                            </button>
+
+                            <div id="password-no-input" class="invalid-feedback">
+                                This password field is required!
+                            </div>
+
+                            <div id="password-invalid-input" class="invalid-feedback">
+                                An password must be at least 8 characters, and has at least 1 uppercase, lowercase,
+                                number and special character!
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="d-flex mb-4 gap-2 justify-content-center">
-                <button id="save-password-btn" class="btn btn-lg btn-primary text-white">
+                <button id="save-password" class="btn btn-lg btn-primary text-white">
                     Save Changes
                 </button>
 
@@ -141,7 +174,9 @@
                         <div class="modal-body">
                             <input type="hidden" id="profile-user-id">
 
-                            <h4 class="text-primary-accent"> First Name </h4>
+                            <h4 class="text-primary-accent"> First Name
+                                <span class="text-danger fw-bolder"> * </span>
+                            </h4>
 
                             <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
@@ -149,35 +184,52 @@
                                 </div>
 
                                 <input id="edit-first-name"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="Enter Updated First Name">
+                                       class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                       type="text" placeholder="Enter Updated First Name" data-group="edit-profile">
+
+                                <div class="invalid-feedback text-start">
+                                    This first name field is required!
+                                </div>
                             </div>
 
-                            <h4 class="text-primary-accent"> Last Name </h4>
+                            <h4 class="text-primary-accent"> Last Name
+                                <span class="text-danger fw-bolder"> * </span>
+                            </h4>
 
                             <div class="mb-3 input-group">
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary bi bi-chat-square-dots-fill"></i>
                                 </div>
 
-                                <input id="edit-last-name" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" placeholder="Enter Updated Last Name">
+                                <input id="edit-last-name"
+                                       class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                       type="text" placeholder="Enter Updated Last Name" data-group="edit-profile">
+
+                                <div class="invalid-feedback text-start">
+                                    This last name field is required!
+                                </div>
                             </div>
 
-                            <h4 class="text-primary-accent"> E-Mail </h4>
+                            <h4 class="text-primary-accent"> E-Mail Address
+                                <span class="text-danger fw-bolder"> * </span>
+                            </h4>
 
                             <div class="mb-3 input-group">
-                                <input id="edit-email-user"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="email-address">
-
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-at"></i>
                                 </div>
 
-                                <input id="edit-email-domain"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="domain.com">
+                                <input id="edit-email-address"
+                                       class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                       type="text" placeholder="email-address@domain.com" data-group="edit-profile">
+
+                                <div id="email-no-input" class="invalid-feedback text-start">
+                                    This e-mail field is required!
+                                </div>
+
+                                <div id="email-invalid-input" class="invalid-feedback">
+                                    An e-mail must have a character before and after @, and a domain!
+                                </div>
                             </div>
 
                             <h4 class="text-primary-accent"> Contact Number </h4>
@@ -197,7 +249,7 @@
                         </div>
 
                         <div class="d-flex modal-footer bg-light">
-                            <button id="save-profile-btn" class="btn btn-success text-white" type="button">
+                            <button id="save-profile" class="btn btn-success text-white" type="button">
                                 Save
                             </button>
 
@@ -423,18 +475,15 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-12 mb-md-4 mb-sm-4 mb-4 mb-lg-0">
                         <!-- E-MAIL -->
-                        <h4 class="text-primary-accent"> E-Mail </h4>
+                        <h4 class="text-primary-accent"> E-Mail Address </h4>
 
                         <div class="input-group">
-                            <input id="email-address" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="email-address">
-
                             <div class="input-group-text bg-dark border-dark">
                                 <i class="text-secondary fa-solid fa-at"></i>
                             </div>
 
-                            <input id="domain-address" class="form-control bg-light border-dark border-2 text-black"
-                                   type="text" placeholder="domain.com">
+                            <input id="email-address" class="form-control bg-light border-dark border-2 text-black"
+                                   type="text" placeholder="email-address@domain.com">
                         </div>
                     </div>
 
@@ -458,7 +507,7 @@
             </div>
 
             <div class="mb-4 text-center">
-                <button id="save-passenger-btn" class="btn btn-lg btn-primary text-white"
+                <button id="save-passenger" class="btn btn-lg btn-primary text-white"
                         onclick="showToast('success-toast', 'Successfully saved passenger [NAME]!')">
                     Save Passenger
                 </button>
@@ -548,15 +597,13 @@
                             <h4 class="text-primary-accent"> Send E-Receipts At E-Mail </h4>
 
                             <div class="input-group">
-                                <input id="receipt-email" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" placeholder="email-address">
-
                                 <div class="input-group-text bg-dark border-dark">
                                     <i class="text-secondary fa-solid fa-at"></i>
                                 </div>
 
-                                <input id="receipt-domain" class="form-control bg-light border-dark border-2 text-black"
-                                       type="text" placeholder="domain.com">
+                                <input id="receipt-email-name"
+                                       class="form-control bg-light border-dark border-2 text-black" type="text"
+                                       placeholder="email-address@domain.com">
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,9 @@
 
         <div class="card-body">
             <div class="mx-4 mt-2">
-                <h4 class="text-primary-accent"> Flight Route </h4>
+                <h4 class="text-primary-accent"> Flight Route
+                    <span class="text-danger fw-bolder"> * </span>
+                </h4>
 
                 <div class="row mb-lg-4 mb-md-4 mb-sm-4 mb-4">
                     <div class="col-lg-4 col-md-6 mb-lg-0 mb-md-4 mb-sm-4 mb-4">
@@ -19,8 +21,9 @@
                                 <i class="text-secondary fa-solid fa-plane-departure"></i>
                             </div>
 
-                            <select id="departure-select"
-                                    class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field">
+                            <select id="departure-select" name="departure-select"
+                                    class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                    data-group="flight-search">
                                 <option selected hidden value=""> Select A Departure Airport </option>
                             </select>
 
@@ -36,8 +39,8 @@
                                 <i class="text-secondary fa-solid fa-plane-arrival"></i>
                             </div>
 
-                            <select id="arrival-select"
-                                    class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field">
+                            <select id="arrival-select" name="departure-select"
+                                    class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field" data-group="flight-search">
                                 <option selected hidden value=""> Select An Arrival Airport </option>
                             </select>
 
@@ -66,15 +69,17 @@
             <div class="mx-4 mt-2">
                 <div class="row mb-lg-4 mb-md-4 mb-sm-4 mb-4">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-12 mb-4 mb-sm-0 mb-md-0 mb-lg-0">
-                        <h4 class="text-primary-accent"> Departure Date </h4>
+                        <h4 class="text-primary-accent"> Departure Date
+                            <span class="text-danger fw-bolder"> * </span>
+                        </h4>
 
                         <div class="input-group">
                             <div class="input-group-text bg-dark border-dark">
                                 <i class="text-secondary fa-solid fa-plane-departure"></i>
                             </div>
 
-                            <input id="departure-date" type="date"
-                                   class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field">
+                            <input id="departure-date" name="departure-date" type="date"
+                                   class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field" data-group="flight-search">
 
                             <div class="invalid-feedback">
                                 Select a departure date!
@@ -281,14 +286,16 @@
                                         <input type="checkbox" class="btn-check" name="additional-option"
                                                id="direct-flights">
 
-                                        <label class="btn btn-lg btn-outline-secondary rounded-end-lg-0 rounded-end-md-0 rounded-end-sm-0 rounded-end-0" for="direct-flights">
+                                        <label class="btn btn-lg btn-outline-secondary rounded-end-lg-0 rounded-end-md-0 rounded-end-sm-0 rounded-end-0"
+                                               for="direct-flights">
                                             Direct Flights Only
                                         </label>
 
                                         <input type="checkbox" class="btn-check" name="additional-option"
                                                id="flexible-dates">
 
-                                        <label class="btn btn-lg btn-outline-secondary rounded-start-lg-0 border-start-lg-0 rounded-start-md-0 border-start-md-0 rounded-start-sm-0 border-start-sm-0 rounded-start-0 border-start-0" for="flexible-dates">
+                                        <label class="btn btn-lg btn-outline-secondary rounded-start-lg-0 border-start-lg-0 rounded-start-md-0 border-start-md-0 rounded-start-sm-0 border-start-sm-0 rounded-start-0 border-start-0"
+                                               for="flexible-dates">
                                             Flexible Dates
                                         </label>
                                     </div>
@@ -390,7 +397,8 @@
 
                             <!-- FILTER BY AIRLINE -->
                             <li class="dropdown-submenu">
-                                <a class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none active">
+                                <a
+                                   class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none active">
                                     <i class="fa-solid fa-plane"></i> Airline
                                 </a>
 
@@ -423,7 +431,8 @@
 
                             <!-- FILTER BY PRICE RANGE -->
                             <li class="dropdown-submenu">
-                                <a class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
+                                <a
+                                   class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
                                     <i class="bi bi-tags-fill"></i> Price Range
                                 </a>
 
@@ -456,7 +465,8 @@
 
                             <!-- FILTER BY LAYOVERS -->
                             <li class="dropdown-submenu">
-                                <a class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
+                                <a
+                                   class="py-1 dropdown-header dropdown-header-item text-dark fs-6 text-decoration-none">
                                     <i class="bi bi-stoplights-fill"></i> Layovers
                                 </a>
 
@@ -615,5 +625,7 @@
         </div>
     </div>
 </div>
+
+{{> toasts}}
 
 {{> footer}}

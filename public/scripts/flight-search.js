@@ -137,14 +137,15 @@ async function performSearch(page) {
  * a flight and display the flight resutls card, if successful.
  */
 async function searchFlights() {
-    bindMissingFieldsEvents();
-    showMissingFields('flight-search');
+    bindMissingFieldsEvents('flight-search');
+    showMissingFields('flight-search', null, 'flight-search');
 
     if (requiredFields.every(field => field.isFilled)) {
         await performSearch(1);
         $('#flight-results').removeClass('d-none').addClass('d-block');
     } else {
         $('#flight-results').removeClass('d-block').addClass('d-none');
+        showToast('warning-toast', 'Fill out the required fields first!');
     }
 }
 

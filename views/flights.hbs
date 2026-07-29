@@ -19,8 +19,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- AIRLINE -->
-                            <h6 class="text-primary-accent text-start">
-                                Airline
+                            <h6 class="text-primary-accent text-start"> Airline
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-3 input-group">
@@ -28,21 +28,26 @@
                                     <i class="text-secondary fa-solid fa-flag"></i>
                                 </div>
 
-                                <select name="airline" class="form-select bg-light border-dark border-2 text-black"
-                                        required>
+                                <select id="airline" name="airline"
+                                        class="form-select bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                        data-group="add-flight">
                                     <option selected hidden value=""> Select Airline </option>
                                     <option> Cebu Atlantic </option>
                                     <option> Filipino Airlines </option>
                                     <option> AirFAST </option>
                                     <option> Sunray Air </option>
                                 </select>
+
+                                <div class="invalid-feedback text-start">
+                                    This airline field is required!
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <!-- BASE FARE -->
-                            <h6 class="text-primary-accent text-start">
-                                Base Fare
+                            <h6 class="text-primary-accent text-start"> Base Fare
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-2 input-group">
@@ -50,16 +55,20 @@
                                     <i class="text-secondary fw-bolder fst-normal"> PHP </i>
                                 </div>
 
-                                <input name="base-fare" id="base-fare"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="Enter Base Fare" required>
+                                <input id="base-fare" name="base-fare"
+                                       class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                       data-group="add-flight" type="text" placeholder="Enter Base Fare">
+
+                                <div class="invalid-feedback text-start">
+                                    This base fare field is required!
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- AIRPORT ORIGIN -->
-                    <h6 class="text-primary-accent text-start">
-                        Airport Origin
+                    <h6 class="text-primary-accent text-start"> Airport Origin
+                        <span class="text-danger fw-bolder"> * </span>
                     </h6>
 
                     <div class="mb-3 input-group">
@@ -67,17 +76,24 @@
                             <i class="text-secondary fa-solid fa-plane-departure"></i>
                         </div>
 
-                        <input name="origin-iata" class="form-control bg-light border-dark border-2 text-black"
-                               type="text" placeholder="Enter IATA Code" required>
-                        <input name="origin-location" class="form-control bg-light border-dark border-2 text-black"
-                               type="text" placeholder="Enter Locality" required>
-                        <input name="origin-name" class="form-control bg-light border-dark border-2 text-black"
-                               type="text" placeholder="Enter Full Name" required>
+                        <input id="origin-iata" name="origin-iata"
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter IATA Code" data-group="add-flight">
+                        <input id="origin-location" name="origin-location"
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter Locality" data-group="add-flight">
+                        <input id="origin-name" name="origin-name"
+                               class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                               type="text" placeholder="Enter Full Name" data-group="add-flight">
+
+                        <div class="invalid-feedback text-start">
+                            This airport origin field is required!
+                        </div>
                     </div>
 
                     <!-- AIRPORT DESTINATION -->
-                    <h6 class="text-primary-accent text-start">
-                        Airport Destination
+                    <h6 class="text-primary-accent text-start"> Airport Destination
+                        <span class="text-danger fw-bolder"> * </span>
                     </h6>
 
                     <div class="mb-3 input-group">
@@ -85,19 +101,26 @@
                             <i class="text-secondary fa-solid fa-plane-arrival"></i>
                         </div>
 
-                        <input name="destination-iata" class="form-control bg-light border-dark border-2 text-black"
-                               type="text" placeholder="Enter IATA Code" required>
-                        <input name="destination-location" class="form-control bg-light border-dark border-2 text-black"
-                               type="text" placeholder="Enter Locality" required>
-                        <input name="destination-name" class="form-control bg-light border-dark border-2 text-black"
-                               type="text" placeholder="Enter Full Name" required>
+                        <input id="destination-iata" name="destination-iata"
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter IATA Code" data-group="add-flight">
+                        <input id="destination-location" name="destination-location"
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter Locality" data-group="add-flight">
+                        <input id="destination-name" name="destination-name"
+                               class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                               type="text" placeholder="Enter Full Name" data-group="add-flight">
+
+                        <div class="invalid-feedback text-start">
+                            This airport destination field is required!
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- DEPARTURE DATETIME -->
-                            <h6 class="text-primary-accent text-start">
-                                Departure Datetime
+                            <h6 class="text-primary-accent text-start"> Departure Datetime
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-3 input-group">
@@ -105,16 +128,20 @@
                                     <i class="text-secondary fa-solid fa-clock"></i>
                                 </div>
 
-                                <input name="departure-datetime"
-                                       class="form-control bg-light border-dark border-2 text-black"
-                                       type="datetime-local" required>
+                                <input id="departure-datetime" name="departure-datetime"
+                                       class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                       type="datetime-local" data-group="add-flight">
+
+                                <div class="invalid-feedback text-start">
+                                    This departure datetime field is required!
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <!-- ARRIVAL DATETIME -->
-                            <h6 class="text-primary-accent text-start">
-                                Arrival Datetime
+                            <h6 class="text-primary-accent text-start"> Arrival Datetime
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-3 input-group">
@@ -122,9 +149,13 @@
                                     <i class="text-secondary fa-solid fa-clock"></i>
                                 </div>
 
-                                <input name="arrival-datetime"
-                                       class="form-control bg-light border-dark border-2 text-black"
-                                       type="datetime-local" required>
+                                <input id="arrival-datetime" name="arrival-datetime"
+                                       class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                       type="datetime-local" data-group="add-flight">
+
+                                <div class="invalid-feedback text-start">
+                                    This arrival datetime field is required!
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -229,8 +260,8 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- BASE FARE -->
-                            <h6 class="text-primary-accent text-start">
-                                Base Fare
+                            <h6 class="text-primary-accent text-start"> Base Fare
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-2 input-group">
@@ -239,15 +270,19 @@
                                 </div>
 
                                 <input id="edit-fare" name="edit-fare"
-                                       class="form-control bg-light border-dark border-2 text-black" type="text"
-                                       placeholder="Enter Base Fare" required>
+                                       class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                       type="text" placeholder="Enter Base Fare" data-group="edit-flight">
+
+                                <div class="invalid-feedback text-start">
+                                    This base fare field is required!
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <!-- FLIGHT STATUS -->
-                            <h6 class="text-primary-accent text-start">
-                                Flight Status
+                            <h6 class="text-primary-accent text-start"> Flight Status
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-3 input-group">
@@ -256,7 +291,8 @@
                                 </div>
 
                                 <select id="edit-status" name="edit-status"
-                                        class="form-select bg-light border-dark border-2 text-black" required>
+                                        class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                        data-group="edit-flight">
                                     <option selected hidden value=""> Select Status </option>
                                 </select>
                             </div>
@@ -264,8 +300,8 @@
                     </div>
 
                     <!-- AIRPORT ORIGIN -->
-                    <h6 class="text-primary-accent text-start">
-                        Airport Origin
+                    <h6 class="text-primary-accent text-start"> Airport Origin
+                        <span class="text-danger fw-bolder"> * </span>
                     </h6>
 
                     <div class="mb-3 input-group">
@@ -274,19 +310,23 @@
                         </div>
 
                         <input id="edit-o-iata" name="edit-o-iata"
-                               class="form-control bg-light border-dark border-2 text-black" type="text"
-                               placeholder="Enter IATA Code" required>
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter IATA Code" data-group="edit-flight">
                         <input id="edit-o-location" name="edit-o-location"
-                               class="form-control bg-light border-dark border-2 text-black" type="text"
-                               placeholder="Enter Locality" required>
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter Locality" data-group="edit-flight">
                         <input id="edit-o-name" name="edit-o-name"
-                               class="form-control bg-light border-dark border-2 text-black" type="text"
-                               placeholder="Enter Full Name" required>
+                               class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                               type="text" placeholder="Enter Full Name" data-group="edit-flight">
+
+                        <div class="invalid-feedback text-start">
+                            This airport origin field is required!
+                        </div>
                     </div>
 
                     <!-- AIRPORT DESTINATION -->
-                    <h6 class="text-primary-accent text-start">
-                        Airport Destination
+                    <h6 class="text-primary-accent text-start"> Airport Destination
+                        <span class="text-danger fw-bolder"> * </span>
                     </h6>
 
                     <div class="mb-3 input-group">
@@ -295,21 +335,25 @@
                         </div>
 
                         <input id="edit-d-iata" name="edit-d-iata"
-                               class="form-control bg-light border-dark border-2 text-black" type="text"
-                               placeholder="Enter IATA Code" required>
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter IATA Code" data-group="edit-flight">
                         <input id="edit-d-location" name="edit-d-location"
-                               class="form-control bg-light border-dark border-2 text-black" type="text"
-                               placeholder="Enter Locality" required>
+                               class="form-control bg-light border-dark border-2 text-black required-field" type="text"
+                               placeholder="Enter Locality" data-group="edit-flight">
                         <input id="edit-d-name" name="edit-d-name"
-                               class="form-control bg-light border-dark border-2 text-black" type="text"
-                               placeholder="Enter Full Name" required>
+                               class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                               type="text" placeholder="Enter Full Name" data-group="edit-flight">
+
+                        <div class="invalid-feedback text-start">
+                            This airport destination field is required!
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- DEPARTURE DATETIME -->
-                            <h6 class="text-primary-accent text-start">
-                                Departure Datetime
+                            <h6 class="text-primary-accent text-start"> Departure Datetime
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-3 input-group">
@@ -318,15 +362,19 @@
                                 </div>
 
                                 <input id="edit-d-datetime" name="edit-d-datetime"
-                                       class="form-control bg-light border-dark border-2 text-black"
-                                       type="datetime-local" required>
+                                       class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                       type="datetime-local" data-group="edit-flight">
+
+                                <div class="invalid-feedback text-start">
+                                    This airport destination field is required!
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <!-- ARRIVAL DATETIME -->
-                            <h6 class="text-primary-accent text-start">
-                                Arrival Datetime
+                            <h6 class="text-primary-accent text-start"> Arrival Datetime
+                                <span class="text-danger fw-bolder"> * </span>
                             </h6>
 
                             <div class="mb-3 input-group">
@@ -335,8 +383,12 @@
                                 </div>
 
                                 <input id="edit-a-datetime" name="edit-a-datetime"
-                                       class="form-control bg-light border-dark border-2 text-black"
-                                       type="datetime-local" required>
+                                       class="form-control bg-light border-dark border-2 text-black required-field rounded-end-3"
+                                       type="datetime-local" data-group="edit-flight">
+
+                                <div class="invalid-feedback text-start">
+                                    This airport destination field is required!
+                                </div>
                             </div>
                         </div>
                     </div>

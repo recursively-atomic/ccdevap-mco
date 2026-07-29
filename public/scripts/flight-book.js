@@ -141,6 +141,22 @@ function checkPassengerInformation() {
                     field.value = null;
                 }
                 break;
+            case '#email-address':
+                if (value !== '') {
+                    const emailRequirements = /[^@\s]+@[^@\s]+\.[^@\s]{2,}/;
+
+                    if (emailRequirements.test(value)) {
+                        field.isFilled = true;
+                        field.value = value;
+                    } else {
+                        field.isFilled = false;
+                        field.value = null;
+                    }
+                } else {
+                    field.isFilled = false;
+                    field.value = null;
+                }
+                break;
             default:
                 if (value !== '') {
                     field.isFilled = true;
@@ -314,7 +330,7 @@ async function getReservationData() {
         identifier: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
         flightNumber: parseInt(flight.flightNumber),
         userNumber: parseInt(user.userNumber),
-        email: `${requiredFields.find(field => field.selector == '#email-address').value}@${requiredFields.find(field => field.selector == '#domain-address').value}`,
+        email: requiredFields.find(field => field.selector == '#email-address').value,
         firstName: requiredFields.find(field => field.selector == '#first-name').value,
         lastName: requiredFields.find(field => field.selector == '#last-name').value,
         passportCode: requiredFields.find(field => field.selector == '#passport-code').value,
@@ -335,8 +351,8 @@ async function getReservationData() {
  * is successful or not.
  */
 async function confirmBooking() {
-    bindMissingFieldsEvents();
-    showMissingFields('flight-book');
+    bindMissingFieldsEvents('flight-book');
+    showMissingFields('flight-book', null, 'flight-book');
 
     if (Object.values(stepsDone).every(Boolean)) {
         const reservationData = await getReservationData();

@@ -2,11 +2,8 @@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="p-2 card card-hover-sm bg-primary-accent shadow">
             <div class="d-flex justify-content-between">
-                <img class="m-0 p-0 bg-dark border-dark img-thumbnail square-40px" {{#if (eq
-                     this.airline 'Cebu Atlantic' )}} src="/media/images/cebu-atlantic.png" {{else if (eq
-                     this.airline 'Filipino Airlines' )}} src="/media/images/filipino-airlines.png" {{else if (eq
-                     this.airline 'AirFAST' )}} src="/media/images/airfast.png" {{else if (eq this.airline 'Sunray Air'
-                     )}} src="/media/images/sunray-air.png" {{/if}}>
+                <img class="m-0 p-0 bg-dark border-dark img-thumbnail square-40px"
+                     src="{{#if (eq this.airline 'Cebu Atlantic')}}/media/images/cebu-atlantic.png{{else if (eq this.airline 'Filipino Airlines')}}/media/images/filipino-airlines.png{{else if (eq this.airline 'AirFAST')}}/media/images/airfast.png{{else if (eq this.airline 'Sunray Air')}}/media/images/sunray-air.png{{/if}}">
 
                 <h4 class="mt-1 m-0 p-0 fw-bold text-light"> PHP {{formatNumber this.baseFare}} </h4>
             </div>
@@ -57,5 +54,5 @@
         </div>
     </div>
 {{else}}
-    <h2 class="p-5 m-0 text-primary text-center"> No Flights FSound </h2>
+    <h2 class="p-5 m-0 text-primary text-center"> No Flights Found </h2>
 {{/each}}

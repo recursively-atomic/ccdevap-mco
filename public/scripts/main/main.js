@@ -129,7 +129,8 @@ function getRequiredFields(script) {
         const id = $(this).attr('id');
         const fieldData = {
             selector: '#' + id,
-            isFilled: script == 'flight-book' ? (id === 'flight-type') : false
+            group: $(this).data('group') || null,
+            isFilled: script === 'flight-book' ? (id === 'flight-type') : false
         };
 
         if (script == 'flight-search') {
@@ -141,85 +142,142 @@ function getRequiredFields(script) {
 }
 
 /**
- * Binds `showMissingFields()` to all of the required fields for
- * completing a process.
+ * Binds validation events to all required fields, or only to the
+ * fields belonging to the specified validation group.
+ *
+ * @param {String} group is the validation group to bind events for.
  */
-function bindMissingFieldsEvents() {
-    requiredFields.forEach(function (field) {
-        $(field.selector).off('input.show change.show').on('input.show change.show', function () {
-            showMissingFields();
-        });
+function bindMissingFieldsEvents(group) {
+    let fields = requiredFields;
+
+    if (group) {
+        fields = requiredFields.filter(field => field.group === group);
+    }
+
+    fields.forEach(function (field) {
+        $(field.selector)
+            .off('input.show change.show')
+            .on('input.show change.show', function () {
+                showMissingFields(undefined, field.selector);
+            });
     });
 }
 
 /**
- * Displays to the user the emtpy fields that are required
- * to finish a process.
- * 
- * 
- * Validates data differently depending on who called the function.
- * 
+ * Validates required fields and updates their validation state and
+ * can be limited to a specific field or validation group.
+ *
  * @param {String} script is the caller's file name.
+ * @param {String} onlyField is the selector of the only field to validate.
+ * @param {String} onlyGroup is the validation group to validate.
  */
-function showMissingFields(script) {
-    requiredFields.forEach(function (field) {
-        const value = $(field.selector).val().trim();
+function showMissingFields(script, onlyField, onlyGroup) {
+    let fieldsToValidate = requiredFields;
 
-        if (script === 'flight-search') {
-            handleDefaultValidation(field, value);
-            return;
-        }
+    if (onlyField) {
+        fieldsToValidate = requiredFields.filter(function (field) { return field.selector === onlyField; });
+    } else if (onlyGroup) {
+        fieldsToValidate = requiredFields.filter(function (field) { return field.group === onlyGroup; });
+    }
 
-        switch (field.selector) {
-            case '#date-input':
-                if (value !== '') {
-                    const currentDate = new Date();
-                    const birthDate = new Date(value);
-                    const differenceInDays = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
-
-                    let ageCategories, ageCategory;
-
-                    ageCategories = [
-                        { label: 'Infant', min: 0, max: 730 },
-                        { label: 'Child', min: 731, max: 6570 },
-                        { label: 'Adult', min: 6571, max: 21900 },
-                        { label: 'Senior', min: 21901, max: Infinity }
-                    ];
-
-                    ageCategory = ageCategories.find(category =>
-                        differenceInDays >= category.min && differenceInDays <= category.max);
-
-                    if (ageCategory) {
-                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                    }
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                    $('#invalid-input').addClass('d-none');
-                    $('#no-input').removeClass('d-none');
-                }
-                break;
-            case '#gender-select':
-                if (value !== '') {
-                    if (value === 'Not Listed') {
-                        if ($('#other-gender-input').val().trim() !== '') {
-                            $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                        } else {
-                            $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                            $('#specify').removeClass('d-none');
-                            $('#select').addClass('d-none');
-                        }
-                    } else {
-                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
-                    }
-                } else {
-                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
-                }
-                break;
-            default:
-                handleDefaultValidation(field, value);
-                break;
-        }
+    fieldsToValidate.forEach(function (field) {
+        validateField(script, field);
     });
+}
+
+/**
+ * Validates a required field according to the caller's validation rules.
+ *
+ * @param {String} script is the caller's file name.
+ * @param {Object} field is the required field to be validated.
+ */
+function validateField(script, field) {
+    const value = $(field.selector).val().trim();
+
+    if (script === 'flight-search') {
+        handleDefaultValidation(field, value);
+        return;
+    }
+
+    switch (field.selector) {
+        case '#date-input':
+            if (value !== '') {
+                const currentDate = new Date();
+                const birthDate = new Date(value);
+                const differenceInDays = Math.floor((currentDate - birthDate) / (1000 * 60 * 60 * 24));
+
+                let ageCategories, ageCategory;
+
+                ageCategories = [
+                    { label: 'Infant', min: 0, max: 730 },
+                    { label: 'Child', min: 731, max: 6570 },
+                    { label: 'Adult', min: 6571, max: 21900 },
+                    { label: 'Senior', min: 21901, max: Infinity }
+                ];
+
+                ageCategory = ageCategories.find(category =>
+                    differenceInDays >= category.min && differenceInDays <= category.max);
+
+                if (ageCategory) {
+                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
+                    $('#date-invalid-input').addClass('d-none');
+                    $('#date-no-input').addClass('d-none');
+                } else {
+                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
+                    $('#date-invalid-input').removeClass('d-none');
+                    $('#date-no-input').addClass('d-none');
+                }
+            } else {
+                $(field.selector).removeClass('is-valid').addClass('is-invalid');
+                $('#date-invalid-input').addClass('d-none');
+                $('#date-no-input').removeClass('d-none');
+            }
+            break;
+        case '#gender-select':
+            if (value !== '') {
+                if (value === 'Not Listed') {
+                    if ($('#other-gender-input').val().trim() !== '') {
+                        $(field.selector).removeClass('is-invalid').addClass('is-valid');
+                    } else {
+                        $(field.selector).removeClass('is-valid').addClass('is-invalid');
+                        $('#specify').removeClass('d-none');
+                        $('#select').addClass('d-none');
+                    }
+                } else {
+                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
+                }
+            } else {
+                $(field.selector).removeClass('is-valid').addClass('is-invalid');
+            }
+            break;
+        case '#edit-email-address':
+        case '#email-address':
+            if (value !== '') {
+                const emailRequirements = /[^@\s]+@[^@\s]+\.[^@\s]{2,}/;
+
+                if (emailRequirements.test(value)) {
+                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
+                    $('#email-invalid-input').addClass('d-none');
+                    $('#email-no-input').addClass('d-none');
+                } else {
+                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
+                    $('#email-invalid-input').removeClass('d-none');
+                    $('#email-no-input').addClass('d-none');
+                }
+            } else {
+                $(field.selector).removeClass('is-valid').addClass('is-invalid');
+                $('#email-invalid-input').addClass('d-none');
+                $('#email-no-input').removeClass('d-none');
+            }
+            break;
+        case '#new-password':
+        case '#register-password':
+            handlePasswordValidation(field, value);
+            break;
+        default:
+            handleDefaultValidation(field, value);
+            break;
+    }
 }
 
 /**
@@ -233,6 +291,26 @@ function handleDefaultValidation(field, value) {
         $(field.selector).removeClass('is-invalid').addClass('is-valid');
     } else {
         $(field.selector).removeClass('is-valid').addClass('is-invalid');
+    }
+}
+
+function handlePasswordValidation(field, value) {
+    const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
+
+    if (value !== '') {
+        if (!passwordRequirements.test(value) || value.length < 8) {
+            $(field.selector).removeClass('is-valid').addClass('is-invalid');
+            $('#password-invalid-input').removeClass('d-none');
+            $('#password-no-input').addClass('d-none');
+        } else {
+            $(field.selector).removeClass('is-invalid').addClass('is-valid');
+            $('#password-invalid-input').addClass('d-none');
+            $('#password-no-input').addClass('d-none');
+        }
+    } else {
+        $(field.selector).removeClass('is-valid').addClass('is-invalid');
+        $('#password-invalid-input').addClass('d-none');
+        $('#password-no-input').removeClass('d-none');
     }
 }
 
@@ -414,31 +492,31 @@ function updateLocations($origin, $destination, script) {
     if (script === 'home') {
         const originCode = $('#origin').data('code');
         const destinationCode = $('#destination').data('code');
- 
+
         const originOptions = $origin.data('options');
         const destinationOptions = $destination.data('options');
- 
+
         $origin.html(originOptions);
         $destination.html(destinationOptions);
- 
+
         if (originCode) {
             $destination.find(`option[data-code="${originCode}"]`).remove();
         }
- 
+
         if (destinationCode) {
             $origin.find(`option[data-code="${destinationCode}"]`).remove();
         }
     } else {
         const originIata = $origin.find(':selected').data('iata');
         const destinationIata = $destination.find(':selected').data('iata');
- 
+
         $origin.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
         $destination.find('option:not([value=""])').prop('hidden', false).prop('disabled', false);
- 
+
         if (destinationIata) {
             $origin.find(`option[data-iata="${destinationIata}"]`).prop('hidden', true).prop('disabled', true);
         }
- 
+
         if (originIata) {
             $destination.find(`option[data-iata="${originIata}"]`).prop('hidden', true).prop('disabled', true);
         }
@@ -515,7 +593,9 @@ async function checkCredentials(event, script) {
                     window.location.href = result.redirect;
                 }, 1000);
             } else if (response.status === 409) {
-                showToast('danger-toast', 'This email is already taken!');
+                showToast('danger-toast', 'This e-mail is already taken!');
+            } else if (response.status === 400) {
+                showToast('warning-toast', 'Fill out the required fields first!');
             }
         } else {
             if (!result.success) {
@@ -523,7 +603,11 @@ async function checkCredentials(event, script) {
                     showToast('danger-toast', 'User not found in the system!');
                 } else if (response.status === 401) {
                     showToast('danger-toast', 'Incorrect credentials!');
+                } else if (response.status === 400) {
+                    showToast('warning-toast', 'Fill out the required fields first!');
                 }
+            } else {
+                window.location.href = result.redirect;
             }
         }
     } finally {
@@ -535,9 +619,9 @@ async function checkCredentials(event, script) {
  * Toggles a password field's masking of the inputted text.
  */
 function togglePassword() {
-    $('#toggle-password').off('click.password').on('click.password', function () {
-        const $password = $('#password');
-        const $icon = $('#toggle-icon');
+    $('.toggle-password').off('click.password').on('click.password', function () {
+        const $icon = $(this).find('i');
+        const $password = $($icon.data('target'));
 
         $password.attr('type', $password.attr('type') == 'password' ? 'text' : 'password');
         $icon.toggleClass('fa-eye fa-eye-slash');

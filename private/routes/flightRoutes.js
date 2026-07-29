@@ -74,8 +74,25 @@ router.get('/flights', async (req, res) => {
 
 router.post('/flights', async (req, res) => {
     try {
+        const requiredFields = [
+            'airline',
+            'origin-iata', 'origin-location', 'origin-name',
+            'destination-iata', 'destination-location', 'destination-name',
+            'departure-datetime', 'arrival-datetime', 'base-fare'
+        ];
+
+        const missingFields = requiredFields.filter(field => {
+            const val = req.body[field];
+            return val === undefined || val === null || String(val).trim() === '';
+        });
+
+        if (missingFields.length > 0) {
+            return res.status(400).json({ success: false });
+        }
+
         const lastFlightNumber = await getLastFlightNumber();
         const newFlightNumber = lastFlightNumber ? lastFlightNumber.flightNumber + 1 : 1;
+
         const flightData = {
             flightNumber: newFlightNumber,
             airline: req.body['airline'],
@@ -84,16 +101,14 @@ router.post('/flights', async (req, res) => {
                 location: req.body['origin-location'],
                 name: req.body['origin-name']
             },
-
             destinationAirport: {
                 iata: req.body['destination-iata'],
                 location: req.body['destination-location'],
                 name: req.body['destination-name']
             },
-
-            departureDatetime: new Date(req.body['departure-datetime'] + 'Z'),
-            arrivalDatetime: new Date(req.body['arrival-datetime'] + 'Z'),
-            baseFare: Number(req.body['base-fare'])
+            departureDatetime: req.body['departure-datetime'],
+            arrivalDatetime: req.body['arrival-datetime'],
+            baseFare: req.body['base-fare']
         };
 
         await createFlight(flightData);
@@ -201,6 +216,22 @@ router.get('/api/read-flight/:flightNumber', async (req, res) => {
 
 router.put('/api/update-flight/:flightNumber', async (req, res) => {
     try {
+        const requiredFields = [
+            'edit-o-iata', 'edit-o-location', 'edit-o-name',
+            'edit-d-iata', 'edit-d-location', 'edit-d-name',
+            'edit-d-datetime', 'edit-a-datetime', 'edit-fare',
+            'edit-status'
+        ];
+
+        const missingFields = requiredFields.filter(field => {
+            const val = req.body[field];
+            return val === undefined || val === null || String(val).trim() === '';
+        });
+
+        if (missingFields.length > 0) {
+            return res.status(400).json({ success: false });
+        }
+
         const flightData = {
             flightNumber: parseInt(req.params.flightNumber),
             originAirport: {

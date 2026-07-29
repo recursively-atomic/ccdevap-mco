@@ -34,7 +34,8 @@
                                         </div>
 
                                         <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
-                                               type="text" placeholder="Alex Jax" id="first-name">
+                                               type="text" placeholder="Alex Jax" id="first-name"
+                                               data-group="flight-book">
 
                                         <div class="invalid-feedback">
                                             This first name field is required!
@@ -48,8 +49,9 @@
                                             <i class="text-secondary bi bi-chat-square-dots-fill"></i>
                                         </div>
 
-                                        <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
-                                               type="text" placeholder="Doe" id="last-name">
+                                        <input id="last-name"
+                                               class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                               type="text" placeholder="Doe" data-group="flight-book">
 
                                         <div class="invalid-feedback">
                                             This last name field is required!
@@ -63,8 +65,9 @@
                                             <i class="text-secondary bi bi-pen-fill"></i></i>
                                         </div>
 
-                                        <select class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
-                                                id="suffix-select">
+                                        <select id="suffix-select"
+                                                class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                                data-group="flight-book">
                                             <option selected hidden value=""> Select A Suffix </option>
                                             <option> None </option>
                                             <option> Jr. </option>
@@ -87,23 +90,26 @@
                             <div class="row">
                                 <!-- E-MAIL -->
                                 <div class="col-lg-6 col-md-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
-                                    <h4 class="text-primary-accent"> E-Mail
+                                    <h4 class="text-primary-accent"> E-Mail Address
                                         <span class="text-danger fw-bolder"> * </span>
                                     </h4>
 
                                     <div class="input-group">
-                                        <input class="form-control bg-light border-dark border-2 text-black required-field"
-                                               type="text" placeholder="email-address" id="email-address">
-
                                         <div class="input-group-text bg-dark border-dark">
                                             <i class="text-secondary fa-solid fa-at"></i>
                                         </div>
 
-                                        <input class="form-control bg-light border-dark border-2 rounded-end-3 text-black required-field"
-                                               type="text" placeholder="domain.com" id="domain-address">
+                                        <input id="email-address"
+                                               class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                               type="text" placeholder="email-address@domain.com"
+                                               data-group="flight-book">
 
-                                        <div class="invalid-feedback">
+                                        <div id="email-no-input" class="invalid-feedback">
                                             This e-mail field is required!
+                                        </div>
+
+                                        <div id="email-invalid-input" class="invalid-feedback">
+                                            An e-mail must have a character before and after @, and a domain!
                                         </div>
                                     </div>
                                 </div>
@@ -119,12 +125,14 @@
                                             <i class="text-secondary bi bi-telephone-fill"></i>
                                         </div>
 
-                                        <input class="form-control bg-light border-dark border-end-0 border-2 text-black required-field"
+                                        <input id="country-number"
+                                               class="form-control bg-light border-dark border-end-0 border-2 text-black required-field"
                                                type="text" oninput="this.value = this.value.replace(/\D/g, '')"
-                                               placeholder="00" id="country-number">
-                                        <input class="form-control w-50 bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                               placeholder="00" data-group="flight-book">
+                                        <input id="contact-number"
+                                               class="form-control w-50 bg-light border-dark border-2 text-black rounded-end-3 required-field"
                                                type="text" oninput="this.value = this.value.replace(/\D/g, '')"
-                                               placeholder="123456789" id="contact-number">
+                                               placeholder="123456789" data-group="flight-book">
 
                                         <div class="invalid-feedback">
                                             This contact number field is required!
@@ -147,8 +155,9 @@
                                             <i class="text-secondary bi bi-postcard-fill"></i>
                                         </div>
 
-                                        <input class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
-                                               type="text" placeholder="A12345678" id="passport-code">
+                                        <input id="passport-code"
+                                               class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                               type="text" placeholder="A12345678" data-group="flight-book">
 
                                         <div class="invalid-feedback">
                                             This passport field is required!
@@ -167,8 +176,9 @@
                                             <i class="text-secondary bi bi-flag-fill"></i>
                                         </div>
 
-                                        <select class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
-                                                id="nationality">
+                                        <select id="nationality"
+                                                class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                                data-group="flight-book">
                                             <option selected hidden value=""> Select A Nationality </option>
                                             <option> Afghan </option>
                                             <option> Bahamian </option>
@@ -218,14 +228,15 @@
                                             <i class="text-secondary bi bi-calendar2-fill"></i>
                                         </div>
 
-                                        <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
-                                               type="date" id="date-input">
+                                        <input id="date-input"
+                                               class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                               type="date" data-group="flight-book">
 
-                                        <div class="invalid-feedback" id="invalid-input">
+                                        <div id="date-invalid-input" class="invalid-feedback">
                                             Select a date before today!
                                         </div>
 
-                                        <div class="invalid-feedback" id="no-input">
+                                        <div id="date-no-input" class="invalid-feedback">
                                             This birthdate filed is required!
                                         </div>
 
@@ -248,8 +259,9 @@
                                             <i class="text-secondary bi bi-person-fill"></i>
                                         </div>
 
-                                        <select class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
-                                                id="gender-select">
+                                        <select id="gender-select"
+                                                class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                                data-group="flight-book">
                                             <option selected hidden value=""> Select Gender </option>
                                             <option> Prefer Not To Answer </option>
                                             <option> Not Listed </option>
@@ -266,8 +278,9 @@
                                     </div>
 
                                     <div class="d-none" id="other-gender-container">
-                                        <input class="mt-4 form-control bg-light border-dark border-2 text-black required-field"
-                                               type="text" placeholder="Please Specify" id="other-gender-input">
+                                        <input id="other-gender-input"
+                                               class="mt-4 form-control bg-light border-dark border-2 text-black required-field"
+                                               type="text" placeholder="Please Specify" data-group="flight-book">
 
                                         <div class="invalid-feedback" id="specify">
                                             Specify your gender!
@@ -530,7 +543,7 @@
                             <p class="m-0 p-0 ps-3 fw-bolder"> Flight Number: </p>
 
                             <p class="m-0 p-0 ps-1">
-                            {{#if (eq flight.airline 'Cebu Atlantic')}} CA
+                                {{#if (eq flight.airline 'Cebu Atlantic')}} CA
                                 {{else if (eq flight.airline 'Filipino Airlines')}} FA
                                 {{else if (eq flight.airline 'AirFAST')}} AF
                                 {{else if (eq flight.airline 'Sunray Air')}} SA {{/if}}

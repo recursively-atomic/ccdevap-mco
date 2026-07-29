@@ -1,6 +1,8 @@
 let selectedFlight;
 
 $(function () {
+    getRequiredFields('flights');
+
     $('#base-fare, #edit-fare').on('input.format', formatBaseFare);
 });
 
@@ -119,6 +121,7 @@ async function showViewModal(flightNumber) {
  * @param {String} flightNumber is the flight number.
  */
 async function showEditModal(flightNumber) {
+    $('#add-flight, #edit-flight').find('*').removeClass('is-valid is-invalid').off('input.show change.show');
     const $editModal = $('#edit-flight');
     const $title = $editModal.find('.modal-title');
 
@@ -178,7 +181,10 @@ function showDeleteModal(flightNumber) {
 }
 
 async function createFlight(event) {
+    bindMissingFieldsEvents('add-flight');
+    showMissingFields('flights', null, 'add-flight');
     event.preventDefault();
+
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
@@ -192,20 +198,25 @@ async function createFlight(event) {
             body: JSON.stringify(data)
         });
 
+        if (response.status === 400) {
+            showToast('warning-toast', 'Fill out the required fields first!');
+            return;
+        }
+
         const result = await response.json();
 
         if (result.success) {
             let airline = result.airline;
             airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+
             hideModalShowToast('add-flight', 'success-toast', `Successfully saved flight ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
+            form.reset();
 
             setTimeout(() => {
                 updateFlightsTable();
             }, 1000);
         }
-    } finally {
-        form.reset();
-    }
+    } finally { }
 }
 
 /**
@@ -214,7 +225,10 @@ async function createFlight(event) {
  * @param {SubmitEvent} event is the event of submitting a form.
  */
 async function updateFlight(event) {
+    bindMissingFieldsEvents('edit-flight');
+    showMissingFields('flights', null, 'edit-flight');
     event.preventDefault();
+
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
@@ -226,6 +240,11 @@ async function updateFlight(event) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
+
+        if (response.status === 400) {
+            showToast('warning-toast', 'Fill out the required fields first!');
+            return;
+        }
 
         const result = await response.json();
 

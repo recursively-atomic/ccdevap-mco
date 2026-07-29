@@ -53,7 +53,18 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     try {
-        if (await getUserByEmail(req.body['email-address'])) {
+        const email = req.body['email-address'];
+        const password = req.body['password'];
+        const firstName = req.body['first-name'];
+        const lastName = req.body['last-name'];
+        const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
+        const emailRequirements = /[^@\s]+@[^@\s]+\.[^@\s]{2,}/;
+
+        if (!email || !password || !firstName || !lastName || !emailRequirements.test(email) || !passwordRequirements.test(password)) {
+            return res.status(400).json({ success: false });
+        }
+
+        if (await getUserByEmail(email)) {
             return res.status(409).json({ success: false });
         }
 
@@ -61,10 +72,10 @@ router.post('/register', async (req, res) => {
         const newUserNumber = lastUserNumber ? lastUserNumber.userNumber + 1 : 1;
         const userData = {
             userNumber: newUserNumber,
-            emailAddress: req.body['email-address'],
-            password: req.body['password'],
-            firstName: req.body['first-name'],
-            lastName: req.body['last-name']
+            emailAddress: email,
+            password: password,
+            firstName: firstName,
+            lastName: lastName
         };
 
         await createUser(userData);
@@ -86,12 +97,16 @@ router.post('/login', async (req, res) => {
         const password = req.body['password'];
         const user = await getUserByEmail(email);
 
-        if (!user) {
-            return res.status(404).json({ success: false });
-        }
+        if (email && email.includes('@') && password) {
+            if (!user) {
+                return res.status(404).json({ success: false });
+            }
 
-        if (user.password !== password) {
-            return res.status(401).json({ success: false });
+            if (user.password !== password) {
+                return res.status(401).json({ success: false });
+            }
+        } else {
+            return res.status(400).json({ success: false });
         }
 
         req.session.user = {
@@ -102,12 +117,10 @@ router.post('/login', async (req, res) => {
         };
 
         if (user.role == 'admin') {
-            return res.redirect('/dashboard');
+            return res.status(200).json({ success: true, redirect: '/dashboard' });
         } else if (user.role == 'user') {
-
+            return res.status(200).json({ success: true, redirect: '/profile' });
         }
-
-        res.redirect('/profile');
     } catch {
         res.status(500).json({ success: false });
     }
@@ -205,7 +218,7 @@ router.get('/logout', (req, res) => {
 // APIs
 router.get('/api/read-user-number', async (req, res) => {
     try {
-        const user = await getUser(req.session.user.number);
+        const user = await getUser(parseInt(req.session.user.number));
         res.status(200).json({ success: true, userNumber: user.number });
     } catch {
         res.status(500).json({ success: false });
@@ -215,6 +228,17 @@ router.get('/api/read-user-number', async (req, res) => {
 router.put('/api/update-user-password', async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
+        const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
+        const user = await getUser(parseInt(req.session.user.number));
+
+        if (!currentPassword || !newPassword || !passwordRequirements.test(newPassword) || (user.password !== currentPassword)) {
+            if ((user.password !== currentPassword) && currentPassword) {
+                return res.status(422).json({ success: false });
+            } else {
+                return res.status(400).json({ success: false });
+            }
+        }
+
         const userData = {
             userNumber: req.session.user.number,
             currentPassword,
@@ -223,18 +247,27 @@ router.put('/api/update-user-password', async (req, res) => {
 
         await updatePassword(userData);
         res.status(200).json({ success: true });
-    } catch {
+    } catch (error) {
         res.status(500).json({ success: false });
+        console.log(error);
     }
 });
 
 router.put('/api/update-user-profile', async (req, res) => {
     try {
+        const firstName = req.body.firstName;
+        const lastName = req.body.lastName;
+        const emailAddress = req.body.emailAddress;
+
+        if (!firstName || !lastName || !emailAddress) {
+            return res.status(400).json({ success: false });
+        }
+
         const userData = {
             userNumber: req.session.user.number,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            emailAddress: req.body.emailAddress,
+            firstName: firstName,
+            lastName: lastName,
+            emailAddress: emailAddress,
             contactNumber: req.body.contactNumber
         }
 

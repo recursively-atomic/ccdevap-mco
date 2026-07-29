@@ -1,13 +1,15 @@
 $(function () {
+    togglePassword();
     showAgeBadge('profile');
     showSpecifyGender();
     showInputFields();
     updateProfilePage();
+    getRequiredFields('profile');
 
     $('#change-profile').on('change.picture', changeProfile);
     $('#card-number').on('input.card', (event) => formatCardNumber(event.target));
-    $('#save-profile-btn').on('click.save', updateProfileInformation);
-    $('#save-password-btn').on('click.save', updatePassword);
+    $('#save-profile').on('click.save', updateProfileInformation);
+    $('#save-password').on('click.save', updatePassword);
 });
 
 /**
@@ -35,8 +37,8 @@ function clearCardFields() {
     $('#card-first-name').val('');
     $('#card-last-name').val('');
 
-    $('#receipt-email').val('');
-    $('#receipt-domain').val('');
+    $('#receipt-email-name').val('');
+    $('#receipt-email-domain').val('');
 
     $('#billing-country').val('');
     $('#billing-region').val('');
@@ -146,9 +148,8 @@ function handleFieldVisibility(value) {
  */
 function updateProfilePage() {
     const name = $('#profile-name').text().trim();
-    const [last, first] = name.split(',');
+    const [last, first] = name.split(', ');
     const email = $('#profile-email').text().trim();
-    const [username, domain] = email.split('@');
     const contact = $('#profile-contact').text().trim();
     const [codeOnly, numberOnly] = contact.split(' ');
 
@@ -156,10 +157,8 @@ function updateProfilePage() {
     $('#card-first-name').val(first);
     $('#card-last-name').val(last);
 
-    $('#email-address').val(username);
-    $('#domain-address').val(domain);
-    $('#receipt-email').val(username);
-    $('#receipt-domain').val(domain);
+    $('#email-address').val(email);
+    $('#receipt-email-address').val(email);
 
     $('#phone-code').val(codeOnly.replace(/\+/g, ''));
     $('#phone-number').val(numberOnly);
@@ -175,16 +174,17 @@ function updateProfilePage() {
  * Opens a modal for users to edit their profile information.
  */
 function showEditModal() {
-    const email = $('#profile-email').text().trim();
-    const [username, domain] = email.split('@');
+    $('#edit-first-name, #edit-last-name, #edit-email-address').removeClass('is-valid is-invalid').off('input.show change.show');
+    $('#current-password').val('').removeClass('is-valid is-invalid');
+    $('#new-password').val('').removeClass('is-valid is-invalid');
+
     const contact = $('#profile-contact').text().trim();
     const [code, number] = contact.split(' ');
 
     $('#edit-first-name').val($('#profile-name').data('first-name'));
     $('#edit-last-name').val($('#profile-name').data('last-name'));
 
-    $('#edit-email-user').val(username);
-    $('#edit-email-domain').val(domain);
+    $('#edit-email-address').val($('#profile-email').text().trim());
 
     $('#edit-phone-code').val(code.replace(/\+/g, ''));
     $('#edit-phone-number').val(number);
@@ -195,13 +195,16 @@ function showEditModal() {
  * on the process' result.
  */
 async function updateProfileInformation() {
+    bindMissingFieldsEvents('edit-profile');
+    showMissingFields('profile', null, 'edit-profile');
+
     const code = $('#edit-phone-code').val().trim() ? '+' + $('#edit-phone-code').val().trim() : '';
     const number = $('#edit-phone-number').val().trim() ? $('#edit-phone-number').val().trim() : '';
 
     const data = {
         firstName: $('#edit-first-name').val().trim(),
         lastName: $('#edit-last-name').val().trim(),
-        emailAddress: $('#edit-email-user').val().trim() + '@' + $('#edit-email-domain').val().trim(),
+        emailAddress: $('#edit-email-address').val().trim(),
         contactNumber: code && number ? code + ' ' + number : ''
     };
 
@@ -210,6 +213,11 @@ async function updateProfileInformation() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     });
+
+    if (response.status === 400) {
+        showToast('warning-toast', 'Fill out the first name, last name, and e-mail fields first!');
+        return;
+    }
 
     const result = await response.json();
 
@@ -232,13 +240,11 @@ async function updateProfileInformation() {
  * on the process' result.
  */
 async function updatePassword() {
+    bindMissingFieldsEvents('update-password');
+    showMissingFields('profile', null, 'update-password');
+
     const currentPassword = $('#current-password').val().trim();
     const newPassword = $('#new-password').val().trim();
-
-    if (!currentPassword || !newPassword) {
-        showToast('warning-toast', 'Fill in both password fields!');
-        return;
-    }
 
     try {
         const response = await fetch('/api/update-user-password', {
@@ -247,11 +253,29 @@ async function updatePassword() {
             body: JSON.stringify({ currentPassword, newPassword })
         });
 
+        if (response.status === 400) {
+            if (currentPassword || newPassword) {
+                $('#current-password').val('').removeClass('is-valid is-invalid');
+                $('#new-password').val('').removeClass('is-valid is-invalid');
+            }
+
+            showToast('warning-toast', 'Fill in both password fields first!');
+            return;
+        } else if (response.status === 422) {
+            if (currentPassword || newPassword) {
+                $('#current-password').val('').removeClass('is-valid is-invalid');
+                $('#new-password').val('').removeClass('is-valid is-invalid');
+            }
+
+            showToast('danger-toast', 'Your current password is incorrect!');
+            return;
+        }
+
         const result = await response.json();
 
         if (result.success) {
-            $('#current-password').val('');
-            $('#new-password').val('');
+            $('#current-password').val('').removeClass('is-valid is-invalid');
+            $('#new-password').val('').removeClass('is-valid is-invalid');
             showToast('success-toast', 'Successfully changed password!');
         }
     } finally { }
