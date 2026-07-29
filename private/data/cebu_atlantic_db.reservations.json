@@ -1,0 +1,46 @@
+[
+    {
+        "_id": {
+            "$oid": "6a6752ce71fb7bb4603f0818"
+        },
+        "identifier": "0010WV",
+        "flightNumber": 1,
+        "userNumber": 1,
+        "email": "anthony.namol.090105@gmail.com",
+        "firstName": "Anthony",
+        "lastName": "Namol",
+        "passportCode": "A12345B54321",
+        "seatNumber": "B3",
+        "totalAmount": 6400,
+        "status": "Pending",
+        "createdAt": {
+            "$date": "2026-07-27T12:45:02.683Z"
+        },
+        "updatedAt": {
+            "$date": "2026-07-28T14:19:20.060Z"
+        },
+        "__v": 0
+    },
+    {
+        "_id": {
+            "$oid": "6a6777a93fb5efb17bbe0b0a"
+        },
+        "identifier": "000MP1",
+        "flightNumber": 1,
+        "userNumber": 1,
+        "email": "general.user@email.com",
+        "firstName": "Generic",
+        "lastName": "User",
+        "passportCode": "QPA123POL345",
+        "seatNumber": "A4",
+        "totalAmount": 4400,
+        "status": "Pending",
+        "createdAt": {
+            "$date": "2026-07-27T15:22:17.954Z"
+        },
+        "updatedAt": {
+            "$date": "2026-07-27T15:22:17.954Z"
+        },
+        "__v": 0
+    }
+]
