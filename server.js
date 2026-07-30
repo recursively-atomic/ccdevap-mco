@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const express = require('express');
 const session = require('express-session');
 const expressHandlebars = require('express-handlebars');
@@ -7,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const server = express();
 
-const { connectToMongo } = require('./private/connection');
+const { connectToMongo, startServer } = require('./private/connection');
 const userRoutes = require("./private/routes/userRoutes");
 const flightRoutes = require("./private/routes/flightRoutes");
 const reservationRoutes = require('./private/routes/reservationRoutes');
@@ -130,13 +128,4 @@ if (process.env.NODE_ENV !== 'production') {
 server.use("/", userRoutes);
 server.use("/", flightRoutes);
 server.use("/", reservationRoutes);
-
-connectToMongo((err) => {
-    if (err) {
-        console.error('Server Not Started!');
-    } else {
-        server.listen(process.env.SERVER_PORT, () => {
-            console.log(`Server Running On http://localhost:${process.env.SERVER_PORT}!`);
-        });
-    }
-});
+startServer(server);

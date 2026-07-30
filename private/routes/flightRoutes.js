@@ -82,8 +82,9 @@ router.post('/flights', async (req, res) => {
         ];
 
         const missingFields = requiredFields.filter(field => {
-            const val = req.body[field];
-            return val === undefined || val === null || String(val).trim() === '';
+            const value = req.body[field];
+
+            return value === undefined || value === null || String(value).trim() === '';
         });
 
         if (missingFields.length > 0) {
@@ -181,8 +182,7 @@ router.get('/api/get-flights-table', async (req, res) => {
                 pagination: pagination
             }
         });
-    } catch (error) {
-        console.error('Error in get-flights-table:', error);   // log for debugging
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -224,8 +224,9 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
         ];
 
         const missingFields = requiredFields.filter(field => {
-            const val = req.body[field];
-            return val === undefined || val === null || String(val).trim() === '';
+            const value = req.body[field];
+
+            return value === undefined || value === null || String(value).trim() === '';
         });
 
         if (missingFields.length > 0) {

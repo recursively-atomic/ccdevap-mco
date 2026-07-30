@@ -3,16 +3,26 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const mongoURI = `${process.env.MONGO_URI}/${process.env.DATABASE_NAME}`;
 
-function connectToMongo(callback) {
-    mongoose.connect(mongoURI)
-        .then(() => {
-            console.log("MongoDB Connected via Mongoose!");
-            if (callback) callback();
-        })
-        .catch((err) => {
-            console.error(`MongoDB Connection Error: ${err}!`);
-            if (callback) callback(err);
-        });
+async function connectToMongo(callback) {
+    try {
+        await mongoose.connect(mongoURI);
+        console.log("MongoDB Connected via Mongoose!");
+    } catch (error) {
+        console.error(`MongoDB Connection Error: ${error}!`);
+        throw error;
+    }
 }
 
-module.exports = { connectToMongo };
+async function startServer(server) {
+    try {
+        await connectToMongo();
+        
+        server.listen(process.env.SERVER_PORT, () => {
+            console.log(`Server Running On http://localhost:${process.env.SERVER_PORT}!`);
+        });
+    } catch (error) {
+        console.error('Server Not Started!');
+    }
+}
+
+module.exports = { connectToMongo, startServer };

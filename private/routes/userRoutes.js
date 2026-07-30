@@ -247,9 +247,8 @@ router.put('/api/update-user-password', async (req, res) => {
 
         await updatePassword(userData);
         res.status(200).json({ success: true });
-    } catch (error) {
+    } catch {
         res.status(500).json({ success: false });
-        console.log(error);
     }
 });
 

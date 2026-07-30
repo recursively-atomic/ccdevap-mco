@@ -118,8 +118,7 @@ router.post('/flight-book', async (req, res) => {
     try {
         const reservation = await createReservation(req.body);
         res.status(200).json({ success: true, redirect: '/my-reservations' });
-    } catch (error) {
-        console.error(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
