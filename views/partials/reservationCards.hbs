@@ -7,7 +7,7 @@
                     <div class="container d-flex flex-row p-0">
                         <h2 class="mb-0 me-2"> {{this.identifier}} </h2>
 
-                        <span class="d-flex p-2 m-0 badge fs-6 rounded-pill text-bg-{{#if text-white align-items-center (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}">
+                        <span class="d-flex p-2 m-0 badge fs-6 rounded-pill text-white align-items-center text-bg-{{#if (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}">
                             {{this.status}}
                         </span>
                     </div>

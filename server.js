@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const server = express();
 
-const { connectToMongo, startServer } = require('./private/connection');
+const { connectToServer } = require('./private/connection');
 const userRoutes = require("./private/routes/userRoutes");
 const flightRoutes = require("./private/routes/flightRoutes");
 const reservationRoutes = require('./private/routes/reservationRoutes');
@@ -128,4 +128,4 @@ if (process.env.NODE_ENV !== 'production') {
 server.use("/", userRoutes);
 server.use("/", flightRoutes);
 server.use("/", reservationRoutes);
-startServer(server);
+connectToServer(server);

@@ -13,16 +13,16 @@ async function connectToMongo(callback) {
     }
 }
 
-async function startServer(server) {
+async function connectToServer(server) {
     try {
         await connectToMongo();
         
         server.listen(process.env.SERVER_PORT, () => {
-            console.log(`Server Running On http://localhost:${process.env.SERVER_PORT}!`);
+            console.log(`Server Running On http://localhost:${process.env.SERVER_PORT}`);
         });
     } catch (error) {
         console.error('Server Not Started!');
     }
 }
 
-module.exports = { connectToMongo, startServer };
+module.exports = { connectToServer };
