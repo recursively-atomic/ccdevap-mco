@@ -1,5 +1,113 @@
 {{> navigation}}
 
-{{> toast}}
+<div class="container mt-5 mb-5">
+    <div class="d-flex card shadow-lg">
+        <div class="card-header text-center text-white bg-primary-accent">
+            <h2 class="mt-2"> Audit Management </h2>
+        </div>
+
+        <!-- TABLE -->
+        <div class="card-body">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover text-center">
+                    <thead class="border-dark border-2">
+                        <tr class="">
+                            <th class="text-secondary bg-dark w-25" scope="col">
+                                Timestamp
+                            </th>
+
+                            <th class="text-secondary bg-dark w-auto" scope="col">
+                                Username
+                            </th>
+
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                User Role
+                            </th>
+
+                            <th class="text-secondary bg-dark" scope="col">
+                                Activity
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="table-group-divider">
+                        <!-- {{> reservationRows}} -->
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> User </td>
+                            <td class="text-start"> Registered with a user number of 1. </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> User </td>
+                            <td class="text-start"> Logged in with a user number of 1. </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> User </td>
+                            <td class="text-start"> Logged out. </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> Admin </td>
+                            <td class="text-start"> Created flight CA 0001 (MNL [07/27/25-00:00] to MNL [07/27/25-00:00]). </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> Admin </td>
+                            <td class="text-start"> Updated flight CA 0001 (MNL [07/27/25-00:00] to MNL [07/27/25-00:00]). </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> Admin </td>
+                            <td class="text-start"> Deleted flight CA 0001. </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> User </td>
+                            <td class="text-start"> Made a reservation under 001234 for flight CA 0001 (MNL [07/27/25-00:00] to MNL [07/27/25-00:00]). </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+                            <th scope="row"> September 99, 9999 99:99 </th>
+                            <td> John Doe </td>
+                            <td class="border-3 border-top-0 border-bottom-0 border-start-0"> User </td>
+                            <td class="text-start"> Cancelled their reservation under 001234. </td>
+                        </tr>
+
+                        <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark">
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer bg-primary-accent">
+            <div class="d-flex flex-wrap gap-3 m-3 justify-content-between align-items-center">
+                <h6 class="text-white">
+                    <!-- Showing {{pagination.resultsPerPage}} Results Out Of {{pagination.totalResults}} -->
+                </h6>
+
+                <div class="d-flex flex-wrap gap-3 justify-content-center align-items-center">
+                    <!-- {{> pagination}} -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{> footer}}

@@ -9,6 +9,7 @@ const { connectToServer } = require('./private/connection');
 const userRoutes = require("./private/routes/userRoutes");
 const flightRoutes = require("./private/routes/flightRoutes");
 const reservationRoutes = require('./private/routes/reservationRoutes');
+const auditRoutes = require("./private/routes/auditRoutes");
 
 const handlebars = expressHandlebars.create({
     extname: 'hbs',
@@ -128,4 +129,5 @@ if (process.env.NODE_ENV !== 'production') {
 server.use("/", userRoutes);
 server.use("/", flightRoutes);
 server.use("/", reservationRoutes);
+server.use("/", auditRoutes);
 connectToServer(server);

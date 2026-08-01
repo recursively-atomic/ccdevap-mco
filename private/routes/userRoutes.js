@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const { authenticate } = require('../middleware/authenticate');
+const { authorize } = require('../middleware/authorize');
+
 const { getFlights } = require('../controllers/flightController');
 const { getReservations } = require('../controllers/reservationController');
 const {
@@ -13,23 +16,56 @@ const {
     updatePassword
 } = require('../controllers/userController');
 
-router.get('/', (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role == 'user') {
+router.get('/', authenticate, (req, res) => {
+    if (req.session.user.role == 'user') {
         return res.redirect('/home');
     } else if (req.session.user.role == 'admin') {
         return res.redirect('/dashboard');
     }
 });
 
-router.get('/home', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'user') {
-        return res.redirect('/dashboard');
-    }
+router.get('/login', (req, res) => {
+    res.render('login', {
+        script: '/scripts/login.js',
+    });
+});
 
+router.post('/login', async (req, res) => {
+    try {
+        const email = req.body['email-address'];
+        const password = req.body['password'];
+        const user = await getUserByEmail(email);
+
+        if (email && email.includes('@') && password) {
+            if (!user) {
+                return res.status(404).json({ success: false });
+            }
+
+            if (user.password !== password) {
+                return res.status(401).json({ success: false });
+            }
+        } else {
+            return res.status(400).json({ success: false });
+        }
+
+        req.session.user = {
+            number: user.userNumber,
+            emailAddress: user.emailAddress,
+            role: user.role,
+            selectedFlight: null
+        };
+
+        if (user.role == 'admin') {
+            return res.status(200).json({ success: true, redirect: '/dashboard' });
+        } else if (user.role == 'user') {
+            return res.status(200).json({ success: true, redirect: '/profile' });
+        }
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/home', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
     const { reservations } = await getReservations(0, 0, parseInt(req.session.user.number));
     const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled').length;
@@ -85,54 +121,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/login', (req, res) => {
-    res.render('login', {
-        script: '/scripts/login.js',
-    });
-});
-
-router.post('/login', async (req, res) => {
-    try {
-        const email = req.body['email-address'];
-        const password = req.body['password'];
-        const user = await getUserByEmail(email);
-
-        if (email && email.includes('@') && password) {
-            if (!user) {
-                return res.status(404).json({ success: false });
-            }
-
-            if (user.password !== password) {
-                return res.status(401).json({ success: false });
-            }
-        } else {
-            return res.status(400).json({ success: false });
-        }
-
-        req.session.user = {
-            number: user.userNumber,
-            emailAddress: user.emailAddress,
-            role: user.role,
-            selectedFlight: null
-        };
-
-        if (user.role == 'admin') {
-            return res.status(200).json({ success: true, redirect: '/dashboard' });
-        } else if (user.role == 'user') {
-            return res.status(200).json({ success: true, redirect: '/profile' });
-        }
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/profile', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'user') {
-        return res.redirect('/dashboard');
-    }
-
+router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
@@ -149,13 +138,7 @@ router.get('/profile', async (req, res) => {
     }
 });
 
-router.get('/dashboard', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'admin') {
-        return res.redirect('/');
-    }
-
+router.get('/dashboard', authenticate, authorize(['admin']), async (req, res) => {
     try {
         const user = await getUser(parseInt(req.session.user.number));
 
@@ -170,13 +153,7 @@ router.get('/dashboard', async (req, res) => {
     }
 });
 
-router.get('/users', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'admin') {
-        return res.redirect('/home');
-    }
-
+router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
     try {
         let page = parseInt(req.query.page) || 1, limit = 10;
         const { users, totalUsers } = await getUsers();

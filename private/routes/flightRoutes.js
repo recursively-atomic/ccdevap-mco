@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const { authenticate } = require('../middleware/authenticate');
+const { authorize } = require('../middleware/authorize');
+
 const {
     getFlight,
     getLastFlightNumber,
@@ -13,13 +16,7 @@ const {
     deleteFlight
 } = require('../controllers/flightController');
 
-router.get('/flight-search', (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'user') {
-        return res.redirect('/dashboard');
-    }
-
+router.get('/flight-search', authenticate, authorize(['user']), (req, res) => {
     const { origin, destination } = req.query;
     req.session.user.selectedFlight = null;
 
@@ -32,13 +29,7 @@ router.get('/flight-search', (req, res) => {
     });
 });
 
-router.get('/flights', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'admin') {
-        return res.redirect('/home');
-    }
-
+router.get('/flights', authenticate, authorize(['admin']), async (req, res) => {
     try {
         let page = parseInt(req.query.page) || 1, limit = 10;
         const { flights, totalFlights } = await getFlights(page, limit);

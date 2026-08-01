@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const { authenticate } = require('../middleware/authenticate');
+const { authorize } = require('../middleware/authorize');
+
 const { getFlight } = require('../controllers/flightController');
 const {
     getSeatMap,
@@ -11,13 +14,7 @@ const {
     updateStatus
 } = require('../controllers/reservationController');
 
-router.get('/my-reservations', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'user') {
-        return res.redirect('/dashboard');
-    }
-
+router.get('/my-reservations', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
@@ -51,13 +48,7 @@ router.get('/my-reservations', async (req, res) => {
     }
 });
 
-router.get('/reservations', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'admin') {
-        return res.redirect('/home');
-    }
-
+router.get('/reservations', authenticate, authorize(['admin']), async (req, res) => {
     try {
         let page = parseInt(req.query.page) || 1, limit = 10;
         const { reservations, totalReservations } = await getReservations(page, limit);
@@ -79,7 +70,6 @@ router.get('/reservations', async (req, res) => {
 
         res.status(200).render('reservations', {
             page: '/reservations',
-            script: '/scripts/reservations.js',
             role: req.session.user.role,
             reservationRows: reservations,
             pagination: pagination
@@ -89,12 +79,8 @@ router.get('/reservations', async (req, res) => {
     }
 });
 
-router.get('/flight-book', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    } else if (req.session.user.role != 'user') {
-        return res.redirect('/dashboard');
-    } else if (!req.session.user.selectedFlight) {
+router.get('/flight-book', authenticate, authorize(['user']), async (req, res) => {
+    if (!req.session.user.selectedFlight) {
         return res.redirect('/flight-search');
     }
 

@@ -251,22 +251,22 @@ input[type="range"].form-range::-webkit-slider-thumb {
     width: 135px !important;
 }
 
-.h-30px {
-    height: 30px;
+.square-100px {
+    height: 100px;
+    width: 100px;
 }
 
 .h-45px {
     height: 45px;
 }
 
-.square-100px {
-    height: 100px;
-    width: 100px;
-}
-
 .square-40px {
     height: 40px;
     width: 40px;
+}
+
+.h-30px {
+    height: 30px;
 }
 
 @media (min-width: 576px) {
