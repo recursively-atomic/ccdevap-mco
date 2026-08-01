@@ -338,6 +338,14 @@ input[type="range"].form-range::-webkit-slider-thumb {
 }
 
 /* LAYOUT STYLES */
+.z-1000 {
+    z-index: 1000;
+}
+
 .z-max {
     z-index: 9999;
+}
+
+.top-130px {
+    top: 130px;
 }

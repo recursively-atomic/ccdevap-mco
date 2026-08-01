@@ -1,14 +1,6 @@
 {{#each flightRows}}
-    <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark">
-        <th>
-            {{#if (eq this.airline 'Cebu Atlantic')}} CA
-            {{else if (eq this.airline 'Filipino Airlines')}} FA
-            {{else if (eq this.airline 'AirFAST')}} AF
-            {{else if (eq this.airline 'Sunray Air')}} SA {{/if}}
-
-            {{pad this.flightNumber 4 '0'}}
-        </th>
-
+    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+        <th> {{getFlightNumber this.airline this.flightNumber}} </th>
         <td> {{this.originAirport.iata}} ({{this.originAirport.location}}) </td>
         <td> {{this.destinationAirport.iata}} ({{this.destinationAirport.location}}) </td>
         <td> {{getDate this.departureDatetime}} {{getTime this.departureDatetime}} </td>

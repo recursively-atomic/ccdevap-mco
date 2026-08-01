@@ -26,23 +26,28 @@ const handlebars = expressHandlebars.create({
         subtract: (a, b) => a - b,
 
         range: (start, end) => {
-            const arr = [];
-            for (let i = start; i <= end; i++) arr.push(i);
-            return arr;
+            const array = [];
+
+            for (let i = start; i <= end; i++) {
+                array.push(i)
+            };
+
+            return array;
         },
 
-        or: (...args) => {
-            args.pop();
-            return args.some(Boolean);
+        or: (...inputs) => {
+            inputs.pop();
+            return inputs.some(Boolean);
         },
 
-        and: (...args) => {
-            args.pop();
-            return args.every(Boolean);
+        and: (...inputs) => {
+            inputs.pop();
+            return inputs.every(Boolean);
         },
 
         formatNumber: (input) => input.toLocaleString('en-US'),
         formatTitleCase: (input) => input.toLowerCase().replace(/\b\w/g, character => character.toUpperCase()),
+
         getDate: (datetime) => {
             const options = {
                 month: 'long',
@@ -86,7 +91,36 @@ const handlebars = expressHandlebars.create({
             return display.join(' ');
         },
 
-        pad: (input, length, padding) => String(input).padStart(length, padding)
+        getUserNumber: (role, number) => {
+            const roleLegend = {
+                'admin': 'ADM',
+                'user': 'USR'
+            };
+
+            return `${roleLegend[role]} ${String(number).padStart(4, '0')}`;
+        },
+
+        getAirlineLogo: (airline) => {
+            const logoLegend = {
+                'Cebu Atlantic': '/media/images/cebu-atlantic.png',
+                'Filipino Airlines': '/media/images/filipino-airlines.png',
+                'AirFAST': '/media/images/airfast.png',
+                'Sunray Air': '/media/images/sunray-air.png'
+            };
+
+            return logoLegend[airline];
+        },
+
+        getFlightNumber: (airline, number) => {
+            const airlineLegend = {
+                'Cebu Atlantic': 'CA',
+                'Filipino Airlines': 'FA',
+                'AirFAST': 'AF',
+                'Sunray Air': 'SA'
+            };
+
+            return `${airlineLegend[airline]} ${String(number).padStart(4, '0')}`;
+        },
     }
 });
 

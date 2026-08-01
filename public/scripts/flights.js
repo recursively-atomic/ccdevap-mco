@@ -181,6 +181,7 @@ function showDeleteModal(flightNumber) {
 }
 
 async function createFlight(event) {
+    $('#add-flight, #edit-flight').find('*').removeClass('is-valid is-invalid').off('input.show change.show');
     bindMissingFieldsEvents('add-flight');
     showMissingFields('flights', null, 'add-flight');
     event.preventDefault();

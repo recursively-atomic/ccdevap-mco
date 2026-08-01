@@ -3,7 +3,7 @@
         <div class="p-2 card card-hover-sm bg-primary-accent shadow">
             <div class="d-flex justify-content-between">
                 <img class="m-0 p-0 bg-dark border-dark img-thumbnail square-40px"
-                     src="{{#if (eq this.airline 'Cebu Atlantic')}}/media/images/cebu-atlantic.png{{else if (eq this.airline 'Filipino Airlines')}}/media/images/filipino-airlines.png{{else if (eq this.airline 'AirFAST')}}/media/images/airfast.png{{else if (eq this.airline 'Sunray Air')}}/media/images/sunray-air.png{{/if}}">
+                     src="{{getAirlineLogo this.airline}}">
 
                 <h4 class="mt-1 m-0 p-0 fw-bold text-light"> PHP {{formatNumber this.baseFare}} </h4>
             </div>
@@ -13,14 +13,7 @@
             <h4 class="d-flex m-0 mb-2 align-items-center text-secondary fw-bolder">
                 <i class="me-2 p-0 fa-solid fa-plane"></i>
 
-                <p class="m-0 p-0">
-                    {{#if (eq this.airline 'Cebu Atlantic')}} CA
-                    {{else if (eq this.airline 'Filipino Airlines')}} FA
-                    {{else if (eq this.airline 'AirFAST')}} AF
-                    {{else if (eq this.airline 'Sunray Air')}} SA {{/if}}
-
-                    {{pad this.flightNumber 4 '0'}}
-                </p>
+                <p class="m-0 p-0"> {{getFlightNumber this.airline this.flightNumber}} </p>
             </h4>
 
             <h6 class="d-flex m-0 align-items-center text-tertiary fw-bolder">

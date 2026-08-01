@@ -2,14 +2,7 @@
     <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark">
         <th scope="row"> {{this.identifier}} </th>
         <td> {{this.firstName}} {{this.lastName}}{{#if this.suffix}} {{this.suffix}}{{/if}} </td>
-        <td>
-            {{#if (eq this.flight.airline 'Cebu Atlantic')}} CA
-            {{else if (eq this.flight.airline 'Filipino Airlines')}} FA
-            {{else if (eq this.flight.airline 'AirFAST')}} AF
-            {{else if (eq this.flight.airline 'Sunray Air')}} SA {{/if}}
-
-            {{pad this.flight.flightNumber 4 '0'}}
-        </td>
+        <td> {{getFlightNumber this.flight.airline this.flight.flightNumber}} </td>
 
         <td> 
             {{this.flight.originAirport.location}} &RightArrow; {{this.flight.destinationAirport.location}}

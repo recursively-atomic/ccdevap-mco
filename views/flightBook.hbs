@@ -62,7 +62,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-text bg-dark border-dark">
-                                            <i class="text-secondary bi bi-pen-fill"></i></i>
+                                            <i class="text-secondary bi bi-pen-fill"></i>
                                         </div>
 
                                         <select id="suffix-select"
@@ -237,7 +237,7 @@
                                         </div>
 
                                         <div id="date-no-input" class="invalid-feedback">
-                                            This birthdate filed is required!
+                                            This birthdate field is required!
                                         </div>
 
                                         <div class="d-none d-flex ms-4 w-auto align-items-center"
@@ -319,7 +319,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="input-group">
                                         <div class="input-group-text bg-dark border-dark">
-                                            <i class="text-secondary bi bi-pen-fill"></i></i>
+                                            <i class="text-secondary bi bi-pen-fill"></i>
                                         </div>
 
                                         <select class="form-select bg-light border-dark border-2 text-black"
@@ -470,7 +470,7 @@
 
                     <div class="mx-4 mb-4 card-body">
                         <div class="mb-4 mt-2">
-                            <h4 class="text-primary-accent"> Addional Baggage (kg) </h4>
+                            <h4 class="text-primary-accent"> Additional Baggage (kg) </h4>
 
                             <div class="input-group">
                                 <div class="input-group-text bg-dark border-dark">
@@ -520,104 +520,101 @@
             </div>
 
             <div class="col-lg-4">
-                <!-- BOOKING SUMMARY -->
-                <div class="card shadow-lg">
-                    <div class="card-header text-center text-white bg-primary-accent">
-                        <h2 class="mt-2"> Booking Summary </h2>
-                    </div>
-
-                    <div class="card-body">
-                        <h2 class="text-primary"> Flight Details </h2>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Origin: </p>
-                            <p class="m-0 p-0 ps-1"> {{flight.originAirport.name}} </p>
+                <div class="sticky-top z-1000 top-130px">
+                    <!-- BOOKING SUMMARY -->
+                    <div class="card shadow-lg">
+                        <div class="card-header text-center text-white bg-primary-accent">
+                            <h2 class="mt-2"> Booking Summary </h2>
                         </div>
 
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Destination: </p>
-                            <p class="m-0 p-0 ps-1"> {{flight.destinationAirport.name}} </p>
+                        <div class="card-body">
+                            <h2 class="text-primary"> Flight Details </h2>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Origin: </p>
+                                <p class="m-0 p-0 ps-1"> {{flight.originAirport.name}} </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Destination: </p>
+                                <p class="m-0 p-0 ps-1"> {{flight.destinationAirport.name}} </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Flight Number: </p>
+
+                                <p class="m-0 p-0 ps-1">
+                                    {{getFlightNumber flight.airline flight.flightNumber}}
+                                </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Cabin Class: </p>
+                                <p class="m-0 p-0 ps-1" id="selected-class"></p>
+                            </div>
+
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                            <h2 class="text-primary"> Reservation Details </h2>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Passengers: </p>
+                                <p class="m-0 p-0 ps-1"> 1 </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Selected Seat: </p>
+                                <p class="m-0 p-0 ps-1" id="selected-seat"></p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Meal Package: </p>
+                                <p class="m-0 p-0 ps-1" id="selected-meal"></p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Extra Services: </p>
+                                <p class="m-0 p-0 ps-1" id="no-extra-services"></p>
+                            </div>
+
+                            <div class="m-0 p-0 text-dark" id="has-extra-services"></div>
+
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                            <h2 class="text-primary"> Price Details </h2>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Base Fare: </p>
+
+                                <p class="m-0 p-0 ps-1" id="base-fare">
+                                    {{formatNumber flight.baseFare}}
+                                </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Taxes and Fees: </p>
+                                <p class="m-0 p-0 ps-1" id="tax-and-fee"></p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Extras: </p>
+                                <p class="m-0 p-0 ps-1" id="extra-fee"></p>
+                            </div>
+
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                            <h2 class="d-flex m-0 p-0 align-items-center text-secondary">
+                                <p class="m-0 p-0"> Grand Total: </p>
+                                <p class="m-0 p-0 ps-2" id="booking-total"></p>
+                            </h2>
                         </div>
 
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Flight Number: </p>
-
-                            <p class="m-0 p-0 ps-1">
-                                {{#if (eq flight.airline 'Cebu Atlantic')}} CA
-                                {{else if (eq flight.airline 'Filipino Airlines')}} FA
-                                {{else if (eq flight.airline 'AirFAST')}} AF
-                                {{else if (eq flight.airline 'Sunray Air')}} SA {{/if}}
-
-                                {{pad flight.flightNumber 4 '0'}}
-                            </p>
-                        </div>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Cabin Class: </p>
-                            <p class="m-0 p-0 ps-1" id="selected-class"></p>
-                        </div>
-
-                        <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                        <h2 class="text-primary"> Reservation Details </h2>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Passengers: </p>
-                            <p class="m-0 p-0 ps-1"> 1 </p>
-                        </div>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Selected Seat: </p>
-                            <p class="m-0 p-0 ps-1" id="selected-seat"></p>
-                        </div>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Meal Package: </p>
-                            <p class="m-0 p-0 ps-1" id="selected-meal"></p>
-                        </div>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Extra Services: </p>
-                            <p class="m-0 p-0 ps-1" id="no-extra-services"></p>
-                        </div>
-
-                        <div class="m-0 p-0 text-dark" id="has-extra-services"></div>
-
-                        <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                        <h2 class="text-primary"> Price Details </h2>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Base Fare: </p>
-
-                            <p class="m-0 p-0 ps-1" id="base-fare">
-                                {{formatNumber flight.baseFare}}
-                            </p>
-                        </div>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Taxes and Fees: </p>
-                            <p class="m-0 p-0 ps-1" id="tax-and-fee"></p>
-                        </div>
-
-                        <div class="d-flex m-0 p-0 align-items-center text-dark">
-                            <p class="m-0 p-0 ps-3 fw-bolder"> Extras: </p>
-                            <p class="m-0 p-0 ps-1" id="extra-fee"></p>
-                        </div>
-
-                        <hr class="border border-3 border-dark rounded-3 opacity-100">
-
-                        <h2 class="d-flex m-0 p-0 align-items-center text-secondary">
-                            <p class="m-0 p-0"> Grand Total: </p>
-                            <p class="m-0 p-0 ps-2" id="booking-total"></p>
-                        </h2>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="d-grid my-2">
-                            <button class="btn btn-success btn-lg text-white" onclick="confirmBooking()">
-                                Confirm Booking
-                            </button>
+                        <div class="card-footer">
+                            <div class="d-grid my-2">
+                                <button class="btn btn-success btn-lg text-white" onclick="confirmBooking()">
+                                    Confirm Booking
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
