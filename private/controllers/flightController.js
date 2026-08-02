@@ -1,14 +1,39 @@
 const model = require('../models/flightModel');
 
-async function getFlight(flightNumber) {
+async function createFlight(flightData) {
+    const flight = new model({
+        flightNumber: flightData.flightNumber,
+        airline: flightData.airline,
+
+        originAirport: {
+            iata: flightData.originAirport.iata,
+            location: flightData.originAirport.location,
+            name: flightData.originAirport.name
+        },
+
+        destinationAirport: {
+            iata: flightData.destinationAirport.iata,
+            location: flightData.destinationAirport.location,
+            name: flightData.destinationAirport.name
+        },
+
+        departureDatetime: flightData.departureDatetime,
+        arrivalDatetime: flightData.arrivalDatetime,
+        baseFare: flightData.baseFare
+    });
+
+    return flight.save();
+}
+
+async function readFlight(flightNumber) {
     return await model.findOne({ flightNumber: flightNumber }).lean();
 }
 
-async function getLastFlightNumber() {
+async function readLastFlightNumber() {
     return await model.findOne().sort({ flightNumber: -1 }).select('flightNumber').lean();
 }
 
-async function getFlightOrigins() {
+async function readFlightOrigins() {
     return await model.aggregate([
         {
             $group: {
@@ -23,7 +48,7 @@ async function getFlightOrigins() {
     ]);
 }
 
-async function getFlightDestinations() {
+async function readFlightDestinations() {
     return await model.aggregate([
         {
             $group: {
@@ -38,8 +63,8 @@ async function getFlightDestinations() {
     ]);
 }
 
-async function getFlightsByQuery(queryData, page, limit) {
-    const skip = (page - 1) * limit, filter = { status: { $nin: ['In Air', 'Cancelled'] } };
+async function readFlightsByQuery(queryData, page, limit) {
+    const skip = (page - 1) * limit, filter = { status: { $nin: ['In Air', 'Cancelled', 'Completed'] } };
     let totalFlights, flights;
 
     if (queryData.departureIata) {
@@ -65,38 +90,13 @@ async function getFlightsByQuery(queryData, page, limit) {
     return { flights, totalFlights };
 }
 
-async function getFlights(page, limit) {
+async function readFlights(page, limit) {
     const skip = (page - 1) * limit;
 
     const totalFlights = await model.countDocuments();
     const flights = await model.find().sort({ flightNumber: 1 }).skip(skip).limit(limit).lean();
 
     return { flights, totalFlights };
-}
-
-async function createFlight(flightData) {
-    const flight = new model({
-        flightNumber: flightData.flightNumber,
-        airline: flightData.airline,
-
-        originAirport: {
-            iata: flightData.originAirport.iata,
-            location: flightData.originAirport.location,
-            name: flightData.originAirport.name
-        },
-
-        destinationAirport: {
-            iata: flightData.destinationAirport.iata,
-            location: flightData.destinationAirport.location,
-            name: flightData.destinationAirport.name
-        },
-
-        departureDatetime: flightData.departureDatetime,
-        arrivalDatetime: flightData.arrivalDatetime,
-        baseFare: flightData.baseFare
-    });
-
-    return flight.save();
 }
 
 function isEqualAirports(a, b) {
@@ -162,4 +162,4 @@ async function deleteFlight(flightNumber) {
     return await model.findOneAndDelete({ flightNumber: flightNumber });
 }
 
-module.exports = { getFlight, getLastFlightNumber, getFlightOrigins, getFlightDestinations, getFlightsByQuery, getFlights, createFlight, updateFlight, deleteFlight };
+module.exports = { createFlight, readFlight, readLastFlightNumber, readFlightOrigins, readFlightDestinations, readFlightsByQuery, readFlights, updateFlight, deleteFlight };

@@ -4,22 +4,52 @@ const router = express.Router();
 const { authenticate } = require('../middleware/authenticate');
 const { authorize } = require('../middleware/authorize');
 
-const { getFlight } = require('../controllers/flightController');
+const { readFlight } = require('../controllers/flightController');
 const {
-    getSeatMap,
-    getReservation,
-    getReservations,
     createReservation,
+    readSeatMap,
+    readReservation,
+    readReservations, 
     updateSeat,
     updateStatus
 } = require('../controllers/reservationController');
+
+router.get('/flight-book', authenticate, authorize(['user']), async (req, res) => {
+    if (!req.session.user.selectedFlight) {
+        return res.redirect('/flight-search');
+    }
+
+    try {
+        const seatMap = await readSeatMap(parseInt(req.session.user.selectedFlight));
+        const flight = await readFlight(parseInt(req.session.user.selectedFlight));
+
+        res.status(200).render('flightBook', {
+            page: '/flight-book',
+            script: '/scripts/flight-book.js',
+            role: req.session.user.role,
+            flight: flight,
+            seats: seatMap
+        });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post('/flight-book', async (req, res) => {
+    try {
+        const reservation = await createReservation(req.body);
+        res.status(200).json({ success: true, redirect: '/my-reservations' });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
 
 router.get('/my-reservations', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
         let page = parseInt(req.query.page) || 1, limit = 3;
-        const { reservations, totalReservations } = await getReservations(page, limit, parseInt(req.session.user.number));
+        const { reservations, totalReservations } = await readReservations(page, limit, parseInt(req.session.user.number));
         const totalPages = Math.max(1, Math.ceil(totalReservations / limit));
 
         let pagination;
@@ -51,7 +81,7 @@ router.get('/my-reservations', authenticate, authorize(['user']), async (req, re
 router.get('/reservations', authenticate, authorize(['admin']), async (req, res) => {
     try {
         let page = parseInt(req.query.page) || 1, limit = 10;
-        const { reservations, totalReservations } = await getReservations(page, limit);
+        const { reservations, totalReservations } = await readReservations(page, limit);
         const totalPages = Math.max(1, Math.ceil(totalReservations / limit));
 
         let pagination;
@@ -79,62 +109,21 @@ router.get('/reservations', authenticate, authorize(['admin']), async (req, res)
     }
 });
 
-router.get('/flight-book', authenticate, authorize(['user']), async (req, res) => {
-    if (!req.session.user.selectedFlight) {
-        return res.redirect('/flight-search');
-    }
-
-    try {
-        const seatMap = await getSeatMap(parseInt(req.session.user.selectedFlight));
-        const flight = await getFlight(parseInt(req.session.user.selectedFlight));
-
-        res.status(200).render('flightBook', {
-            page: '/flight-book',
-            script: '/scripts/flight-book.js',
-            role: req.session.user.role,
-            flight: flight,
-            seats: seatMap
-        });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.post('/flight-book', async (req, res) => {
-    try {
-        const reservation = await createReservation(req.body);
-        res.status(200).json({ success: true, redirect: '/my-reservations' });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
 // APIs
 router.get('/api/select-flight/:flightNumber', async (req, res) => {
     req.session.user.selectedFlight = req.params.flightNumber;
     res.redirect('/flight-book');
 });
 
-router.get('/api/read-reservation/:identifier', async (req, res) => {
-    try {
-        const identifier = req.params.identifier;
-        const reservation = await getReservation(identifier);
-
-        res.status(200).json({ success: true, reservation: reservation });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
 router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
     try {
         const identifier = req.params.identifier;
-        const reservation = await getReservation(identifier);
+        const reservation = await readReservation(identifier);
 
         const seatMap = await getSeatMap(parseInt(reservation.flight.flightNumber));
         const modifiedSeatMap = seatMap.map(row =>
             row.map(seat => {
-                if (seat.number == reservation.seatNumber) {
+                if (seat.number === reservation.seatNumber) {
                     return { ...seat, occupied: false, selected: true };
                 } else {
                     return { ...seat, selected: false };
@@ -146,6 +135,17 @@ router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
             layout: false,
             seats: modifiedSeatMap
         });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/read-reservation/:identifier', async (req, res) => {
+    try {
+        const identifier = req.params.identifier;
+        const reservation = await readReservation(identifier);
+
+        res.status(200).json({ success: true, reservation: reservation });
     } catch {
         res.status(500).json({ success: false });
     }

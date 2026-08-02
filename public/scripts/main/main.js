@@ -133,7 +133,7 @@ function getRequiredFields(script) {
             isFilled: script === 'flight-book' ? (id === 'flight-type') : false
         };
 
-        if (script == 'flight-search') {
+        if (script === 'flight-search') {
             fieldData.value = null;
         }
 
@@ -438,8 +438,8 @@ function showSpecifyGender() {
 async function bindLocations(originInput, destinationInput, script) {
     try {
         const [originResponse, destinationResponse] = await Promise.all([
-            fetch('/api/get-flight-origins'),
-            fetch('/api/get-flight-destinations')
+            fetch('/api/read-flight-origins'),
+            fetch('/api/read-flight-destinations')
         ]);
 
         const originResult = await originResponse.json();
@@ -623,7 +623,7 @@ function togglePassword() {
         const $icon = $(this).find('i');
         const $password = $($icon.data('target'));
 
-        $password.attr('type', $password.attr('type') == 'password' ? 'text' : 'password');
+        $password.attr('type', $password.attr('type') === 'password' ? 'text' : 'password');
         $icon.toggleClass('fa-eye fa-eye-slash');
     });
 }

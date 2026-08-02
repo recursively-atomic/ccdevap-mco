@@ -4,81 +4,24 @@ const router = express.Router();
 const { authenticate } = require('../middleware/authenticate');
 const { authorize } = require('../middleware/authorize');
 
-const { getFlights } = require('../controllers/flightController');
-const { getReservations } = require('../controllers/reservationController');
+const { readFlights } = require('../controllers/flightController');
+const { readReservations } = require('../controllers/reservationController');
 const {
-    getUser,
-    getUserByEmail,
-    getLastUserNumber,
-    getUsers,
     createUser,
+    readUser,
+    readUserByEmail,
+    readLastUserNumber,
+    readUsers,
     updateUser,
     updatePassword
 } = require('../controllers/userController');
 
 router.get('/', authenticate, (req, res) => {
-    if (req.session.user.role == 'user') {
+    if (req.session.user.role === 'user') {
         return res.redirect('/home');
-    } else if (req.session.user.role == 'admin') {
+    } else if (req.session.user.role === 'admin') {
         return res.redirect('/dashboard');
     }
-});
-
-router.get('/login', (req, res) => {
-    res.render('login', {
-        script: '/scripts/login.js',
-    });
-});
-
-router.post('/login', async (req, res) => {
-    try {
-        const email = req.body['email-address'];
-        const password = req.body['password'];
-        const user = await getUserByEmail(email);
-
-        if (email && email.includes('@') && password) {
-            if (!user) {
-                return res.status(404).json({ success: false });
-            }
-
-            if (user.password !== password) {
-                return res.status(401).json({ success: false });
-            }
-        } else {
-            return res.status(400).json({ success: false });
-        }
-
-        req.session.user = {
-            number: user.userNumber,
-            emailAddress: user.emailAddress,
-            role: user.role,
-            selectedFlight: null
-        };
-
-        if (user.role == 'admin') {
-            return res.status(200).json({ success: true, redirect: '/dashboard' });
-        } else if (user.role == 'user') {
-            return res.status(200).json({ success: true, redirect: '/profile' });
-        }
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/home', authenticate, authorize(['user']), async (req, res) => {
-    req.session.user.selectedFlight = null;
-    const { reservations } = await getReservations(0, 0, parseInt(req.session.user.number));
-    const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled').length;
-    const { flights } = await getFlights(0, 0);
-    const activeFlights = flights.filter(flight => flight.status !== 'Cancelled').length;
-
-    res.status(200).render('home', {
-        page: '/home',
-        script: '/scripts/home.js',
-        role: req.session.user.role,
-        reservations: activeReservations,
-        flights: activeFlights
-    });
 });
 
 router.get('/register', (req, res) => {
@@ -100,11 +43,11 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ success: false });
         }
 
-        if (await getUserByEmail(email)) {
+        if (await readUserByEmail(email)) {
             return res.status(409).json({ success: false });
         }
 
-        const lastUserNumber = await getLastUserNumber();
+        const lastUserNumber = await readLastUserNumber();
         const newUserNumber = lastUserNumber ? lastUserNumber.userNumber + 1 : 1;
         const userData = {
             userNumber: newUserNumber,
@@ -121,11 +64,68 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.get('/login', (req, res) => {
+    res.render('login', {
+        script: '/scripts/login.js',
+    });
+});
+
+router.post('/login', async (req, res) => {
+    try {
+        const email = req.body['email-address'];
+        const password = req.body['password'];
+        const user = await readUserByEmail(email);
+
+        if (email && email.includes('@') && password) {
+            if (!user) {
+                return res.status(404).json({ success: false });
+            }
+
+            if (user.password !== password) {
+                return res.status(401).json({ success: false });
+            }
+        } else {
+            return res.status(400).json({ success: false });
+        }
+
+        req.session.user = {
+            number: user.userNumber,
+            emailAddress: user.emailAddress,
+            role: user.role,
+            selectedFlight: null
+        };
+
+        if (user.role === 'admin') {
+            return res.status(200).json({ success: true, redirect: '/dashboard' });
+        } else if (user.role === 'user') {
+            return res.status(200).json({ success: true, redirect: '/profile' });
+        }
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/home', authenticate, authorize(['user']), async (req, res) => {
+    req.session.user.selectedFlight = null;
+    const { reservations } = await readReservations(0, 0, parseInt(req.session.user.number));
+    const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled' && reservation.status !== 'Completed').length;
+    const { flights } = await readFlights(0, 0);
+    const activeFlights = flights.filter(flight => flight.status !== 'Cancelled' && flight.status !== 'Completed').length;
+
+    res.status(200).render('home', {
+        page: '/home',
+        script: '/scripts/home.js',
+        role: req.session.user.role,
+        reservations: activeReservations,
+        flights: activeFlights
+    });
+});
+
 router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
-        const user = await getUser(parseInt(req.session.user.number));
+        const user = await readUser(parseInt(req.session.user.number));
 
         res.status(200).render('profile', {
             page: '/profile',
@@ -138,25 +138,16 @@ router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     }
 });
 
-router.get('/dashboard', authenticate, authorize(['admin']), async (req, res) => {
-    try {
-        const user = await getUser(parseInt(req.session.user.number));
-
-        res.render('dashboard', {
-            page: '/dashboard',
-            script: '/scripts/dashboard.js',
-            role: req.session.user.role,
-            user: user
-        });
-    } catch {
-        res.status(500).json({ success: false });
-    }
+router.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/login');
+    });
 });
 
 router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
     try {
         let page = parseInt(req.query.page) || 1, limit = 10;
-        const { users, totalUsers } = await getUsers();
+        const { users, totalUsers } = await readUsers();
         const totalPages = Math.max(1, Math.ceil(totalUsers / limit));
 
         let pagination;
@@ -186,44 +177,11 @@ router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
-    req.session.destroy(() => {
-        res.redirect('/login');
-    });
-});
-
 // APIs
 router.get('/api/read-user-number', async (req, res) => {
     try {
-        const user = await getUser(parseInt(req.session.user.number));
+        const user = await readUser(parseInt(req.session.user.number));
         res.status(200).json({ success: true, userNumber: user.number });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.put('/api/update-user-password', async (req, res) => {
-    try {
-        const { currentPassword, newPassword } = req.body;
-        const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
-        const user = await getUser(parseInt(req.session.user.number));
-
-        if (!currentPassword || !newPassword || !passwordRequirements.test(newPassword) || (user.password !== currentPassword)) {
-            if ((user.password !== currentPassword) && currentPassword) {
-                return res.status(422).json({ success: false });
-            } else {
-                return res.status(400).json({ success: false });
-            }
-        }
-
-        const userData = {
-            userNumber: req.session.user.number,
-            currentPassword,
-            newPassword
-        }
-
-        await updatePassword(userData);
-        res.status(200).json({ success: true });
     } catch {
         res.status(500).json({ success: false });
     }
@@ -251,6 +209,33 @@ router.put('/api/update-user-profile', async (req, res) => {
         req.session.user.emailAddress = updatedUser.emailAddress;
 
         res.status(200).json({ success: true, user: updatedUser });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.put('/api/update-user-password', async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
+        const user = await readUser(parseInt(req.session.user.number));
+
+        if (!currentPassword || !newPassword || !passwordRequirements.test(newPassword) || (user.password !== currentPassword)) {
+            if ((user.password !== currentPassword) && currentPassword) {
+                return res.status(422).json({ success: false });
+            } else {
+                return res.status(400).json({ success: false });
+            }
+        }
+
+        const userData = {
+            userNumber: req.session.user.number,
+            currentPassword: currentPassword,
+            newPassword: newPassword
+        }
+
+        await updatePassword(userData);
+        res.status(200).json({ success: true });
     } catch {
         res.status(500).json({ success: false });
     }

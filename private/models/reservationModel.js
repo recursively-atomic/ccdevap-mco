@@ -53,7 +53,7 @@ const schema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['Confirmed', 'Pending', 'Cancelled', 'Waitlisted', 'Rescheduled'],
+        enum: ['Confirmed', 'Pending', 'Cancelled', 'Waitlisted', 'Rescheduled', 'Completed'],
         default: 'Pending'
     }
 },

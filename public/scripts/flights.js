@@ -71,7 +71,7 @@ async function showViewModal(flightNumber) {
         let capacity = flightData.availableSeats;
         let status = flightData.status;
 
-        airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+        airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
         $title.text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);
 
         $('#flight-number').text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')}`);
@@ -89,18 +89,18 @@ async function showViewModal(flightNumber) {
         $('#arrival-day').text(Intl.DateTimeFormat('en-US', dateOptions).format(new Date(flightData.arrivalDatetime)));
         $('#arrival-time').text(Intl.DateTimeFormat('en-US', timeOptions).format(new Date(flightData.arrivalDatetime)));
 
-        if (status == 'Cancelled') {
+        if (status === 'Cancelled') {
             $statusBagde.text(status);
             $statusBagde.addClass('text-bg-danger');
-        } else if (status == 'Delayed' || status == 'Rescheduled') {
+        } else if (status === 'Delayed' || status === 'Rescheduled') {
             $statusBagde.text('status');
             $statusBagde.addClass('text-bg-warning');
-        } else if (status == 'Scheduled' || status == 'In Air') {
+        } else if (status === 'Scheduled' || status === 'In Air') {
             $statusBagde.text(status);
             $statusBagde.addClass('text-bg-success');
         }
 
-        if (capacity == 0) {
+        if (capacity === 0) {
             $capacityBadge.text('Full Flight');
             $capacityBadge.addClass('text-bg-danger');
         } else if (capacity <= 5) {
@@ -143,14 +143,14 @@ async function showEditModal(flightNumber) {
         let originAirport = flightData.originAirport;
         let destinationAirport = flightData.destinationAirport;
 
-        airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+        airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
         $title.text(`Edit ${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);
 
         $('#edit-fare').val((flightData.baseFare).toLocaleString('en-US'));
         $status.empty();
 
         for (const status of statusOptions) {
-            if (flightData.status == status) {
+            if (flightData.status === status) {
                 $status.append(`<option selected> ${status} </option>`);
             } else {
                 $status.append(`<option> ${status} </option>`);
@@ -208,7 +208,7 @@ async function createFlight(event) {
 
         if (result.success) {
             let airline = result.airline;
-            airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+            airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
 
             hideModalShowToast('add-flight', 'success-toast', `Successfully saved flight ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
             form.reset();
@@ -252,7 +252,7 @@ async function updateFlight(event) {
         if (result.success) {
             let airline = result.airline;
 
-            airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+            airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
             hideModalShowToast('edit-flight', 'success-toast', `Successfully saved changes on ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
@@ -279,7 +279,7 @@ async function deleteFlight() {
         if (result.success) {
             let airline = result.airline;
 
-            airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+            airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
             hideModalShowToast('delete-flight', 'danger-toast', `Deleted ${airline} ${String(result.flightNumber).padStart(4, '0')}!`);
 
             setTimeout(() => {
@@ -296,7 +296,7 @@ async function updateFlightsTable() {
     const page = new URLSearchParams(window.location.search).get('page') || 1;
 
     try {
-        const response = await fetch(`/api/get-flights-table?page=${page}`, {
+        const response = await fetch(`/api/read-flights-table?page=${page}`, {
             method: 'GET'
         });
 

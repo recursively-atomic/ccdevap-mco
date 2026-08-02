@@ -28,8 +28,8 @@ async function showViewModal(identifier) {
         const flight = reservation.flight;
         let airline = flight.airline;
 
-        airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
-
+        airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
+        
         $title.text(`${identifier} Details`);
         $identifier.text(reservation.identifier);
         $status.text(reservation.status);

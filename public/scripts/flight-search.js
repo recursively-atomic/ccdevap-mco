@@ -123,7 +123,7 @@ async function performSearch(page) {
     const parameters = new URLSearchParams({ ...query, page });
 
     try {
-        const response = await fetch(`/api/search-flight?${parameters.toString()}`);
+        const response = await fetch(`/api/read-flights?${parameters.toString()}`);
         const result = await response.json();
 
         if (result.success) {
@@ -179,7 +179,7 @@ async function showViewModal(flightNumber) {
         let capacity = flightData.availableSeats;
         let status = flightData.status;
 
-        airline = airline == 'Cebu Atlantic' ? 'CA' : airline == 'Filipino Airlines' ? 'FA' : airline == 'AirFAST' ? 'AF' : 'SA';
+        airline = airline === 'Cebu Atlantic' ? 'CA' : airline === 'Filipino Airlines' ? 'FA' : airline === 'AirFAST' ? 'AF' : 'SA';
         $title.text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')} Details`);
 
         $('#flight-number').text(`${airline} ${String(flightData.flightNumber).padStart(4, '0')}`);
@@ -197,18 +197,18 @@ async function showViewModal(flightNumber) {
         $('#arrival-day').text(Intl.DateTimeFormat('en-US', dateOptions).format(new Date(flightData.arrivalDatetime)));
         $('#arrival-time').text(Intl.DateTimeFormat('en-US', timeOptions).format(new Date(flightData.arrivalDatetime)));
 
-        if (status == 'Cancelled') {
+        if (status === 'Cancelled') {
             $statusBagde.text(status);
             $statusBagde.addClass('text-bg-danger');
-        } else if (status == 'Delayed' || status == 'Rescheduled') {
+        } else if (status === 'Delayed' || status === 'Rescheduled') {
             $statusBagde.text('status');
             $statusBagde.addClass('text-bg-warning');
-        } else if (status == 'Scheduled' || status == 'In Air') {
+        } else if (status === 'Scheduled' || status === 'In Air') {
             $statusBagde.text(status);
             $statusBagde.addClass('text-bg-success');
         }
 
-        if (capacity == 0) {
+        if (capacity === 0) {
             $capacityBadge.text('Full Flight');
             $capacityBadge.addClass('text-bg-danger');
         } else if (capacity <= 5) {

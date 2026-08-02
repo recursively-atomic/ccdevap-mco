@@ -74,7 +74,7 @@ const schema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['Scheduled', 'In Air', 'Delayed', 'Rescheduled', 'Cancelled'],
+        enum: ['Scheduled', 'In Air', 'Delayed', 'Rescheduled', 'Cancelled', 'Completed'],
         default: 'Scheduled'
     }
 },

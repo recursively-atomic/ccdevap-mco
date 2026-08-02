@@ -163,7 +163,7 @@ function updateProfilePage() {
     $('#phone-code').val(codeOnly.replace(/\+/g, ''));
     $('#phone-number').val(numberOnly);
 
-    if ($('#profile-contact').text().trim() == 0) {
+    if ($('#profile-contact').text().trim()) {
         $('#profile-contact').closest('div').addClass('d-none');
     } else {
         $('#profile-contact').closest('div').removeClass('d-none');

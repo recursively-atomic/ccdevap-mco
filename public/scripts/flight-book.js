@@ -125,7 +125,7 @@ function checkPassengerInformation() {
                     } else {
                         field.isFilled = true;
                         field.value = value;
-                        requiredFields.find(field => field.selector == '#other-gender-input').isFilled = true;
+                        requiredFields.find(field => field.selector === '#other-gender-input').isFilled = true;
                     }
                 } else {
                     field.isFilled = false;
@@ -133,7 +133,7 @@ function checkPassengerInformation() {
                 }
                 break;
             case '#other-gender-input':
-                if (requiredFields.find(field => field.selector == '#gender-select').isFilled == true) {
+                if (requiredFields.find(field => field.selector === '#gender-select').isFilled == true) {
                     field.isFilled = true;
                     field.value = value;
                 } else {
@@ -330,16 +330,16 @@ async function getReservationData() {
         identifier: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
         flightNumber: parseInt(flight.flightNumber),
         userNumber: parseInt(user.userNumber),
-        email: requiredFields.find(field => field.selector == '#email-address').value,
-        firstName: requiredFields.find(field => field.selector == '#first-name').value,
-        lastName: requiredFields.find(field => field.selector == '#last-name').value,
-        passportCode: requiredFields.find(field => field.selector == '#passport-code').value,
+        email: requiredFields.find(field => field.selector === '#email-address').value,
+        firstName: requiredFields.find(field => field.selector === '#first-name').value,
+        lastName: requiredFields.find(field => field.selector === '#last-name').value,
+        passportCode: requiredFields.find(field => field.selector === '#passport-code').value,
         seatNumber: $('#selected-seat').text().trim(),
         totalAmount: baseFare + classFare + taxAndFee + extraFee
     };
 
     if ($('#suffix-select').val() != 'None') {
-        reservationData.suffix = requiredFields.find(field => field.selector == '#suffix-select').value;
+        reservationData.suffix = requiredFields.find(field => field.selector === '#suffix-select').value;
     }
 
     return reservationData;

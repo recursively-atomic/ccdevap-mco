@@ -1,32 +1,5 @@
 const model = require('../models/userModel');
 
-async function getUser(userNumber) {
-    return await model.findOne({ userNumber: userNumber }).lean();
-}
-
-async function getUserByEmail(email) {
-    return await model.findOne({ emailAddress: email }).lean();
-}
-
-async function getLastUserNumber() {
-    return await model.findOne().sort({ userNumber: -1 }).select('userNumber').lean();
-}
-
-async function getUsers(page, limit) {
-    const skip = (page - 1) * limit;
-
-    const totalUsers = await model.countDocuments();
-    const users = await model.find().sort({ userNumber: 1 }).skip(skip).limit(limit).lean();
-
-    return { users, totalUsers };
-}
-
-/**
- * Creates a single user once a user registers.
- * 
- * @param {Object} userData is an object containing all of the user input.
- * @returns {Promise} the status of the creation of the document.
- */
 async function createUser(userData) {
     const user = new model({
         userNumber: userData.userNumber,
@@ -40,8 +13,29 @@ async function createUser(userData) {
     return await user.save();
 }
 
+async function readUser(userNumber) {
+    return await model.findOne({ userNumber: userNumber }).lean();
+}
+
+async function readUserByEmail(email) {
+    return await model.findOne({ emailAddress: email }).lean();
+}
+
+async function readLastUserNumber() {
+    return await model.findOne().sort({ userNumber: -1 }).select('userNumber').lean();
+}
+
+async function readUsers(page, limit) {
+    const skip = (page - 1) * limit;
+
+    const totalUsers = await model.countDocuments();
+    const users = await model.find().sort({ userNumber: 1 }).skip(skip).limit(limit).lean();
+
+    return { users, totalUsers };
+}
+
 async function updateUser(userData) {
-    const currentData = await getUser(userData.userNumber);
+    const currentData = await readUser(userData.userNumber);
 
     const newFirstName = userData.firstName;
     const newLastName = userData.lastName;
@@ -89,4 +83,4 @@ async function updatePassword(userData) {
     return await user.save();
 }
 
-module.exports = { getUser, getUserByEmail, getLastUserNumber, getUsers, createUser, updateUser, updatePassword };
+module.exports = { createUser, readUser, readUserByEmail, readLastUserNumber, readUsers, updateUser, updatePassword };

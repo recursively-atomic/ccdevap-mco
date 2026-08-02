@@ -1,15 +1,26 @@
 const model = require('../models/reservationModel');
 const flight = require('../models/flightModel');
 
-/**
- * Creates a seat map of a specific flight that keeps track of
- * seat availability.
- * 
- * @param {Number} identifier the specific flight to create a seat map of.
- * @returns {Object} the seat map.
- */
-async function getSeatMap(flightNumber) {
-    const reservations = await model.find({ flightNumber, status: { $ne: 'Cancelled' } }).select('seatNumber').lean();
+async function createReservation(reservationData) {
+    const reservation = new model({
+        identifier: reservationData.identifier,
+        flightNumber: reservationData.flightNumber,
+        userNumber: reservationData.userNumber,
+        email: reservationData.email,
+        firstName: reservationData.firstName,
+        lastName: reservationData.lastName,
+        suffix: reservationData.suffix,
+        passportCode: reservationData.passportCode,
+        seatNumber: reservationData.seatNumber,
+        totalAmount: reservationData.totalAmount
+    });
+
+    await flight.findOneAndUpdate({ flightNumber: reservationData.flightNumber, availableSeats: { $gt: 0 } }, { $inc: { availableSeats: -1 } });
+    return reservation.save();
+}
+
+async function readSeatMap(flightNumber) {
+    const reservations = await model.find({ flightNumber, status: { $nin: ['Cancelled', 'Completed'] } }).select('seatNumber').lean();
     const reservedSeats = reservations.map(reservation => reservation.seatNumber);
 
     const rows = ['A', 'B', 'C', 'D'];
@@ -31,7 +42,7 @@ async function getSeatMap(flightNumber) {
     return seatMap;
 }
 
-async function getReservation(identifier) {
+async function readReservation(identifier) {
     const reservation = await model.findOne({ identifier }).lean();
     const flightData = await flight.findOne({ flightNumber: reservation.flightNumber }).lean();
     const { flightNumber, ...rest } = reservation;
@@ -39,7 +50,7 @@ async function getReservation(identifier) {
     return { ...rest, flight: flightData };
 }
 
-async function getReservations(page, limit, userNumber = null) {
+async function readReservations(page, limit, userNumber = null) {
     const skip = (page - 1) * limit;
     const filter = userNumber ? { userNumber } : {};
 
@@ -59,38 +70,6 @@ async function getReservations(page, limit, userNumber = null) {
     return { reservations: reservationsWithFlights, totalReservations };
 }
 
-/**
- * Creates a single reservation from user inputs in
- * `booking.hbs` and `booking.js`.
- * 
- * @param {Object} reservationData is an object containing all of the user input.
- * @returns {Promise} the status of the creation of the document.
- */
-async function createReservation(reservationData) {
-    const reservation = new model({
-        identifier: reservationData.identifier,
-        flightNumber: reservationData.flightNumber,
-        userNumber: reservationData.userNumber,
-        email: reservationData.email,
-        firstName: reservationData.firstName,
-        lastName: reservationData.lastName,
-        suffix: reservationData.suffix,
-        passportCode: reservationData.passportCode,
-        seatNumber: reservationData.seatNumber,
-        totalAmount: reservationData.totalAmount
-    });
-
-    await flight.findOneAndUpdate({ flightNumber: reservationData.flightNumber, availableSeats: { $gt: 0 } }, { $inc: { availableSeats: -1 } });
-    return reservation.save();
-}
-
-/**
- * Updates the seat associated to a certain reservation.
- * 
- * @param {String} reservationNumber the reservation to be updated.
- * @param {String} newSeat the new selected seat to be associated to the reservation.
- * @returns {Promise} the status after updating the document.
- */
 async function updateSeat(identifier, newSeat) {
     return await model.findOneAndUpdate(
         { identifier },
@@ -111,4 +90,4 @@ async function updateStatus(identifier, newStatus) {
     );
 }
 
-module.exports = { getSeatMap, getReservation, getReservations, createReservation, updateSeat, updateStatus };
+module.exports = { createReservation, readSeatMap, readReservation, readReservations, updateSeat, updateStatus };
