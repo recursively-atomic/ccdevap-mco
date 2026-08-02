@@ -4,6 +4,7 @@ const router = express.Router();
 const { authenticate } = require('../middleware/authenticate');
 const { authorize } = require('../middleware/authorize');
 
+const { createAudit } = require('../controllers/auditController');
 const { readFlights } = require('../controllers/flightController');
 const { readReservations } = require('../controllers/reservationController');
 const {
@@ -58,6 +59,15 @@ router.post('/register', async (req, res) => {
         };
 
         await createUser(userData);
+
+        const auditData = {
+            userName: `${userData.firstName} ${userData.lastName}`,
+            userEmail: userData.emailAddress,
+            userRole: 'user',
+            action: 'u-reg'
+        };
+
+        await createAudit(auditData);
         res.status(200).json({ success: true, redirect: '/login', user: userData });
     } catch {
         res.status(500).json({ success: false });
@@ -75,8 +85,9 @@ router.post('/login', async (req, res) => {
         const email = req.body['email-address'];
         const password = req.body['password'];
         const user = await readUserByEmail(email);
+        const emailRequirements = /[^@\s]+@[^@\s]+\.[^@\s]{2,}/;
 
-        if (email && email.includes('@') && password) {
+        if (email && emailRequirements.test(email) && password) {
             if (!user) {
                 return res.status(404).json({ success: false });
             }
@@ -95,6 +106,15 @@ router.post('/login', async (req, res) => {
             selectedFlight: null
         };
 
+        const auditData = {
+            userName: `${user.firstName} ${user.lastName}`,
+            userEmail: user.emailAddress,
+            userRole: user.role,
+            action: 'u-lin'
+        };
+
+        await createAudit(auditData);
+
         if (user.role === 'admin') {
             return res.status(200).json({ success: true, redirect: '/dashboard' });
         } else if (user.role === 'user') {
@@ -107,7 +127,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/home', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
-    const { reservations } = await readReservations(0, 0, parseInt(req.session.user.number));
+    const { reservations } = await readReservations(0, 0, req.session.user.number);
     const activeReservations = reservations.filter(reservation => reservation.status !== 'Cancelled' && reservation.status !== 'Completed').length;
     const { flights } = await readFlights(0, 0);
     const activeFlights = flights.filter(flight => flight.status !== 'Cancelled' && flight.status !== 'Completed').length;
@@ -125,7 +145,7 @@ router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = null;
 
     try {
-        const user = await readUser(parseInt(req.session.user.number));
+        const user = await readUser(req.session.user.number);
 
         res.status(200).render('profile', {
             page: '/profile',
@@ -138,10 +158,33 @@ router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     }
 });
 
-router.get('/logout', (req, res) => {
+router.get('/logout', async (req, res) => {
+    const user = await readUser(req.session.user.number);
+    const auditData = {
+        userName: `${user.firstName} ${user.lastName}`,
+        userRole: user.role,
+        action: 'u-lot'
+    };
+
+    await createAudit(auditData);
     req.session.destroy(() => {
         res.redirect('/login');
     });
+});
+
+router.get('/dashboard', authenticate, authorize(['admin']), async (req, res) => {
+    try {
+        const user = await readUser(req.session.user.number);
+
+        res.render('dashboard', {
+            page: '/dashboard',
+            script: '/scripts/dashboard.js',
+            role: req.session.user.role,
+            user: user
+        });
+    } catch {
+        res.status(500).json({ success: false });
+    }
 });
 
 router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
@@ -180,7 +223,7 @@ router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
 // APIs
 router.get('/api/read-user-number', async (req, res) => {
     try {
-        const user = await readUser(parseInt(req.session.user.number));
+        const user = await readUser(req.session.user.number);
         res.status(200).json({ success: true, userNumber: user.number });
     } catch {
         res.status(500).json({ success: false });
@@ -192,8 +235,9 @@ router.put('/api/update-user-profile', async (req, res) => {
         const firstName = req.body.firstName;
         const lastName = req.body.lastName;
         const emailAddress = req.body.emailAddress;
+        const emailRequirements = /[^@\s]+@[^@\s]+\.[^@\s]{2,}/;
 
-        if (!firstName || !lastName || !emailAddress) {
+        if (!firstName || !lastName || !emailAddress || !emailRequirements.test(emailAddress)) {
             return res.status(400).json({ success: false });
         }
 
@@ -218,7 +262,7 @@ router.put('/api/update-user-password', async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
         const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
-        const user = await readUser(parseInt(req.session.user.number));
+        const user = await readUser(req.session.user.number);
 
         if (!currentPassword || !newPassword || !passwordRequirements.test(newPassword) || (user.password !== currentPassword)) {
             if ((user.password !== currentPassword) && currentPassword) {

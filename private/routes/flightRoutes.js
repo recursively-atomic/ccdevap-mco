@@ -254,6 +254,9 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
 router.delete('/api/delete-flight/:flightNumber', async (req, res) => {
     try {
         const deletedFlight = await deleteFlight(parseInt(req.params.flightNumber));
+
+        
+
         res.status(200).json({ success: true, airline: deletedFlight.airline, flightNumber: deletedFlight.flightNumber });
     } catch {
         res.status(500).json({ success: false });

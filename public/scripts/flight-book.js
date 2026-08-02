@@ -328,8 +328,8 @@ async function getReservationData() {
 
     let reservationData = {
         identifier: `${Math.floor(performance.now()).toString(36).slice(-6).padStart(6, '0').toLocaleUpperCase()}`,
-        flightNumber: parseInt(flight.flightNumber),
-        userNumber: parseInt(user.userNumber),
+        flightNumber: flight.flightNumber,
+        userNumber: user.userNumber,
         email: requiredFields.find(field => field.selector === '#email-address').value,
         firstName: requiredFields.find(field => field.selector === '#first-name').value,
         lastName: requiredFields.find(field => field.selector === '#last-name').value,

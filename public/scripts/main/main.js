@@ -238,6 +238,8 @@ function validateField(script, field) {
                 if (value === 'Not Listed') {
                     if ($('#other-gender-input').val().trim() !== '') {
                         $(field.selector).removeClass('is-invalid').addClass('is-valid');
+                        $('#specify').addClass('d-none');
+                        $('#select').addClass('d-none');
                     } else {
                         $(field.selector).removeClass('is-valid').addClass('is-invalid');
                         $('#specify').removeClass('d-none');
@@ -248,6 +250,19 @@ function validateField(script, field) {
                 }
             } else {
                 $(field.selector).removeClass('is-valid').addClass('is-invalid');
+            }
+            break;
+        case '#other-gender-input':
+            if ($('#gender-select').val() === 'Not Listed') {
+                if (value !== '') {
+                    $(field.selector).removeClass('is-invalid').addClass('is-valid');
+                    $('#specify').addClass('d-none');
+                } else {
+                    $(field.selector).removeClass('is-valid').addClass('is-invalid');
+                    $('#specify').removeClass('d-none');
+                }
+                
+                showMissingFields(undefined, '#gender-select');
             }
             break;
         case '#edit-email-address':
@@ -417,9 +432,14 @@ function showSpecifyGender() {
         if ($genderSelect.val() === 'Not Listed') {
             $otherGenderContainer.removeClass('d-none');
             $otherGenderInput.focus();
+
+            showMissingFields(undefined, '#gender-select');
+            showMissingFields(undefined, '#other-gender-input');
         } else {
             $otherGenderContainer.addClass('d-none');
-            $otherGenderInput.val('');
+            $otherGenderInput.val('').removeClass('is-valid is-invalid');
+
+            showMissingFields(undefined, '#gender-select');
         }
     });
 }

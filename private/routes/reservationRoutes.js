@@ -20,8 +20,8 @@ router.get('/flight-book', authenticate, authorize(['user']), async (req, res) =
     }
 
     try {
-        const seatMap = await readSeatMap(parseInt(req.session.user.selectedFlight));
-        const flight = await readFlight(parseInt(req.session.user.selectedFlight));
+        const seatMap = await readSeatMap(req.session.user.selectedFlight);
+        const flight = await readFlight(req.session.user.selectedFlight);
 
         res.status(200).render('flightBook', {
             page: '/flight-book',
@@ -111,7 +111,7 @@ router.get('/reservations', authenticate, authorize(['admin']), async (req, res)
 
 // APIs
 router.get('/api/select-flight/:flightNumber', async (req, res) => {
-    req.session.user.selectedFlight = req.params.flightNumber;
+    req.session.user.selectedFlight = parseInt(req.params.flightNumber);
     res.redirect('/flight-book');
 });
 
@@ -120,7 +120,7 @@ router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
         const identifier = req.params.identifier;
         const reservation = await readReservation(identifier);
 
-        const seatMap = await getSeatMap(parseInt(reservation.flight.flightNumber));
+        const seatMap = await getSeatMap(reservation.flight.flightNumber);
         const modifiedSeatMap = seatMap.map(row =>
             row.map(seat => {
                 if (seat.number === reservation.seatNumber) {

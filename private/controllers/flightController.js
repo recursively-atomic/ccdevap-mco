@@ -104,7 +104,7 @@ function isEqualAirports(a, b) {
 }
 
 async function updateFlight(flightData) {
-    const currentData = await getFlight(parseInt(flightData.flightNumber));
+    const currentData = await getFlight(flightData.flightNumber);
 
     const currentOrigAirport = currentData.originAirport;
     const newOrigAirport = flightData.originAirport;

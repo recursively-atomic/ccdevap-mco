@@ -215,7 +215,7 @@ async function updateProfileInformation() {
     });
 
     if (response.status === 400) {
-        showToast('warning-toast', 'Fill out the first name, last name, and e-mail fields first!');
+        showToast('warning-toast', 'Fill out the required fields first!');
         return;
     }
 
