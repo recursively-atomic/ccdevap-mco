@@ -46,7 +46,12 @@
                     </thead>
 
                     <tbody class="table-group-divider">
-                        {{> flightRows}}
+                        {{#if flightRows}}
+                            {{> flightRows}}
+                        {{else}}
+                            <td class="p-5 m-0 text-primary fs-2 fw-bolder text-center" colspan="9"> No Created Flights </td>
+                        {{/if}}
+
                         <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark"></tr>
                     </tbody>
                 </table>

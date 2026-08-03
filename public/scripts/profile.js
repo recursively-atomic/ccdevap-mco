@@ -155,7 +155,9 @@ function updateProfilePage() {
 
     $('#account-name').val(`${first} ${last}`);
     $('#card-first-name').val(first);
+    $('#first-name').val(first);
     $('#card-last-name').val(last);
+    $('#last-name').val(last);
 
     $('#email-address').val(email);
     $('#receipt-email-address').val(email);
@@ -175,14 +177,16 @@ function updateProfilePage() {
  */
 function showEditModal() {
     $('#edit-first-name, #edit-last-name, #edit-email-address').removeClass('is-valid is-invalid').off('input.show change.show');
-    $('#current-password').val('').removeClass('is-valid is-invalid');
-    $('#new-password').val('').removeClass('is-valid is-invalid');
+    $('#current-password').val('').removeClass('is-valid is-invalid').off('input.show change.show');
+    $('#new-password').val('').removeClass('is-valid is-invalid').off('input.show change.show');
 
     const contact = $('#profile-contact').text().trim();
     const [code, number] = contact.split(' ');
+    const name = $('#profile-name').text().trim();
+    const [last, first] = name.split(', ');
 
-    $('#edit-first-name').val($('#profile-name').data('first-name'));
-    $('#edit-last-name').val($('#profile-name').data('last-name'));
+    $('#edit-first-name').val(first);
+    $('#edit-last-name').val(last);
 
     $('#edit-email-address').val($('#profile-email').text().trim());
 
@@ -195,6 +199,7 @@ function showEditModal() {
  * on the process' result.
  */
 async function updateProfileInformation() {
+    event.preventDefault();
     bindMissingFieldsEvents('edit-profile');
     showMissingFields('profile', null, 'edit-profile');
 

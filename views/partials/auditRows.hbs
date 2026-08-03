@@ -1,0 +1,16 @@
+{{#each auditRows}}
+    <tr class="border-3 border-bottom-0 border-end-0 border-start-0 border-dark w-auto">
+        <th scope="row"> {{getDate this.timestamp}} {{getSpecificTime this.timestamp}} </th>
+        
+        <td>
+            {{this.userName}}
+
+            {{#if (eq ../currentUser this.userNumber)}}
+                <span class="fw-medium"> (You) </span>
+            {{/if}}
+        </td>
+
+        <td class="border-3 border-top-0 border-bottom-0 border-start-0"> {{formatTitleCase this.userRole}} </td>
+        <td class="text-start"> {{formatAuditLog this}} </td>
+    </tr>
+{{/each}}

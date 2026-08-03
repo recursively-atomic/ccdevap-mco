@@ -64,17 +64,17 @@
             <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
                 <div class="d-flex flex-column gap-2 align-items-center w-100">
                     <button class="btn btn-success btn-lg text-white" onclick="showViewModal('{{this.identifier}}')"
-                            data-bs-toggle="modal" data-bs-target="#view-reservation">
+                            data-bs-toggle="modal" data-bs-target="#view-reservation" {{#if (eq this.status 'Cancelled')}}disabled{{/if}}>
                         View Details
                     </button>
 
                     <button class="btn btn-warning btn-lg text-white" onclick="showEditModal('{{this.identifier}}')"
-                            data-bs-toggle="modal" data-bs-target="#edit-reservation">
+                            data-bs-toggle="modal" data-bs-target="#edit-reservation" {{#if (eq this.status 'Cancelled')}}disabled{{/if}}>
                         Edit Details
                     </button>
 
                     <button class="btn btn-danger btn-lg text-white" onclick="showCancelModal('{{this.identifier}}')"
-                            data-bs-toggle="modal" data-bs-target="#cancel-reservation">
+                            data-bs-toggle="modal" data-bs-target="#cancel-reservation" {{#if (eq this.status 'Cancelled')}}disabled{{/if}}>
                         Cancel Reservation </button>
                 </div>
             </div>

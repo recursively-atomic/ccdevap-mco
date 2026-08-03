@@ -67,8 +67,7 @@
                     </div>
 
                     <div class="col-lg-9 col-md-8 col-sm-12 mt-sm-3 mt-3 text-dark">
-                        <p class="m-0 p-0 fs-1 fw-bolder" id="profile-name" data-first-name="{{user.firstName}}"
-                           data-last-name="{{user.lastName}}">
+                        <p class="m-0 p-0 fs-1 fw-bolder" id="profile-name">
                             {{user.lastName}}, {{user.firstName}}
                         </p>
 
@@ -105,8 +104,7 @@
 
                             <input id="current-password"
                                    class="form-control bg-light border-dark border-2 text-black required-field"
-                                   type="password" placeholder="Current Password" data-group="update-password"
-                                   data-password="{{user.password}}">
+                                   type="password" placeholder="Current Password" data-group="update-password">
 
                             <button type="button"
                                     class="input-group-text bg-dark border-dark border-2 rounded-end-3 toggle-password">
@@ -332,7 +330,7 @@
 
                             <input id="first-name" name="firstName"
                                    class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                   type="text" value="{{user.firstName}}">
+                                   type="text">
                         </div>
                     </div>
 
@@ -344,7 +342,7 @@
 
                             <input id="last-name" name="lastName"
                                    class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
-                                   type="text" value="{{user.lastName}}">
+                                   type="text">
                         </div>
                     </div>
 

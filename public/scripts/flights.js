@@ -4,6 +4,9 @@ $(function () {
     getRequiredFields('flights');
 
     $('#base-fare, #edit-fare').on('input.format', formatBaseFare);
+    $('#add-flight, #edit-flight').on('show.bs.modal', function () {
+        $('#add-flight, #edit-flight').find('*').removeClass('is-valid is-invalid').off('input.show change.show');
+    });
 });
 
 /**
@@ -121,7 +124,6 @@ async function showViewModal(flightNumber) {
  * @param {String} flightNumber is the flight number.
  */
 async function showEditModal(flightNumber) {
-    $('#add-flight, #edit-flight').find('*').removeClass('is-valid is-invalid').off('input.show change.show');
     const $editModal = $('#edit-flight');
     const $title = $editModal.find('.modal-title');
 
@@ -181,7 +183,6 @@ function showDeleteModal(flightNumber) {
 }
 
 async function createFlight(event) {
-    $('#add-flight, #edit-flight').find('*').removeClass('is-valid is-invalid').off('input.show change.show');
     bindMissingFieldsEvents('add-flight');
     showMissingFields('flights', null, 'add-flight');
     event.preventDefault();

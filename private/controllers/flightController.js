@@ -75,12 +75,10 @@ async function readFlightsByQuery(queryData, page, limit) {
         filter['destinationAirport.iata'] = queryData.arrivalIata;
     }
 
-    if (queryData.departuredate) {
-        const dayStart = new Date(queryData.departuredate);
-        const dayEnd = new Date(queryData.departuredate);
+    if (queryData.departureDate) {
+        const dayStart = new Date(`${queryData.departureDate}T00:00:00.000+08:00`);
+        const dayEnd = new Date(`${queryData.departureDate}T23:59:59.999+08:00`);
 
-        dayStart.setUTCHours(0, 0, 0, 0);
-        dayEnd.setUTCHours(23, 59, 59, 999);
         filter.departureDatetime = { $gte: dayStart, $lte: dayEnd };
     }
 
@@ -104,7 +102,7 @@ function isEqualAirports(a, b) {
 }
 
 async function updateFlight(flightData) {
-    const currentData = await getFlight(flightData.flightNumber);
+    const currentData = await readFlight(flightData.flightNumber);
 
     const currentOrigAirport = currentData.originAirport;
     const newOrigAirport = flightData.originAirport;

@@ -21,7 +21,7 @@
         "arrivalDatetime": {
             "$date": "2026-07-25T09:30:00.000Z"
         },
-        "availableSeats": 14,
+        "availableSeats": 16,
         "layovers": 0,
         "baseFare": 2000,
         "status": "Scheduled",

@@ -58,18 +58,19 @@ router.post('/register', async (req, res) => {
             lastName: lastName
         };
 
-        await createUser(userData);
-
+        const user = await createUser(userData);
         const auditData = {
-            userName: `${userData.firstName} ${userData.lastName}`,
-            userEmail: userData.emailAddress,
-            userRole: 'user',
+            userNumber: user.userNumber,
+            userName: `${user.firstName} ${user.lastName}`,
+            userEmail: user.emailAddress,
+            userRole: user.role,
             action: 'u-reg'
         };
 
         await createAudit(auditData);
         res.status(200).json({ success: true, redirect: '/login', user: userData });
-    } catch {
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ success: false });
     }
 });
@@ -107,6 +108,7 @@ router.post('/login', async (req, res) => {
         };
 
         const auditData = {
+            userNumber: user.userNumber,
             userName: `${user.firstName} ${user.lastName}`,
             userEmail: user.emailAddress,
             userRole: user.role,
@@ -120,7 +122,8 @@ router.post('/login', async (req, res) => {
         } else if (user.role === 'user') {
             return res.status(200).json({ success: true, redirect: '/profile' });
         }
-    } catch {
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ success: false });
     }
 });
@@ -158,9 +161,10 @@ router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     }
 });
 
-router.get('/logout', async (req, res) => {
+router.get('/logout', authenticate, async (req, res) => {
     const user = await readUser(req.session.user.number);
     const auditData = {
+        userNumber: user.userNumber,
         userName: `${user.firstName} ${user.lastName}`,
         userRole: user.role,
         action: 'u-lot'
@@ -224,7 +228,7 @@ router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
 router.get('/api/read-user-number', async (req, res) => {
     try {
         const user = await readUser(req.session.user.number);
-        res.status(200).json({ success: true, userNumber: user.number });
+        res.status(200).json({ success: true, userNumber: user.userNumber });
     } catch {
         res.status(500).json({ success: false });
     }
@@ -249,9 +253,19 @@ router.put('/api/update-user-profile', async (req, res) => {
             contactNumber: req.body.contactNumber
         }
 
+        const oldUser = await readUser(req.session.user.number);
         const updatedUser = await updateUser(userData);
         req.session.user.emailAddress = updatedUser.emailAddress;
+        const auditData = {
+            userNumber: updatedUser.userNumber,
+            userName: `${oldUser.firstName} ${oldUser.lastName}`,
+            newUserName: `${updatedUser.firstName} ${updatedUser.lastName}`,
+            userEmail: updatedUser.emailAddress,
+            userRole: updatedUser.role,
+            action: 'u-upd'
+        };
 
+        await createAudit(auditData);
         res.status(200).json({ success: true, user: updatedUser });
     } catch {
         res.status(500).json({ success: false });

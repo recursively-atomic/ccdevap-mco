@@ -1,9 +1,19 @@
 const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
+    userNumber: {
+        type: Number,
+        required: true
+    },
+    
     userName: {
         type: String,
         required: true
+    },
+
+    newUserName: {
+        type: String,
+        required: false
     },
 
     userEmail: {
@@ -14,6 +24,11 @@ const schema = new mongoose.Schema({
     userRole: {
         type: String,
         required: true
+    },
+
+    flightAirline: {
+        type: String,
+        required: false
     },
 
     flightNumber: {
@@ -47,6 +62,11 @@ const schema = new mongoose.Schema({
         }
     },
 
+    flightStatus: {
+        type: String,
+        required: false
+    },
+
     reservationIdentifier: {
         type: String,
         required: false
@@ -57,9 +77,14 @@ const schema = new mongoose.Schema({
         required: false
     },
 
+    newReservationSeat: {
+        type: String,
+        required: false
+    },
+
     action: {
         type: String,
-        enum: ['u-reg', 'u-lin', 'u-lot', 'f-cre', 'f-upd', 'f-del', 'r-cre', 'r-upd', 'r-can'],
+        enum: ['u-reg', 'u-lin', 'u-upd', 'u-lot', 'f-cre', 'f-upd', 'f-del', 'r-cre', 'r-upd', 'r-can'],
         required: true
     }
 },

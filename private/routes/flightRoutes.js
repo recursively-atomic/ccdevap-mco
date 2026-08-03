@@ -4,6 +4,8 @@ const router = express.Router();
 const { authenticate } = require('../middleware/authenticate');
 const { authorize } = require('../middleware/authorize');
 
+const { createAudit } = require('../controllers/auditController');
+const { readUser } = require('../controllers/userController');
 const {
     createFlight,
     readFlight,
@@ -84,28 +86,55 @@ router.post('/flights', async (req, res) => {
 
         const lastFlightNumber = await readLastFlightNumber();
         const newFlightNumber = lastFlightNumber ? lastFlightNumber.flightNumber + 1 : 1;
-
         const flightData = {
             flightNumber: newFlightNumber,
             airline: req.body['airline'],
+
             originAirport: {
                 iata: req.body['origin-iata'],
                 location: req.body['origin-location'],
                 name: req.body['origin-name']
             },
+
             destinationAirport: {
                 iata: req.body['destination-iata'],
                 location: req.body['destination-location'],
                 name: req.body['destination-name']
             },
+
             departureDatetime: req.body['departure-datetime'],
             arrivalDatetime: req.body['arrival-datetime'],
             baseFare: req.body['base-fare']
         };
 
-        await createFlight(flightData);
+        const flight = await createFlight(flightData);
+        const user = await readUser(req.session.user.number);
+        const auditData = {
+            userNumber: user.userNumber,
+            userName: `${user.firstName} ${user.lastName}`,
+            userRole: user.role,
+            flightAirline: flight.airline,
+            flightNumber: flight.flightNumber,
+
+            flightRoute: {
+                origin: {
+                    airport: flight.originAirport.iata,
+                    datetime: flight.departureDatetime,
+                },
+
+                destination: {
+                    airport: flight.destinationAirport.iata,
+                    datetime: flight.arrivalDatetime,
+                }
+            },
+
+            action: 'f-cre'
+        };
+
+        await createAudit(auditData);
         res.status(200).json({ success: true, flightNumber: newFlightNumber, airline: flightData.airline });
-    } catch {
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ success: false });
     }
 });
@@ -226,6 +255,7 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
 
         const flightData = {
             flightNumber: parseInt(req.params.flightNumber),
+
             originAirport: {
                 iata: req.body['edit-o-iata'],
                 location: req.body['edit-o-location'],
@@ -245,6 +275,31 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
         };
 
         const updatedFlight = await updateFlight(flightData);
+        const user = await readUser(req.session.user.number);
+        const auditData = {
+            userNumber: user.userNumber,
+            userName: `${user.firstName} ${user.lastName}`,
+            userRole: user.role,
+            flightAirline: updatedFlight.airline,
+            flightNumber: updatedFlight.flightNumber,
+
+            flightRoute: {
+                origin: {
+                    airport: updatedFlight.originAirport.iata,
+                    datetime: updatedFlight.departureDatetime,
+                },
+
+                destination: {
+                    airport: updatedFlight.destinationAirport.iata,
+                    datetime: updatedFlight.arrivalDatetime,
+                }
+            },
+
+            flightStatus: updatedFlight.status,
+            action: 'f-upd'
+        };
+
+        await createAudit(auditData);
         res.status(200).json({ success: true, airline: updatedFlight.airline, flightNumber: updatedFlight.flightNumber });
     } catch {
         res.status(500).json({ success: false });
@@ -254,9 +309,31 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
 router.delete('/api/delete-flight/:flightNumber', async (req, res) => {
     try {
         const deletedFlight = await deleteFlight(parseInt(req.params.flightNumber));
+        const user = await readUser(req.session.user.number);
+        const auditData = {
+            userNumber: user.userNumber,
+            userName: `${user.firstName} ${user.lastName}`,
+            userRole: user.role,
+            flightAirline: deletedFlight.airline,
+            flightNumber: deletedFlight.flightNumber,
 
-        
+            flightRoute: {
+                origin: {
+                    airport: deletedFlight.originAirport.iata,
+                    datetime: deletedFlight.departureDatetime,
+                },
 
+                destination: {
+                    airport: deletedFlight.destinationAirport.iata,
+                    datetime: deletedFlight.arrivalDatetime,
+                }
+            },
+
+            flightStatus: deletedFlight.status,
+            action: 'f-del'
+        };
+
+        await createAudit(auditData);
         res.status(200).json({ success: true, airline: deletedFlight.airline, flightNumber: deletedFlight.flightNumber });
     } catch {
         res.status(500).json({ success: false });
