@@ -151,8 +151,7 @@ router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
             layout: false,
             seats: modifiedSeatMap
         });
-    } catch (error) {
-        console.log(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });

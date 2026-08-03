@@ -133,8 +133,7 @@ router.post('/flights', async (req, res) => {
 
         await createAudit(auditData);
         res.status(200).json({ success: true, flightNumber: newFlightNumber, airline: flightData.airline });
-    } catch (error) {
-        console.log(error);
+    } catch {;
         res.status(500).json({ success: false });
     }
 });

@@ -69,8 +69,7 @@ router.post('/register', async (req, res) => {
 
         await createAudit(auditData);
         res.status(200).json({ success: true, redirect: '/login', user: userData });
-    } catch (error) {
-        console.log(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });
@@ -122,8 +121,7 @@ router.post('/login', async (req, res) => {
         } else if (user.role === 'user') {
             return res.status(200).json({ success: true, redirect: '/profile' });
         }
-    } catch (error) {
-        console.log(error);
+    } catch {
         res.status(500).json({ success: false });
     }
 });

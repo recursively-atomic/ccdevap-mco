@@ -59,7 +59,7 @@ async function showEditModal(identifier) {
         const markup = await response.text();
 
         if (response.status != 200) {
-            return
+            return;
         }
 
         $title.text(`Edit ${identifier}`);
