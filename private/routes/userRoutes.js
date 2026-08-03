@@ -40,7 +40,7 @@ router.post('/register', async (req, res) => {
         const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
         const emailRequirements = /[^@\s]+@[^@\s]+\.[^@\s]{2,}/;
 
-        if (!email || !password || !firstName || !lastName || !emailRequirements.test(email) || !passwordRequirements.test(password)) {
+        if (!email || !password || !firstName || !lastName || !emailRequirements.test(email) || (password.length < 8) || !passwordRequirements.test(password)) {
             return res.status(400).json({ success: false });
         }
 
@@ -278,7 +278,7 @@ router.put('/api/update-user-password', async (req, res) => {
         const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;
         const user = await readUser(req.session.user.number);
 
-        if (!currentPassword || !newPassword || !passwordRequirements.test(newPassword) || (user.password !== currentPassword)) {
+        if (!currentPassword || !newPassword || !passwordRequirements.test(newPassword) || (newPassword.length < 8) || (user.password !== currentPassword)) {
             if ((user.password !== currentPassword) && currentPassword) {
                 return res.status(422).json({ success: false });
             } else {
