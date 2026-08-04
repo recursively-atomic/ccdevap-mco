@@ -1,9 +1,11 @@
 {
     "scripts": {
         "start": "node server.js",
-        "dev": "nodemon server.js -e js, html, css"
+        "dev": "nodemon server.js -e js,css --ignore \"node_modules/\"",
+        "test": "cross-env NODE_ENV=test jest"
     },
     "dependencies": {
+        "cors": "^2.8.6",
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "express-handlebars": "^9.0.1",
@@ -11,5 +13,12 @@
         "mongodb": "^7.5.0",
         "mongoose": "^9.7.4",
         "nodemon": "^3.1.14"
+    },
+    "devDependencies": {
+        "connect-livereload": "^0.6.1",
+        "cross-env": "^10.1.0",
+        "jest": "^30.4.2",
+        "livereload": "^0.10.3",
+        "supertest": "^7.2.2"
     }
 }
