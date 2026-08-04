@@ -67,33 +67,13 @@ server.use(session({
     saveUninitialized: false
 }));
 
-// ============================================================================
-// RELOADS THE FRONTEND WHENEVER A CHANGE IS MADE
-if (process.env.NODE_ENV !== 'production') {
-    const livereload = require("livereload");
-    const connectLiveReload = require("connect-livereload");
-    const liveReloadServer = livereload.createServer({
-        exts: ['hbs', 'css', 'js'],
-        exclusions: [/node_modules/]
-    });
-
-    liveReloadServer.watch([__dirname + "/views", __dirname + "/public"]);
-    server.use(connectLiveReload());
-    liveReloadServer.server.once("connection", () => {
-        setTimeout(() => {
-            liveReloadServer.refresh("/");
-        }, 1);
-    });
-}
-// ============================================================================
-
 server.use("/", userRoutes);
 server.use("/", flightRoutes);
 server.use("/", reservationRoutes);
 server.use("/", auditRoutes);
 
-module.exports = server;
-
 if (require.main === module) {
     connectToServer(server);
 }
+
+module.exports = server;

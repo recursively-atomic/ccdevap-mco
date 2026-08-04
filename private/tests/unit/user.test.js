@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../../server');
+const server = require('../../../server');
 
 const {
     createUser,
@@ -38,17 +38,37 @@ describe('User Authentication', () => {
             role: 'user'
         });
 
-        const response = await request(app)
+        const response = await request(server)
             .post('/register')
             .send({
                 'email-address': 'jest@test.com',
-                password: 'Password1!',
+                'password': 'Password1!',
                 'first-name': 'Jest',
                 'last-name': 'User'
             });
 
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBe(true);
+    });
+
+    test('Failed Registration', async () => {
+        readUserByEmail.mockResolvedValue({
+            userNumber: 1000,
+            emailAddress: 'jest@test.com',
+            role: 'user'
+        });
+
+        const response = await request(server)
+            .post('/register')
+            .send({
+                'email-address': 'jest@test.com',
+                'password': 'Password1!',
+                'first-name': 'Jest',
+                'last-name': 'User'
+            });
+
+        expect(response.statusCode).toBe(409);
+        expect(response.body.success).toBe(false);
     });
 
     test('Successful Login', async () => {
@@ -59,11 +79,11 @@ describe('User Authentication', () => {
             role: 'user'
         });
 
-        const response = await request(app)
+        const response = await request(server)
             .post('/login')
             .send({
                 'email-address': 'jest@test.com',
-                password: 'Password1!'
+                'password': 'Password1!'
             });
 
         expect(response.statusCode).toBe(200);
@@ -78,11 +98,11 @@ describe('User Authentication', () => {
             role: 'user'
         });
 
-        const response = await request(app)
+        const response = await request(server)
             .post('/login')
             .send({
                 'email-address': 'jest@test.com',
-                password: 'WrongPassword'
+                'password': 'WrongPassword'
             });
 
         expect(response.statusCode).toBe(401);
