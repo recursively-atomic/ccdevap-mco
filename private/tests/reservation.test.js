@@ -1,6 +1,6 @@
 const controller = require('../../private/controllers/reservationController');
-const reservationModel = require('../../private/models/reservationModel'); // Fixed name
-const flightModel = require('../../private/models/flightModel');           // Fixed name
+const reservationModel = require('../../private/models/reservationModel'); 
+const flightModel = require('../../private/models/flightModel');           
 
 // Mocking Mongoose models
 jest.mock('../../private/models/reservationModel');
@@ -26,7 +26,7 @@ describe('Reservation Controller Unit Tests', () => {
         totalAmount: 4200
       };
 
-      // Fixed: changed to mockResolvedValue (capital R)
+      
       const mockSave = jest.fn().mockResolvedValue({ ...mockReservationData, status: 'Pending' });
       reservationModel.mockImplementation(() => ({ save: mockSave }));
       flightModel.findOneAndUpdate.mockResolvedValue({ flightNumber: 2, availableSeats: 15 });
@@ -70,7 +70,7 @@ describe('Reservation Controller Unit Tests', () => {
       await expect(controller.updateStatus('INVALID=ID', 'Cancelled')).rejects.toThrow(TypeError);
 
       expect(flightModel.findOneAndUpdate).not.toHaveBeenCalled();
-      expect(reservationModel.findOneAndUpdate).not.toHaveBeenCalled(); // Fixed typo
+      expect(reservationModel.findOneAndUpdate).not.toHaveBeenCalled();
     });
   });
 });
