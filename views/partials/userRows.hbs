@@ -1,0 +1,56 @@
+{{#each userRows}}
+    <tr>
+        <th scope="row">
+            {{getUserNumber this.role this.userNumber}}
+
+            {{#if (eq ../currentUser this.userNumber)}}
+                <span class="fw-medium"> (You) </span>
+            {{/if}}
+        </th>
+
+        <td> {{formatTitleCase this.role}} </td>
+        <td> Active </td>
+        <td> {{this.firstName}} </td>
+        <td> {{this.lastName}} </td>
+
+        <td>
+            {{#if this.birthdate}}
+                {{this.birthdate}}
+            {{else}}
+                None
+            {{/if}}
+        </td>
+
+        <td>
+            {{#if this.contactNumber}}
+                {{this.contactNumber}}
+            {{else}}
+                None
+            {{/if}}
+        </td>
+
+        <td> {{this.emailAddress}} </td>
+
+        <td>
+            {{#if this.savedPassengers}}
+                {{this.savedPassengers}}
+            {{else}}
+                None
+            {{/if}}
+        </td>
+
+        <td>
+            <button class="btn btn-success btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                    data-bs-target="#view-activity"> View </button>
+
+            <button class="btn btn-warning btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                    data-bs-target="#edit-activity"> Edit </button>
+
+            <button class="btn btn-danger btn-sm text-white fw-bolder" data-bs-toggle="modal"
+                    data-bs-target="#delete-activity"> Delete </button>
+        </td>
+    </tr>
+
+    <tr class="border-3 border-bottom-0 border-top border-end-0 border-start-0 border-dark">
+    </tr>
+{{/each}}

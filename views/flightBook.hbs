@@ -1,0 +1,628 @@
+{{> navigation}}
+
+<div class="container mt-5 mb-5">
+    <div class="card bg-transparent border-0">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- PROGRESS BAR -->
+                <div class="mb-5 card bg-transparent border-0">
+                    <div class="p-4 card-header bg-primary-accent rounded-5 shadow-lg">
+                        <div class="progress rounded-pill h-30px bg-warning">
+                            <div class="pb-1 progress-bar bg-success fs-6"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASSENGER INFORMATION -->
+                <div class="mb-5 card shadow-lg">
+                    <div class="card-header text-center text-white bg-primary-accent">
+                        <h2 class="mt-2"> Passenger Information </h2>
+                    </div>
+
+                    <div class="card-body">
+                        <!-- PASSENGER NAME -->
+                        <div class="mx-4 mb-4 mt-2">
+                            <h4 class="text-primary-accent"> Name
+                                <span class="text-danger fw-bolder"> * </span>
+                            </h4>
+
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                        </div>
+
+                                        <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                               type="text" placeholder="Alex Jax" id="first-name"
+                                               data-group="flight-book">
+
+                                        <div class="invalid-feedback">
+                                            This first name field is required!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                        </div>
+
+                                        <input id="last-name"
+                                               class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                               type="text" placeholder="Doe" data-group="flight-book">
+
+                                        <div class="invalid-feedback">
+                                            This last name field is required!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-pen-fill"></i>
+                                        </div>
+
+                                        <select id="suffix-select"
+                                                class="form-select bg-light border-dark border-2 rounded-end-3 text-black required-field"
+                                                data-group="flight-book">
+                                            <option selected hidden value=""> Select A Suffix </option>
+                                            <option> None </option>
+                                            <option> Jr. </option>
+                                            <option> Sr. </option>
+                                            <option> II </option>
+                                            <option> III </option>
+                                            <option> IV </option>
+                                            <option> V </option>
+                                        </select>
+
+                                        <div class="invalid-feedback">
+                                            This suffix field is required!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mb-4">
+                            <div class="row">
+                                <!-- E-MAIL -->
+                                <div class="col-lg-6 col-md-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
+                                    <h4 class="text-primary-accent"> E-Mail Address
+                                        <span class="text-danger fw-bolder"> * </span>
+                                    </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary fa-solid fa-at"></i>
+                                        </div>
+
+                                        <input id="email-address"
+                                               class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                               type="text" placeholder="email-address@domain.com"
+                                               data-group="flight-book">
+
+                                        <div id="email-no-input" class="invalid-feedback">
+                                            This e-mail field is required!
+                                        </div>
+
+                                        <div id="email-invalid-input" class="invalid-feedback">
+                                            An e-mail must have a character before and after @, and a domain!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CONTACT NUMBER -->
+                                <div class="col-lg-6 col-md-12">
+                                    <h4 class="text-primary-accent"> Contact Number
+                                        <span class="text-danger fw-bolder"> * </span>
+                                    </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-telephone-fill"></i>
+                                        </div>
+
+                                        <input id="country-number"
+                                               class="form-control bg-light border-dark border-end-0 border-2 text-black required-field"
+                                               type="text" oninput="this.value = this.value.replace(/\D/g, '')"
+                                               placeholder="00" data-group="flight-book">
+                                        <input id="contact-number"
+                                               class="form-control w-50 bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                               type="text" oninput="this.value = this.value.replace(/\D/g, '')"
+                                               placeholder="123456789" data-group="flight-book">
+
+                                        <div class="invalid-feedback">
+                                            This contact number field is required!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mb-4">
+                            <div class="row">
+                                <!-- PASSPORT CODE -->
+                                <div class="col-lg-6 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-4">
+                                    <h4 class="text-primary-accent"> Passport Code
+                                        <span class="text-danger fw-bolder"> * </span>
+                                    </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-postcard-fill"></i>
+                                        </div>
+
+                                        <input id="passport-code"
+                                               class="form-control bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                               type="text" placeholder="A12345678" data-group="flight-book">
+
+                                        <div class="invalid-feedback">
+                                            This passport field is required!
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- NATIONALITY -->
+                                <div class="col-lg-6 col-md-6">
+                                    <h4 class="text-primary-accent"> Nationality
+                                        <span class="text-danger fw-bolder"> * </span>
+                                    </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-flag-fill"></i>
+                                        </div>
+
+                                        <select id="nationality"
+                                                class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                                data-group="flight-book">
+                                            <option selected hidden value=""> Select A Nationality </option>
+                                            <option> Afghan </option>
+                                            <option> Bahamian </option>
+                                            <option> Cambodian </option>
+                                            <option> Danish </option>
+                                            <option> East Timorese </option>
+                                            <option> Filipino </option>
+                                            <option> Gabonese </option>
+                                            <option> Haitian </option>
+                                            <option> Icelander </option>
+                                            <option> Jamaican </option>
+                                            <option> Kazakhstani </option>
+                                            <option> Laotian </option>
+                                            <option> Macedonian </option>
+                                            <option> Namibian </option>
+                                            <option> Omani </option>
+                                            <option> Pakistani </option>
+                                            <option> Qatari </option>
+                                            <option> Romanian </option>
+                                            <option> Saint Lucian </option>
+                                            <option> Taiwanese </option>
+                                            <option> Ugandan </option>
+                                            <option> Venezuelan </option>
+                                            <option> Welsh </option>
+                                            <option> Yemenite </option>
+                                            <option> Zambian </option>
+                                        </select>
+
+                                        <div class="invalid-feedback">
+                                            This nationality field is required!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mb-4">
+                            <div class="row">
+                                <!-- BIRTHDATE -->
+                                <div class="col-lg-6 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-4" id="date-container">
+                                    <h4 class="text-primary-accent"> Birthdate
+                                        <span class="text-danger fw-bolder"> * </span>
+                                    </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-calendar2-fill"></i>
+                                        </div>
+
+                                        <input id="date-input"
+                                               class="form-control rounded-end-3 bg-light border-dark border-2 text-black required-field"
+                                               type="date" data-group="flight-book">
+
+                                        <div id="date-invalid-input" class="invalid-feedback">
+                                            Select a date before today!
+                                        </div>
+
+                                        <div id="date-no-input" class="invalid-feedback">
+                                            This birthdate field is required!
+                                        </div>
+
+                                        <div class="d-none d-flex ms-4 w-auto align-items-center"
+                                             id="age-badge-container">
+                                            <span class="p-2 badge card-hover-sm rounded-pill text-bg-primary text-white shadow"
+                                                  id="age-badge"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- GENDER -->
+                                <div class="col-lg-6 col-md-6">
+                                    <h4 class="text-primary-accent"> Gender
+                                        <span class="text-danger fw-bolder"> * </span>
+                                    </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-person-fill"></i>
+                                        </div>
+
+                                        <select id="gender-select"
+                                                class="form-select bg-light border-dark border-2 text-black rounded-end-3 required-field"
+                                                data-group="flight-book">
+                                            <option selected hidden value=""> Select Gender </option>
+                                            <option> Prefer Not To Answer </option>
+                                            <option> Not Listed </option>
+                                            <option> Male </option>
+                                            <option> Female </option>
+                                            <option> Transgender Male </option>
+                                            <option> Transgender Female </option>
+                                            <option> Non-Binary </option>
+                                        </select>
+
+                                        <div class="invalid-feedback" id="select">
+                                            This gender field is required!
+                                        </div>
+                                    </div>
+
+                                    <div class="d-none" id="other-gender-container">
+                                        <input id="other-gender-input"
+                                               class="mt-4 form-control bg-light border-dark border-2 text-black required-field"
+                                               type="text" placeholder="Please Specify" data-group="flight-book">
+
+                                        <div class="invalid-feedback" id="specify">
+                                            Specify your gender!
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- EMERGENCY CONTACT NAME -->
+                        <div class="mx-4 mb-4">
+                            <h4 class="text-primary-accent"> Emergency Contact Name </h4>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                        </div>
+
+                                        <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                               type="text" placeholder="Alex Jax" id="emergency-first-name">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6 mb-sm-4 mb-lg-0 mb-md-0 mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-chat-square-dots-fill"></i>
+                                        </div>
+
+                                        <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                               type="text" placeholder="Doe" id="emergency-last-name">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-pen-fill"></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 text-black"
+                                                id="emergency-suffix">
+                                            <option selected hidden value=""> Select A Suffix </option>
+                                            <option> None </option>
+                                            <option> Jr. </option>
+                                            <option> Sr. </option>
+                                            <option> II </option>
+                                            <option> III </option>
+                                            <option> IV </option>
+                                            <option> V </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mx-4 mb-2">
+                            <div class="row">
+                                <!-- EMERGENCY CONTACT NUMBER -->
+                                <div class="col-lg-6 col-md-6 mt-md-4 mt-lg-0 mb-sm-4 mb-4">
+                                    <h4 class="text-primary-accent"> Emergency Contact </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-telephone-fill"></i>
+                                        </div>
+
+                                        <input class="form-control bg-light border-dark border-end-0 border-2 text-black"
+                                               type="text" oninput="this.value = this.value.replace(/\D/g, '')"
+                                               placeholder="00" id="emergency-country-number">
+                                        <input class="form-control w-50 bg-light border-dark border-2 text-black"
+                                               type="text" oninput="this.value = this.value.replace(/\D/g, '')"
+                                               placeholder="123456789" id="emergency-contact-number">
+                                    </div>
+                                </div>
+
+                                <!-- RELATIONSHIP WITH EMERGENCY CONTACT -->
+                                <div class="col-lg-6 col-md-6 mb-4">
+                                    <h4 class="text-primary-accent"> Emergency Contact Relationship </h4>
+
+                                    <div class="input-group">
+                                        <div class="input-group-text bg-dark border-dark">
+                                            <i class="text-secondary bi bi-people-fill"></i>
+                                        </div>
+
+                                        <select class="form-select bg-light border-dark border-2 text-black"
+                                                id="emergency-relationship">
+                                            <option selected hidden value=""> Select Relationship </option>
+                                            <option> Partner or Spouse </option>
+                                            <option> Parent </option>
+                                            <option> Child </option>
+                                            <option> Sibling </option>
+                                            <option> Relative </option>
+                                            <option> Friend </option>
+                                            <option> Guardian </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="m-0 p-0 border border-3 border-dark rounded-3 opacity-100">
+
+                        <div class="container d-flex mb-3 mt-4 justify-content-center">
+                            <button class="m-0 btn btn-primary btn-lg text-white">
+                                Add A Passenger
+                                <!-- Duplicates the fields for another passenger -->
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEAL SELECTION -->
+                <div class="mb-5 card shadow-lg">
+                    <div class="card-header text-center text-white bg-primary-accent">
+                        <h2 class="mt-2"> Meal Selection </h2>
+                    </div>
+
+                    <div class="d-grid mx-5 my-4 p-0 card-body">
+                        <div class="row">
+                            <div class="col-lg-6 p-0 mb-md-3 mb-lg-0 mb-sm-3 mb-3">
+                                <div class="btn-group w-100">
+                                    <input class="btn-check" type="radio" name="meal-selection" id="standard">
+                                    <label class="col-md-4 col-lg-2 btn btn-outline-primary" for="standard">
+                                        Standard
+                                    </label>
+
+                                    <input type="radio" class="btn-check" name="meal-selection" id="vegetarian">
+                                    <label class="col-md-4 col-lg-2 btn btn-outline-primary" for="vegetarian">
+                                        Vegetarian
+                                    </label>
+
+                                    <input type="radio" class="mb-lg-0 btn-check" name="meal-selection" id="vegan">
+                                    <label class="col-md-4 col-lg-2 btn btn-outline-primary rounded-end-md-2 rounded-end-lg-0"
+                                           for="vegan">
+                                        Vegan
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 p-0">
+                                <div class="btn-group w-100">
+                                    <input type="radio" class="btn-check" name="meal-selection" id="halal">
+                                    <label class="col-md-4 col-lg-2 btn btn-outline-primary rounded-start-lg-0 border-start-lg-0 rounded-start-md-2"
+                                           for="halal">
+                                        Halal
+                                    </label>
+
+                                    <input type="radio" class="btn-check" name="meal-selection" id="kosher">
+                                    <label class="col-md-4 col-lg-2 btn btn-outline-primary" for="kosher">
+                                        Kosher
+                                    </label>
+
+                                    <input type="radio" class="btn-check" name="meal-selection" id="gluten-free">
+                                    <label class="col-md-4 col-lg-2 btn btn-outline-primary" for="gluten-free">
+                                        Gluten-Free
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEAT SELECTION -->
+                <div class="mb-5 card shadow-lg">
+                    <div class="card-header text-center text-white bg-primary-accent">
+                        <h2 class="mt-2"> Seat Selection </h2>
+                    </div>
+
+                    <div class="mx-4 mb-4 mt-2 card-body">
+                        <div class="d-flex mb-3 gap-2">
+                            <div class="row d-flex w-100">
+                                {{> seatLegend}}
+                            </div>
+                        </div>
+
+                        {{> seats}}
+                    </div>
+                </div>
+
+                <!-- EXTRA SERVICES -->
+                <div class="mb-md-5 mb-lg-0 mb-sm-5 mb-5 card shadow-lg">
+                    <div class="card-header text-center text-white bg-primary-accent">
+                        <h2 class="mt-2"> Extra Services </h2>
+                    </div>
+
+                    <div class="mx-4 mb-4 card-body">
+                        <div class="mb-4 mt-2">
+                            <h4 class="text-primary-accent"> Additional Baggage (kg) </h4>
+
+                            <div class="input-group">
+                                <div class="input-group-text bg-dark border-dark">
+                                    <i class="text-secondary fa-solid fa-weight-hanging"></i>
+                                </div>
+
+                                <input class="form-control rounded-end-3 bg-light border-dark border-2 text-black"
+                                       type="number" min="0" max="50" value="0" id="additional-baggage">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6 col-md-6 m-0 pe-lg-0 mb-sm-3 mb-3 mb-lg-0 mb-md-0">
+                                <div class="btn-group w-100">
+                                    <input type="checkbox" class="btn-check" name="extra-services"
+                                           id="priority-boarding">
+                                    <label class="btn btn-outline-primary" for="priority-boarding">
+                                        Priority Boarding
+                                    </label>
+
+                                    <input type="checkbox" class="btn-check" name="extra-services"
+                                           id="travel-insurance">
+                                    <label class="btn btn-outline-primary rounded-end-lg-0 rounded-end-md-0"
+                                           for="travel-insurance">
+                                        Travel Insurance
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-lg-6 col-md-6 m-0 ps-lg-0">
+                                <div class="btn-group w-100">
+                                    <input type="checkbox" class="btn-check" name="extra-services" id="lounge-access">
+                                    <label class="btn btn-outline-primary rounded-start-lg-0 border-start-lg-0 rounded-start-md-0 border-start-md-0"
+                                           for="lounge-access">
+                                        Lounge Access
+                                    </label>
+
+                                    <input type="checkbox" class="btn-check" name="extra-services" id="none">
+                                    <label class="btn btn-outline-primary" for="none">
+                                        No Extra Service
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sticky-top z-1000 top-130px">
+                    <!-- BOOKING SUMMARY -->
+                    <div class="card shadow-lg">
+                        <div class="card-header text-center text-white bg-primary-accent">
+                            <h2 class="mt-2"> Booking Summary </h2>
+                        </div>
+
+                        <div class="card-body">
+                            <h2 class="text-primary"> Flight Details </h2>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Origin: </p>
+                                <p class="m-0 p-0 ps-1"> {{flight.originAirport.name}} </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Destination: </p>
+                                <p class="m-0 p-0 ps-1"> {{flight.destinationAirport.name}} </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Flight Number: </p>
+
+                                <p class="m-0 p-0 ps-1">
+                                    {{getFlightNumber flight.airline flight.flightNumber}}
+                                </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Cabin Class: </p>
+                                <p class="m-0 p-0 ps-1" id="selected-class"></p>
+                            </div>
+
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                            <h2 class="text-primary"> Reservation Details </h2>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Passengers: </p>
+                                <p class="m-0 p-0 ps-1"> 1 </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Selected Seat: </p>
+                                <p class="m-0 p-0 ps-1" id="selected-seat"></p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Meal Package: </p>
+                                <p class="m-0 p-0 ps-1" id="selected-meal"></p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Extra Services: </p>
+                                <p class="m-0 p-0 ps-1" id="no-extra-services"></p>
+                            </div>
+
+                            <div class="m-0 p-0 text-dark" id="has-extra-services"></div>
+
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                            <h2 class="text-primary"> Price Details </h2>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Base Fare: </p>
+
+                                <p class="m-0 p-0 ps-1" id="base-fare">
+                                    {{formatNumber flight.baseFare}}
+                                </p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Taxes and Fees: </p>
+                                <p class="m-0 p-0 ps-1" id="tax-and-fee"></p>
+                            </div>
+
+                            <div class="d-flex m-0 p-0 align-items-center text-dark">
+                                <p class="m-0 p-0 ps-3 fw-bolder"> Extras: </p>
+                                <p class="m-0 p-0 ps-1" id="extra-fee"></p>
+                            </div>
+
+                            <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                            <h2 class="d-flex m-0 p-0 align-items-center text-secondary">
+                                <p class="m-0 p-0"> Grand Total: </p>
+                                <p class="m-0 p-0 ps-2" id="booking-total"></p>
+                            </h2>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="d-grid my-2">
+                                <button class="btn btn-success btn-lg text-white" onclick="confirmBooking()">
+                                    Confirm Booking
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> toasts}}
+
+{{> footer}}

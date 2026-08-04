@@ -1,0 +1,82 @@
+<img src="https://picsum.photos/1920/1080/?blur=5"
+     class="position-fixed top-0 start-0 w-100 h-100 z-n1 object-fit-cover">
+
+<div class="container m-auto">
+    <div class="row justify-content-center">
+        <div class="col-10 col-sm-9 col-md-7 col-lg-4">
+            <div class="p-4 mt-5 mb-5 card shadow-sm rounded-3 bg-dark">
+                <img class="d-inline-block mb-2 p-1 align-items-center square-40px"
+                     src="/media/images/cebu-atlantic.png">
+
+                <h2 class="mb-4 text-center fw-bolder text-primary"> Log In </h2>
+
+                <form onsubmit="checkCredentials(event, 'login')">
+                    <div class="mb-3">
+                        <h4 class="text-secondary"> E-Mail Address
+                            <span class="text-danger fw-bolder"> * </span>
+                        </h4>
+
+                        <div class="input-group">
+                            <div class="input-group-text bg-secondary border-secondary">
+                                <i class="text-primary-accent fa-solid fa-at"></i>
+                            </div>
+
+                            <input id="email-address" name="email-address"
+                                   class="form-control bg-light border-secondary border-2 text-black h-45px rounded-end-3 required-field"
+                                   type="text" placeholder="Enter Your E-Mail Address" data-group="login">
+
+                            <div id="email-no-input" class="invalid-feedback">
+                                <p class="d-inline-flex mt-2 m-0 p-2 w-auto text-white text-bg-danger rounded-3">
+                                    This e-mail field is required!
+                                </p>
+                            </div>
+
+                            <div id="email-invalid-input" class="invalid-feedback">
+                                <p class="d-inline-flex mt-2 m-0 p-2 w-auto text-white text-bg-danger rounded-3">
+                                    An e-mail must have a character before and after @, and a domain!
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <h4 class="text-secondary"> Password
+                            <span class="text-danger fw-bolder"> * </span>
+                        </h4>
+
+                        <div class="input-group">
+                            <input id="password" name="password"
+                                   class="form-control bg-light border-secondary border-2 text-black h-45px required-field"
+                                   type="password" placeholder="Enter Your Password" data-group="login">
+
+                            <button type="button"
+                                    class="input-group-text bg-secondary border-secondary border-2 rounded-end-3 toggle-password">
+                                <i class="text-primary-accent fa-solid fa-eye" data-target="#password"></i>
+                            </button>
+
+                            <div class="invalid-feedback">
+                                <p class="d-inline-flex mt-2 m-0 p-2 w-auto text-white text-bg-danger rounded-3">
+                                    This password field is required!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" onclick="validateLogin()"
+                            class="mt-3 btn btn-lg btn-secondary fw-bold text-light w-100">
+                        Login
+                    </button>
+
+                    <div class="mt-3 text-center">
+                        <a href="/register" class="text-decoration-none text-tertiary">
+                            No Account? Register One!
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> toasts}}

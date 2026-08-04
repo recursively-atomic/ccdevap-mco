@@ -1,0 +1,9 @@
+{{#each seats}}
+    <div class="row mb-2 text-center">
+        {{#each this}}
+            <div class="col d-flex justify-content-center">
+                <div class="seat {{class}} {{#if occupied}}occupied{{else if selected}}selected{{else}}available{{/if}}"> {{number}} </div>
+            </div>
+        {{/each}}
+    </div>
+{{/each}}

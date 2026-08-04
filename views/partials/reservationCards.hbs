@@ -1,0 +1,85 @@
+{{#each reservationCards}}
+    <div class="m-4 p-4 mb-4 card card-hover-sm bg-primary-accent shadow" data-identifier="{{this.identifier}}">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
+                <!-- FLIGHT ID AND FLIGHT STATUS -->
+                <div class="d-flex m-0 align-items-center text-secondary justify-content-between">
+                    <div class="container d-flex flex-row p-0">
+                        <h2 class="mb-0 me-2"> {{this.identifier}} </h2>
+
+                        <span class="d-flex p-2 m-0 badge fs-6 rounded-pill text-white align-items-center text-bg-{{#if (eq this.status 'Confirmed')}}success{{else if (eq this.status 'Cancelled')}}danger{{else}}warning{{/if}}">
+                            {{this.status}}
+                        </span>
+                    </div>
+
+                    <h2 class="m-0 p-0 ps-3 text-light text-end text-nowrap"> PHP {{formatNumber this.totalAmount}}
+                    </h2>
+                </div>
+
+                <!-- FLIGHT TYPE AND PASSENGER AMOUNT -->
+                <div class="d-flex m-0 align-items-center text-light">
+                    <h4 class="m-0 p-0"> One-Way Trip </h4>
+                    <i class="m-0 p-0 bi bi-dot display-6"></i>
+                    <h4 class="m-0 p-0"> {{this.lastName}}{{#if this.suffix}} {{this.suffix}}{{/if}}, {{this.firstName}}
+                        (1 PAX) </h4>
+                </div>
+
+                <hr class="border border-3 border-dark rounded-3 opacity-100">
+
+                <div class="row">
+                    <!-- FLIGHT DEPARTURE DETAILS -->
+                    <div class="col-lg-6 col-md-12 col-sm-12 mb-md-4 mb-lg-0 mb-sm-4 mb-4">
+                        <div class="d-flex m-0 p-0 align-items-center text-tertiary">
+                            <i class="fa-solid fa-plane-departure fa-xl"></i>
+                            <h6 class="m-2 fw-bolder"> Departure </h6>
+                        </div>
+
+                        <p class="m-0 p-0 ps-3 text-light"> {{this.flight.originAirport.name}} </p>
+
+                        <div class="d-flex m-0 p-0 align-items-center text-light">
+                            <p class="m-0 p-0 ps-3"> {{getDate this.flight.departureDatetime}} </p>
+                            <i class="m-0 p-0 bi bi-dot"></i>
+                            <p class="m-0 p-0"> {{getTime this.flight.departureDatetime}} </p>
+                        </div>
+                    </div>
+
+                    <!-- FLIGHT ARRIVAL DETAILS -->
+                    <div class="col-lg-6 col-md-12 mb-sm-4 mb-4 mb-lg-0">
+                        <div class="d-flex m-0 p-0 align-items-center text-tertiary">
+                            <i class="fa-solid fa-plane-arrival fa-xl"></i>
+                            <h6 class="m-2 fw-bolder"> Arrival </h6>
+                        </div>
+
+                        <p class="m-0 p-0 ps-3 text-light"> {{this.flight.destinationAirport.name}} </p>
+
+                        <div class="d-flex m-0 p-0 align-items-center text-light">
+                            <p class="m-0 p-0 ps-3"> {{getDate this.flight.arrivalDatetime}} </p>
+                            <i class="m-0 p-0 bi bi-dot"></i>
+                            <p class="m-0 p-0"> {{getTime this.flight.arrivalDatetime}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-12 d-flex align-items-center justify-content-center">
+                <div class="d-flex flex-column gap-2 align-items-center w-100">
+                    <button class="btn btn-success btn-lg text-white" onclick="showViewModal('{{this.identifier}}')"
+                            data-bs-toggle="modal" data-bs-target="#view-reservation">
+                        View Details
+                    </button>
+
+                    <button class="btn btn-warning btn-lg text-white" onclick="showEditModal('{{this.identifier}}')"
+                            data-bs-toggle="modal" data-bs-target="#edit-reservation">
+                        Edit Details
+                    </button>
+
+                    <button class="btn btn-danger btn-lg text-white" onclick="showCancelModal('{{this.identifier}}')"
+                            data-bs-toggle="modal" data-bs-target="#cancel-reservation">
+                        Cancel Reservation </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <h2 class="p-5 m-0 text-primary text-center"> No Active Reservations </h2>
+{{/each}}

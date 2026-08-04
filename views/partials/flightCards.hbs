@@ -1,0 +1,51 @@
+{{#each flightCards}}
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="p-2 card card-hover-sm bg-primary-accent shadow">
+            <div class="d-flex justify-content-between">
+                <img class="m-0 p-0 bg-dark border-dark img-thumbnail square-40px"
+                     src="{{getAirlineLogo this.airline}}">
+
+                <h4 class="mt-1 m-0 p-0 fw-bold text-light"> PHP {{formatNumber this.baseFare}} </h4>
+            </div>
+
+            <hr class="m-0 my-2 border border-3 border-tertiary-accent rounded-3 opacity-100">
+
+            <h4 class="d-flex m-0 mb-2 align-items-center text-secondary fw-bolder">
+                <i class="me-2 p-0 fa-solid fa-plane"></i>
+
+                <p class="m-0 p-0"> {{getFlightNumber this.airline this.flightNumber}} </p>
+            </h4>
+
+            <h6 class="d-flex m-0 align-items-center text-tertiary fw-bolder">
+                <i class="me-1 fa-solid fa-hourglass-start fa-sm"></i>
+                <p class="m-0 p-0 me-1"> {{getTime this.departureDatetime}} - {{getTime this.arrivalDatetime}} </p>
+                <p class="m-0 p-0"> ( </p>
+                <p class="m-0 p-0"> {{getDuration this.departureDatetime this.arrivalDatetime}} </p>
+                <p class="m-0 p-0"> ) </p>
+            </h6>
+
+            <h6 class="d-flex m-0 align-items-center text-tertiary fw-bolder">
+                <i class="me-2 p-0 bi bi-stoplights-fill"></i>
+                <p class="m-0 p-0"> No Layovers </p>
+            </h6>
+
+            <hr class="m-0 my-2 border border-3 border-tertiary-accent rounded-3 opacity-100">
+
+            <button class="m-0 mb-2 btn btn-lg btn-primary border-4 text-white"
+                    onclick="continueBooking({{this.flightNumber}})">
+
+                <p class="m-0 p-0 fw-bolder"> Book </p>
+                <h6 class="m-0 p-0 text-light"> ({{this.availableSeats}}/16 Seats) </h6>
+            </button>
+
+            <button class="m-0 btn btn-lg btn-secondary border-4 text-white"
+                    onclick="showViewModal('{{this.flightNumber}}')" data-bs-toggle="modal"
+                    data-bs-target="#view-flight">
+
+                <p class="m-0 p-0 fw-bolder"> View Details </p>
+            </button>
+        </div>
+    </div>
+{{else}}
+    <h2 class="p-5 m-0 text-primary text-center"> No Flights Found </h2>
+{{/each}}
