@@ -9,7 +9,7 @@
             </li>
 
             {{#each (range 1 pagination.totalPages)}}
-                {{#if (or (eq this 1) (eq this ../pagination.totalPages) (and (gte this (subtract ../pagination.currentPage 2)) (lte this (add ../pagination.currentPage 3))))}}
+                {{#if (or (eq this 1) (eq this ../pagination.totalPages) (and (gte this (subtract ../pagination.currentPage 2)) (lte this (add ../pagination.currentPage 2))))}}
                     {{#if (eq this ../pagination.currentPage)}}
                         <li class="page-item">
                             <a class="page-link active"> {{this}} </a>
@@ -20,7 +20,7 @@
                         </li>
                     {{/if}}
                 {{else}}
-                    {{#if (or (eq this (add ../pagination.currentPage 2)) (eq this (subtract ../pagination.currentPage 2)))}}
+                    {{#if (or (eq this (add ../pagination.currentPage 3)) (eq this (subtract ../pagination.currentPage 3)))}}
                         <li class="page-item">
                             <a class="page-link disabled"> … </a>
                         </li>
