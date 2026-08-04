@@ -3,13 +3,13 @@
         <ul class="m-0 pagination">
             <li class="page-item">
                 <a class="page-link {{#if (eq pagination.currentPage 1)}}disabled{{/if}}"
-                   href="{{#if (gt pagination.currentPage 1)}}{{pagination.baseUrl}}{{subtract pagination.currentPage 1}}{{else}}#{{/if}}">
+                   {{#if (gt pagination.currentPage 1)}} href="{{pagination.baseUrl}}1"{{/if}}>
                     <span> &laquo; </span>
                 </a>
             </li>
 
             {{#each (range 1 pagination.totalPages)}}
-                {{#if (or (eq this 1) (eq this ../pagination.totalPages) (and (gte this (subtract ../pagination.currentPage 1)) (lte this (add ../pagination.currentPage 1))))}}
+                {{#if (or (eq this 1) (eq this ../pagination.totalPages) (and (gte this (subtract ../pagination.currentPage 2)) (lte this (add ../pagination.currentPage 3))))}}
                     {{#if (eq this ../pagination.currentPage)}}
                         <li class="page-item">
                             <a class="page-link active"> {{this}} </a>
@@ -30,7 +30,7 @@
 
             <li class="page-item">
                 <a class="page-link {{#if (eq pagination.currentPage pagination.totalPages)}}disabled{{/if}}"
-                   href="{{#if (lt pagination.currentPage pagination.totalPages)}}{{pagination.baseUrl}}{{add pagination.currentPage 1}}{{else}}#{{/if}}">
+                   {{#if (lt pagination.currentPage pagination.totalPages)}} href="{{pagination.baseUrl}}{{pagination.totalPages}}"{{/if}}>
                     <span aria-hidden="true"> &raquo; </span>
                 </a>
             </li>
