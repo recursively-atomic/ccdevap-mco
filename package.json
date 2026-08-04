@@ -1,7 +1,7 @@
 {
     "scripts": {
         "start": "node server.js",
-        "test": "jest"
+        "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles"
     },
     "dependencies": {
         "cors": "^2.8.6",
