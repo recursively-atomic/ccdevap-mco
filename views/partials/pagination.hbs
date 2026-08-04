@@ -9,6 +9,7 @@
             </li>
 
             {{#each (range 1 pagination.totalPages)}}
+                <!-- Always displays the first and last page buttons, as well as 2 pages before and after the page the user is in -->
                 {{#if (or (eq this 1) (eq this ../pagination.totalPages) (and (gte this (subtract ../pagination.currentPage 2)) (lte this (add ../pagination.currentPage 2))))}}
                     {{#if (eq this ../pagination.currentPage)}}
                         <li class="page-item">
@@ -19,6 +20,7 @@
                             <a class="page-link" href="{{../pagination.baseUrl}}{{this}}"> {{this}} </a>
                         </li>
                     {{/if}}
+                <!-- The page buttons meant for 3 pages before and after the page the user is in, will display an elipsis to represent the other page buttons not displayed -->
                 {{else}}
                     {{#if (or (eq this (add ../pagination.currentPage 3)) (eq this (subtract ../pagination.currentPage 3)))}}
                         <li class="page-item">

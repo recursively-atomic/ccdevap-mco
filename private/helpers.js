@@ -60,7 +60,6 @@ function formatAuditLog(auditData) {
     const userNumber = getUserNumber(auditData.userRole, auditData.userNumber);
     let flightNumber, origin, originDate, originTime, destination, destinationDate, destinationTime;
     let reservationIdentifier, reservationSeat;
-    let auditString;
 
     if (auditData.flightNumber) {
         flightNumber = getFlightNumber(auditData.flightAirline, auditData.flightNumber);
@@ -78,40 +77,20 @@ function formatAuditLog(auditData) {
         reservationSeat = auditData.reservationSeat;
     }
 
-    switch (auditData.action) {
-        case 'u-reg':
-            auditString = `Registered with an email of ${auditData.userEmail} and a user number of ${userNumber}.`;
-            break;
-        case 'u-lin':
-            auditString = `Logged in with an email of ${auditData.userEmail} and a user number of ${userNumber}.`;
-            break;
-        case 'u-upd':
-            auditString = `Updated their account to have an email of ${auditData.userEmail} and a user name of ${auditData.newUserName}.`;
-            break;
-        case 'u-lot':
-            auditString = `Logged out of their account that uses an email of ${auditData.userEmail} and a user number of ${userNumber}.`;
-            break;
-        case 'f-cre':
-            auditString = `Created flight ${flightNumber} that goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`;
-            break;
-        case 'f-upd':
-            auditString = `Updated flight ${flightNumber} to be ${auditData.flightStatus.toLowerCase()} which goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`;
-            break;
-        case 'f-del':
-            auditString = `Deleted flight ${flightNumber} that went from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`;
-            break;
-        case 'r-cre':
-            auditString = `Made a reservation under ${reservationIdentifier} for flight ${flightNumber} with a seat of ${reservationSeat}.`;
-            break;
-        case 'r-upd':
-            auditString = `Updated their reservation under ${reservationIdentifier} for flight ${flightNumber} from seat ${reservationSeat} to seat ${auditData.newReservationSeat}.`;
-            break;
-        case 'r-can':
-            auditString = `Cancelled their reservation under ${reservationIdentifier} for flight ${flightNumber} with a seat of ${reservationSeat}.`;
-            break;
-    }
+    const auditString = {
+        'u-reg': `Registered with an email of ${auditData.userEmail} and a user number of ${userNumber}.`,
+        'u-lin': `Logged in with an email of ${auditData.userEmail} and a user number of ${userNumber}.`,
+        'u-upd': `Updated their account to have an email of ${auditData.userEmail} and a user name of ${auditData.newUserName}.`,
+        'u-lot': `Logged out of their account that uses an email of ${auditData.userEmail} and a user number of ${userNumber}.`,
+        'f-cre': `Created flight ${flightNumber} that goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
+        'f-upd': `Updated flight ${flightNumber} to be ${auditData.flightStatus.toLowerCase()} which goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
+        'f-del': `Deleted flight ${flightNumber} that went from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
+        'r-cre': `Created a reservation under ${reservationIdentifier} for flight ${flightNumber} with a seat of ${reservationSeat}.`,
+        'r-upd': `Updated their reservation under ${reservationIdentifier} for flight ${flightNumber} from seat ${reservationSeat} to seat ${auditData.newReservationSeat}.`,
+        'r-can': `Cancelled their reservation under ${reservationIdentifier} for flight ${flightNumber} with a seat of ${reservationSeat}.`
+    };
 
-    return auditString;
+    return auditString[auditData.action];
 }
 
 function getDate(datetime) {
