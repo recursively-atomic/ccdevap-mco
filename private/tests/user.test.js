@@ -1,13 +1,13 @@
 const request = require('supertest');
-const server = require('../../../server');
+const server = require('../../server');
 
 const {
     createUser,
     readUserByEmail,
     readLastUserNumber
-} = require('../../controllers/userController');
+} = require('../controllers/userController');
 
-jest.mock('../../controllers/userController', () => ({
+jest.mock('../controllers/userController', () => ({
     createUser: jest.fn(),
     readUser: jest.fn(),
     readUserByEmail: jest.fn(),
@@ -17,7 +17,7 @@ jest.mock('../../controllers/userController', () => ({
     updatePassword: jest.fn()
 }));
 
-jest.mock('../../controllers/auditController', () => ({
+jest.mock('../controllers/auditController', () => ({
     createAudit: jest.fn()
 }));
 
