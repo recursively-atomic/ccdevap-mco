@@ -17,10 +17,6 @@ jest.mock('../controllers/userController', () => ({
     updatePassword: jest.fn()
 }));
 
-jest.mock('../controllers/auditController', () => ({
-    createAudit: jest.fn()
-}));
-
 beforeEach(() => {
     jest.clearAllMocks();
 });

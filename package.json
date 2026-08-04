@@ -1,9 +1,7 @@
 {
     "scripts": {
         "start": "node server.js",
-        "test": "jest",
-        "test:unit": "jest tests/unit",
-        "test:coverage": "jest --coverage"
+        "test": "jest"
     },
     "dependencies": {
         "cors": "^2.8.6",
