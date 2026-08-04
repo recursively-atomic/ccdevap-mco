@@ -75,6 +75,12 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+    if(req.session.user) {
+        if (req.session.user.role === 'admin') {
+            return res.redirect('/dashboard');
+        }
+        return res.redirect('/home');
+    }
     res.render('login', {
         script: '/scripts/login.js',
     });
@@ -160,19 +166,27 @@ router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
 });
 
 router.get('/logout', authenticate, authorize(['admin', 'user']), async (req, res) => {
-    const user = await readUser(req.session.user.number);
-    const auditData = {
-        userNumber: user.userNumber,
-        userName: `${user.firstName} ${user.lastName}`,
-        userEmail: user.emailAddress,
-        userRole: user.role,
-        action: 'u-lot'
-    };
+    try {
+        const user = await readUser(req.session.user.number);
+        const auditData = {
+            userNumber: user.userNumber,
+            userName: `${user.firstName} ${user.lastName}`,
+            userEmail: user.emailAddress,
+            userRole: user.role,
+            action: 'u-lot'
+        };
 
-    await createAudit(auditData);
-    req.session.destroy(() => {
-        res.redirect('/login');
-    });
+        await createAudit(auditData);
+        req.session.destroy(() => {
+            res.redirect('/login');
+        });
+    } catch (error) {
+        console.error(error);
+
+        req.session.destroy(() => {
+            res.redirect('/login');
+        });
+    }
 });
 
 router.get('/dashboard', authenticate, authorize(['admin']), async (req, res) => {

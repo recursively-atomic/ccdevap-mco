@@ -15,9 +15,13 @@ function authorize(authorizedRoles) {
 
         if (userRole === 'admin') {
             return res.redirect('/dashboard');
-        } else if (userRole === 'user') {
+        }
+        
+        if (userRole === 'user') {
             return res.redirect('/home');
         }
+
+        return res.redirect('/login');
     };
 }
 
