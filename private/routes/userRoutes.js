@@ -164,6 +164,7 @@ router.get('/logout', authenticate, authorize(['admin', 'user']), async (req, re
     const auditData = {
         userNumber: user.userNumber,
         userName: `${user.firstName} ${user.lastName}`,
+        userEmail: user.emailAddress,
         userRole: user.role,
         action: 'u-lot'
     };
