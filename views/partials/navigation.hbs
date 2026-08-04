@@ -41,16 +41,16 @@
                     <a class="nav-link fw-bold {{#if (eq page "/dashboard")}}disabled text-light{{/if}}" {{#unless (eq page "/dashboard")}} href="/dashboard"{{/unless}}> Dashboard </a>
                 </li>
 
+                <li class="me-3 nav-item {{#if (eq page "/users")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-0 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
+                    <a class="nav-link fw-bold {{#if (eq page "/users")}}disabled text-light{{/if}}" {{#unless (eq page "/users")}} href="/users"{{/unless}}> User Management </a>
+                </li>
+
                 <li class="me-3 nav-item {{#if (eq page "/flights")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-0 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
                     <a class="nav-link fw-bold {{#if (eq page "/flights")}}disabled text-light{{/if}}" {{#unless (eq page "/flights")}} href="/flights"{{/unless}}> Flight Management </a>
                 </li>
 
                 <li class="me-3 nav-item {{#if (eq page "/reservations")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-0 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
                     <a class="nav-link fw-bold {{#if (eq page "/reservations")}}disabled text-light{{/if}}" {{#unless (eq page "/reservations")}} href="/reservations"{{/unless}}> Reservation Management </a>
-                </li>
-
-                <li class="me-3 nav-item {{#if (eq page "/users")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-0 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">
-                    <a class="nav-link fw-bold {{#if (eq page "/users")}}disabled text-light{{/if}}" {{#unless (eq page "/users")}} href="/users"{{/unless}}> User Management </a>
                 </li>
 
                 <li class="me-3 nav-item {{#if (eq page "/audits")}}ps-3 ps-sm-3 ps-md-3 ps-lg-0 mt-3 mt-sm-3 mt-md-0 mt-lg-0 text-bg-primary-accent rounded-3{{/if}}">

@@ -159,7 +159,7 @@ router.get('/profile', authenticate, authorize(['user']), async (req, res) => {
     }
 });
 
-router.get('/logout', authenticate, async (req, res) => {
+router.get('/logout', authenticate, authorize(['admin', 'user']), async (req, res) => {
     const user = await readUser(req.session.user.number);
     const auditData = {
         userNumber: user.userNumber,
@@ -223,7 +223,7 @@ router.get('/users', authenticate, authorize(['admin']), async (req, res) => {
 });
 
 // APIs
-router.get('/api/read-user-number', async (req, res) => {
+router.get('/api/read-user-number', authenticate, authorize(['user']), async (req, res) => {
     try {
         const user = await readUser(req.session.user.number);
         res.status(200).json({ success: true, userNumber: user.userNumber });
@@ -232,7 +232,7 @@ router.get('/api/read-user-number', async (req, res) => {
     }
 });
 
-router.put('/api/update-user-profile', async (req, res) => {
+router.put('/api/update-user-profile', authenticate, authorize(['user']), async (req, res) => {
     try {
         const firstName = req.body.firstName;
         const lastName = req.body.lastName;
@@ -270,7 +270,7 @@ router.put('/api/update-user-profile', async (req, res) => {
     }
 });
 
-router.put('/api/update-user-password', async (req, res) => {
+router.put('/api/update-user-password', authenticate, authorize(['user']), async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
         const passwordRequirements = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])/;

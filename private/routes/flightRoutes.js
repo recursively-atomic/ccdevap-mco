@@ -65,7 +65,7 @@ router.get('/flights', authenticate, authorize(['admin']), async (req, res) => {
     }
 });
 
-router.post('/flights', async (req, res) => {
+router.post('/flights', authenticate, authorize(['admin']), async (req, res) => {
     try {
         const requiredFields = [
             'airline',
@@ -133,107 +133,12 @@ router.post('/flights', async (req, res) => {
 
         await createAudit(auditData);
         res.status(200).json({ success: true, flightNumber: newFlightNumber, airline: flightData.airline });
-    } catch {;
-        res.status(500).json({ success: false });
-    }
-});
-
-// APIs
-router.get('/api/read-flight/:flightNumber', async (req, res) => {
-    try {
-        const flight = await readFlight(parseInt(req.params.flightNumber));
-        res.status(200).json({ success: true, flightData: flight });
     } catch {
         res.status(500).json({ success: false });
     }
 });
 
-router.get('/api/read-flight-number', (req, res) => {
-    res.status(200).json({ success: true, flightNumber: req.session.user.selectedFlight });
-});
-
-router.get('/api/read-flight-origins', async (req, res) => {
-    try {
-        const origins = await readFlightOrigins();
-        res.status(200).json({ success: true, origins: origins });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/api/read-flight-destinations', async (req, res) => {
-    try {
-        const destinations = await readFlightDestinations();
-        res.status(200).json({ success: true, destinations: destinations });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/api/read-flights-table', async (req, res) => {
-    try {
-        let page = parseInt(req.query.page) || 1, limit = 10;
-        let { flights, totalFlights } = await readFlights(page, limit);
-        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
-
-        let pagination;
-
-        if (page > totalPages) {
-            page = totalPages;
-            ({ flights, totalFlights } = await readFlights(page, limit));
-        }
-
-        pagination = {
-            currentPage: page,
-            totalPages: totalPages,
-            totalResults: totalFlights,
-            resultsPerPage: limit,
-            baseUrl: '/flights?page='
-        };
-
-        res.status(200).render('partials/flightsCard', {
-            layout: false,
-            flightsCard: {
-                flightRows: flights,
-                pagination: pagination
-            }
-        });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.get('/api/read-flights', async (req, res) => {
-    try {
-        let page = parseInt(req.query.page) || 1, limit = 8;
-
-        const { flights, totalFlights } = await readFlightsByQuery(req.query, page, limit);
-        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
-        const pagination = {
-            currentPage: page,
-            totalPages: totalPages,
-            totalResults: totalFlights,
-            resultsPerPage: limit,
-            baseUrl: '/flight-search?page='
-        };
-
-        res.status(200).render('partials/searchResults', {
-            layout: false,
-            flightCards: flights,
-            pagination: pagination
-        }, (err, html) => {
-            if (err) {
-                return res.status(500).json({ success: false });
-            }
-
-            res.status(200).json({ success: true, html });
-        });
-    } catch {
-        res.status(500).json({ success: false });
-    }
-});
-
-router.put('/api/update-flight/:flightNumber', async (req, res) => {
+router.put('/flights', authenticate, authorize(['admin']), async (req, res) => {
     try {
         const requiredFields = [
             'edit-o-iata', 'edit-o-location', 'edit-o-name',
@@ -253,7 +158,7 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
         }
 
         const flightData = {
-            flightNumber: parseInt(req.params.flightNumber),
+            flightNumber: parseInt(req.body['flight-number']),
 
             originAirport: {
                 iata: req.body['edit-o-iata'],
@@ -305,9 +210,9 @@ router.put('/api/update-flight/:flightNumber', async (req, res) => {
     }
 });
 
-router.delete('/api/delete-flight/:flightNumber', async (req, res) => {
+router.delete('/flights', authenticate, authorize(['admin']), async (req, res) => {
     try {
-        const deletedFlight = await deleteFlight(parseInt(req.params.flightNumber));
+        const deletedFlight = await deleteFlight(parseInt(req.body['flight-number']));
         const user = await readUser(req.session.user.number);
         const auditData = {
             userNumber: user.userNumber,
@@ -334,6 +239,102 @@ router.delete('/api/delete-flight/:flightNumber', async (req, res) => {
 
         await createAudit(auditData);
         res.status(200).json({ success: true, airline: deletedFlight.airline, flightNumber: deletedFlight.flightNumber });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false });
+    }
+});
+
+// APIs
+router.get('/api/read-flight/:flightNumber', authenticate, authorize(['admin', 'user']), async (req, res) => {
+    try {
+        const flight = await readFlight(parseInt(req.params.flightNumber));
+        res.status(200).json({ success: true, flightData: flight });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/read-flight-number', authenticate, authorize(['user']), (req, res) => {
+    res.status(200).json({ success: true, flightNumber: req.session.user.selectedFlight });
+});
+
+router.get('/api/read-flight-origins', authenticate, authorize(['user']), async (req, res) => {
+    try {
+        const origins = await readFlightOrigins();
+        res.status(200).json({ success: true, origins: origins });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/read-flight-destinations', authenticate, authorize(['user']), async (req, res) => {
+    try {
+        const destinations = await readFlightDestinations();
+        res.status(200).json({ success: true, destinations: destinations });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/read-flights-table', authenticate, authorize(['admin']), async (req, res) => {
+    try {
+        let page = parseInt(req.query.page) || 1, limit = 10;
+        let { flights, totalFlights } = await readFlights(page, limit);
+        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
+
+        let pagination;
+
+        if (page > totalPages) {
+            page = totalPages;
+            ({ flights, totalFlights } = await readFlights(page, limit));
+        }
+
+        pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalFlights,
+            resultsPerPage: limit,
+            baseUrl: '/flights?page='
+        };
+
+        res.status(200).render('partials/flightsCard', {
+            layout: false,
+            flightsCard: {
+                flightRows: flights,
+                pagination: pagination
+            }
+        });
+    } catch {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.get('/api/read-flights', authenticate, authorize(['user']), async (req, res) => {
+    try {
+        let page = parseInt(req.query.page) || 1, limit = 8;
+
+        const { flights, totalFlights } = await readFlightsByQuery(req.query, page, limit);
+        const totalPages = Math.max(1, Math.ceil(totalFlights / limit));
+        const pagination = {
+            currentPage: page,
+            totalPages: totalPages,
+            totalResults: totalFlights,
+            resultsPerPage: limit,
+            baseUrl: '/flight-search?page='
+        };
+
+        res.status(200).render('partials/searchResults', {
+            layout: false,
+            flightCards: flights,
+            pagination: pagination
+        }, (err, html) => {
+            if (err) {
+                return res.status(500).json({ success: false });
+            }
+
+            res.status(200).json({ success: true, html });
+        });
     } catch {
         res.status(500).json({ success: false });
     }

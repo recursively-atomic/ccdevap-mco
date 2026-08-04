@@ -37,7 +37,7 @@ router.get('/flight-book', authenticate, authorize(['user']), async (req, res) =
     }
 });
 
-router.post('/flight-book', async (req, res) => {
+router.post('/flight-book', authenticate, authorize(['user']), async (req, res) => {
     try {
         await createReservation(req.body);
         const reservation = await readReservation(req.body['identifier']);
@@ -126,12 +126,12 @@ router.get('/reservations', authenticate, authorize(['admin']), async (req, res)
 });
 
 // APIs
-router.get('/api/select-flight/:flightNumber', async (req, res) => {
+router.get('/api/select-flight/:flightNumber', authenticate, authorize(['user']), async (req, res) => {
     req.session.user.selectedFlight = parseInt(req.params.flightNumber);
     res.redirect('/flight-book');
 });
 
-router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
+router.get('/api/read-reservation-seat/:identifier', authenticate, authorize(['user']), async (req, res) => {
     try {
         const identifier = req.params.identifier;
         const reservation = await readReservation(identifier);
@@ -156,7 +156,7 @@ router.get('/api/read-reservation-seat/:identifier', async (req, res) => {
     }
 });
 
-router.get('/api/read-reservation/:identifier', async (req, res) => {
+router.get('/api/read-reservation/:identifier', authenticate, authorize(['user']), async (req, res) => {
     try {
         const identifier = req.params.identifier;
         const reservation = await readReservation(identifier);
@@ -167,7 +167,7 @@ router.get('/api/read-reservation/:identifier', async (req, res) => {
     }
 });
 
-router.put('/api/update-reservation-seat/:identifier', async (req, res) => {
+router.put('/api/update-reservation-seat/:identifier', authenticate, authorize(['user']), async (req, res) => {
     try {
         const identifier = req.params.identifier;
         const { seatNumber } = req.body;
@@ -195,7 +195,7 @@ router.put('/api/update-reservation-seat/:identifier', async (req, res) => {
     }
 });
 
-router.put('/api/update-reservation-cancel/:identifier', async (req, res) => {
+router.put('/api/update-reservation-cancel/:identifier', authenticate, authorize(['user']), async (req, res) => {
     try {
         const identifier = req.params.identifier;
         await updateStatus(identifier, 'Cancelled');

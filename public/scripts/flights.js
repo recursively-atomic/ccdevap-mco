@@ -235,9 +235,10 @@ async function updateFlight(event) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     data['edit-fare'] = data['edit-fare'].replace(/\,/g, '');
+    data['flight-number'] = selectedFlight;
 
     try {
-        const response = await fetch(`/api/update-flight/${selectedFlight}`, {
+        const response = await fetch(`/flights`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
@@ -268,11 +269,12 @@ async function updateFlight(event) {
  */
 async function deleteFlight() {
     event.preventDefault();
-
+    
     try {
-        const response = await fetch(`/api/delete-flight/${selectedFlight}`, {
+        const response = await fetch(`/flights`, {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'flight-number': selectedFlight })
         });
 
         const result = await response.json();

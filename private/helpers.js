@@ -83,7 +83,7 @@ function formatAuditLog(auditData) {
         'u-upd': `Updated their account to have an email of ${auditData.userEmail} and a user name of ${auditData.newUserName}.`,
         'u-lot': `Logged out of their account that uses an email of ${auditData.userEmail} and a user number of ${userNumber}.`,
         'f-cre': `Created flight ${flightNumber} that goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
-        'f-upd': `Updated flight ${flightNumber} to be ${auditData.flightStatus.toLowerCase()} which goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
+        'f-upd': `Updated flight ${flightNumber} to be ${String(auditData.flightStatus).toLowerCase()} which goes from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
         'f-del': `Deleted flight ${flightNumber} that went from ${origin} on ${originDate} ${originTime} to ${destination} on ${destinationDate} ${destinationTime}.`,
         'r-cre': `Created a reservation under ${reservationIdentifier} for flight ${flightNumber} with a seat of ${reservationSeat}.`,
         'r-upd': `Updated their reservation under ${reservationIdentifier} for flight ${flightNumber} from seat ${reservationSeat} to seat ${auditData.newReservationSeat}.`,
