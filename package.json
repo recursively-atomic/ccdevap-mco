@@ -1,7 +1,7 @@
 {
     "scripts": {
         "start": "node server.js",
-        "test": "cross-env NODE_ENV=test jest --forceExit --detectOpenHandles",
+        "test": "jest",
         "test:unit": "jest tests/unit",
         "test:coverage": "jest --coverage"
     },
