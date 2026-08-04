@@ -91,4 +91,9 @@ server.use("/", userRoutes);
 server.use("/", flightRoutes);
 server.use("/", reservationRoutes);
 server.use("/", auditRoutes);
-connectToServer(server);
+
+module.exports = server;
+
+if (require.main === module) {
+    connectToServer(server);
+}

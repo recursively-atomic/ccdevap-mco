@@ -1,6 +1,13 @@
 const request = require('supertest');
+const app = require('../../../server');
 
-jest.mock('../controllers/userController', () => ({
+const {
+    createUser,
+    readUserByEmail,
+    readLastUserNumber
+} = require('../../controllers/userController');
+
+jest.mock('../../controllers/userController', () => ({
     createUser: jest.fn(),
     readUser: jest.fn(),
     readUserByEmail: jest.fn(),
@@ -10,26 +17,16 @@ jest.mock('../controllers/userController', () => ({
     updatePassword: jest.fn()
 }));
 
-jest.mock('../controllers/auditController', () => ({
+jest.mock('../../controllers/auditController', () => ({
     createAudit: jest.fn()
 }));
-
-const {
-    createUser,
-    readUserByEmail,
-    readLastUserNumber
-} = require('../controllers/userController');
-
-const app = require('../../server');
 
 beforeEach(() => {
     jest.clearAllMocks();
 });
 
 describe('User Authentication', () => {
-
     test('Successful registration', async () => {
-
         readUserByEmail.mockResolvedValue(null);
 
         readLastUserNumber.mockResolvedValue({
@@ -56,7 +53,6 @@ describe('User Authentication', () => {
     });
 
     test('Successful login', async () => {
-
         readUserByEmail.mockResolvedValue({
             userNumber: 1001,
             emailAddress: 'jest@test.com',
@@ -75,8 +71,7 @@ describe('User Authentication', () => {
         expect(response.body.success).toBe(true);
     });
 
-    test('Failed login', async () => {
-
+    test('Failed Login', async () => {
         readUserByEmail.mockResolvedValue({
             userNumber: 1001,
             emailAddress: 'jest@test.com',
@@ -94,5 +89,4 @@ describe('User Authentication', () => {
         expect(response.statusCode).toBe(401);
         expect(response.body.success).toBe(false);
     });
-
 });
