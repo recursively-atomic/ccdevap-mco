@@ -26,9 +26,8 @@ beforeEach(() => {
 });
 
 describe('User Authentication', () => {
-    test('Successful registration', async () => {
+    test('Successful Registration', async () => {
         readUserByEmail.mockResolvedValue(null);
-
         readLastUserNumber.mockResolvedValue({
             userNumber: 1000
         });
@@ -52,7 +51,7 @@ describe('User Authentication', () => {
         expect(response.body.success).toBe(true);
     });
 
-    test('Successful login', async () => {
+    test('Successful Login', async () => {
         readUserByEmail.mockResolvedValue({
             userNumber: 1001,
             emailAddress: 'jest@test.com',
