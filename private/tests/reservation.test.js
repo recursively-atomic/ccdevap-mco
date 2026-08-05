@@ -1,9 +1,9 @@
-const controller = require('../../private/controllers/reservationController');
-const reservationModel = require('../../private/models/reservationModel');
-const flightModel = require('../../private/models/flightModel');
+const controller = require('../controllers/reservationController');
+const reservationModel = require('../models/reservationModel');
+const flightModel = require('../models/flightModel');
 
-jest.mock('../../private/models/reservationModel');
-jest.mock('../../private/models/flightModel');
+jest.mock('../models/reservationModel');
+jest.mock('../models/flightModel');
 
 beforeEach(() => {
     jest.clearAllMocks();
