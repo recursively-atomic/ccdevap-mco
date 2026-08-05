@@ -74,13 +74,17 @@ async function updateUser(userData) {
 };
 
 async function updatePassword(userData) {
-    const user = await model.findOne({ userNumber: userData.userNumber });
-
-    if (userData.currentPassword === user.password) {
-        user.password = userData.newPassword;
+    const currentData = await readUser(userData.userNumber);
+    
+    if (userData.currentPassword !== currentData.password) {
+        return currentData;
     }
 
-    return await user.save();
+    return await model.findOneAndUpdate(
+        { userNumber: userData.userNumber },
+        { password: userData.newPassword },
+        { returnDocument: "after" }
+    ).lean();
 }
 
 module.exports = { createUser, readUser, readUserByEmail, readLastUserNumber, readUsers, updateUser, updatePassword };

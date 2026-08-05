@@ -73,21 +73,24 @@ async function readReservations(page, limit, userNumber = null) {
 async function updateSeat(identifier, newSeat) {
     return await model.findOneAndUpdate(
         { identifier },
-        { seatNumber: newSeat }
-    );
+        { seatNumber: newSeat },
+        { returnDocument: "after" }
+    ).lean();
 }
 
 async function updateStatus(identifier, newStatus) {
-    const reservation = await model.findOne({ identifier });
+    const reservation = await model.findOne({ identifier }).lean();
 
-    if (newStatus === 'Cancelled') {
-        await flight.findOneAndUpdate({ flightNumber: reservation.flightNumber }, { $inc: { availableSeats: 1 } });
+    if (newStatus !== 'Cancelled') {
+        return reservation;
     }
 
+    await flight.findOneAndUpdate({ flightNumber: reservation.flightNumber }, { $inc: { availableSeats: 1 } });
     return await model.findOneAndUpdate(
         { identifier },
-        { status: newStatus }
-    );
+        { status: newStatus },
+        { returnDocument: "after" }
+    ).lean();
 }
 
 module.exports = { createReservation, readSeatMap, readReservation, readReservations, updateSeat, updateStatus };

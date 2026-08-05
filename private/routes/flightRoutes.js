@@ -233,7 +233,6 @@ router.delete('/flights', authenticate, authorize(['admin']), async (req, res) =
                 }
             },
 
-            flightStatus: deletedFlight.status,
             action: 'f-del'
         };
 

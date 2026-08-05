@@ -1,20 +1,17 @@
 const request = require('supertest');
 const server = require('../../server');
 
-const {
-    createUser,
-    readUserByEmail,
-    readLastUserNumber
-} = require('../controllers/userController');
+const { createUser, readUserByEmail, readLastUserNumber } = require('../controllers/userController');
+const { createAudit } = require('../controllers/auditController');
 
 jest.mock('../controllers/userController', () => ({
     createUser: jest.fn(),
-    readUser: jest.fn(),
     readUserByEmail: jest.fn(),
     readLastUserNumber: jest.fn(),
-    readUsers: jest.fn(),
-    updateUser: jest.fn(),
-    updatePassword: jest.fn()
+}));
+
+jest.mock('../controllers/auditController', () => ({
+    createAudit: jest.fn()
 }));
 
 beforeEach(() => {
@@ -23,22 +20,15 @@ beforeEach(() => {
 
 describe('User Authentication', () => {
     test('Successful Registration', async () => {
-        readUserByEmail.mockResolvedValue(null);
-        readLastUserNumber.mockResolvedValue({
-            userNumber: 1000
-        });
-
-        createUser.mockResolvedValue({
-            userNumber: 1001,
-            emailAddress: 'jest@test.com',
-            role: 'user'
-        });
+        readUserByEmail.mockResolvedValue();
+        readLastUserNumber.mockResolvedValue({ userNumber: 1000 });
+        createUser.mockResolvedValue({ userNumber: 1001 });
 
         const response = await request(server)
             .post('/register')
             .send({
                 'email-address': 'jest@test.com',
-                'password': 'Password1!',
+                'password': 'JestPa5$wrd',
                 'first-name': 'Jest',
                 'last-name': 'User'
             });
@@ -47,18 +37,14 @@ describe('User Authentication', () => {
         expect(response.body.success).toBe(true);
     });
 
-    test('Failed Registration', async () => {
-        readUserByEmail.mockResolvedValue({
-            userNumber: 1000,
-            emailAddress: 'jest@test.com',
-            role: 'user'
-        });
+    test('Failed Registration (Duplicate E-Mail)', async () => {
+        readUserByEmail.mockResolvedValue({ emailAddress: 'jest@test.com', });
 
         const response = await request(server)
             .post('/register')
             .send({
                 'email-address': 'jest@test.com',
-                'password': 'Password1!',
+                'password': 'JestPa5$wrd',
                 'first-name': 'Jest',
                 'last-name': 'User'
             });
@@ -69,9 +55,8 @@ describe('User Authentication', () => {
 
     test('Successful Login', async () => {
         readUserByEmail.mockResolvedValue({
-            userNumber: 1001,
             emailAddress: 'jest@test.com',
-            password: 'Password1!',
+            password: 'JestPa5$wrd',
             role: 'user'
         });
 
@@ -79,18 +64,17 @@ describe('User Authentication', () => {
             .post('/login')
             .send({
                 'email-address': 'jest@test.com',
-                'password': 'Password1!'
+                'password': 'JestPa5$wrd'
             });
 
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBe(true);
     });
 
-    test('Failed Login', async () => {
+    test('Failed Login (Incorrect Password)', async () => {
         readUserByEmail.mockResolvedValue({
-            userNumber: 1001,
             emailAddress: 'jest@test.com',
-            password: 'Password1!',
+            password: 'JestPa5$wrd',
             role: 'user'
         });
 
@@ -98,7 +82,7 @@ describe('User Authentication', () => {
             .post('/login')
             .send({
                 'email-address': 'jest@test.com',
-                'password': 'WrongPassword'
+                'password': 'Wr0ngPa5$word'
             });
 
         expect(response.statusCode).toBe(401);

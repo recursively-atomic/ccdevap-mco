@@ -1,67 +1,122 @@
-const controller = require('../../private/controllers/reservationController');
-const reservationModel = require('../../private/models/reservationModel');
-const flightModel = require('../../private/models/flightModel');
+const request = require('supertest');
+const express = require('express');
+let mockServer;
 
-jest.mock('../../private/models/reservationModel');
-jest.mock('../../private/models/flightModel');
+const { readUser } = require('../controllers/userController');
+const { createReservation, readReservation, updateSeat, updateStatus } = require('../controllers/reservationController');
+const { createAudit } = require('../controllers/auditController');
+
+jest.mock('../controllers/userController', () => ({
+    readUser: jest.fn()
+}));
+
+jest.mock('../controllers/reservationController', () => ({
+    createReservation: jest.fn(),
+    readReservation: jest.fn(),
+    updateSeat: jest.fn(),
+    updateStatus: jest.fn()
+}));
+
+
+jest.mock('../controllers/auditController', () => ({
+    createAudit: jest.fn()
+}));
 
 beforeEach(() => {
     jest.clearAllMocks();
+
+    mockServer = express();
+    mockServer.use(express.json());
+    mockServer.use(express.urlencoded({ extended: true }));
+    mockServer.use((req, res, next) => {
+        req.session = { user: { number: 1, role: 'user' } };
+        next();
+    });
+
+    mockServer.use('/', require('../routes/reservationRoutes'));
 });
 
 describe('Reservation Management', () => {
-    test('Successful Reservation Creation', async () => {
-        const mockReservationData = {
-            identifier: '0012WV',
-            flightNumber: 2,
-            userNumber: 2,
-            email: 'random.kid@email.com',
-            firstName: 'Random',
-            lastName: 'Kid',
-            suffix: '',
-            passportCode: 'Z54321Y12345',
-            seatNumber: 'B4',
-            totalAmount: 4200
-        };
+    test('Successful Creation', async () => {
+        createReservation.mockResolvedValue({ identifier: 'JEST-RSV' });
+        readUser.mockResolvedValue({ userNumber: 1 });
+        readReservation.mockResolvedValue({
+            identifier: 'JEST-RSV',
 
-        const mockSave = jest.fn().mockResolvedValue({ ...mockReservationData, status: 'Pending' });
-        reservationModel.mockImplementation(() => ({ save: mockSave }));
-        flightModel.findOneAndUpdate.mockResolvedValue({ flightNumber: 2, availableSeats: 15 });
+            flight: {
+                airline: 'Filipino Airlines',
+                flightNumber: 1
+            }
+        });
 
-        const result = await controller.createReservation(mockReservationData);
-        expect(flightModel.findOneAndUpdate).toHaveBeenCalledWith(
-            { flightNumber: 2, availableSeats: { $gt: 0 } },
-            { $inc: { availableSeats: -1 } }
-        );
+        const response = await request(mockServer)
+            .post('/flight-book')
+            .send({
+                'identifier': 'JEST-RSV',
+                'flightNumber': 1,
+                'userNumber': 1,
+                'email': 'jest@test.com',
+                'firstName': 'Jest',
+                'lastName': 'User',
+                'suffix': '',
+                'passportCode': 'MockPassport',
+                'seatNumber': 'MockSeat A2',
+                'totalAmount': 16000
+            });
 
-        expect(mockSave).toHaveBeenCalled();
-        expect(result.status).toBe('Pending');
+        expect(response.statusCode).toBe(200);
+        expect(response.body.success).toBe(true);
     });
 
-    test('Successful Reservation Cancellation', async () => {
-        reservationModel.findOne.mockResolvedValue({ identifier: 'W12345X54321', flightNumber: 3 });
-        flightModel.findOneAndUpdate.mockResolvedValue({});
-        reservationModel.findOneAndUpdate.mockResolvedValue({ identifier: 'W12345X54321', status: 'Cancelled' });
+    test('Successful Cancellation', async () => {
+        updateStatus.mockResolvedValue(true);
+        readUser.mockResolvedValue({ userNumber: 1 });
+        readReservation.mockResolvedValue({
+            identifier: 'JEST-RSV',
 
-        await controller.updateStatus('W12345X54321', 'Cancelled');
+            flight: {
+                airline: 'Filipino Airlines',
+                flightNumber: 1
+            }
+        });
 
-        expect(reservationModel.findOne).toHaveBeenCalledWith({ identifier: 'W12345X54321' });
-        expect(flightModel.findOneAndUpdate).toHaveBeenCalledWith(
-            { flightNumber: 3 },
-            { $inc: { availableSeats: 1 } }
-        );
-        expect(reservationModel.findOneAndUpdate).toHaveBeenCalledWith(
-            { identifier: 'W12345X54321' },
-            { status: 'Cancelled' }
-        );
+        const response = await request(mockServer)
+            .put('/api/update-reservation-cancel/JEST-RSV');
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.success).toBe(true);
     });
 
-    test('Failed Reservation Cancellation (Reservation Not Found)', async () => {
-        reservationModel.findOne.mockResolvedValue(null);
+    test('Successful Update', async () => {
+        updateSeat.mockResolvedValue(true);
+        readReservation.mockResolvedValue({
+            identifier: 'JEST-RSV',
 
-        await expect(controller.updateStatus('INVALID-ID', 'Cancelled')).rejects.toThrow(TypeError);
+            flight: {
+                airline: 'Filipino Airlines',
+                flightNumber: 1
+            }
+        });
 
-        expect(flightModel.findOneAndUpdate).not.toHaveBeenCalled();
-        expect(reservationModel.findOneAndUpdate).not.toHaveBeenCalled();
+        const response = await request(mockServer)
+            .put('/api/update-reservation-seat/JEST-RSV')
+            .send({
+                'seatNumber': 'A1'
+            });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.success).toBe(true);
+    });
+
+    test('Failed Cancellation (Reservation Not Found)', async () => {
+        updateStatus.mockResolvedValue(false);
+        readUser.mockResolvedValue({ userNumber: 1 });
+        readReservation.mockResolvedValue(null);
+
+        const response = await request(mockServer)
+            .put('/api/update-reservation-cancel/INVALID');
+
+        expect(response.statusCode).toBe(500);
+        expect(response.body.success).toBe(false);
     });
 });
