@@ -87,6 +87,18 @@ describe('Reservation Management', () => {
         expect(response.body.success).toBe(true);
     });
 
+    test('Failed Cancellation (Reservation Not Found)', async () => {
+        updateStatus.mockResolvedValue(false);
+        readUser.mockResolvedValue({ userNumber: 1 });
+        readReservation.mockResolvedValue(null);
+
+        const response = await request(mockServer)
+            .put('/api/update-reservation-cancel/INVALID');
+
+        expect(response.statusCode).toBe(500);
+        expect(response.body.success).toBe(false);
+    });
+
     test('Successful Update', async () => {
         updateSeat.mockResolvedValue(true);
         readReservation.mockResolvedValue({
@@ -106,17 +118,5 @@ describe('Reservation Management', () => {
 
         expect(response.statusCode).toBe(200);
         expect(response.body.success).toBe(true);
-    });
-
-    test('Failed Cancellation (Reservation Not Found)', async () => {
-        updateStatus.mockResolvedValue(false);
-        readUser.mockResolvedValue({ userNumber: 1 });
-        readReservation.mockResolvedValue(null);
-
-        const response = await request(mockServer)
-            .put('/api/update-reservation-cancel/INVALID');
-
-        expect(response.statusCode).toBe(500);
-        expect(response.body.success).toBe(false);
     });
 });
