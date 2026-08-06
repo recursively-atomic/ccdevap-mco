@@ -53,6 +53,7 @@ const handlebars = expressHandlebars.create({
 
 server.engine('hbs', handlebars.engine);
 
+server.set('trust proxy', true);
 server.set('view engine', 'hbs');
 server.set('views', path.join(__dirname, 'views'));
 

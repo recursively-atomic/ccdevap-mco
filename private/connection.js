@@ -17,8 +17,8 @@ async function connectToServer(server) {
     try {
         await connectToMongo();
         
-        server.listen(process.env.SERVER_PORT, () => {
-            console.log(`Server Running On http://localhost:${process.env.SERVER_PORT}`);
+        server.listen(process.env.SERVER_PORT, '0.0.0.0', () => {
+            console.log(`Server Running On http://172.0.0.1:${process.env.SERVER_PORT}`);
         });
     } catch (error) {
         console.error('Server Not Started!');
