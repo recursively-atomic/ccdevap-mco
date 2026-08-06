@@ -1,3 +1,1 @@
-$(function () {
-    changeDropdownDisplay(false, false);
-});
+$(function(){changeDropdownDisplay(!1,!1)});
