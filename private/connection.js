@@ -17,7 +17,7 @@ async function connectToServer(server) {
     try {
         await connectToMongo();
         
-        server.listen(process.env.SERVER_PORT, '0.0.0.0', () => {
+        server.listen(process.env.SERVER_PORT, () => {
             console.log(`Server Running On http://127.0.0.1:${process.env.SERVER_PORT}`);
         });
     } catch (error) {
